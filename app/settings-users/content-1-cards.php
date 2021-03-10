@@ -58,7 +58,7 @@ if ( xan\isNotEmpty( $resp->reqID ) ) {
 	$recsDetail = new xan\recs( $mmUsersT );
 	$recsDetail->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmUsersT->NameTableKey . ' = ?';
 	$recsDetail->queryBindNamesA = array( UUIDTENANTS, $mmUsersT->NameTableKey );
-	$recsDetail->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], $resp->reqID );
+	$recsDetail->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $resp->reqID );
 	$recsDetail->query();
 	$recsDetail->rowsMassageForGUI( false );
 	
@@ -91,6 +91,7 @@ if ( xan\isNotEmpty( $resp->reqID ) ) {
 		
 		// Detail Cards Append
 		require_once( 'content-card-users-user.php' );
+		require_once( 'content-card-users-2fa.php' );
 		require_once( 'content-card-users-privs.php' );
 		require_once( 'content-card-users-auth.php' );
 		require_once( 'content-card-users-meta.php' );

@@ -26,6 +26,7 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->reqID = $doParam[ 'IDUsers' ];
 	$resp->moduleName = $mmUsersT->NameModule;
 	$resp->headTitle = $mmUsersT->NameModule;
+	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
 	$resp->contentHeader = $mmUsersT->FontAwesome . STR_NBSP . $mmUsersT->NameModule . STR_NBSP;
 	

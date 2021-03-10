@@ -8,6 +8,7 @@ $resp->reqPath = $aloe_request->path_get();
 $resp->reqID = $aloe_request->path_components_get()[ 1 ];
 $resp->moduleName = $mmContactsT->NameModule;
 $resp->headTitle = $mmContactsT->NameModule;
+$resp->headLogoutAuto = true;
 $resp->navInclude = true;
 $resp->contentHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NameModule;
 

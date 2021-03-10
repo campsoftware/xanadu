@@ -3,7 +3,7 @@
 $mmUsersT->setPathLast( $aloe_request->path_get() );
 
 // Priv Redirect
-if ( $_SESSION[ 'recsUsersCURRENT' ][ 'PrivAdmin' ] !== 'Yes' ) {
+if ( $_SESSION[ SESS_USER ][ 'PrivAdmin' ] !== 'Yes' ) {
 	$aloe_response->status_set( '307 Temporary Redirect' );
 	$aloe_response->header_set( 'Location', '/home/' );
 	$aloe_response->content_set( '' );
@@ -15,6 +15,7 @@ $resp->reqPath = $aloe_request->path_get();
 $resp->reqID = $aloe_request->path_components_get()[ 1 ];
 $resp->moduleName = $mmServerStats->NameModule;
 $resp->headTitle = $mmServerStats->NameModule;
+$resp->headLogoutAuto = false;
 $resp->navInclude = true;
 $resp->contentHeader = $mmServerStats->FontAwesome . STR_NBSP . $mmServerStats->NameModule;
 

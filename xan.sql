@@ -2836,6 +2836,7 @@ CREATE TABLE `Settings` (
   `AppIconURLLink` text,
   `AppCurrency` varchar(5) DEFAULT NULL,
   `AppEmailFrom` text,
+  `LogoutAutoSeconds` int(5) DEFAULT NULL,
   `FormatDisplayDate` varchar(255) DEFAULT NULL,
   `FormatDisplayTS` varchar(255) DEFAULT NULL,
   `FormatDisplayTSSecs` varchar(255) DEFAULT NULL,
@@ -2852,6 +2853,9 @@ CREATE TABLE `Settings` (
   `SMTPPassword` varchar(255) DEFAULT NULL,
   `SMTPUseAuth` varchar(3) DEFAULT NULL,
   `SMTPAuthType` varchar(255) DEFAULT NULL,
+  `TwilloPhoneNumber` varchar(255) DEFAULT NULL,
+  `TwilloAPIKey` varchar(255) DEFAULT NULL,
+  `TwilloAPISecret` varchar(255) DEFAULT NULL,
   `ModTS` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ModName` varchar(255) DEFAULT NULL,
   `ModUUIDUsers` varchar(255) DEFAULT NULL,
@@ -2867,7 +2871,7 @@ CREATE TABLE `Settings` (
 -- Records of Settings
 -- ----------------------------
 BEGIN;
-INSERT INTO `Settings` VALUES ('Yes', 'Xanadu', '/images/logo50.png', '/images/logo1024.png', 'https://campsoftware.com/products/xanadu-for-xojo.php', '$', 'foo@bar.com', 'm/d/Y', 'm/d/Y g:ia', 'm/d/Y g:i:sa', 'g:ia', 'myGoogleMapsKey', 'myStripeKeyLivePrivate', 'myStripeKeyLivePublic', 'myStripeKeyTestPrivate', 'myStripeKeyTestPublic', 'usd', 'smtpServer', 587, 'smtpLogin', 'smtpPassword', 'Yes', 'tls', '2021-03-02 20:37:41', NULL, NULL, '100', 'Xanadu');
+INSERT INTO `Settings` VALUES ('Yes', 'Xanadu', '/images/logo50.png', '/images/logo1024.png', 'https://campsoftware.com/products/xanadu-for-xojo.php', '$', 'foo@bar.com', 3600, 'm/d/Y', 'm/d/Y g:ia', 'm/d/Y g:i:sa', 'g:ia', 'myGoogleMapsKey', 'myStripeKeyLivePrivate', 'myStripeKeyLivePublic', 'myStripeKeyTestPrivate', 'myStripeKeyTestPublic', 'usd', 'smtpServer', 587, 'smtpLogin', 'smtpPassword', 'Yes', 'tls', '+14075551212', 'APIKey', 'APISecret', '2021-03-10 20:14:29', NULL, NULL, '100', 'Xanadu');
 COMMIT;
 
 -- ----------------------------
@@ -2920,6 +2924,10 @@ CREATE TABLE `Users` (
   `ModUUIDUsers` varchar(255) DEFAULT NULL,
   `UUIDUsers` varchar(255) NOT NULL,
   `UUIDTenants` varchar(255) DEFAULT NULL,
+  `TwoFactorCodeString` varchar(10) DEFAULT NULL,
+  `TwoFactorCodeExpiresTS` timestamp NULL DEFAULT NULL,
+  `TwoFactorPhoneNumber` varchar(255) DEFAULT NULL,
+  `TwoFactorEmailAddress` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`UUIDUsers`),
   UNIQUE KEY `UUIDUsers` (`UUIDUsers`),
   KEY `Index_2` (`LoginKey`) USING BTREE,

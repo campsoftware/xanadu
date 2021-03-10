@@ -3,7 +3,7 @@
 $recsContactsComms = new xan\recs( $mmContactsCommsT );
 $recsContactsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
 $recsContactsComms->queryBindNamesA = array( UUIDTENANTS, $mmContactsCommsT->NameTableKey );
-$recsContactsComms->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], $resp->reqID );
+$recsContactsComms->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $resp->reqID );
 $recsContactsComms->query();
 $recsContactsComms->rowsMassageForGUI( false );
 

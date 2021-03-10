@@ -35,7 +35,7 @@ $queryTermBindValues = ( xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : xan
 $recs = new xan\recs( $mmContactsT );
 $recs->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . $queryWhere . ' ORDER BY NameCompany ASC, NameLast ASC ' . ' LIMIT 500 ';
 $recs->queryBindNamesA = array_merge( array( UUIDTENANTS ), $queryTermBindNames );
-$recs->queryBindValuesA = array_merge( array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ] ), $queryTermBindValues );;
+$recs->queryBindValuesA = array_merge( array( $_SESSION[ SESS_USER ][ UUIDTENANTS ] ), $queryTermBindValues );;
 $recs->query();
 
 // Error Check
@@ -64,7 +64,7 @@ $result[ 'Do_HTMLSelectorName' ][ 0 ] = '#' . $idPrefix . '_ListItems';
 $result[ 'Do_HTMLSelectorData' ][ 0 ] = $cardListHeader . '<div class="list-group list-group-flush">' . $cardListContent . '</div>';
 
 // Set Focus Selector
-//$_SESSION[ 'FocusSelector' ] = '#xf_' . $UUIDNew . '_Data';
+//$_SESSION[ SESS_FOCUS_SELECTOR ] = '#xf_' . $UUIDNew . '_Data';
 
 // Return JSON
 $resultJSON = json_encode( $result );

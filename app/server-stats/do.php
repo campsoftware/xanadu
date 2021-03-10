@@ -25,6 +25,7 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->reqPath = $aloe_request->path_get();
 	$resp->moduleName = $mmServerStatsT->NameModule;
 	$resp->headTitle = $mmServerStatsT->NameModule;
+	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
 	$resp->contentHeader = $mmServerStatsT->FontAwesome . STR_NBSP . $mmServerStatsT->NameModule . STR_NBSP;
 	

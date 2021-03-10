@@ -40,7 +40,7 @@ if ( $recs->errorB || $recs->rowCount < 1 ) {
 $result[ 'Do_URLLoad' ] = $mmContactsT->URLFull . $doParam[ 'IDContactsComms' ];
 
 // Set Focus Selector on Page Reload
-$_SESSION[ 'FocusSelector' ] = '#xf_' . $UUIDNew . '_Data';
+$_SESSION[ SESS_FOCUS_SELECTOR ] = '#xf_' . $UUIDNew . '_Data';
 
 // Return Records as JSON
 $resultJSON = json_encode( $result );

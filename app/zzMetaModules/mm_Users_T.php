@@ -28,6 +28,11 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		
 		$this->URLDoRelative = '/' . 'settings-users-do/';
 		$this->URLDoFull = URL_BASE . 'settings-users-do/';
+		
+		// Unique to Users
+		$this->TwoFactorCode = '';
+		$this->TwoFactorSubject = '';
+		$this->TwoFactorBody = '';
 	}
 	
 	
@@ -126,7 +131,21 @@ class moduleMetaUsersT extends xan\moduleMeta {
 			case 'PhoneMobile':
 				$colMeta->colLabelEN = 'Mobile Phone';
 				break;
-				
+			
+			case 'TwoFactorPhoneNumber':
+				$colMeta->colLabelEN = '2FA Phone';
+				break;
+			case 'TwoFactorEmailAddress':
+				$colMeta->colLabelEN = '2FA Email';
+				break;
+			case 'TwoFactorCodeString':
+				$colMeta->colLabelEN = '2FA Code';
+				break;
+			case 'TwoFactorCodeExpiresTS':
+				$colMeta->colLabelEN = '2FA Code Expires';
+				$colMeta->eleType = ELE_TYPE_DATETIME_DB;
+				break;
+			
 			case 'Active':
 				$colMeta->colLabelEN = 'Active';
 				$colMeta->eleType = ELE_TYPE_SELECT_DB;
@@ -182,7 +201,7 @@ class moduleMetaUsersT extends xan\moduleMeta {
 				$colMeta->colLabelEN = 'Login Key';
 				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
-				
+			
 			// Mod
 			case 'ModTS':
 				$colMeta->colLabelEN = 'Mod TS';
@@ -232,19 +251,68 @@ class moduleMetaUsersT extends xan\moduleMeta {
 	///////////////////////////////////////////////////////////
 	// Functions For This Module
 	
-	public function setPathLast( $path ) {
+	public function setPathLast( $pPath ) {
 		// User Update
 		$userUpdate = new xan\recs( $this );
 		$userUpdate->querySQL = 'UPDATE ' . $this->NameTable . ' SET PathLast = ? WHERE ' . UUIDTENANTS . ' = ? AND ' . UUIDUSERS . ' = ?';;
 		$userUpdate->queryBindNamesA = array( 'PathLast', UUIDTENANTS, UUIDUSERS );
-		$userUpdate->queryBindValuesA = array( $path, $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] );
+		$userUpdate->queryBindValuesA = array( $pPath, $_SESSION[ SESS_USER ][ UUIDTENANTS ], $_SESSION[ SESS_USER ][ UUIDUSERS ] );
 		$userUpdate->query();
 		
 		// Error Check
 		if ( $userUpdate->errorB ) {
-			xan\logEventToSQL( 'Error', $userUpdate->messageExtra . STR_SEP . $userUpdate->messageSQL, $userUpdate->querySQL . STR_SEP . print_r( $userUpdate->queryBindNamesA ) . STR_SEP . print_r( $userUpdate->queryBindValuesA ), 'users->setPathLast', $_SESSION[ 'recsUsersCURRENT' ][ 'EmailAddress' ], $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] );
+			xan\logEventToSQL( 'Error', $userUpdate->messageExtra . STR_SEP . $userUpdate->messageSQL, $userUpdate->querySQL . STR_SEP . print_r( $userUpdate->queryBindNamesA ) . STR_SEP . print_r( $userUpdate->queryBindValuesA ), 'users->setPathLast', $_SESSION[ SESS_USER ][ 'EmailAddress' ], $_SESSION[ SESS_USER ][ UUIDUSERS ] );
 		}
 	}
+	
+	
+	public function set2FA( $pUUIDUser, $pCode = '2FA_GENERATE' ) {
+		// Get Timestamps
+		$tsFuture = \xan\dateTimeFromString( '+1 hour', DATETIME_FORMAT_SQLDATETIME );
+		$tsPast = \xan\dateTimeFromString( '-1 year', DATETIME_FORMAT_SQLDATETIME );
+		
+		// Get Code and Timestamp
+		if ( $pCode === '2FA_GENERATE' ) {
+			$code = \xan\strCode2FA();
+			$ts = $tsFuture;
+		} else {
+			$code = $pCode;
+			$ts = ( $code === '' ? $tsPast : $tsFuture );
+		}
+		
+		// Update User
+		$userUpdate = new \xan\recs( $this );
+		$userUpdate->recordUpdate( $pUUIDUser, array( 'TwoFactorCodeString' => $code, 'TwoFactorCodeExpiresTS' => $ts ) );
+		
+		// Create the Message
+		$this->TwoFactorCode = $code;
+		$this->TwoFactorSubject = APP_NAME . ' Verification Code';
+		$this->TwoFactorBody = $code . ' is your ' . APP_NAME . ' verification code.';
+	}
+	
+	
+	public function doLogin( $loginMethod, \xan\recs $userSelect ) {
+		// Set Session
+		$_SESSION[ SESS_USER ] = $userSelect->rowsD[ 0 ];
+		
+		// Log
+		$logEvent = xan\logEventToSQL( 'Login', $loginMethod, '', xan\paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
+		// Error Check
+		if ( $logEvent->errorB ) {
+			return 'Error: ' . '500 Internal Service Error: ' . 'LogAudit Error; ' . $logEvent->messageExtra . '; ' . $logEvent->messageSQL;
+		} elseif ( $logEvent->rowCount < 1 ) {
+			return 'Error: ' . '500 Internal Service Error: ' . 'LogAudit Not Found; ' . $logEvent->messageExtra . '; ' . $logEvent->messageSQL;
+		}
+		
+		// Redirect User
+		$PathLast = $userSelect->rowsD[ 0 ][ 'PathLast' ];
+		if ( xan\isNotEmpty( $PathLast ) ) {
+			return $PathLast;
+		} else {
+			return '/home';
+		}
+	}
+	
 }
 
 // Init

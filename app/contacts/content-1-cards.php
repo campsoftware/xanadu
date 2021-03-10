@@ -58,7 +58,7 @@ if ( xan\isNotEmpty( $resp->reqID ) ) {
 	$recsDetail = new xan\recs( $mmContactsT );
 	$recsDetail->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
 	$recsDetail->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey );
-	$recsDetail->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], $resp->reqID );
+	$recsDetail->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $resp->reqID );
 	$recsDetail->query();
 	$recsDetail->rowsMassageForGUI( false );
 	

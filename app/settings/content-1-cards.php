@@ -3,7 +3,7 @@
 $recsDetail = new xan\recs( $mmSettingsT );
 $recsDetail->querySQL = 'SELECT * FROM ' . $mmSettingsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND Active = ?';
 $recsDetail->queryBindNamesA = array( UUIDTENANTS, 'Active' );
-$recsDetail->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], 'Yes' );
+$recsDetail->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], 'Yes' );
 $recsDetail->query();
 $recsDetail->rowsMassageForGUI( false );
 
@@ -33,7 +33,9 @@ if ( $recsDetail->errorB ) {
 	require_once( 'content-card-settings-app.php' );
 	require_once( 'content-card-settings-formats.php' );
 	require_once( 'content-card-settings-smtp.php' );
-	require_once( 'content-card-settings-apis.php' );
+	require_once( 'content-card-settings-twillo.php' );
+	require_once( 'content-card-settings-stripe.php' );
+	require_once( 'content-card-settings-otherapis.php' );
 	
 	// Scripts Extra
 	// $resp->scriptsOnLoadA[] = '';

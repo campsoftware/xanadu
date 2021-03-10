@@ -18,11 +18,11 @@ namespace aloe {
         @session_start();
 
         // Set Session Data
-        $_SESSION['SES_INFO'] = $info;
-        if (!isset( $_SESSION['SES_BEGIN'])){
-            $_SESSION['SES_BEGIN'] = date( 'Y-m-d H:i:s' );
+        $_SESSION[SES_INFO] = $info;
+        if (!isset( $_SESSION[SES_BEGIN])){
+            $_SESSION[SES_BEGIN] = date( 'Y-m-d H:i:s' );
         }
-        $_SESSION['SES_CHANGE'] = date( 'Y-m-d H:i:s' );
+        $_SESSION[SES_CHANGE] = date( 'Y-m-d H:i:s' );
 
 
         // Update the current session's id with a newly generated one,

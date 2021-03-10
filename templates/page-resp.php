@@ -10,8 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title><?= $resp->headTitle ?></title>
         <meta name="referrer" content="no-referrer">
-        <meta http-equiv="refresh" content="<?= APP_COOKIE_SESSION_SECONDS_RELOAD ?>;url=<?= $mmUsersLogout->URLRelative ?>">
-
+		<?php if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) : ?>
+            <meta http-equiv="refresh" content="<?= LOGOUT_AUTO_SECONDS ?>;url=<?= $mmUsersLogout->URLRelative ?>">
+		<?php endif ?>
         <!-- Icons -->
         <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
         <link rel="apple-touch-icon" href="/images/apple-touch-icon.png"/>
@@ -76,7 +77,7 @@
         <!-- Fonts and Styles -->
         <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
         <!-- family=IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif|IBM+Plex+Mono&display=swap -->
-        
+
         <style>
             /* Common Vars */
             :root {
@@ -329,7 +330,7 @@
                                 <a class="nav-item-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $mmUsersT->FontAwesome ?></i></a>
                                 <div class="dropdown-menu text" aria-labelledby="navbarDropdown">
 									<?php
-									if ( $_SESSION[ 'recsUsersCURRENT' ][ 'PrivAdmin' ] === 'Yes' ) {
+									if ( $_SESSION[ SESS_USER ][ 'PrivAdmin' ] === 'Yes' ) {
 										echo xan\navItemModuleDropdown( $mmServerStats );
 										echo xan\navDivider();
 										echo xan\navItemModuleDropdown( $mmSettingsT );
@@ -339,11 +340,11 @@
 									<?= xan\navItemModuleDropdown( $mmUsersLogout ) ?>
 									<?= xan\navDivider() ?>
                                     <span class="dropdown-item disabled">Session Info</span>
-                                    <span class="dropdown-item disabled">Email: <?= $_SESSION[ 'recsUsersCURRENT' ][ 'EmailAddress' ] ?></span>
-                                    <span class="dropdown-item disabled">Tenant: <?= $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ] ?></span>
-                                    <span class="dropdown-item disabled">User: <?= $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] ?></span>
-                                    <span class="dropdown-item disabled">Active: <?= $_SESSION[ 'recsUsersCURRENT' ][ 'Active' ] ?></span>
-                                    <span class="dropdown-item disabled">Admin: <?= $_SESSION[ 'recsUsersCURRENT' ][ 'PrivAdmin' ] ?></span>
+                                    <span class="dropdown-item disabled">Email: <?= $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?></span>
+                                    <span class="dropdown-item disabled">Tenant: <?= $_SESSION[ SESS_USER ][ UUIDTENANTS ] ?></span>
+                                    <span class="dropdown-item disabled">User: <?= $_SESSION[ SESS_USER ][ UUIDUSERS ] ?></span>
+                                    <span class="dropdown-item disabled">Active: <?= $_SESSION[ SESS_USER ][ 'Active' ] ?></span>
+                                    <span class="dropdown-item disabled">Admin: <?= $_SESSION[ SESS_USER ][ 'PrivAdmin' ] ?></span>
                                 </div>
                             </li>
                             <!-- ------ -->
@@ -422,7 +423,6 @@
                     if ( result[ "Do_HTMLSelectorName" ] !== undefined ) {
                         let i;
                         for ( i = 0; i < result[ "Do_HTMLSelectorName" ].length; i++ ) {
-                            // alert( "html: " + result[ "Do_HTMLSelectorName" ][ i ] + " | " + result[ "Do_HTMLSelectorData" ][ i ] );
                             $( result[ "Do_HTMLSelectorName" ][ i ] ).html( result[ "Do_HTMLSelectorData" ][ i ] );
                         }
                     }
@@ -431,8 +431,19 @@
                     if ( result[ "Do_ValSelectorName" ] !== undefined ) {
                         let i;
                         for ( i = 0; i < result[ "Do_ValSelectorName" ].length; i++ ) {
-                            // alert( "Val: " + result[ "Do_ValSelectorName" ][ i ] + " | " + result[ "Do_ValSelectorData" ][ i ] );
                             $( result[ "Do_ValSelectorName" ][ i ] ).val( result[ "Do_ValSelectorData" ][ i ] );
+                        }
+                    }
+
+                    // Do Selectors Hide/Show
+                    if ( result[ "Do_HideShowSelectorName" ] !== undefined ) {
+                        let i;
+                        for ( i = 0; i < result[ "Do_HideShowSelectorName" ].length; i++ ) {
+                            if ( result[ "Do_HideShowSelectorVis" ][ i ] === "Hide" ) {
+                                $( result[ "Do_HideShowSelectorName" ][ i ] ).hide();
+                            } else {
+                                $( result[ "Do_HideShowSelectorName" ][ i ] ).show();
+                            }
                         }
                     }
 
@@ -445,14 +456,20 @@
                     if ( result[ "Do_RunInit" ] ) {
                         xanDoInit();
                     }
+                    
 
-                    // Focus Select
+                    // Focus from Session
 					<?php
-					if ( $_SESSION[ 'FocusSelector' ] !== '' ) {
-						echo '$( "' . $_SESSION[ 'FocusSelector' ] . '" ).focus().select();' . STR_CRLF_ASCII;
-						$_SESSION[ 'FocusSelector' ] = '';
+					if ( $_SESSION[ SESS_FOCUS_SELECTOR ] !== '' ) {
+						echo '$( "' . $_SESSION[ SESS_FOCUS_SELECTOR ] . '" ).focus().select();' . STR_CRLF_ASCII;
+						$_SESSION[ SESS_FOCUS_SELECTOR ] = '';
 					}
 					?>
+
+                    // Do Selector Focus
+                    if ( result[ "Do_FocusSelectorName" ] !== undefined ) {
+                        $( result[ "Do_FocusSelectorName" ] ).focus().select();
+                    }
 
                     // Notify
                     let timeEnd = new Date();

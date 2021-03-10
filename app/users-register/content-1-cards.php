@@ -81,10 +81,10 @@ if ( $Validated ) {
 		
 		// User Insert
 		$userSelect = new xan\recs( $mmUsersT );
-		$sqlCols = array( 'UUIDUsers', 'UUIDTenants', 'EmailAddress', 'PasswordHashSeed', 'PasswordHashed', 'RegisterTS', 'Registered', 'PasswordResetCode' );
+		$sqlCols = array( 'UUIDUsers', 'UUIDTenants', 'EmailAddress', 'TwoFactorEmailAddress', 'PasswordHashSeed', 'PasswordHashed', 'RegisterTS', 'Registered', 'PasswordResetCode' );
 		$userSelect->querySQL = 'INSERT INTO Users ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
 		$userSelect->queryBindNamesA = $sqlCols;
-		$userSelect->queryBindValuesA = array( $UUIDUsers, $GLOBALS[ UUIDTENANTS ], $PostLogin, $PasswordSeed, $PasswordHash, $RegisterTS, $Registered, $RegistrationCode );
+		$userSelect->queryBindValuesA = array( $UUIDUsers, $GLOBALS[ UUIDTENANTS ], $PostLogin, $PostLogin, $PasswordSeed, $PasswordHash, $RegisterTS, $Registered, $RegistrationCode );
 		$userSelect->query();
 		// Error Check
 		if ( $userSelect->errorB ) {
@@ -121,7 +121,8 @@ if ( $Validated ) {
 	// Send Email
 	if ( $SendEmail ) {
 		$emailMessage = 'Click the following link to complete your ' . APP_NAME . ' Registration: ' . "\r\n" . URL_BASE . 'login/' . $PostLogin . '/' . $RegistrationCode;
-		$emailSend = xan\emailSend( "mailgun", true, APP_EMAIL_FROM, $PostLogin, APP_NAME . " - Registration", nl2br( $emailMessage ), $emailMessage );
+		$sender = new \xan\sender();
+		$sender->sendEmail( true, APP_EMAIL_FROM, $PostLogin, APP_NAME . " - Registration", nl2br( $emailMessage ), $emailMessage );
 		$xanMessage .= 'An email was sent to ' . $PostLogin . ' to validate the registration.' . STR_BR;
 	}
 	

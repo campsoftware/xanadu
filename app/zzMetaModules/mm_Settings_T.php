@@ -99,6 +99,9 @@ class moduleMetaSettingsT extends xan\moduleMeta {
 			case 'AppEmailFrom':
 				$colMeta->colLabelEN = 'App Email From';
 				break;
+			case 'LogoutAutoSeconds':
+				$colMeta->colLabelEN = 'Auto Logout Seconds';
+				break;
 				
 			// Formats
 			case 'FormatDisplayDate':
@@ -126,9 +129,11 @@ class moduleMetaSettingsT extends xan\moduleMeta {
 				break;
 			case 'SMTPUsername':
 				$colMeta->colLabelEN = 'SMTP Username';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			case 'SMTPPassword':
 				$colMeta->colLabelEN = 'SMTP Password';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			case 'SMTPUseAuth':
 				$colMeta->colLabelEN = 'SMTP UseAuth';
@@ -144,27 +149,46 @@ class moduleMetaSettingsT extends xan\moduleMeta {
 				$colMeta->choicesADisplay = ARRAY_SMTP_AUTHTYPE;
 				$colMeta->choicesOtherLabel = '';
 				break;
-				
-			// APIs
-			case 'GoogleMapsKey':
-				$colMeta->colLabelEN = 'Google Maps Key';
+			
+			// Twillo
+			case 'TwilloPhoneNumber':
+				$colMeta->colLabelEN = 'Twillo Phone Number';
 				break;
+			case 'TwilloAPIKey':
+				$colMeta->colLabelEN = 'Twillo API Key';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
+				break;
+			case 'TwilloAPISecret':
+				$colMeta->colLabelEN = 'Twillo API Secret';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
+				break;
+				
+			// Stripe
 			case 'StripeKeyTestPublic':
 				$colMeta->colLabelEN = 'Stripe Key Test Public';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			case 'StripeKeyTestSecret':
 				$colMeta->colLabelEN = 'Stripe Key Test Secret';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			case 'StripeKeyLivePublic':
 				$colMeta->colLabelEN = 'Stripe Key Live Public';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			case 'StripeKeyLiveSecret':
 				$colMeta->colLabelEN = 'Stripe Key Live Secret';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			case 'StripeCurrencyCode':
 				$colMeta->colLabelEN = 'Stripe Currency Code';
 				break;
-			
+				
+			// APIs Other
+			case 'GoogleMapsKey':
+				$colMeta->colLabelEN = 'Google Maps Key';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
+				break;
 				
 			// Mod
 			case 'ModTS':

@@ -32,7 +32,7 @@ if ( !empty( $ValidationMessage ) ) {
 $recsContacts = new xan\recs( $mmContactsT );
 $recsContacts->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
 $recsContacts->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey );
-$recsContacts->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
+$recsContacts->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
 $recsContacts->query();
 $recsContacts->rowsMassageForGUI( true );
 // Error Check
@@ -48,7 +48,7 @@ if ( $recsContacts->errorB ) {
 $recsContactsComms = new xan\recs( $mmContactsCommsT );
 $recsContactsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
 $recsContactsComms->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey );
-$recsContactsComms->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
+$recsContactsComms->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
 $recsContactsComms->query();
 $recsContacts->rowsMassageForGUI( true );
 // Error Check
@@ -212,13 +212,14 @@ $docTitle = 'Contact - ' . $mmContactsT->getDisplayName( $recsContacts );
 $docParams = '--quiet --page-size Letter --orientation Portrait --lowquality --enable-forms --header-line --footer-line --margin-top 25 --margin-bottom 25 --header-spacing 5 --footer-spacing 5';
 
 // Doc Create
-$resultHTMLPDFer = xan\printHTML( $doParam[ 'Format' ], $doParam[ 'Template' ], $docTitle, $docParams, $docHeader, $docBody, $docFooter );
+$printer = new \xan\printer();
+$resultHTMLPDFer = $printer->htmlToFile( $doParam[ 'Format' ], $doParam[ 'Template' ], $docTitle, $docParams, $docHeader, $docBody, $docFooter );
 
 // Result
 $result[ 'Do_URLLoad' ] = $resultHTMLPDFer[ 'url' ];
 
 // Set Focus Selector
-//$_SESSION[ 'FocusSelector' ] = '#xf_' . $UUIDNew . '_Data';
+//$_SESSION[ SESS_FOCUS_SELECTOR ] = '#xf_' . $UUIDNew . '_Data';
 
 // Return JSON
 $resultJSON = json_encode( $result );
