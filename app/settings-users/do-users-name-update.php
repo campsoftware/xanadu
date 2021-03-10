@@ -18,7 +18,7 @@ if ( !empty( $ValidationMessage ) ) {
 $recsDetail = new xan\recs( $mmUsersT );
 $recsDetail->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmUsersT->NameTableKey . ' = ?';
 $recsDetail->queryBindNamesA = array( UUIDTENANTS, $mmUsersT->NameTableKey );
-$recsDetail->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], $doParam[ 'IDUsers' ] );
+$recsDetail->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDUsers' ] );
 $recsDetail->query();
 
 // Error Check

@@ -6,46 +6,87 @@ $card = new xan\eleCard( CARD_WIDTH, '', false );
 // Tags Special
 $tagsEleInput_Logo = new xan\tags( [ 'col', '' ], [ 'height' => ELE_HEIGHT_6X, 'width' => 'auto' ], [] );
 
+///////////////////////////////////////////////////////////
+
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$loginTable = new xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows
 $tableRowIndex++;
 $logoEle = new \xan\eleURLImage( APP_ICON_URL_1024, false, '', 'Xanadu', 'Xanadu', $tagsEleInput_Logo );
-$table->cellSet( $tableRowIndex, 0, $tagsCellCenterMiddle, $logoEle->render() );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellCenterMiddle, $logoEle->render() );
 
 $tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Email' );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<strong>Login</strong>' );
+
+$tableRowIndex++;
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Email' );
 
 $tableRowIndex++;
 $loginEle = new \xan\eleText( $CookieLogin ?? '', 'Login', 'Login', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $loginEle->render() );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $loginEle->render() );
 
 $tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Password' );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Password' );
 
 $tableRowIndex++;
 $pwEle = new \xan\eleTextReveal( '', 'Password', 'Password', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
 
 $tableRowIndex++;
 $rememberMe = "<input type='checkbox' name='RememberMe' id='RememberMe' value='1'>&nbsp;&nbsp;<label for='RememberMe'>Remember Me</label>";
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $rememberMe );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $rememberMe );
 
 $tableRowIndex++;
-$formNameEle = new \xan\eleTextHidden( 'Login', 'FormName', 'FormName', $tagsEleInput );
-$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ 'onclick="document.getElementById(\'login\').submit();"' ] );
+$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ 'onclick=\'xanDo( { "Msg": "Checking Login", "URL":"' . $mmUsersLogin->URLDoRelative . '", "Login": $("#Login").val(), "Password": $("#Password").val(), "RememberMe": $("#RememberMe").val(), "Do": "Login" } );\'' ] );
 $buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . $mmUsersLogin->NameModule, '', '', $buttonTags );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $formNameEle->render() . $buttonEle->render() );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
 $tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $xanMessage );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="loginMessage">' . $xanMessage . '</div>' );
 
-$contentBody = "<form method='post' id='login' action='/login' enctype='application/x-www-form-urlencoded'>" . $table->render() . "</form>";
+///////////////////////////////////////////////////////////
+
+// Table
+$codeTable = new xan\eleTable( $tagsCellEmpty );
+$tableRowIndex = -1;
+
+// Table Rows
+$tableRowIndex++;
+$logoEle = new \xan\eleURLImage( APP_ICON_URL_1024, false, '', 'Xanadu', 'Xanadu', $tagsEleInput_Logo );
+$codeTable->cellSet( $tableRowIndex, 0, $tagsCellCenterMiddle, $logoEle->render() );
+
+$tableRowIndex++;
+$codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<strong>Enter the Verification Code</strong>' );
+
+$tableRowIndex++;
+$codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Code' );
+
+$tableRowIndex++;
+$tagsEleCode = new xan\tags( [ 'col' ], [], [ 'inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code"' ] );
+$codeEle = new \xan\eleText( '', 'Code', 'Code', $tagsEleCode );
+$codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $codeEle->render() );
+
+$tableRowIndex++;
+$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ 'onclick=\'xanDo( { "Msg": "Verifying Code", "URL":"' . $mmUsersLogin->URLDoRelative . '", "Login": $("#Login").val(), "RememberMe": ($("#RememberMe").is(":checked")) ? "1" :"0", "Code": $("#Code").val(), "Do": "CodeVerify" } );\'' ] );
+$buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . 'Verify Code', '', '', $buttonTags );
+$codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
+
+$tableRowIndex++;
+$codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="codeMessage">' . $xanMessage . '</div>' );
+
+///////////////////////////////////////////////////////////
+
+// Set the Body
+$contentBody = '<div id="loginForm">' . $loginTable->render() . '</div>' . '<div id="codeForm" style="display: none;">' . $codeTable->render() . '</div>';
+
+// Init the Form
 $jsFocus = <<< JS
         <script>
             $( function () {
+            	// Set the Action
+            	$( "#Login" ).val( "{$_COOKIE[COOKIE_LOGIN]}" );
                 // Set the Focus
                 if ( $( "#Login" ).val() === "" ) {
                     $( "#Login" ).focus();
@@ -57,5 +98,5 @@ $jsFocus = <<< JS
 JS;
 
 // Card Append to Source
-$resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $contentBody . $jsFocus );
+$resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $contentBody . "\n" . $jsFocus );
 ?>

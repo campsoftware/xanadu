@@ -26,6 +26,7 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->reqID = $doParam[ 'IDContacts' ];
 	$resp->moduleName = $mmContactsT->NameModule;
 	$resp->headTitle = $mmContactsT->NameModule;
+	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
 	$resp->contentHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NameModule . STR_NBSP;
 	

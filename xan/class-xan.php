@@ -2,6 +2,18 @@
 
 namespace xan;
 
+// Session
+define( 'SES_BEGIN', 'SES_BEGIN' );
+define( 'SES_CHANGE', 'SES_CHANGE' );
+define( 'SES_PATH', 'SES_PATH' );
+define( 'SES_INFO', 'SES_INFO' );
+define( 'SESS_USER', 'SESS_USER' );
+define( 'SESS_FOCUS_SELECTOR', 'SESS_FOCUS_SELECTOR' );
+
+// Cookies
+define( 'COOKIE_REMEMBERME', 'COOKIE_REMEMBERME' );
+define( 'COOKIE_LOGIN', 'COOKIE_LOGIN' );
+
 // Element As
 define( 'ELE_AS_DEFINED', 'ELE_AS_DEFINED' );
 define( 'ELE_AS_LABEL', 'ELE_AS_LABEL' );
@@ -181,6 +193,7 @@ class response {
 	// Content
 	public $headTitle = '';
 	public $headExtraA = [];
+	public $headLogoutAuto = true;
 	public $navInclude = false;
 	public $contentHeader = '';
 	public $contentAreaA = [];
@@ -278,7 +291,7 @@ class recs {
             $newDB = new \PDO( "mysql:host=$servername;port=$serverport;dbname=$dbname", $username, $password, $optDB );
             return $newDB;
         } catch ( \PDOException $e ) {
-            logEventToFile( 'Catch', 'DBConnect', $e->getMessage(), paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ 'recsUsersCURRENT' ][ 'EmailAddress' ] ?? 'No', $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] ?? 'No' );
+            logEventToFile( 'Catch', 'DBConnect', $e->getMessage(), paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? 'No', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? 'No' );
             return 'Error: ' . $e->getMessage();
         }
     }
@@ -340,7 +353,7 @@ class recs {
             }
         } catch ( \PDOException $e ) {
             // Log Error
-            logEventToFile( 'Catch', 'DBSelect: ' . $this->querySQL, $e->getMessage(), paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ 'recsUsersCURRENT' ][ 'EmailAddress' ] ?? 'No', $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] ?? 'No' );
+            logEventToFile( 'Catch', 'DBSelect: ' . $this->querySQL, $e->getMessage(), paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? 'No', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? 'No' );
             $this->errorB = true;
             $this->rowsD = [];
             $this->rowCount = 0;
@@ -466,7 +479,7 @@ class recs {
         }
         
         // Append Tenant
-        $tenant = ( isNotEmpty( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ] ) ? $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ] : $GLOBALS[ UUIDTENANTS ] );
+        $tenant = ( isNotEmpty( $_SESSION[ SESS_USER ][ UUIDTENANTS ] ) ? $_SESSION[ SESS_USER ][ UUIDTENANTS ] : $GLOBALS[ UUIDTENANTS ] );
         $columnArrayNames[] = UUIDTENANTS;
         $columnArrayValues[] = $tenant;
         
@@ -1372,10 +1385,10 @@ class eleTextReveal extends element {
 		$input = "<input $this->typeTag $this->idTag $this->nameTag $this->classTag $this->styleTag $this->extrasTag $this->valueTag>";
 		ob_start();
 		?>
-		<div class="input-group">
+		<div class="input-group" id="<?= $this->idValue . '_Group' ?>">
 			<?= $input ?>
-			<div class="input-group-append">
-				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= iconFA( 'fas fa-eye' ) ?></button>
+			<div class="input-group-append" id="<?= $this->idValue . '_Reveal' ?>">
+				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" id="<?= $this->idValue . '_Button' ?>" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= iconFA( 'fas fa-eye' ) ?></button>
 			</div>
 		</div>
 		<?php
@@ -2106,7 +2119,7 @@ class eleSearchBarListDB extends element {
 		$queryWhere = UUIDTENANTS . ' = ? ' . $searchWhere;
 		$queryOrderBy = ' ORDER BY ' . $_SESSION[ $this->idPrefix . 'SearchSort' ] . ' ';
 		$result[ 'queryBindNames' ] = array_merge( array( UUIDTENANTS ), $searchTerBindNames );
-		$result[ 'queryBindValues' ] = array_merge( array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ] ), $searchTerBindValues );
+		$result[ 'queryBindValues' ] = array_merge( array( $_SESSION[ SESS_USER ][ UUIDTENANTS ] ), $searchTerBindValues );
 		$result[ 'querySQL' ] = 'SELECT * FROM ' . $this->mm->NameTable . ' WHERE ' . $queryWhere . $queryOrderBy;
 
 		// Button Search
@@ -2446,13 +2459,13 @@ function arrayJSCodeToString( $classArray ) {
 ///////////////////////////////////////////////////////////
 // User Is
 function userTenant(){
-	$tenantValue = $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ];
+	$tenantValue = $_SESSION[ SESS_USER ][ UUIDTENANTS ];
 	$tenantDefault = $GLOBALS[ UUIDTENANTS ];
 	return ( isNotEmpty( $tenantValue ) ? $tenantValue : $tenantDefault );
 }
 
 function userIsAuthenticated(){
-	if ( isset( $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] ) ){
+	if ( isset( $_SESSION[ SESS_USER ][ UUIDUSERS ] ) ){
 		return true;
 	}else{
 		return false;
@@ -2460,7 +2473,7 @@ function userIsAuthenticated(){
 }
 
 function userIsAdmin(){
-	if ( $_SESSION[ 'recsUsersCURRENT' ][ 'PrivAdmin' ] === 'Yes' ){
+	if ( $_SESSION[ SESS_USER ][ 'PrivAdmin' ] === 'Yes' ){
 		return true;
 	}else{
 		return false;

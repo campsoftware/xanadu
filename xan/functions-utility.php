@@ -65,19 +65,27 @@ function strFilterKeepAlphanumeric( $text ){
     return preg_replace( '/[^a-zA-Z0-9]/', '', $text );
 }
 
+function strFilterKeepAlpha( $text ){
+	return preg_replace( '/[^a-zA-Z]/', '', $text );
+}
+
+function strFilterKeepNumbers( $text ){
+	return preg_replace( '/[^0-9]/', '', $text );
+}
+
+function strFilterKeepChars( $text, $keep ){
+	return preg_replace( '/[^' . $keep . ']/', '', $text );
+}
+
 // UUID
 function strUUID() {
     return str_replace( '.', '', uniqid( '', true ) );
 }
 
-function strUUIDValid( $UUID ) {
-    if ( !preg_match( "/^[A-Za-z0-9-]+$/", $UUID ) ) { // Letters, Number, Hyphen
-        return false;
-    } else {
-        return true;
-    }
+// Generate Codes
+function strCode2FA() {
+    return strRight( strFilterKeepNumbers( \xan\strUUID() ), 6 );
 }
-
 
 ///////////////////////////////////////////////////////////
 // Numbers
@@ -95,7 +103,9 @@ function numBytesToString( $bytes, $dec = 2 ) {
 ///////////////////////////////////////////////////////////
 // Date, Timestamp, Time
 function dateTimeFromString( $timeString, $format ) {
-    // Formats: DATETIME_FORMAT_LOG > 20200105_183747.225600
+    // Formats:
+    // DATETIME_FORMAT_LOG > 20200105_183747.225600
+    // DATETIME_FORMAT_SQLDATETIME > 2021-03-09 20:29:49
     // TimeString: now, - 5 hours, 1/7/2020 5pm
     return date( $format, strtotime( $timeString ) );
 }
@@ -143,7 +153,7 @@ function ipOfServerExternal() {
 }
 
 // URLs
-function urlContent( $pURL, $pPostDict = [] ) {
+function urlContent( $pURL, $pPostD = [] ) {
     // Note - Requires: ini_set( "allow_url_fopen", 1 );
     // Calling Example
     if ( false ) {
@@ -151,12 +161,12 @@ function urlContent( $pURL, $pPostDict = [] ) {
         $content = urlContent( 'https://xandev.xanweb.app/postTest.php', array( 'var1' => 'one', 'var2' => 'two' ) );
     }
 
-    if ( $pPostDict === [] ) {
+    if ( $pPostD === [] ) {
         // Post = No
         return file_get_contents( $pURL );
     } else {
         // Post = Yes
-        $postdata = http_build_query( $pPostDict );
+        $postdata = http_build_query( $pPostD );
         $opts = array( 'http' =>
             array(
                 'method' => 'POST',

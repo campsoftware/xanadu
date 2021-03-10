@@ -84,6 +84,9 @@ define( 'URL_BUCKET', URL_BASE . 'bucket/' );
 define( 'URL_IMAGES', URL_BASE . 'images/' );
 define( 'URL_IMAGES_PLACEHOLDER', URL_IMAGES . 'imagePlaceholder.png' );
 
+///////////////////////////////////////////////////////////
+// Two Factor
+define( 'APP_TWOFACTOR_REQUIRED', 'Yes' ); // 'Yes' to Require
 
 ///////////////////////////////////////////////////////////
 // Cookies
@@ -119,7 +122,7 @@ foreach ( glob( PATH_ROOT_APP . "zzMetaModules/mm_*.php" ) as $filename ) {
 
 ///////////////////////////////////////////////////////////
 // Tenant Default
-$GLOBALS[ UUIDTENANTS ] = 'Xanadu'; // Current User: $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ].
+$GLOBALS[ UUIDTENANTS ] = 'Xanadu'; // Current User: $_SESSION[ SESS_USER ][ UUIDTENANTS ].
 
 
 ///////////////////////////////////////////////////////////
@@ -129,11 +132,11 @@ xan\dbRecsSchemaSet(); // Sets: $GLOBALS[ 'schema' ]
 
 ///////////////////////////////////////////////////////////
 // Session recsUsersCURRENT Init ;
-// Example: $_SESSION[ 'recsUsersCURRENT' ][ 'NameFirst' ]
+// Example: $_SESSION[ SESS_USER ][ 'NameFirst' ]
 $recsUserCURRENT = new xan\recs( $mmUsersT );
 $recsUserCURRENT->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . $mmUsersT->NameTableKey . ' = ?';
 $recsUserCURRENT->queryBindNamesA = array( $mmUsersT->NameTableKey );
-$recsUserCURRENT->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] );
+$recsUserCURRENT->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDUSERS ] );
 $recsUserCURRENT->query();
 // Error Check
 if ( $recsUserCURRENT->errorB ) {
@@ -143,7 +146,7 @@ if ( $recsUserCURRENT->errorB ) {
 } elseif ( $recsUserCURRENT->rowCount > 0 ) {
 	// Use First Record
 }
-$_SESSION[ 'recsUsersCURRENT' ] = $recsUserCURRENT->rowsD[ 0 ];
+$_SESSION[ SESS_USER ] = $recsUserCURRENT->rowsD[ 0 ];
 $recsUserCURRENT = new \xan\recs( $mmNull_T );
 
 // URL Current
@@ -178,8 +181,9 @@ define( 'APP_EMAIL_FROM', $recsSettings->rowsD[ 0 ][ 'AppEmailFrom' ] );
 define( 'APP_EMAIL_TO_DEBUG', 'hal@campsoftware.com' );
 define( 'APP_LANG_CODE', 'en' ); // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
-// Content
+// Features
 define( 'CONTENT_LOAD_NOW', true );
+define( 'LOGOUT_AUTO_SECONDS', $recsSettings->rowsD[ 0 ][ 'LogoutAutoSeconds' ] );
 
 // Formats
 define( 'DATETIME_FORMAT_DISPLAY_DATE', $recsSettings->rowsD[ 0 ][ 'FormatDisplayDate' ] );
@@ -213,6 +217,10 @@ define( 'SMTP_PASSWORD_MAILGUN', $recsSettings->rowsD[ 0 ][ 'SMTPPassword' ] );
 define( 'SMTP_USEAUTH_MAILGUN', ( $recsSettings->rowsD[ 0 ][ 'SMTPUseAuth' ] === 'Yes' ? true : false ) ); // true or false
 define( 'SMTP_SECURE_MAILGUN', $recsSettings->rowsD[ 0 ][ 'SMTPAuthType' ] ); // tls or ssl
 
+// SMS
+define( 'SMS_PHONENUM_TWILLO', $recsSettings->rowsD[ 0 ][ 'TwilloPhoneNumber' ] );
+define( 'SMS_APIKEY_TWILLO', $recsSettings->rowsD[ 0 ][ 'TwilloAPIKey' ] );
+define( 'SMS_APISECRET_TWILLO', $recsSettings->rowsD[ 0 ][ 'TwilloAPISecret' ] );
 
 ///////////////////////////////////////////////////////////
 // Arrays

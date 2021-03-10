@@ -139,10 +139,10 @@ foreach ( $GLOBALS[ 'schema' ][ $theTableName ] as $theTableSchema ) {
 ///////////////////////////////////////////////////////////
 
 // Update ModTS and ModName
-$sqlSetPairs[ UUIDTENANTS ] = $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ] ?? "";
+$sqlSetPairs[ UUIDTENANTS ] = $_SESSION[ SESS_USER ][ UUIDTENANTS ] ?? "";
 $sqlSetPairs[ 'ModTS' ] = xan\dateTimeNowSQL();
-$sqlSetPairs[ 'Mod' . UUIDUSERS ] = $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] ?? "";
-$sqlSetPairs[ 'ModName' ] = $_SESSION[ 'recsUsersCURRENT' ][ 'EmailAddress' ] ?? "";
+$sqlSetPairs[ 'Mod' . UUIDUSERS ] = $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? "";
+$sqlSetPairs[ 'ModName' ] = $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? "";
 
 // Get the SQL SET Statement and Bind Values
 $sqlSet = '';
@@ -253,7 +253,7 @@ $recsTable->rowsD[ 0 ][ "AjaxColumnLabel" ] = $theAjaxLabel;
 $resultJSON = json_encode( $recsTable->rowsD );
 
 // LogAudit
-$logAudit = xan\logAuditToSQL( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ] ?? "", $_SESSION[ 'recsUsersCURRENT' ][ UUIDUSERS ] ?? "", $_SESSION[ 'recsUsersCURRENT' ][ 'EmailAddress' ] ?? "", $theAjaxAction, $theTableName, $theTableKeyName, $theTableKeyValue, $resultJSON );
+$logAudit = xan\logAuditToSQL( $_SESSION[ SESS_USER ][ UUIDTENANTS ] ?? "", $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? "", $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? "", $theAjaxAction, $theTableName, $theTableKeyName, $theTableKeyValue, $resultJSON );
 // Error Check
 if ( $logAudit->errorB ) {
 	$aloe_response->status_set( '500 Internal Service Error: ' . 'LogAudit Error; ' . $logAudit->messageExtra . '; ' . $logAudit->messageSQL );

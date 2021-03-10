@@ -32,7 +32,7 @@ if ( !empty( $ValidationMessage ) ) {
 $recsUsers = new xan\recs( $mmUsersT );
 $recsUsers->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmUsersT->NameTableKey . ' = ?';
 $recsUsers->queryBindNamesA = array( UUIDTENANTS, $mmUsersT->NameTableKey );
-$recsUsers->queryBindValuesA = array( $_SESSION[ 'recsUsersCURRENT' ][ UUIDTENANTS ], $doParam[ 'IDUsers' ] );
+$recsUsers->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDUsers' ] );
 $recsUsers->query();
 $recsUsers->rowsMassageForGUI( true );
 // Error Check
@@ -154,13 +154,14 @@ $docTitle = 'User - ' . $mmUsersT->getDisplayName( $recsUsers );
 $docParams = '--quiet --page-size Letter --orientation Portrait --lowquality --enable-forms --header-line --footer-line --margin-top 25 --margin-bottom 25 --header-spacing 5 --footer-spacing 5';
 
 // Doc Create
-$resultHTMLPDFer = xan\printHTML( $doParam[ 'Format' ], $doParam[ 'Template' ], $docTitle, $docParams, $docHeader, $docBody, $docFooter );
+$printer = new \xan\printer();
+$resultHTMLPDFer = $printer->htmlToFile( $doParam[ 'Format' ], $doParam[ 'Template' ], $docTitle, $docParams, $docHeader, $docBody, $docFooter );
 
 // Result
 $result[ 'Do_URLLoad' ] = $resultHTMLPDFer[ 'url' ];
 
 // Set Focus Selector
-//$_SESSION[ 'FocusSelector' ] = '#xf_' . $UUIDNew . '_Data';
+//$_SESSION[ SESS_FOCUS_SELECTOR ] = '#xf_' . $UUIDNew . '_Data';
 
 // Return JSON
 $resultJSON = json_encode( $result );
