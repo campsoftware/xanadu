@@ -39,7 +39,7 @@ $table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
 $tableRowIndex++;
 $formNameEle = new \xan\eleTextHidden( 'Register', 'FormName', 'FormName', $tagsEleInput );
 $buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ 'onclick="document.getElementById(\'register\').submit();"' ] );
-$buttonEle = new \xan\eleButton( $mmUsersRegister->FontAwesome . STR_NBSP . $mmUsersRegister->NameModule, '', '', $buttonTags );
+$buttonEle = new \xan\eleButton( $mmUsersRegister->FontAwesome . STR_NBSP . $mmUsersRegister->NameModule, 'registerButton', '', $buttonTags );
 $table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $formNameEle->render() . $buttonEle->render() );
 
 $tableRowIndex++;
@@ -49,8 +49,18 @@ $contentBody = "<form method='post' id='register' action='/register' enctype='ap
 $jsFocus = <<< JS
         <script>
             $( function () {
+            
                 // Set the Focus
                 $( "#Login" ).focus();
+                
+                // Add Return Key Event
+				$( "#Login, #Password, #PasswordVerify" ).on( "keypress", function ( event ) {
+					let keycode = event.which || event.keyCode || event.charCode;
+					if ( keycode === 13 ) {
+						$( "#registerButton" ).click();
+					}
+				} );
+			
             } );
         </script>
 JS;
