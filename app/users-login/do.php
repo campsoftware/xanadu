@@ -146,12 +146,12 @@ if ( $doParam[ 'Do' ] === 'Login' ) {
 	$mmUsersT->set2FA( $userSelect->rowsD[ 0 ][ UUIDUSERS ] );
 	$sender = new \xan\sender();
 	// Send SMS
-	if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'TwoFactorPhoneNumber' ] ) ) {
-		$sender->sendSMS( $userSelect->rowsD[ 0 ][ 'TwoFactorPhoneNumber' ], $mmUsersT->TwoFactorBody );
+	if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'PhoneTwoFactor' ] ) ) {
+		$sender->sendSMS( $userSelect->rowsD[ 0 ][ 'PhoneTwoFactor' ], $mmUsersT->TwoFactorBody );
 	}
 	// Send Email
-	if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'TwoFactorEmailAddress' ] ) ) {
-		$sender->sendEmail( true, APP_EMAIL_FROM, $userSelect->rowsD[ 0 ][ 'TwoFactorEmailAddress' ], $mmUsersT->TwoFactorSubject, '', $mmUsersT->TwoFactorBody );
+	if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'EmailTwoFactor' ] ) ) {
+		$sender->sendEmail( true, APP_EMAIL_FROM, $userSelect->rowsD[ 0 ][ 'EmailTwoFactor' ], $mmUsersT->TwoFactorSubject, '', $mmUsersT->TwoFactorBody );
 	}
 	
 	// Return JSON
@@ -205,7 +205,7 @@ if ( $doParam[ 'Do' ] === 'CodeVerify' ) {
 			
 			// Validate Code String
 			if ( \xan\isNotEmpty( $doParam[ 'Code' ] ) ) {
-				if ( $doParam[ 'Code' ] !== $userSelect->rowsD[ 0 ][ 'TwoFactorCodeString' ] ) {
+				if ( $doParam[ 'Code' ] !== $userSelect->rowsD[ 0 ][ 'TwoFactorString' ] ) {
 					$ValidationMessage[] = 'Code is not Valid.';
 				}
 			}
@@ -213,7 +213,7 @@ if ( $doParam[ 'Do' ] === 'CodeVerify' ) {
 			// Validate Code Timestamp
 			if ( \xan\isNotEmpty( $doParam[ 'Code' ] ) ) {
 				$tsNow = \xan\dateTimeFromString( 'now', DATETIME_FORMAT_SQLDATETIME );
-				if ( $tsNow > $userSelect->rowsD[ 0 ][ 'TwoFactorCodeExpiresTS' ] ) {
+				if ( $tsNow > $userSelect->rowsD[ 0 ][ 'TwoFactorExpiresTS' ] ) {
 					$ValidationMessage[] = 'Code is no longer Valid.';
 				}
 			}

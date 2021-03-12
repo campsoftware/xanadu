@@ -81,7 +81,7 @@ if ( $Validated ) {
 		
 		// User Insert
 		$userSelect = new xan\recs( $mmUsersT );
-		$sqlCols = array( 'UUIDUsers', 'UUIDTenants', 'EmailAddress', 'TwoFactorEmailAddress', 'PasswordHashSeed', 'PasswordHashed', 'RegisterTS', 'Registered', 'PasswordResetCode' );
+		$sqlCols = array( 'UUIDUsers', 'UUIDTenants', 'EmailAddress', 'EmailTwoFactor', 'PasswordHashSeed', 'PasswordHashed', 'RegisterTS', 'Registered', 'PasswordResetCode' );
 		$userSelect->querySQL = 'INSERT INTO Users ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
 		$userSelect->queryBindNamesA = $sqlCols;
 		$userSelect->queryBindValuesA = array( $UUIDUsers, $GLOBALS[ UUIDTENANTS ], $PostLogin, $PostLogin, $PasswordSeed, $PasswordHash, $RegisterTS, $Registered, $RegistrationCode );

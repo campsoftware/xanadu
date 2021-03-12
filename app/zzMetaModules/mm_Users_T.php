@@ -132,16 +132,16 @@ class moduleMetaUsersT extends xan\moduleMeta {
 				$colMeta->colLabelEN = 'Mobile Phone';
 				break;
 			
-			case 'TwoFactorPhoneNumber':
+			case 'PhoneTwoFactor':
 				$colMeta->colLabelEN = '2FA Phone';
 				break;
-			case 'TwoFactorEmailAddress':
+			case 'EmailTwoFactor':
 				$colMeta->colLabelEN = '2FA Email';
 				break;
-			case 'TwoFactorCodeString':
+			case 'TwoFactorString':
 				$colMeta->colLabelEN = '2FA Code';
 				break;
-			case 'TwoFactorCodeExpiresTS':
+			case 'TwoFactorExpiresTS':
 				$colMeta->colLabelEN = '2FA Code Expires';
 				$colMeta->eleType = ELE_TYPE_DATETIME_DB;
 				break;
@@ -282,7 +282,7 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		
 		// Update User
 		$userUpdate = new \xan\recs( $this );
-		$userUpdate->recordUpdate( $pUUIDUser, array( 'TwoFactorCodeString' => $code, 'TwoFactorCodeExpiresTS' => $ts ) );
+		$userUpdate->recordUpdate( $pUUIDUser, array( 'TwoFactorString' => $code, 'TwoFactorExpiresTS' => $ts ) );
 		
 		// Create the Message
 		$this->TwoFactorCode = $code;
