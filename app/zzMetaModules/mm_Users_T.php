@@ -131,18 +131,24 @@ class moduleMetaUsersT extends xan\moduleMeta {
 			case 'PhoneMobile':
 				$colMeta->colLabelEN = 'Mobile Phone';
 				break;
-			
-			case 'TwoFactorPhoneNumber':
+			case 'PhoneTwoFactor':
 				$colMeta->colLabelEN = '2FA Phone';
 				break;
-			case 'TwoFactorEmailAddress':
-				$colMeta->colLabelEN = '2FA Email';
+			
+			case 'LoginKey':
+				$colMeta->colLabelEN = 'Login Key';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
-			case 'TwoFactorCodeString':
+			case 'LoginKeyOneTime':
+				$colMeta->colLabelEN = 'Login Key One Time Code';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
+				break;
+			case 'TwoFactorString':
 				$colMeta->colLabelEN = '2FA Code';
+				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
-			case 'TwoFactorCodeExpiresTS':
-				$colMeta->colLabelEN = '2FA Code Expires';
+			case 'TwoFactorExpiresTS':
+				$colMeta->colLabelEN = '2FA Expires';
 				$colMeta->eleType = ELE_TYPE_DATETIME_DB;
 				break;
 			
@@ -191,14 +197,6 @@ class moduleMetaUsersT extends xan\moduleMeta {
 				break;
 			case 'PasswordHashed':
 				$colMeta->colLabelEN = 'PW Hashed';
-				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
-				break;
-			case 'PasswordResetCode':
-				$colMeta->colLabelEN = 'PW Reset Code';
-				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
-				break;
-			case 'LoginKey':
-				$colMeta->colLabelEN = 'Login Key';
 				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			
@@ -282,7 +280,7 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		
 		// Update User
 		$userUpdate = new \xan\recs( $this );
-		$userUpdate->recordUpdate( $pUUIDUser, array( 'TwoFactorCodeString' => $code, 'TwoFactorCodeExpiresTS' => $ts ) );
+		$userUpdate->recordUpdate( $pUUIDUser, array( 'TwoFactorString' => $code, 'TwoFactorExpiresTS' => $ts ) );
 		
 		// Create the Message
 		$this->TwoFactorCode = $code;

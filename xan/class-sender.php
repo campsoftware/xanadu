@@ -88,7 +88,7 @@ class sender {
 			}
 			if ( $pBodyHTML !== "" ) {
 				$mail->isHTML( true );
-				$mail->Body = $pBodyHTML;
+				$mail->Body = nl2br( $pBodyHTML );
 				$mail->AltBody = $pBodyText;
 			}
 			if ( $pBodyHTML === "" && $pBodyText !== "" ) {

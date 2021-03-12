@@ -1,11 +1,48 @@
 <?php
-// Get Path Parts
-$registrationLogin = $path_components[ 1 ];
-$registrationCode = $path_components[ 2 ];
+// One Time Code Login
+$loginMethod = $path_components[ 1 ];
+$loginUUIDUser = $path_components[ 2 ];
+$LoginKeyOneTime = $path_components[ 3 ];
+if ( $loginMethod === 'otc' and xan\isNotEmpty( $loginUUIDUser ) and xan\isNotEmpty( $LoginKeyOneTime ) ) {
+	// User Select
+	$userSelect = new xan\recs( $mmUsersT );
+	$userSelect->querySQL = 'SELECT * FROM Users WHERE UUIDUsers = ? AND LoginKeyOneTime = ?';
+	$userSelect->queryBindNamesA = array( UUIDUSERS, 'LoginKeyOneTime' );
+	$userSelect->queryBindValuesA = array( $loginUUIDUser, $LoginKeyOneTime );
+	$userSelect->query();
+	// Error Check
+	if ( $userSelect->errorB ) {
+		$xanMessage .= ' OTC Login Select Error: ' . $userSelect->messageExtra . '; ' . $userSelect->messageSQL . STR_BR;
+	} elseif ( $userSelect->rowCount < 1 ) {
+		$xanMessage .= ' OTC Login Select: None Found' . STR_BR;
+	} elseif ( $userSelect->rowCount > 0 ) {
+		
+		// User Update
+		$userUpdate = new xan\recs( $mmUsersT );
+		$userUpdate->querySQL = 'UPDATE Users SET Registered = ?, LoginKeyOneTime = ? WHERE UUIDUsers = ?';
+		$userUpdate->queryBindNamesA = array( 'Registered', 'LoginKeyOneTime', UUIDUSERS );
+		$userUpdate->queryBindValuesA = array( 'Yes', '', $loginUUIDUser );
+		$userUpdate->query();
+		// Error Check
+		if ( $userUpdate->errorB ) {
+			$xanMessage .= ' OTC Login Update Error: ' . $userUpdate->messageExtra . '; ' . $userUpdate->messageSQL . STR_BR;
+		} elseif ( $userUpdate->rowCount < 1 ) {
+			$xanMessage .= ' OTC Login Update: None Found' . STR_BR;
+		} elseif ( $userUpdate->rowCount > 0 ) {
+			$redirectPath = $mmUsersT->doLogin( 'Registration', $userSelect );
+			$aloe_response->status_set( '307 Temporary Redirect' );
+			$aloe_response->header_set( 'Location', $redirectPath );
+			$aloe_response->content_set( '' );
+			return;
+		}
+	}
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // RememberMe Login
 $CookieRememberMe = $_COOKIE[ COOKIE_REMEMBERME ] ?? '';
-if ( $CookieRememberMe != '' ) {
+if ( \xan\isNotEmpty( $CookieRememberMe ) ) {
 	// User Select
 	$userSelect = new xan\recs( $mmUsersT );
 	$userSelect->querySQL = 'SELECT * FROM Users WHERE LoginKey = ?';
@@ -25,45 +62,6 @@ if ( $CookieRememberMe != '' ) {
 		return;
 	}
 }
-
-// Registration Login
-if ( xan\isNotEmpty( $registrationLogin ) and xan\isNotEmpty( $registrationCode ) ) {
-	$PostLogin = $registrationLogin;
-	
-	// User Select
-	$userSelect = new xan\recs( $mmUsersT );
-	$userSelect->querySQL = 'SELECT * FROM Users WHERE EmailAddress = ? AND PasswordResetCode = ?';
-	$userSelect->queryBindNamesA = array( 'EmailAddress', 'PasswordResetCode' );
-	$userSelect->queryBindValuesA = array( $registrationLogin, $registrationCode );
-	$userSelect->query();
-	// Error Check
-	if ( $userSelect->errorB ) {
-		$xanMessage .= ' Registration Select Error: ' . $userSelect->messageExtra . '; ' . $userSelect->messageSQL . STR_BR;
-	} elseif ( $userSelect->rowCount < 1 ) {
-		$xanMessage .= ' Registration Select: None Found' . STR_BR;
-	} elseif ( $userSelect->rowCount > 0 ) {
-		
-		// User Update
-		$userUpdate = new xan\recs( $mmUsersT );
-		$userUpdate->querySQL = 'UPDATE Users SET Registered = ?, PasswordResetCode = ? WHERE EmailAddress = ?';
-		$userUpdate->queryBindNamesA = array( 'Registered', 'PasswordResetCode', 'EmailAddress' );
-		$userUpdate->queryBindValuesA = array( 'Yes', '', $PostLogin );
-		$userUpdate->query();
-		// Error Check
-		if ( $userUpdate->errorB ) {
-			$xanMessage .= ' Registration Update Error: ' . $userUpdate->messageExtra . '; ' . $userUpdate->messageSQL . STR_BR;
-		} elseif ( $userUpdate->rowCount < 1 ) {
-			$xanMessage .= ' Registration Update: None Found' . STR_BR;
-		} elseif ( $userUpdate->rowCount > 0 ) {
-			$redirectPath = $mmUsersT->doLogin( 'Registration', $userSelect );
-			$aloe_response->status_set( '307 Temporary Redirect' );
-			$aloe_response->header_set( 'Location', $redirectPath );
-			$aloe_response->content_set( '' );
-			return;
-		}
-	}
-}
-
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

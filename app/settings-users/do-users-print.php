@@ -119,7 +119,7 @@ foreach ( $recsUsers->rowsD as $recsUsersRow ) : ?>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">PW Reset Code</td>
-                <td class="cellBorder cellLeft"><?= $recsUsersRow[ 'PasswordResetCode' ] ?></td>
+                <td class="cellBorder cellLeft"><?= $recsUsersRow[ 'LoginKeyOneTime' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">PW Hash Seed</td>

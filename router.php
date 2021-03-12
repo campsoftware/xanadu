@@ -65,6 +65,23 @@ if ( ( $path_components[ 0 ] == 'register-do' ) ) {
 	return;
 }
 
+// PassworedReset Page
+if ( ( $path_components[ 0 ] == 'passwordreset' ) ) {
+	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
+	$_SESSION[ SES_PATH ] = $path;
+	$_SESSION[ SES_INFO ] = '';
+	require_once( 'app/users-passwordreset/content-0-page.php' );
+	return;
+}
+
+// PassworedReset Do
+if ( ( $path_components[ 0 ] == 'passwordreset-do' ) ) {
+	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
+	$_SESSION[ SES_INFO ] = $path . '>' . print_r( $_POST, true );
+	require_once( 'app/users-passwordreset/do.php' );
+	return;
+}
+
 
 ///////////////////////////////////////////////////////////
 // Checkout Redirect

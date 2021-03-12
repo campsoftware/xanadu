@@ -6,7 +6,7 @@ $card = new xan\eleCard( CARD_WIDTH, '', false );
 // Tags Special
 $tagsEleInput_Logo = new xan\tags( [ 'col', '' ], [ 'height' => ELE_HEIGHT_6X, 'width' => 'auto' ], [] );
 
-///////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Table
 $loginTable = new xan\eleTable( $tagsCellEmpty );
@@ -18,10 +18,7 @@ $logoEle = new \xan\eleURLImage( APP_ICON_URL_1024, false, '', 'Xanadu', 'Xanadu
 $loginTable->cellSet( $tableRowIndex, 0, $tagsCellCenterMiddle, $logoEle->render() );
 
 $tableRowIndex++;
-$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<strong>Login</strong>' );
-
-$tableRowIndex++;
-$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Email' );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Email<div class="float-right small"><a href="' . $mmUsersPasswordReset->URLRelative .  '">Password Reset</a></div>' );
 
 $tableRowIndex++;
 $loginEle = new \xan\eleText( $CookieLogin ?? '', 'Login', 'Login', $tagsEleInput );
@@ -40,13 +37,13 @@ $loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $rememberMe );
 
 $tableRowIndex++;
 $buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ 'onclick=\'xanDo( { "Msg": "Checking Login", "URL":"' . $mmUsersLogin->URLDoRelative . '", "Login": $("#Login").val(), "Password": $("#Password").val(), "RememberMe": $("#RememberMe").val(), "Do": "Login" } );\'' ] );
-$buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . $mmUsersLogin->NameModule, '', '', $buttonTags );
+$buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . $mmUsersLogin->NameModule, 'loginButton', '', $buttonTags );
 $loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
 $tableRowIndex++;
-$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="loginMessage">' . $xanMessage . '</div>' );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="formMessageLogin">' . $xanMessage . '</div>' );
 
-///////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Table
 $codeTable = new xan\eleTable( $tagsCellEmpty );
@@ -70,29 +67,48 @@ $codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $codeEle->render() 
 
 $tableRowIndex++;
 $buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ 'onclick=\'xanDo( { "Msg": "Verifying Code", "URL":"' . $mmUsersLogin->URLDoRelative . '", "Login": $("#Login").val(), "RememberMe": ($("#RememberMe").is(":checked")) ? "1" :"0", "Code": $("#Code").val(), "Do": "CodeVerify" } );\'' ] );
-$buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . 'Verify Code', '', '', $buttonTags );
+$buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . 'Verify Code', 'codeButton', '', $buttonTags );
 $codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
 $tableRowIndex++;
 $codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="codeMessage">' . $xanMessage . '</div>' );
 
-///////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Set the Body
-$contentBody = '<div id="loginForm">' . $loginTable->render() . '</div>' . '<div id="codeForm" style="display: none;">' . $codeTable->render() . '</div>';
+$contentBody = '<div id="loginForm">' . $loginTable->render() . '</div>' . '<div id="formMessageCode" style="display: none;">' . $codeTable->render() . '</div>';
 
 // Init the Form
 $jsFocus = <<< JS
         <script>
             $( function () {
-            	// Set the Action
+            
+            	// Set the Login from the Cookie
             	$( "#Login" ).val( "{$_COOKIE[COOKIE_LOGIN]}" );
+            	
                 // Set the Focus
                 if ( $( "#Login" ).val() === "" ) {
                     $( "#Login" ).focus();
                 } else {
                     $( "#Password" ).focus();
                 }
+                
+                // Login Add Return Key Event
+				$( "#Login, #Password" ).on( "keypress", function ( event ) {
+					let keycode = event.which || event.keyCode || event.charCode;
+					if ( keycode === 13 ) {
+						$( "#loginButton" ).click();
+					}
+				} );
+                
+                // Code Add Return Key Event
+				$( "#Code" ).on( "keypress", function ( event ) {
+					let keycode = event.which || event.keyCode || event.charCode;
+					if ( keycode === 13 ) {
+						$( "#codeButton" ).click();
+					}
+				} );
+            
             } );
         </script>
 JS;
