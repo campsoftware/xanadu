@@ -80,8 +80,9 @@ if ( $doParam[ 'Do' ] === 'Login' ) {
 		$ValidationMessage[] = "Password is Blank.";
 	}
 	
-	// Validate User
+	// Validate Check. Check Login and Password
 	if ( empty( $ValidationMessage ) ) {
+		
 		// User Select
 		$userSelect = new xan\recs( $mmUsersT );
 		$userSelect->querySQL = 'SELECT * FROM Users WHERE EmailAddress = ?';
@@ -112,26 +113,28 @@ if ( $doParam[ 'Do' ] === 'Login' ) {
 					$ValidationMessage[] = 'Login and/or Password: None Found.';
 				}
 			}
-			
 		}
+		
 	}
 	
-	// Validate Response
+	// Validate Check
 	if ( !empty( $ValidationMessage ) ) {
 		// Messages
 		$i = -1;
-		$result[ 'Do_HTMLSelectorName' ][ ++$i ] = '#loginMessage';
+		$result[ 'Do_HTMLSelectorName' ][ ++$i ] = '#formMessageLogin';
 		$result[ 'Do_HTMLSelectorData' ][ $i ] = implode( ', ', $ValidationMessage );
 		// Return JSON
 		$aloe_response->content_set( json_encode( $result ) );
 		return;
 	}
 	
+	// Send 2FA and advance to Code Check
+	
 	// HideShow
 	$i = -1;
 	$result[ 'Do_HideShowSelectorName' ][ ++$i ] = '#loginForm';
 	$result[ 'Do_HideShowSelectorVis' ][ $i ] = 'Hide';
-	$result[ 'Do_HideShowSelectorName' ][ ++$i ] = '#codeForm';
+	$result[ 'Do_HideShowSelectorName' ][ ++$i ] = '#formMessageCode';
 	$result[ 'Do_HideShowSelectorVis' ][ $i ] = 'Show';
 	
 	// Values
@@ -151,7 +154,7 @@ if ( $doParam[ 'Do' ] === 'Login' ) {
 	}
 	// Send Email
 	if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'EmailTwoFactor' ] ) ) {
-		$sender->sendEmail( true, APP_EMAIL_FROM, $userSelect->rowsD[ 0 ][ 'EmailTwoFactor' ], $mmUsersT->TwoFactorSubject, '', $mmUsersT->TwoFactorBody );
+		$sender->sendEmail( true, APP_EMAIL_FROM, $userSelect->rowsD[ 0 ][ 'EmailAddress' ], $mmUsersT->TwoFactorSubject, '', $mmUsersT->TwoFactorBody );
 	}
 	
 	// Return JSON
@@ -263,14 +266,14 @@ if ( $doParam[ 'Do' ] === 'CodeVerify' ) {
 		}
 	}
 	
+	// Redirect
+	$redirectPath = $mmUsersT->doLogin( 'Form', $userSelect );
+	$result[ "Do_URLLoad" ] = $redirectPath;
+	
 	// Messages
 	$i = -1;
 	$result[ 'Do_HTMLSelectorName' ][ ++$i ] = '#codeMessage';
 	$result[ 'Do_HTMLSelectorData' ][ $i ] = 'Loading...';
-	
-	// Redirect
-	$redirectPath = $mmUsersT->doLogin( 'Form', $userSelect );
-	$result[ "Do_URLLoad" ] = $redirectPath;
 	
 	// Return JSON
 	$aloe_response->content_set( json_encode( $result ) );

@@ -25,23 +25,9 @@ $loginEle = new \xan\eleText( $CookieLogin ?? '', 'Login', 'Login', $tagsEleInpu
 $table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $loginEle->render() );
 
 $tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Password' );
+$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ 'onclick=\'xanDo( { "Msg": "Checking", "URL":"' . $mmUsersPasswordReset->URLDoRelative . '", "Login": $("#Login").val(), "Do": "PasswordReset" } );\'' ] );
 
-$tableRowIndex++;
-$pwEle = new \xan\eleTextReveal( '', 'Password', 'Password', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
-
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Password Verify' );
-
-$tableRowIndex++;
-$pwEle = new \xan\eleTextReveal( '', 'PasswordVerify', 'PasswordVerify', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
-
-$tableRowIndex++;
-$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ 'onclick=\'xanDo( { "Msg": "Checking Registration", "URL":"' . $mmUsersRegister->URLDoRelative . '", "Login": $("#Login").val(), "Password": $("#Password").val(), "PasswordVerify": $("#PasswordVerify").val(), "Do": "Registration" } );\'' ] );
-
-$buttonEle = new \xan\eleButton( $mmUsersRegister->FontAwesome . STR_NBSP . $mmUsersRegister->NameModule, 'registerButton', '', $buttonTags );
+$buttonEle = new \xan\eleButton( $mmUsersPasswordReset->FontAwesome . STR_NBSP . $mmUsersPasswordReset->NameModule, 'passwordResetButton', '', $buttonTags );
 $table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
 $tableRowIndex++;
@@ -58,17 +44,13 @@ $jsFocus = <<< JS
             $( function () {
             
                 // Set the Focus
-                if ( $( "#Login" ).val() === "" ) {
-                    $( "#Login" ).focus();
-                } else {
-                    $( "#Password" ).focus();
-                }
+                $( "#Login" ).focus();
                 
                 // Add Return Key Event
 				$( "#Login, #Password, #PasswordVerify" ).on( "keypress", function ( event ) {
 					let keycode = event.which || event.keyCode || event.charCode;
 					if ( keycode === 13 ) {
-						$( "#registerButton" ).click();
+						$( "#passwordResetButton" ).click();
 					}
 				} );
 			

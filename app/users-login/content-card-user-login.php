@@ -18,7 +18,7 @@ $logoEle = new \xan\eleURLImage( APP_ICON_URL_1024, false, '', 'Xanadu', 'Xanadu
 $loginTable->cellSet( $tableRowIndex, 0, $tagsCellCenterMiddle, $logoEle->render() );
 
 $tableRowIndex++;
-$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Email' );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Email<div class="float-right small"><a href="' . $mmUsersPasswordReset->URLRelative .  '">Password Reset</a></div>' );
 
 $tableRowIndex++;
 $loginEle = new \xan\eleText( $CookieLogin ?? '', 'Login', 'Login', $tagsEleInput );
@@ -41,7 +41,7 @@ $buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . $mmUser
 $loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
 $tableRowIndex++;
-$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="loginMessage">' . $xanMessage . '</div>' );
+$loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="formMessageLogin">' . $xanMessage . '</div>' );
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -76,7 +76,7 @@ $codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="codeMessa
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Set the Body
-$contentBody = '<div id="loginForm">' . $loginTable->render() . '</div>' . '<div id="codeForm" style="display: none;">' . $codeTable->render() . '</div>';
+$contentBody = '<div id="loginForm">' . $loginTable->render() . '</div>' . '<div id="formMessageCode" style="display: none;">' . $codeTable->render() . '</div>';
 
 // Init the Form
 $jsFocus = <<< JS

@@ -91,7 +91,6 @@ if ( xan\isNotEmpty( $resp->reqID ) ) {
 		
 		// Detail Cards Append
 		require_once( 'content-card-users-user.php' );
-		require_once( 'content-card-users-2fa.php' );
 		require_once( 'content-card-users-privs.php' );
 		require_once( 'content-card-users-auth.php' );
 		require_once( 'content-card-users-meta.php' );

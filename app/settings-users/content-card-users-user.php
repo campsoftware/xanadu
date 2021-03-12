@@ -39,6 +39,11 @@ $tableRowIndex++;
 $table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $mmUsersT->getColEleRender( 'PhoneMobile', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmUsersT->getColEleRender( 'PhoneMobile', ELE_AS_DEFINED, $tagsEleInput, $recsDetail, $formTagDetail, $resp ) );
 
+$tableRowIndex++;
+$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle,$mmUsersT->getColEleRender( 'PhoneTwoFactor', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
+$table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmUsersT->getColEleRender( 'PhoneTwoFactor', ELE_AS_DEFINED, $tagsEleInput_NameUpdate, $recsDetail, $formTagDetail, $resp ) );
+
+
 // Card Append to Source
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $table->render() );
 ?>
