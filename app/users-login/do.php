@@ -19,6 +19,7 @@ if ( !empty( $ValidationMessage ) ) {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Do ContentLoadAll
 if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	// Response Init [ Matches Content ]
@@ -47,6 +48,7 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Do Init
 if ( $doParam[ 'Do' ] === 'Init' ) {
 	$result[ 'Do_RunInit' ] = true;
@@ -56,6 +58,7 @@ if ( $doParam[ 'Do' ] === 'Init' ) {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Do Login
 if ( $doParam[ 'Do' ] === 'Login' ) {
 	
@@ -158,6 +161,7 @@ if ( $doParam[ 'Do' ] === 'Login' ) {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Do CodeVerify
 if ( $doParam[ 'Do' ] === 'CodeVerify' ) {
 	
@@ -271,6 +275,5 @@ if ( $doParam[ 'Do' ] === 'CodeVerify' ) {
 	// Return JSON
 	$aloe_response->content_set( json_encode( $result ) );
 	return;
-	
 }
 ?>

@@ -6,7 +6,7 @@ $card = new xan\eleCard( CARD_WIDTH, '', false );
 // Tags Special
 $tagsEleInput_Logo = new xan\tags( [ 'col', '' ], [ 'height' => ELE_HEIGHT_6X, 'width' => 'auto' ], [] );
 
-///////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Table
 $loginTable = new xan\eleTable( $tagsCellEmpty );
@@ -46,7 +46,7 @@ $loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render
 $tableRowIndex++;
 $loginTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="loginMessage">' . $xanMessage . '</div>' );
 
-///////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Table
 $codeTable = new xan\eleTable( $tagsCellEmpty );
@@ -76,7 +76,7 @@ $codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render(
 $tableRowIndex++;
 $codeTable->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<div id="codeMessage">' . $xanMessage . '</div>' );
 
-///////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Set the Body
 $contentBody = '<div id="loginForm">' . $loginTable->render() . '</div>' . '<div id="codeForm" style="display: none;">' . $codeTable->render() . '</div>';

@@ -3,28 +3,7 @@
 $registrationLogin = $path_components[ 1 ];
 $registrationCode = $path_components[ 2 ];
 
-// RememberMe Login
-$CookieRememberMe = $_COOKIE[ COOKIE_REMEMBERME ] ?? '';
-if ( $CookieRememberMe != '' ) {
-	// User Select
-	$userSelect = new xan\recs( $mmUsersT );
-	$userSelect->querySQL = 'SELECT * FROM Users WHERE LoginKey = ?';
-	$userSelect->queryBindNamesA = array( 'LoginKey' );
-	$userSelect->queryBindValuesA = array( $CookieRememberMe );
-	$userSelect->query();
-	// Error Check
-	if ( $userSelect->errorB ) {
-		$xanMessage .= ' Remember Me Select Error: ' . $userSelect->messageExtra . '; ' . $userSelect->messageSQL . STR_BR;
-	} elseif ( $userSelect->rowCount < 1 ) {
-		$xanMessage .= ' Remember Me Select: None Found' . STR_BR;
-	} elseif ( $userSelect->rowCount > 0 ) {
-		$redirectPath = $mmUsersT->doLogin( 'RememberMe', $userSelect );
-		$aloe_response->status_set( '307 Temporary Redirect' );
-		$aloe_response->header_set( 'Location', $redirectPath );
-		$aloe_response->content_set( '' );
-		return;
-	}
-}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Registration Login
 if ( xan\isNotEmpty( $registrationLogin ) and xan\isNotEmpty( $registrationCode ) ) {
@@ -64,6 +43,30 @@ if ( xan\isNotEmpty( $registrationLogin ) and xan\isNotEmpty( $registrationCode 
 	}
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// RememberMe Login
+$CookieRememberMe = $_COOKIE[ COOKIE_REMEMBERME ] ?? '';
+if ( $CookieRememberMe != '' ) {
+	// User Select
+	$userSelect = new xan\recs( $mmUsersT );
+	$userSelect->querySQL = 'SELECT * FROM Users WHERE LoginKey = ?';
+	$userSelect->queryBindNamesA = array( 'LoginKey' );
+	$userSelect->queryBindValuesA = array( $CookieRememberMe );
+	$userSelect->query();
+	// Error Check
+	if ( $userSelect->errorB ) {
+		$xanMessage .= ' Remember Me Select Error: ' . $userSelect->messageExtra . '; ' . $userSelect->messageSQL . STR_BR;
+	} elseif ( $userSelect->rowCount < 1 ) {
+		$xanMessage .= ' Remember Me Select: None Found' . STR_BR;
+	} elseif ( $userSelect->rowCount > 0 ) {
+		$redirectPath = $mmUsersT->doLogin( 'RememberMe', $userSelect );
+		$aloe_response->status_set( '307 Temporary Redirect' );
+		$aloe_response->header_set( 'Location', $redirectPath );
+		$aloe_response->content_set( '' );
+		return;
+	}
+}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
