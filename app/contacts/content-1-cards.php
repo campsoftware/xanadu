@@ -90,11 +90,11 @@ if ( xan\isNotEmpty( $resp->reqID ) ) {
 		$tagsEleSelector = new xan\tags( [], [], [] );
 		
 		// Detail Cards Append
-		require_once( 'content-card-contacts-contact.php' );
-		require_once( 'content-card-contactscomms.php' );
-		require_once( 'content-card-contacts-info.php' );
-		require_once( 'content-card-contacts-notes.php' );
-		require_once( 'content-card-contacts-other.php' );
+		require_once( 'content-card-contactsContact.php' );
+		require_once( 'content-card-contactsComms.php' );
+		require_once( 'content-card-contactsInfo.php' );
+		require_once( 'content-card-contactsNotes.php' );
+		require_once( 'content-card-contactsOther.php' );
 		
 		// Actions Menu ; Disable items with 'disabled' class
 		ob_start();

@@ -56,7 +56,7 @@ if ( $doParam[ 'Do' ] === 'Init' ) {
 
 // Do Things
 if ( $doParam[ 'Do' ] === 'ContactsNameUpdate' ) {
-	require_once( "do-contacts-name-update.php" );
+	require_once( "do-contacts-nameUpdate.php" );
 	return;
 }
 
@@ -72,33 +72,33 @@ if ( $doParam[ 'Do' ] === 'ContactsPrint' ) {
 
 // Records Delete, Duplicate, Create
 if ( $doParam[ 'Do' ] === 'ContactsRecDelete' ) {
-	require_once( "do-contacts-rec-delete.php" );
+	require_once( "do-contacts-recDelete.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'ContactsRecDuplicate' ) {
-	require_once( "do-contacts-rec-duplicate.php" );
+	require_once( "do-contacts-recDuplicate.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'ContactsRecNew' ) {
-	require_once( "do-contacts-rec-new.php" );
+	require_once( "do-contacts-recNew.php" );
 	return;
 }
 
 // ContactsComms Delete, Duplicate, Create
 if ( $doParam[ 'Do' ] === 'ContactsCommsRecDelete' ) {
-	require_once( "do-contactscomms-rec-delete.php" );
+	require_once( "do-contactscomms-recDelete.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'ContactsCommsRecNew' ) {
-	require_once( "do-contactscomms-rec-new.php" );
+	require_once( "do-contactscomms-recNew.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'ContactsCommsURLGet' ) {
-	require_once( "do-contactscomms-url-get.php" );
+	require_once( "do-contactscomms-urlGet.php" );
 	return;
 }
 ?>

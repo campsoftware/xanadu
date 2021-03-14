@@ -62,7 +62,7 @@ JS;
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Users Password Update - Modal
-	$xanDoDo = 'UsersPasswordUpdate';
+	$xanDoDo = 'UsersPasswordReplace';
 	$modal = new \xan\eleModal( $xanDoDo );
 	
 	// Table
@@ -88,8 +88,8 @@ JS;
 JS;
 	// OnClick
 	$modalButtonActionOnClick = /** @lang JavaScript */
-		"xanDo( { 'Msg': 'Updating Password', 'URL': '{$mmUsersT->URLDoRelative}', 'Do': '{$xanDoDo}', 'IDUsers': '{$resp->reqID}', 'PasswordNew': $( '#passwordUpdateInput' ).val() } ); $( '#passwordUpdateInput' ).val( '' )";
-	$resp->contentEndA[] = $modal->renderModalWButtons( 'Update the Password for this User?', '', $table->render(), '', 'Cancel', 'Update Password', [ 'onclick="' . $modalButtonActionOnClick . '"' ], $modalInitJS );
+		"xanDo( { 'Msg': 'Replacing Password', 'URL': '{$mmUsersT->URLDoRelative}', 'Do': '{$xanDoDo}', 'IDUsers': '{$resp->reqID}', 'PasswordNew': $( '#passwordUpdateInput' ).val() } ); $( '#passwordUpdateInput' ).val( '' )";
+	$resp->contentEndA[] = $modal->renderModalWButtons( 'Replace the Password for this User?', '', $table->render(), '', 'Cancel', 'Replace Password', [ 'onclick="' . $modalButtonActionOnClick . '"' ], $modalInitJS );
 	
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

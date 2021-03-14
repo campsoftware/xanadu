@@ -136,11 +136,11 @@ class moduleMetaUsersT extends xan\moduleMeta {
 				break;
 			
 			case 'LoginKey':
-				$colMeta->colLabelEN = 'Login Key';
+				$colMeta->colLabelEN = 'Login Key Cookie';
 				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			case 'LoginKeyOneTime':
-				$colMeta->colLabelEN = 'Login Key One Time Code';
+				$colMeta->colLabelEN = 'Login Key One Time';
 				$colMeta->eleType = ELE_TYPE_TEXTREVEAL_DB;
 				break;
 			case 'TwoFactorString':

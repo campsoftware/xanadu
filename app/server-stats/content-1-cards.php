@@ -12,10 +12,10 @@ $tagsEleInput = new xan\tags( [ 'col' ], [], [] );
 $tagsEleSelector = new xan\tags( [], [], [] );
 
 // Detail Cards Append
-require_once( 'content-card-stats-diskram.php' );
-require_once( 'content-card-stats-diskdir.php' );
-require_once( 'content-card-stats-processes.php' );
-require_once( 'content-card-stats-sessions.php' );
-require_once( 'content-card-stats-sessionsarray.php' );
-require_once( 'content-card-stats-processespools.php' );
+require_once( 'content-card-statsDiskRam.php' );
+require_once( 'content-card-statsDiskDir.php' );
+require_once( 'content-card-statsProcesses.php' );
+require_once( 'content-card-statsSessions.php' );
+require_once( 'content-card-statsSessionsArray.php' );
+require_once( 'content-card-statsProcessesPools.php' );
 ?>

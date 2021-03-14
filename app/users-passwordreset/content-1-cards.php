@@ -15,7 +15,7 @@ $tagsEleInput = new xan\tags( [ 'col' ], [], [] );
 $tagsEleSelector = new xan\tags( [], [], [] );
 
 // Detail Cards Append
-require_once( 'content-card-user-passwordreset.php' );
+require_once( 'content-card-userPasswordReset.php' );
 
 // Scripts Extra
 // $resp->scriptsOnLoadA[] = '';

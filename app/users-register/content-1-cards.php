@@ -15,7 +15,7 @@ $tagsEleInput = new xan\tags( [ 'col' ], [], [] );
 $tagsEleSelector = new xan\tags( [], [], [] );
 
 // Detail Cards Append
-require_once( 'content-card-user-register.php' );
+require_once( 'content-card-userRegister.php' );
 
 // Scripts Extra
 // $resp->scriptsOnLoadA[] = '';

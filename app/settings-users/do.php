@@ -56,12 +56,12 @@ if ( $doParam[ 'Do' ] === 'Init' ) {
 
 // Do Things
 if ( $doParam[ 'Do' ] === 'UsersNameUpdate' ) {
-	require_once( "do-users-name-update.php" );
+	require_once( "do-users-nameUpdate.php" );
 	return;
 }
 
-if ( $doParam[ 'Do' ] === 'UsersPasswordUpdate' ) {
-	require_once( "do-users-password-update.php" );
+if ( $doParam[ 'Do' ] === 'UsersPasswordReplace' ) {
+	require_once( "do-users-passwordReplace.php" );
 	return;
 }
 
@@ -72,17 +72,17 @@ if ( $doParam[ 'Do' ] === 'UsersPrint' ) {
 
 // Records Delete, Duplicate, Create
 if ( $doParam[ 'Do' ] === 'UsersRecDelete' ) {
-	require_once( "do-users-rec-delete.php" );
+	require_once( "do-users-recDelete.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'UsersRecDuplicate' ) {
-	require_once( "do-users-rec-duplicate.php" );
+	require_once( "do-users-recDuplicate.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'UsersRecNew' ) {
-	require_once( "do-users-rec-new.php" );
+	require_once( "do-users-recNew.php" );
 	return;
 }
 
