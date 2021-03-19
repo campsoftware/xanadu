@@ -1,15 +1,18 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate Contact ID
-if ( xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
-    $ValidationMessage[] = "Contact ID is Blank";
+if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
+    $ValidationMsgA[] = "Contact ID is Blank";
 }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-    $aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+    $aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMsgA ) );
     $aloe_response->content_set( 'Error' );
     return;
 }
@@ -20,15 +23,19 @@ $recs->recordDelete( $doParam[ 'IDContacts' ] );
 
 // Error Check
 if ( $recs->errorB ) {
-    $aloe_response->status_set( '500 Internal Service Error: ' . $recs->messageExtra . '; ' . $recs->messageSQL );
-    return;
+	$ValidationMsgA[] = 'Contact Delete Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 }
 
-// Result
-$result[ 'Do_URLLoad' ] = $mmContactsT->URLFull;
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '500 Internal Service Error: ' . implode( ", ", $ValidationMsgA ) );
+	$aloe_response->content_set( 'Error' );
+	return;
+}
 
-// Return JSON
-$resultJSON = json_encode( $result );
-$aloe_response->content_set( $resultJSON );
-return;
+// Go to the List
+$resp->jsSetPageURL( $mmContactsT->URLFull );
+
+// Actions Return as JSON
+$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 ?>

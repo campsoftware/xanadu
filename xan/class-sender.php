@@ -3,9 +3,9 @@
 namespace xan;
 
 // PHPMailer
-require_once( PATH_ROOT_INCLUDE . "PHPMailer/6.0.5/src/Exception.php" );
-require_once( PATH_ROOT_INCLUDE . "PHPMailer/6.0.5/src/PHPMailer.php" );
-require_once( PATH_ROOT_INCLUDE . "PHPMailer/6.0.5/src/SMTP.php" );
+require_once( PATH_ROOT_INCLUDE . 'PHPMailer/6.0.5/src/Exception.php' );
+require_once( PATH_ROOT_INCLUDE . 'PHPMailer/6.0.5/src/PHPMailer.php' );
+require_once( PATH_ROOT_INCLUDE . 'PHPMailer/6.0.5/src/SMTP.php' );
 
 
 class sender {
@@ -20,21 +20,21 @@ class sender {
 	// SMS
 	public function sendSMS( $pToPhone, $pText ) {
 		// Validate Init
-		$ValidationMessage = array();
+		$ValidationMsgA = array();
 		
 		// Validate ToPhone
 		if ( isEmpty( $pToPhone ) ) {
-			$ValidationMessage[] = "Phone Number is Blank.";
+			$ValidationMsgA[] = "Phone Number is Blank";
 		}
 		
 		// Validate Text
 		if ( isEmpty( $pToPhone ) ) {
-			$ValidationMessage[] = "Text Message is Blank.";
+			$ValidationMsgA[] = "Text Message is Blank";
 		}
 		
-		// Invalid Response
-		if ( !empty( $ValidationMessage ) ) {
-			$this->resultSMS = 'Error: Cannot Send SMS: ' . implode( ", ", $ValidationMessage );
+		// Validate Response
+		if ( !empty( $ValidationMsgA ) ) {
+			$this->resultSMS = 'Error: Cannot Send SMS: ' . implode( ", ", $ValidationMsgA );
 		}
 		
 		// Init

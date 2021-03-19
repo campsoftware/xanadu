@@ -66,13 +66,13 @@ if ( false ) {
 
 ///////////////////////////////////////////////////////////
 // Paths
+// Try to use Relative paths when possible.
+// However, using '../' to got up a directory
 define( 'PATH_ROOT_XAN', PATH_ROOT_OS . 'xan/' );
 define( 'PATH_ROOT_APP', PATH_ROOT_OS . 'app/' );
-define( 'PATH_ROOT_IMAGES', PATH_ROOT_OS . 'images/' );
 define( 'PATH_ROOT_INCLUDE', PATH_ROOT_OS . 'include/' );
 define( 'PATH_ROOT_LOGS', PATH_ROOT_OS . 'logs/' );
 define( 'PATH_ROOT_BRIEF', PATH_ROOT_OS . 'brief/' );
-define( 'PATH_ROOT_BUCKET', PATH_ROOT_OS . 'bucket/' );
 define( 'PATH_ROOT_TEMPLATES', PATH_ROOT_OS . 'templates/' );
 define( 'PATH_PAGE_RESP', PATH_ROOT_TEMPLATES . 'page-resp.php' );
 
@@ -84,14 +84,16 @@ define( 'URL_BUCKET', URL_BASE . 'bucket/' );
 define( 'URL_IMAGES', URL_BASE . 'images/' );
 define( 'URL_IMAGES_PLACEHOLDER', URL_IMAGES . 'imagePlaceholder.png' );
 
+
 ///////////////////////////////////////////////////////////
-// Two Factor
+// User Logins
 define( 'APP_TWOFACTOR_REQUIRED', 'Yes' ); // 'Yes' to Require
+define( 'APP_PASSWORD_LENGTH_GENERATED', 15 );
+
 
 ///////////////////////////////////////////////////////////
 // Cookies
-define( 'APP_COOKIE_SESSION_SECONDS', 60 * 60 * 1 ); // 1 Hour
-define( 'APP_COOKIE_SESSION_SECONDS_RELOAD', APP_COOKIE_SESSION_SECONDS - ( 60 * 1 ) );  // 1 Minute Prior
+define( 'APP_COOKIE_SESSION_SECONDS', 60 * 60 * 1 ); // 60 * 60 * 1 = 1 Hour; FORM_TIMEOUT_SECONDS Expires 60 Seconds Later.
 define( 'APP_COOKIE_LOGIN_DAYS', 7 );
 define( 'APP_COOKIE_REMEMBERME_DAYS', 7 );
 
@@ -115,7 +117,7 @@ foreach ( glob( PATH_ROOT_XAN . "class-*.php" ) as $filename ) {
 
 // App Classes
 $mm = [];
-foreach ( glob( PATH_ROOT_APP . "zzMetaModules/mm_*.php" ) as $filename ) {
+foreach ( glob( PATH_ROOT_APP . "zzMetaModules/mm*.php" ) as $filename ) {
 	require_once( $filename );
 }
 

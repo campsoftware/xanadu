@@ -1,15 +1,21 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+
+// Spinner Hide
+$resp->jsHideOrShow( '#xanMessageSpinner', 'Hide' );
+
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate Contacts ID
-if ( xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
-	$ValidationMessage[] = "User ID is Blank";
+if ( \xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
+	$ValidationMsgA[] = "User ID is Blank";
 }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-	$aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMsgA ) );
 	$aloe_response->content_set( 'Error' );
 	return;
 }
@@ -23,9 +29,9 @@ $recsDetail->query();
 
 // Error Check
 if ( $recsDetail->errorB ) {
-	$result[ 'Do_ErrorMessage' ] = $recsDetail->messageExtra . '; ' . $recsDetail->messageSQL;
+	$ValidationMsgA[] = 'User Select Error' . $recsDetail->messageExtra . '; ' . $recsDetail->messageSQL;
 } elseif ( $recsDetail->rowCount < 1 ) {
-	$result[ 'Do_ErrorMessage' ] = 'None Found';
+	$ValidationMsgA[] = 'User Select None Found';
 } elseif ( $recsDetail->rowCount > 0 ) {
 	
 	// Recs Loop
@@ -34,17 +40,21 @@ if ( $recsDetail->errorB ) {
 	$recsDetail->rowIndex++;
 	
 	// Process
-	$result[ 'Do_HTMLSelectorName' ][ 0 ] = '#UsersList' . $doParam[ 'IDUsers' ] . 'Label';
-	$result[ 'Do_HTMLSelectorData' ][ 0 ] = $mmUsersT->getDisplayList( $recsDetail );
-	$result[ 'Do_HTMLSelectorName' ][ 1 ] = '#pageContentHeaderDetails';
-	$result[ 'Do_HTMLSelectorData' ][ 1 ] = ': ' . $mmUsersT->getDisplayName( $recsDetail );
+	$resp->jsSetHTML( '#UsersList' . $doParam[ 'IDUsers' ] . 'Label', $mmUsersT->getDisplayList( $recsDetail ) );
+	$resp->jsSetHTML( '#pageContentHeaderDetails', ': ' . $mmUsersT->getDisplayName( $recsDetail ) );
 	
 	//    }
 	
 }
 
-// Return JSON
-$resultJSON = json_encode( $result );
-$aloe_response->content_set( $resultJSON );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '500 Internal Service Error: ' . implode( ", ", $ValidationMsgA ) );
+	$aloe_response->content_set( 'Error' );
+	return;
+}
+
+// Actions Return as JSON
+$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 return;
 ?>

@@ -1,15 +1,18 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate ContactsComms ID
-if ( xan\isEmpty( $doParam[ 'IDContactsComms' ] ) ) {
-    $ValidationMessage[] = "Contact ID is Blank";
+if ( \xan\isEmpty( $doParam[ 'IDContactsComms' ] ) ) {
+    $ValidationMsgA[] = "Contact ID is Blank";
 }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-    $aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+    $aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMsgA ) );
     $aloe_response->content_set( 'Error' );
     return;
 }
@@ -23,25 +26,32 @@ $recs->query();
 
 // Error Check
 if ( $recs->errorB ) {
-    $result[ 'Do_ErrorMessage' ] = $recs->messageExtra . '; ' . $recs->messageSQL;
+    $ValidationMsgA[] = 'Comms URL Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 } elseif ( $recs->rowCount < 1 ) {
-    $result[ 'Do_ErrorMessage' ] = 'None Found';
+    $ValidationMsgA[] = 'Comms URL None Found';
 } elseif ( $recs->rowCount > 0 ) {
 
     // Recs Loop
     $recs->rowIndex = -1;
     //    foreach ( $recs->rowsD as $recsListRow ) {
     $recs->rowIndex++;
-
-    // Return URL
-    $result[ 'Do_URLLoad' ] = $mmContactsCommsT->getURL( $recs );
+    
+    // Go to the URL
+    $resp->jsSetPageURL( $mmContactsCommsT->getURL( $recs ) );
     
     //    }
 
 }
 
-// Return JSON
-$resultJSON = json_encode( $result );
-$aloe_response->content_set( $resultJSON );
+// Validate Check
+if ( !empty( $ValidationMsgA ) ) {
+    // Actions Return as JSON
+    $resp->jsSetHTML( '#xanMessage', implode( ', ', $ValidationMsgA ) );
+    $aloe_response->content_set( json_encode( $resp->jsActionsA ) );
+    return;
+}
+
+// Actions Return as JSON
+$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 return;
 ?>

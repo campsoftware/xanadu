@@ -35,28 +35,28 @@ if ( FORM_OBFUSCATE ) {
 
 ///////////////////////////////////////////////////////////
 // Validate
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Check Action
 if ( $theAjaxAction !== "ajaxSave" ) {
-	$ValidationMessage[] = "Invalid Action";
+	$ValidationMsgA[] = "Invalid Action";
 }
 
 // Check Table and Key Value
 if ( $theTime === "" or $theTableName === "" or $theTableKeyValue === "" ) {
-	$ValidationMessage[] = "Invalid Action Data";
+	$ValidationMsgA[] = "Invalid Action Data";
 }
 
 // Check Time
 $timeValidUntil = strtotime( "now" ) - FORM_TIMEOUT_SECONDS;
 $timeLeft = $theTime - $timeValidUntil;
 if ( $timeLeft < 0 ) {
-	$ValidationMessage[] = "Form Expired: " . round( abs( $timeLeft ) / 60, 1 ) . 'min Ago';
+	$ValidationMsgA[] = "Form Expired: " . round( abs( $timeLeft ) / 60, 1 ) . 'min Ago';
 }
 
 // Respond Not Valid
-if ( !empty( $ValidationMessage ) ) {
-	$aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMessage ) );
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMsgA ) );
 	$aloe_response->content_set( 'Error' );
 	return;
 }

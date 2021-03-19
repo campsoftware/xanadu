@@ -1,20 +1,27 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+
+// Spinner Hide; Button Enable
+// $resp->jsHideOrShow( '#formButtonSpinner', 'Hide' );
+// $resp->jsSetHTMLProperty( '#formButton', 'disabled', false );
+
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate Users ID
-if ( xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
-	$ValidationMessage[] = "User ID is Blank";
+if ( \xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
+	$ValidationMsgA[] = "User ID is Blank";
 }
 
 // Validate PasswordNew
-if ( xan\isEmpty( $doParam[ 'PasswordNew' ] ) ) {
-	$ValidationMessage[] = "New Password cannot be Blank";
+if ( \xan\isEmpty( $doParam[ 'PasswordNew' ] ) ) {
+	$ValidationMsgA[] = "New Password Cannot be Blank";
 }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-	$aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMsgA ) );
 	$aloe_response->content_set( 'Error' );
 	return;
 }
@@ -29,9 +36,9 @@ $recsDetail = new xan\recs( $mmUsersT );
 $recsDetail->recordUpdate( $doParam[ 'IDUsers' ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ));
 // Error Check
 if ( $recsDetail->errorB ) {
-	$result[ 'Do_ErrorMessage' ] = $recsDetail->messageExtra . ';' .  $recsDetail->messageSQL;
+	$ValidationMsgA[] = 'Password Replace Error: ' . $recsDetail->messageExtra . ';' .  $recsDetail->messageSQL;
 } elseif ( $recsDetail->rowCount < 1 ) {
-	$result[ 'Do_ErrorMessage' ] = 'None Found';
+	$ValidationMsgA[] = 'Password Replace None Found';
 } elseif ( $recsDetail->rowCount > 0 ) {
 	
 	// Recs Loop
@@ -40,17 +47,22 @@ if ( $recsDetail->errorB ) {
 	$recsDetail->rowIndex++;
 	
 	// Process
-	$result[ 'Do_ValSelectorName' ][ 0 ] = '#xf_' . $doParam[ 'IDUsers' ] . '_PasswordHashSeed';
-	$result[ 'Do_ValSelectorData' ][ 0 ] = $PasswordHashSeed;
-	$result[ 'Do_ValSelectorName' ][ 1 ] = '#xf_' . $doParam[ 'IDUsers' ] . '_PasswordHashed';
-	$result[ 'Do_ValSelectorData' ][ 1 ] = $PasswordHashed;
+	$resp->jsSetHTML( '#xf_' . $doParam[ 'IDUsers' ] . '_PasswordHashSeed', $PasswordHashSeed );
+	$resp->jsSetHTML( '#xf_' . $doParam[ 'IDUsers' ] . '_PasswordHashed', $PasswordHashed );
 	
 	//    }
 	
 }
 
-// Return JSON
-$resultJSON = json_encode( $result );
-$aloe_response->content_set( $resultJSON );
+// Validate Check
+if ( !empty( $ValidationMsgA ) ) {
+	// Actions Return as JSON
+	$resp->jsSetHTML( '#xanMessage', implode( ', ', $ValidationMsgA ) );
+	$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
+	return;
+}
+
+// Actions Return as JSON
+$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 return;
 ?>

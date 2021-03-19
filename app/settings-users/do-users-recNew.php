@@ -1,15 +1,18 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate Users ID
-//if ( xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
-//    $ValidationMessage[] = "Users ID is Blank";
+//if ( \xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
+//    $ValidationMsgA[] = "Users ID is Blank";
 //}
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-	$aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMsgA ) );
 	$aloe_response->content_set( 'Error' );
 	return;
 }
@@ -23,8 +26,7 @@ $recs->recordInsert( array( 'NameCompany' => 'A New User' ) );
 
 // Error Check
 if ( $recs->errorB || $recs->rowCount < 1 ) {
-	$aloe_response->status_set( '500 Internal Service Error: ' . $recs->messageExtra . '; ' . $recs->messageSQL );
-	return;
+	$ValidationMsgA[] = 'User Create Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 } else {
 	// Recs Loop
 	$recs->rowIndex = -1;
@@ -37,14 +39,20 @@ if ( $recs->errorB || $recs->rowCount < 1 ) {
 	}
 }
 
-// Result
-$result[ 'Do_URLLoad' ] = $mmUsersT->URLFull . $UUIDNew;
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '500 Internal Service Error: ' . implode( ", ", $ValidationMsgA ) );
+	$aloe_response->content_set( 'Error' );
+	return;
+}
 
-// Set Focus Selector on Page Reload
-$_SESSION[ SESS_FOCUS_SELECTOR ] = '#xf_' . $UUIDNew . '_NameCompany';
+// Go to the Record
+$resp->jsSetPageURL( $mmUsersT->URLFull . $UUIDNew );
 
-// Return JSON
-$resultJSON = json_encode( $result );
-$aloe_response->content_set( $resultJSON );
+// Set Focus
+$resp->jsSetFocus( '#xf_' . $UUIDNew . '_NameCompany' );
+
+// Actions Return as JSON
+$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 return;
 ?>

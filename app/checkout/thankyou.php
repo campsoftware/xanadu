@@ -1,6 +1,6 @@
 <?php
 // Response
-$resp = new xan\response;
+$resp = new \xan\response;
 $resp->reqPath = $aloe_request->path_get();
 $resp->reqID = $aloe_request->path_components_get()[ 1 ];
 $resp->moduleName = $mmCheckout->NameModule;

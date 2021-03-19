@@ -1,10 +1,11 @@
-<?php ob_start(); ?>
+<?php
+ob_start();
+?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <script>
-            // Log Init
-            var xanConsoleMsgs = [];
+            var xanConsoleMsgs = []; // <?= 'Session Updated: ' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . ';' ?>
         </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -322,22 +323,28 @@
                         <ul class="navbar-nav mt-2 mt-sm-0">
 
                             <!-- ------ -->
-							<?= xan\navItemModuleButton( $mmHome, $resp->moduleName ) ?>
+							<?= xan\navItemButtonModule( $mmHome, $resp->moduleName ) ?>
                             <!-- ------ -->
-							<?= xan\navItemModuleButton( $mmContactsT, $resp->moduleName ) ?>
+							<?= xan\navItemButtonModule( $mmContactsT, $resp->moduleName ) ?>
                             <!-- ------ -->
                             <li class="nav-item dropdown">
                                 <a class="nav-item-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $mmUsersT->FontAwesome ?></i></a>
                                 <div class="dropdown-menu text" aria-labelledby="navbarDropdown">
 									<?php
 									if ( $_SESSION[ SESS_USER ][ 'PrivAdmin' ] === 'Yes' ) {
-										echo xan\navItemModuleDropdown( $mmServerStats );
+										echo xan\navItemDropdownModule( $mmServerStats );
 										echo xan\navDivider();
-										echo xan\navItemModuleDropdown( $mmSettingsT );
-										echo xan\navItemModuleDropdown( $mmUsersT );
+										echo xan\navItemDropdownModule( $mmSettingsT );
+										echo xan\navItemDropdownModule( $mmUsersT );
 										echo xan\navDivider();
-									} ?>
-									<?= xan\navItemModuleDropdown( $mmUsersLogout ) ?>
+									}
+									if ( \xan\isNotEmpty( $_SESSION[ SESS_USER ][ UUIDUSERS ] ) ) {
+										echo \xan\navItemDropdownCustom( FA_PASSWORD . STR_NBSP . 'Change My Password', /** @lang JavaScript */ "$('#UsersPasswordChange_Modal').modal('show');" );
+										echo xan\navDivider();
+										require_once( PATH_ROOT_APP . 'settings-users/contentModal-users-passwordChange.php' );
+									}
+									?>
+									<?= xan\navItemDropdownModule( $mmUsersLogout ) ?>
 									<?= xan\navDivider() ?>
                                     <span class="dropdown-item disabled">Session Info</span>
                                     <span class="dropdown-item disabled">Email: <?= $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?></span>
@@ -351,7 +358,7 @@
                         </ul>
                     </div>
 
-                    <!-- Load Time and Message -->
+                    <!-- Message and Spinner -->
                     <span id="xanMessage" class="small text-muted mr-1"></span>
 				
 				<?php endif ?>
@@ -387,6 +394,7 @@
 
     <script>
         function xanDo( params ) {
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_BEGIN ?>", true, false );
             // alert( "xanDo params = " + JSON.stringify( params ) );
             let timeBegin = new Date();
             // Window in Current or New Window
@@ -403,60 +411,74 @@
                 success: function ( successResult, status, xhr ) {
                     // JSON Get
                     // alert( "Success: " + successResult );
-                    let result;
+                    if ( successResult === "" ) {
+                        alert( "Error: xanDo Result is Blank; Params: " + JSON.stringify( params ) );
+                        return;
+                    }
+                    let xanDoJS;
                     try {
-                        result = JSON.parse( successResult );
+                        xanDoJS = JSON.parse( successResult );
                     } catch ( e ) {
-                        alert( "xanDo JSON Parse Error: " + e + "; Result: " + successResult );
+                        alert( "Error: xanDo Result Cannot Parse: " + e + "; Result: " + successResult );
                         return;
                     }
 
-                    // DoAfter Scripts
-					<?= xan\respAToString( $resp->scriptsDoAfterA ) ?>
-
-                    // DoAfter Common
-                    if ( result[ "Do_PageTitle" ] !== undefined ) {
-                        document.title = result[ "Do_PageTitle" ];
-                    }
-
-                    // Do Selectors Assign HTML
-                    if ( result[ "Do_HTMLSelectorName" ] !== undefined ) {
+                    // Do Selectors
+                    if ( xanDoJS !== undefined ) {
                         let i;
-                        for ( i = 0; i < result[ "Do_HTMLSelectorName" ].length; i++ ) {
-                            $( result[ "Do_HTMLSelectorName" ][ i ] ).html( result[ "Do_HTMLSelectorData" ][ i ] );
-                        }
-                    }
+                        for ( i = 0; i < xanDoJS.length; i++ ) {
 
-                    // Do Selectors Assign Val
-                    if ( result[ "Do_ValSelectorName" ] !== undefined ) {
-                        let i;
-                        for ( i = 0; i < result[ "Do_ValSelectorName" ].length; i++ ) {
-                            $( result[ "Do_ValSelectorName" ][ i ] ).val( result[ "Do_ValSelectorData" ][ i ] );
-                        }
-                    }
+                            switch ( xanDoJS[ i ][ "xanDo_Action" ] ) {
 
-                    // Do Selectors Hide/Show
-                    if ( result[ "Do_HideShowSelectorName" ] !== undefined ) {
-                        let i;
-                        for ( i = 0; i < result[ "Do_HideShowSelectorName" ].length; i++ ) {
-                            if ( result[ "Do_HideShowSelectorVis" ][ i ] === "Hide" ) {
-                                $( result[ "Do_HideShowSelectorName" ][ i ] ).hide();
-                            } else {
-                                $( result[ "Do_HideShowSelectorName" ][ i ] ).show();
+                                case "setPageTitle":
+                                    document.title = xanDoJS[ i ][ "xanDo_Value" ];
+                                    break;
+
+                                case "setPageURL":
+                                    theWindow.location.href = xanDoJS[ i ][ "xanDo_Value" ]
+                                    break;
+
+                                case "hideOrShow":
+                                    if ( xanDoJS[ i ][ "xanDo_Value" ] === "hide" ) {
+                                        $( xanDoJS[ i ][ "xanDo_Selector" ] ).hide();
+                                    } else {
+                                        $( xanDoJS[ i ][ "xanDo_Selector" ] ).show();
+                                    }
+                                    break;
+
+                                case "hideOrShowModal":
+                                    if ( xanDoJS[ i ][ "xanDo_Value" ] === "hide" ) {
+                                        $( xanDoJS[ i ][ "xanDo_Selector" ] ).modal( "hide" );
+                                    } else {
+                                        $( xanDoJS[ i ][ "xanDo_Selector" ] ).modal( "show" );
+                                    }
+                                    break;
+
+
+                                case "setHTML":
+                                    $( xanDoJS[ i ][ "xanDo_Selector" ] ).html( xanDoJS[ i ][ "xanDo_Value" ] );
+                                    break;
+
+                                case "setVal":
+                                    $( xanDoJS[ i ][ "xanDo_Selector" ] ).val( xanDoJS[ i ][ "xanDo_Value" ] );
+                                    break;
+
+                                case "setHTMLProperty":
+                                    $( xanDoJS[ i ][ "xanDo_Selector" ] ).prop( xanDoJS[ i ][ "xanDo_Property" ], xanDoJS[ i ][ "xanDo_Value" ] );
+                                    break;
+
+                                case "runInit":
+                                    xanDoInit();
+                                    break;
+
+                                case "setFocus":
+                                    $( xanDoJS[ i ][ "xanDo_Selector" ] ).focus().select();
+                                    break;
+
                             }
+
                         }
                     }
-
-                    // Do URL Load
-                    if ( result[ "Do_URLLoad" ] !== undefined ) {
-                        theWindow.location.href = result[ "Do_URLLoad" ];
-                    }
-
-                    // Do Init Run
-                    if ( result[ "Do_RunInit" ] ) {
-                        xanDoInit();
-                    }
-                    
 
                     // Focus from Session
 					<?php
@@ -466,18 +488,13 @@
 					}
 					?>
 
-                    // Do Selector Focus
-                    if ( result[ "Do_FocusSelectorName" ] !== undefined ) {
-                        $( result[ "Do_FocusSelectorName" ] ).focus().select();
-                    }
-
                     // Notify
                     let timeEnd = new Date();
                     let timeSecs = ( timeEnd.getMilliseconds() - timeBegin.getMilliseconds() ) / 1000;
-                    xanMessageDisplay( "#xanMessage", Math.abs( timeSecs ) + "s <span class='text-success'><?= FA_PSOS_SUCCESS ?> " + params[ "Msg" ] + "</span>", true, true );
+                    xanMessageDisplay( "#xanMessage", "<span class='text-success'> " + params[ "Msg" ] + " " + Math.abs( timeSecs ) + "s</span>", true, true );
                 },
                 error: function ( xhr, status, error ) {
-                    xanMessageDisplay( "#xanMessage", "<span class='text-danger'><?= FA_PSOS_ERROR ?> Loading " + params[ "Msg" ] + " Error:" + error + "</span>", false, true );
+                    xanMessageDisplay( "#xanMessage", "<span class='text-danger'><?= FA_PSOS_ERROR ?> " + params[ "Msg" ] + " Error:" + error + "</span>", false, true );
                 }
             } );
         }
@@ -512,9 +529,7 @@
 
         function xanDoSave( event ) {
             thisInput = $( this );
-            let messageText = "Saving...";
-            let messageTextSuccess = "Saved";
-            xanMessageDisplay( "#xanMessage", "<span class='text-success'><?= FA_PSOS_BEGIN ?> " + messageText + "</span>", false, false );
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_BEGIN ?>", true, false );
 
             let thisInputID = $( thisInput ).attr( "id" );
             let thisInputName = $( thisInput ).attr( "name" );
@@ -563,12 +578,11 @@
                                 }
                             }
                         }
-                        //xanAjaxRecSavePostProcess( thisFormName, thisTableName, thisKeyName, thisKeyValue );
-                        xanMessageDisplay( "#xanMessage", result[ 0 ][ "AjaxLoadTime" ] + " <span class='text-success'><?= FA_PSOS_SUCCESS ?> " + messageTextSuccess + " " + result[ 0 ][ 'AjaxColumnLabel' ] + "</span>", true, true );
+                        xanMessageDisplay( "#xanMessage", "<span class='text-success'> Saved " + result[ 0 ][ 'AjaxColumnLabel' ] + " " + result[ 0 ][ "AjaxLoadTime" ] + "</span>", true, true );
                     },
                     error: function ( xhr, status, error ) {
                         //alert( "Error: " + status + " / " + error );
-                        xanMessageDisplay( "#xanMessage", "<span class='text-danger'><?= FA_PSOS_ERROR ?> " + messageText + " Error: " + error + "</span>", false, true );
+                        xanMessageDisplay( "#xanMessage", "<span class='text-danger'><?= FA_PSOS_ERROR ?>" + " Saving Error: " + error + "</span>", false, true );
                     }
                 } );
             }
@@ -597,10 +611,9 @@
                     e.preventDefault();
                 }
             }, false );
-
-
+            
             // Message Display
-            xanMessageDisplay( "#xanMessage", "<?= xan\microsecsDiff( $pageload_begin ) ?> <span class='text-success'><i class='fas fa-stopwatch'></i> Loading Page</span>", true, true );
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_STOPWATCH ?> <span class='text-success'>Load Page <?= xan\microsecsDiff( $pageload_begin ) ?></span>", true, true );
 
             // Scripts Onload
 			<?= xan\respAToString( $resp->scriptsOnLoadA ) ?>

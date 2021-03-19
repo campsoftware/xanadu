@@ -1,15 +1,18 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate Contact ID
-if ( xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
-    $ValidationMessage[] = "Contact ID is Blank";
+if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
+    $ValidationMsgA[] = "Contact ID is Blank";
 }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-    $aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+    $aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMsgA ) );
     $aloe_response->content_set( 'Error' );
     return;
 }
@@ -23,8 +26,7 @@ $recs->recordDuplicate( $doParam[ 'IDContacts' ] );
 
 // Error Check
 if ( $recs->errorB || $recs->rowCount < 1 ) {
-	$aloe_response->status_set( '500 Internal Service Error: ' . $recs->messageExtra . '; ' . $recs->messageSQL );
-	return;
+	$ValidationMsgA[] = 'Contact Duplicate Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 } else {
 	// Recs Loop
 	$recs->rowIndex = -1;
@@ -37,24 +39,37 @@ if ( $recs->errorB || $recs->rowCount < 1 ) {
 	}
 }
 
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '500 Internal Service Error: ' . implode( ", ", $ValidationMsgA ) );
+	$aloe_response->content_set( 'Error' );
+	return;
+}
+
 // Duplicate Related ContactComms
 $recs = new \xan\recs( $mmContactsCommsT );
 $recs->recordDuplicateRelated( $mmContactsT->NameTableKey, $doParam[ 'IDContacts' ], $UUIDNew );
 
 // Error Check
-if ( $recs->errorB || $recs->rowCount < 1 ) {
-	$aloe_response->status_set( '500 Internal Service Error: ' . $recs->messageExtra . '; ' . $recs->messageSQL );
+if ( $recs->errorB ) {
+	$ValidationMsgA[] = 'Comms Duplicate Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
+}
+
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '500 Internal Service Error: ' . implode( ", ", $ValidationMsgA ) );
+	$aloe_response->content_set( 'Error' );
 	return;
 }
 
-// Result
-$result[ 'Do_URLLoad' ] = $mmContactsT->URLFull . $UUIDNew;
+// Go to the Record
+$resp->jsSetPageURL( $mmContactsT->URLFull . $UUIDNew );
 
-// Set Focus Selector
-$_SESSION[ SESS_FOCUS_SELECTOR ] = '#xf_' . $UUIDNew . '_NameCompany';
+// Set Focus
+$resp->jsSetFocus( '#xf_' . $UUIDNew . '_NameCompany' );
 
-// Return JSON
-$resultJSON = json_encode( $result );
-$aloe_response->content_set( $resultJSON );
+// Actions Return as JSON
+$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 return;
+?>
 ?>

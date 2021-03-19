@@ -22,12 +22,12 @@ $pFileTypes = xan\valuePOST( 'fileTypes' );
 
 // Validate Params
 $resultArray[ 'Log' ] .= '$pKey = ' . $pKey . ' ';
-if ( xan\isEmpty( $pKey ) ) {
+if ( \xan\isEmpty( $pKey ) ) {
     $resultArray[ 'Message' ] .= 'The fileKey is empty. ';
     $uploadOk = 0;
 }
 $resultArray[ 'Log' ] .= '$pFileTypes = ' . $pFileTypes . ' ';
-if ( xan\isEmpty( $pFileTypes ) ) {
+if ( \xan\isEmpty( $pFileTypes ) ) {
     $resultArray[ 'Message' ] .= 'The fileTypes is empty. ';
     $uploadOk = 0;
 }
