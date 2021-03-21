@@ -8,10 +8,13 @@ function xanEventReturnFalse( e ) {
 // Messages
 
 function xanMessageDisplay( selector, html, doFadeOut, doConsoleLog ) {
-    $( selector ).fadeIn( 'fast' );
-    $( selector ).html( html );
+    let theDate = new Date();
+    let theID = theDate.getMilliseconds();
+    let theMsg = "<span id='" + theID + "'>" + html + "&nbsp;&nbsp;</span>";
+    $( selector ).append( theMsg );
+    // $( "#" + theID ).fadeIn( "fast" );
     if ( doFadeOut === true ) {
-        $( selector ).delay( 2000 ).fadeOut( 'slow' );
+        $( "#" + theID ).delay( 3000 ).fadeOut( 'slow' );
     }
     if ( doConsoleLog === true ) {
         console.log( xanConsoleCleanHTML( html ) );

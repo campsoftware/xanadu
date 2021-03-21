@@ -16,7 +16,7 @@ if ( ( $path_components[ 0 ] == 'xanDoSave' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		require_once( PATH_ROOT_XAN . 'do-save.php' );
+		require_once( 'xan/do-save.php' );
 		return;
 	}
 }
@@ -36,7 +36,7 @@ if ( ( $path_components[ 0 ] == 'login' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
 	$_SESSION[ SES_PATH ] = $path;
 	$_SESSION[ SES_INFO ] = '';
-	require_once( 'app/users-login/content-0-page.php' );
+	require_once( 'app/users-login/content-page.php' );
 	return;
 }
 
@@ -53,7 +53,7 @@ if ( ( $path_components[ 0 ] == 'register' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
 	$_SESSION[ SES_PATH ] = $path;
 	$_SESSION[ SES_INFO ] = '';
-	require_once( 'app/users-register/content-0-page.php' );
+	require_once( 'app/users-register/content-page.php' );
 	return;
 }
 
@@ -70,7 +70,7 @@ if ( ( $path_components[ 0 ] == 'passwordreset' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
 	$_SESSION[ SES_PATH ] = $path;
 	$_SESSION[ SES_INFO ] = '';
-	require_once( 'app/users-passwordreset/content-0-page.php' );
+	require_once( 'app/users-passwordreset/content-page.php' );
 	return;
 }
 
@@ -108,7 +108,7 @@ if ( ( $path_components[ 0 ] == 'home' ) || ( $aloe_request->path_get() == '' ) 
 	} else {
 		$_SESSION[ SES_PATH ] = $path;
 		$_SESSION[ SES_INFO ] = '';
-		require_once( 'app/home/content-0-page.php' );
+		require_once( 'app/home/content-page.php' );
 		return;
 	}
 }
@@ -125,7 +125,7 @@ if ( ( $path_components[ 0 ] == 'contacts' ) ) {
 	} else {
 		$_SESSION[ SES_PATH ] = $path;
 		$_SESSION[ SES_INFO ] = '';
-		require_once( 'app/contacts/content-0-page.php' );
+		require_once( 'app/contacts/content-page.php' );
 		return;
 	}
 }
@@ -154,7 +154,7 @@ if ( ( $path_components[ 0 ] == 'settings' ) ) {
 	} else {
 		$_SESSION[ SES_PATH ] = $path;
 		$_SESSION[ SES_INFO ] = '';
-		require_once( 'app/settings/content-0-page.php' );
+		require_once( 'app/settings/content-page.php' );
 		return;
 	}
 }
@@ -180,7 +180,7 @@ if ( ( $path_components[ 0 ] == 'server-stats' ) ) {
 	} else {
 		$_SESSION[ SES_PATH ] = $path;
 		$_SESSION[ SES_INFO ] = '';
-		require_once( 'app/server-stats/content-0-page.php' );
+		require_once( 'app/server-stats/content-page.php' );
 		return;
 	}
 }
@@ -193,7 +193,7 @@ if ( ( $path_components[ 0 ] == 'settings-users' ) ) {
 	} else {
 		$_SESSION[ SES_PATH ] = $path;
 		$_SESSION[ SES_INFO ] = '';
-		require_once( 'app/settings-users/content-0-page.php' );
+		require_once( 'app/settings-users/content-page.php' );
 		return;
 	}
 }
@@ -222,5 +222,5 @@ if ( $redirectToLogin ) {
 ///////////////////////////////////////////////////////////
 // 404 - DO NOT LOAD THE SESSION
 $_SESSION[ SES_PATH ] = '404: ' . $path;
-require_once( 'app/server-404/content-0-page.php' );
+require_once( 'app/server-404/content-page.php' );
 ?>

@@ -3,25 +3,27 @@
 $doParam = json_decode( $_POST[ 'params' ], true );
 
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate From Ajax
 if ( xan\isAjax() === false ) {
-	$ValidationMessage[] = "Do Validation 01";
+	$ValidationMsgA[] = "Call Method Error";
 }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-	$ValidationMessage[] = "In URL: " . $doParam[ 'URL' ] . '; Do: ' . $doParam[ 'Do' ];
-	$aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$ValidationMsgA[] = "In URL: " . $doParam[ 'URL' ] . '; Do: ' . $doParam[ 'Do' ];
+	$aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMsgA ) );
 	$aloe_response->content_set( 'Error' );
 	return;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Do ContentLoadAll
 if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
-	// Response Init [ Matches Content ]
-	$resp = new xan\response;
+	// Response Init
+	$resp = new \xan\response;
 	$resp->reqPath = $aloe_request->path_get();
 	$resp->moduleName = $mmSettingsT->NameModule;
 	$resp->headTitle = $mmSettingsT->NameModule;
@@ -30,26 +32,31 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->contentHeader = $mmSettingsT->FontAwesome . STR_NBSP . $mmSettingsT->NameModule . STR_NBSP;
 	
 	// Content Area Load
-	require_once( 'content-1-cards.php' );
+	require_once( 'content-cards.php' );
 	
-	// Return
-	$result[ 'Do_PageTitle' ] = $resp->headTitle;
-	$result[ 'Do_HTMLSelectorName' ][ 0 ] = '#pageContentHeader';
-	$result[ 'Do_HTMLSelectorData' ][ 0 ] = $resp->headTitle;
-	$result[ 'Do_HTMLSelectorName' ][ 1 ] = '#pageContentBody';
-	$result[ 'Do_HTMLSelectorData' ][ 1 ] = xan\respAToString( $resp->contentAreaA );
-	$result[ 'Do_RunInit' ] = true;
+	// Response Actions Append
+	$resp->jsSetPageTitle( $resp->headTitle );
+	$resp->jsSetHTML( '#pageContentHeader', $resp->headTitle );
+	$resp->jsSetHTML( '#pageContentBody', xan\respAToString( $resp->contentAreaA ) );
+	$resp->jsRunInit();
 	
-	// Return JSON
-	$aloe_response->content_set( json_encode( $result ) );
+	// Actions Return as JSON
+	$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 	return;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Do Init
 if ( $doParam[ 'Do' ] === 'Init' ) {
-	$result[ 'Do_RunInit' ] = true;
-	$resultJSON = json_encode( $result );
-	$aloe_response->content_set( $resultJSON );
+	// Response Init
+	$resp = new \xan\response;
+	
+	// Response Actions Append
+	$resp->jsRunInit();
+	
+	// Actions Return as JSON
+	$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 	return;
 }
 ?>

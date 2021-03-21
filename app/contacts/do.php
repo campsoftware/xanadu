@@ -3,25 +3,27 @@
 $doParam = json_decode( $_POST[ 'params' ], true );
 
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate From Ajax
 if ( xan\isAjax() === false ) {
-	$ValidationMessage[] = "Do Validation 01";
+	$ValidationMsgA[] = "Call Method Error";
 }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-	$ValidationMessage[] = "In URL: " . $doParam[ 'URL' ] . '; Do: ' . $doParam[ 'Do' ];
-	$aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$ValidationMsgA[] = "In URL: " . $doParam[ 'URL' ] . '; Do: ' . $doParam[ 'Do' ];
+	$aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMsgA ) );
 	$aloe_response->content_set( 'Error' );
 	return;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Do ContentLoadAll
 if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
-	// Response Init [ Matches Content ]
-	$resp = new xan\response;
+	// Response Init
+	$resp = new \xan\response;
 	$resp->reqPath = $aloe_request->path_get();
 	$resp->reqID = $doParam[ 'IDContacts' ];
 	$resp->moduleName = $mmContactsT->NameModule;
@@ -31,74 +33,91 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->contentHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NameModule . STR_NBSP;
 	
 	// Content Area Load
-	require_once( 'content-1-cards.php' );
+	require_once( 'content-cards.php' );
 	
-	// Return
-	$result[ 'Do_PageTitle' ] = $resp->headTitle;
-	$result[ 'Do_HTMLSelectorName' ][ 0 ] = '#pageContentHeader';
-	$result[ 'Do_HTMLSelectorData' ][ 0 ] = $resp->headTitle;
-	$result[ 'Do_HTMLSelectorName' ][ 1 ] = '#pageContentBody';
-	$result[ 'Do_HTMLSelectorData' ][ 1 ] = xan\respAToString( $resp->contentAreaA );
-	$result[ 'Do_RunInit' ] = true;
+	// Response Actions Append
+	$resp->jsSetPageTitle( $resp->headTitle );
+	$resp->jsSetHTML( '#pageContentHeader', $resp->headTitle );
+	$resp->jsSetHTML( '#pageContentBody', xan\respAToString( $resp->contentAreaA ) );
+	$resp->jsRunInit();
 	
-	// Return JSON
-	$aloe_response->content_set( json_encode( $result ) );
+	// Actions Return as JSON
+	$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 	return;
 }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Do Init
 if ( $doParam[ 'Do' ] === 'Init' ) {
-	$result[ 'Do_RunInit' ] = true;
-	$resultJSON = json_encode( $result );
-	$aloe_response->content_set( $resultJSON );
+	// Response Init
+	$resp = new \xan\response;
+	
+	// Response Actions Append
+	$resp->jsRunInit();
+	
+	// Actions Return as JSON
+	$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 	return;
 }
 
-// Do Things
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Do Contacts Name Update
 if ( $doParam[ 'Do' ] === 'ContactsNameUpdate' ) {
-	require_once( "do-contacts-name-update.php" );
+	require_once( "do-contacts-nameUpdate.php" );
 	return;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Do Contacts Picker
 if ( $doParam[ 'Do' ] === 'ContactsPicker' ) {
 	require_once( "do-contacts-picker.php" );
 	return;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Do Contacts Print
 if ( $doParam[ 'Do' ] === 'ContactsPrint' ) {
 	require_once( "do-contacts-print.php" );
 	return;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // Records Delete, Duplicate, Create
 if ( $doParam[ 'Do' ] === 'ContactsRecDelete' ) {
-	require_once( "do-contacts-rec-delete.php" );
+	require_once( "do-contacts-recDelete.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'ContactsRecDuplicate' ) {
-	require_once( "do-contacts-rec-duplicate.php" );
+	require_once( "do-contacts-recDuplicate.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'ContactsRecNew' ) {
-	require_once( "do-contacts-rec-new.php" );
+	require_once( "do-contacts-recNew.php" );
 	return;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // ContactsComms Delete, Duplicate, Create
 if ( $doParam[ 'Do' ] === 'ContactsCommsRecDelete' ) {
-	require_once( "do-contactscomms-rec-delete.php" );
+	require_once( "do-contactscomms-recDelete.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'ContactsCommsRecNew' ) {
-	require_once( "do-contactscomms-rec-new.php" );
+	require_once( "do-contactscomms-recNew.php" );
 	return;
 }
 
 if ( $doParam[ 'Do' ] === 'ContactsCommsURLGet' ) {
-	require_once( "do-contactscomms-url-get.php" );
+	require_once( "do-contactscomms-urlGet.php" );
 	return;
 }
 ?>

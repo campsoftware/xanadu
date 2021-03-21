@@ -1,20 +1,23 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate Contact ID for Foreign Keys
-if ( xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
-    $ValidationMessage[] = 'Contact ID is Invalid';
+if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
+    $ValidationMsgA[] = 'Contact ID is Invalid';
 }
 
 // Validate Search Term // Blank is OK to Find All
-// if ( xan\isEmpty( $doParam[ 'SearchTerm' ] ) ) {
-//     $ValidationMessage[] = 'Search Term is Blank';
+// if ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ) {
+//     $ValidationMsgA[] = 'Search Term is Blank';
 // }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-    $aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+    $aloe_response->status_set( '400 Bad Request: ' . implode( ', ', $ValidationMsgA ) );
     $aloe_response->content_set( 'Error' );
     return;
 }
@@ -27,9 +30,9 @@ $cardTemp = new \xan\eleCard( '', '', '');
 
 // Query Search Term Prep
 $queryColumns = array( 'NameCompany', 'NameFirst', 'NameLast' );
-$queryWhere = UUIDTENANTS . ' = ? ' . ( xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? '' : 'AND ( ' . xan\dbSearchTermSQL( $queryColumns ) . ' )' );
-$queryTermBindNames = ( xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : xan\dbSearchTermBindNames( $queryColumns ) );
-$queryTermBindValues = ( xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : xan\dbSearchTermBindValues( $queryColumns, $doParam[ 'SearchTerm' ] ) );
+$queryWhere = UUIDTENANTS . ' = ? ' . ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? '' : 'AND ( ' . xan\dbSearchTermSQL( $queryColumns ) . ' )' );
+$queryTermBindNames = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : xan\dbSearchTermBindNames( $queryColumns ) );
+$queryTermBindValues = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : xan\dbSearchTermBindValues( $queryColumns, $doParam[ 'SearchTerm' ] ) );
 
 // Query Actual
 $recs = new xan\recs( $mmContactsT );
@@ -40,7 +43,7 @@ $recs->query();
 
 // Error Check
 if ( $recs->errorB ) {
-    $cardListHeader .= 'Error:  ' . $recs[ DB_ERRORMESSAGE ];
+    $ValidationMsgA[] = 'Name Update Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 } elseif ( $recs->rowCount < 1 ) {
     $cardListHeader .= ': None Found';
 } else {
@@ -55,19 +58,20 @@ if ( $recs->errorB ) {
         $itemContent = $mmContactsT->getListItem( $idPrefix, $recs, $onClick );
         $itemID = $idPrefix . $recsListRow[ $mmContactsT->NameTableKey ];
         $cardListContent .= $cardTemp->renderListItemLink( $itemContent, $recs->rowIndex + 1, $itemID, false, $onClick );
-        
     }
 }
 
-// Result
-$result[ 'Do_HTMLSelectorName' ][ 0 ] = '#' . $idPrefix . '_ListItems';
-$result[ 'Do_HTMLSelectorData' ][ 0 ] = $cardListHeader . '<div class="list-group list-group-flush">' . $cardListContent . '</div>';
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+    $aloe_response->status_set( '500 Internal Service Error: ' . implode( ", ", $ValidationMsgA ) );
+    $aloe_response->content_set( 'Error' );
+    return;
+}
 
-// Set Focus Selector
-//$_SESSION[ SESS_FOCUS_SELECTOR ] = '#xf_' . $UUIDNew . '_Data';
+// Process
+$resp->jsSetHTML( '#' . $idPrefix . '_ListItems', $cardListHeader . '<div class="list-group list-group-flush">' . $cardListContent . '</div>' );
 
-// Return JSON
-$resultJSON = json_encode( $result );
-$aloe_response->content_set( $resultJSON );
+// Actions Return as JSON
+$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 return;
 ?>

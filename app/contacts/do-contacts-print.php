@@ -1,29 +1,31 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+
 // Validate Init
-$ValidationMessage = array();
+$ValidationMsgA = array();
 
 // Validate Contact ID
-if ( xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
-    $ValidationMessage[] = "Contact ID is Blank";
+if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
+    $ValidationMsgA[] = "Contact ID is Blank";
 }
 
 // Validate Format
-if ( xan\isEmpty( $doParam[ 'Format' ] ) ) {
-    $ValidationMessage[] = "Format is Blank";
+if ( \xan\isEmpty( $doParam[ 'Format' ] ) ) {
+    $ValidationMsgA[] = "Format is Blank";
 }
 
 // Validate Template
-if ( xan\isEmpty( $doParam[ 'Template' ] ) ) {
-    $ValidationMessage[] = "Template is Blank";
+if ( \xan\isEmpty( $doParam[ 'Template' ] ) ) {
+    $ValidationMsgA[] = "Template is Blank";
 }
 
-// Invalid Response
-if ( !empty( $ValidationMessage ) ) {
-    $aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMessage ) );
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+    $aloe_response->status_set( '400 Bad Request: ' . implode( ", ", $ValidationMsgA ) );
     $aloe_response->content_set( 'Error' );
     return;
 }
-
 
 ///////////////////////////////////////////////////////////
 // Records Get
@@ -35,11 +37,10 @@ $recsContacts->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey 
 $recsContacts->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
 $recsContacts->query();
 $recsContacts->rowsMassageForGUI( true );
+
 // Error Check
 if ( $recsContacts->errorB ) {
-    $aloe_response->status_set( '500 Internal Service Error: ' . 'SELECT 01' );
-    $aloe_response->content_set( 'Error' );
-    return;
+	$ValidationMsgA[] = 'Contact Print Error' . $recsContacts->messageExtra . '; ' . $recsContacts->messageSQL;
 } elseif ( $recsContacts->rowCount < 1 ) {
 } else {
 }
@@ -50,16 +51,21 @@ $recsContactsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable .
 $recsContactsComms->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey );
 $recsContactsComms->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
 $recsContactsComms->query();
-$recsContacts->rowsMassageForGUI( true );
+$recsContactsComms->rowsMassageForGUI( true );
+
 // Error Check
 if ( $recsContactsComms->errorB ) {
-    $aloe_response->status_set( '500 Internal Service Error: ' . 'SELECT 02' );
-    $aloe_response->content_set( 'Error' );
-    return;
+	$ValidationMsgA[] = 'Contact Print Error' . $recsContactsComms->messageExtra . '; ' . $recsContactsComms->messageSQL;
 } elseif ( $recsContactsComms->rowCount < 1 ) {
 } else {
 }
 
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '500 Internal Service Error: ' . implode( ", ", $ValidationMsgA ) );
+	$aloe_response->content_set( 'Error' );
+	return;
+}
 
 // HTML Create
 ob_start();
@@ -215,14 +221,18 @@ $docParams = '--quiet --page-size Letter --orientation Portrait --lowquality --e
 $printer = new \xan\printer();
 $resultHTMLPDFer = $printer->htmlToFile( $doParam[ 'Format' ], $doParam[ 'Template' ], $docTitle, $docParams, $docHeader, $docBody, $docFooter );
 
-// Result
-$result[ 'Do_URLLoad' ] = $resultHTMLPDFer[ 'url' ];
+// Validate Response
+if ( !empty( $ValidationMsgA ) ) {
+	$aloe_response->status_set( '500 Internal Service Error: ' . implode( ", ", $ValidationMsgA ) );
+	$aloe_response->content_set( 'Error' );
+	return;
+}
 
-// Set Focus Selector
-//$_SESSION[ SESS_FOCUS_SELECTOR ] = '#xf_' . $UUIDNew . '_Data';
+// Redirect
+$resp->jsSetPageURL( $resultHTMLPDFer[ 'url' ] );
 
-// Return JSON
-$resultJSON = json_encode( $result );
-$aloe_response->content_set( $resultJSON );
+// Actions Return as JSON
+$resp->jsSetHTML( '#formMessage', implode( ', ', $ValidationMsgA ) );
+$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 return;
 ?>

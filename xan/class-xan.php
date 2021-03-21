@@ -5,6 +5,7 @@ namespace xan;
 // Session
 define( 'SES_BEGIN', 'SES_BEGIN' );
 define( 'SES_CHANGE', 'SES_CHANGE' );
+define( 'SES_EXPIRES', 'SES_EXPIRES' );
 define( 'SES_PATH', 'SES_PATH' );
 define( 'SES_INFO', 'SES_INFO' );
 define( 'SESS_USER', 'SESS_USER' );
@@ -120,13 +121,16 @@ define( 'ZINDEX_TOP', '1000' );
 // FontAwesome
 define( 'FA_SORT_ASC', 'Asc' );
 define( 'FA_SORT_DESC', 'Desc' );
-
 define( 'FA_LIST', '<i class=\'fas fa-th-list\'></i>' );
 define( 'FA_SEARCH', '<i class=\'fas fa-search\'></i>' );
 define( 'FA_SEARCHPLUS', '<i class=\'fas fa-search-plus\'></i>' );
 define( 'FA_SORT', '<i class=\'fas fa-sort\'></i>' );
 define( 'FA_CLEAR', '<i class=\'fas fa-times-circle\'></i>' );
 define( 'FA_UPLOAD', '<i class=\'fas fa-file-upload\'></i>' ); // fa-file-upload, fa-cloud-upload
+define( 'FA_PASSWORD', '<i class=\'fas fa-key\'></i>' );
+define( 'FA_STOPWATCH', '<i class=\'fas fa-stopwatch\'></i>' );
+define( 'FA_CLOUD', '<i class=\'fas fa-cloud\'></i>' );
+define( 'FA_SPINNER', '<i class=\'fas fa-spinner fa-spin\'></i>' );
 
 define( 'FA_NEW', '<i class=\'fas fa-plus\'></i>' );
 define( 'FA_DUPLICATE', '<i class=\'fas fa-clone\'></i>' );
@@ -139,7 +143,7 @@ define( 'FA_MENU', '<i class=\'fas fa-bars\'></i>' );
 define( 'FA_SELECT', '<i class=\'fas fa-caret-down\'></i>' );
 
 define( 'FA_PSOS_BEGIN', '<i class=\'fas fa-cloud\'></i>' );
-define( 'FA_PSOS_SUCCESS', '<i class=\'fas fa-check-square\'></i>' );
+define( 'FA_PSOS_STOPWATCH', '<i class=\'fas fa-stopwatch\'></i>' );
 define( 'FA_PSOS_ERROR', '<i class=\'fas fa-exclamation-triangle\'></i>' );
 
 // Bucket File Types
@@ -174,12 +178,11 @@ define( 'DB_EXTRAMESSAGE', 'ExtraMessage' );
 define( 'FORM_OBFUSCATE', true );
 define( 'FORM_PREFIX', 'xf_' );
 define( 'FORM_META', 'Meta' );
-define( 'FORM_TIMEOUT_SECONDS', 60 * 60 * 12 );  // 12 Hours
+define( 'FORM_TIMEOUT_SECONDS', APP_COOKIE_SESSION_SECONDS + 60 );  // Expire Shortly After Session Expires
 define( 'FORM_TIME', 'Time' );
 define( 'FORM_TABLENAME', 'TableName' );
 define( 'FORM_KEYNAME', 'KeyName' );
 define( 'FORM_KEYVALUE', 'KeyValue' );
-
 
 
 class response {
@@ -199,13 +202,74 @@ class response {
 	public $contentAreaA = [];
 	public $contentEndA = [];
 	public $scriptsDoInitA = [];
-	public $scriptsDoAfterA = [];
 	public $scriptsExtraA = [];
 	public $scriptsOnLoadA = [];
+	
+	// Do Actions
+	public $jsActionsA = [];
 
 	// Constructor
 	public function __construct() {
 	}
+	
+	public function jsSetPageTitle( $value ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'setPageTitle';
+        $this->jsActionsA[ $index ][ 'xanDo_Value' ] = $value;
+    }
+    
+    public function jsSetPageURL( $value ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'setPageURL';
+        $this->jsActionsA[ $index ][ 'xanDo_Value' ] = $value;
+    }
+	
+    public function jsHideOrShow( $selector, $value ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'hideOrShow';
+        $this->jsActionsA[ $index ][ 'xanDo_Selector' ] = $selector;
+        $this->jsActionsA[ $index ][ 'xanDo_Value' ] = strtolower($value);
+    }
+    
+    public function jsHideOrShowModal( $selector, $value ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'hideOrShowModal';
+        $this->jsActionsA[ $index ][ 'xanDo_Selector' ] = $selector;
+        $this->jsActionsA[ $index ][ 'xanDo_Value' ] = strtolower($value);
+    }
+    
+    public function jsSetHTML( $selector, $value ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'setHTML';
+        $this->jsActionsA[ $index ][ 'xanDo_Selector' ] = $selector;
+        $this->jsActionsA[ $index ][ 'xanDo_Value' ] = $value;
+    }
+    
+    public function jsSetVal( $selector, $value ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'setVal';
+        $this->jsActionsA[ $index ][ 'xanDo_Selector' ] = $selector;
+        $this->jsActionsA[ $index ][ 'xanDo_Value' ] = $value;
+    }
+    
+    public function jsSetHTMLProperty( $selector, $property, $value ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'setHTMLProperty';
+        $this->jsActionsA[ $index ][ 'xanDo_Selector' ]  = $selector;
+        $this->jsActionsA[ $index ][ 'xanDo_Property' ] = $property;
+        $this->jsActionsA[ $index ][ 'xanDo_Value' ] = $value;
+    }
+    
+    public function jsRunInit(){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'runInit';
+    }
+    
+    public function jsSetFocus( $selector ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'setFocus';
+        $this->jsActionsA[ $index ][ 'xanDo_Selector' ]  = $selector;
+    }
 }
 
 
@@ -1134,7 +1198,10 @@ class eleModal extends element {
 	public $body = '';
 	public $footer = '';
 	public $jsInit = '';
-	public $buttonDanger = false;
+	// Optional
+	public $buttonCancelAutoDismiss = true;
+	public $buttonActionAutoDismiss = true;
+	public $buttonActionDanger = false;
 
 	public function __construct( $idPrefix ) {
 		parent::__construct();
@@ -1143,24 +1210,18 @@ class eleModal extends element {
 
 	public function renderModalWButtons( $title, $header, $body, $footer, $buttonCancelLabel, $buttonActionLabel, $buttonActionExtrasA, $modalInitJS ) {
 		// Button Cancel
-		$modalButtonCancelTags = new tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [] );
-		$modalButtonCancel = $this->renderButton( $buttonCancelLabel, true, $modalButtonCancelTags );
+		$modalButtonCancelDismiss = ( $this->buttonCancelAutoDismiss ? 'data-dismiss="modal"' : '' );
+		$modalButtonCancelTags = new tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ $modalButtonCancelDismiss ] );
+		$modalButtonCancel = new eleButton($buttonCancelLabel,$this->idPrefix . '_Modal_ButtonCancel','',$modalButtonCancelTags);
+		
 		// Button Action
-		$buttonActionClass = ( $this->buttonDanger ? ELE_CLASS_BUTTON_RG_DELETE : ELE_CLASS_BUTTON_RG_PRIMARY );
-		$modalButtonActionTags = new tags( [ $buttonActionClass ], [], $buttonActionExtrasA );
-		$modalButtonAction = $this->renderButton( $buttonActionLabel, true, $modalButtonActionTags );
+		$buttonActionExtrasA[] = ( $this->buttonActionAutoDismiss ? 'data-dismiss="modal"' : '' );
+		$modalButtonActionClass = ( $this->buttonActionDanger ? ELE_CLASS_BUTTON_RG_DELETE : ELE_CLASS_BUTTON_RG_PRIMARY );
+		$modalButtonActionTags = new tags( [ $modalButtonActionClass ], [], $buttonActionExtrasA );
+		$modalButtonAction = new eleButton($buttonActionLabel,$this->idPrefix . '_Modal_ButtonAction','',$modalButtonActionTags);
+		
 		// Modal
-		$code = $this->renderModal( $title, $header, $body, $footer . $modalButtonCancel . $modalButtonAction, $modalInitJS );
-		return $code;
-	}
-
-	public function renderButton( $label, $dismissModal, tags $tags ) {
-		$id = $this->idPrefix . '_Modal_' . strFilterKeepAlphanumeric( $label );
-		if ( $dismissModal ) {
-			$tags->extrasA[] = 'data-dismiss="modal"';
-		}
-		$button = new eleButton( $label, $id, '', $tags );
-		$code = $button->render();
+		$code = $this->renderModal( $title, $header, $body, ( $buttonCancelLabel === '' ? '' : $modalButtonCancel->render() ) . ( $buttonActionLabel === '' ? '' : $modalButtonAction->render() ) . '<p>' . $footer . '</p>', $modalInitJS );
 		return $code;
 	}
 
@@ -2062,11 +2123,13 @@ class eleSearchBarListDB extends element {
 
 		// QueryBuilder Modal
 		$modal = new eleModal($nameQB);
-		$modalbutton1Tags = new tags( [ELE_CLASS_BUTTON_RG_SECONDARY], [], [] );
-		$modalbutton1 = $modal->renderButton('Cancel',true,$modalbutton1Tags);
-		$modalbutton2Tags = new tags( [ELE_CLASS_BUTTON_RG_PRIMARY], [], ['onclick="' . $nameQB . '_Submit();"'] );
-		$modalbutton2 = $modal->renderButton('Search',true,$modalbutton2Tags);
-		$this->resp->contentEndA[] = $modal->renderModal($this->mm->NamePlural . ' Search Builder','',$queryBuilderForm . $queryBuilderRules,$modalbutton1 . $modalbutton2,'');
+		// $modalbutton1Tags = new tags( [ELE_CLASS_BUTTON_RG_SECONDARY], [], [] );
+		// $modalbutton1 = $modal->renderButton('Cancel',true,$modalbutton1Tags);
+		// $modalbutton2Tags = new tags( [ELE_CLASS_BUTTON_RG_PRIMARY], [], ['onclick="' . $nameQB . '_Submit();"'] );
+		// $modalbutton2 = $modal->renderButton('Search',true,$modalbutton2Tags);
+		// $this->resp->contentEndA[] = $modal->renderModal($this->mm->NamePlural . ' Search Builder','',$queryBuilderForm . $queryBuilderRules,$modalbutton1 . $modalbutton2,'');
+		$this->resp->contentEndA[] = $modal->renderModalWButtons( $this->mm->NamePlural . ' Search Builder', '', $queryBuilderForm . $queryBuilderRules, '', 'Cancel', 'Search', [ 'onclick="' . $nameQB . '_Submit();"' ], '' );
+
 
 
 		// Order By Dropdown Items
@@ -2282,6 +2345,7 @@ function eleDBMetaRender( colMeta $colMeta, tags $tags, recs $recs, formTag $for
 	// Return
 	return $eleString;
 }
+
 
 ///////////////////////////////////////////////////////////
 // Selectors
@@ -2537,7 +2601,7 @@ function iconFA( $pKey, $quote = '"' ) {
 
 ///////////////////////////////////////////////////////////
 // Nav Items
-function navItemModuleButton( $module, $pageModuleName ) {
+function navItemButtonModule( $module, $pageModuleName ) {
 	$theText = $module->NamePlural;
 	ob_start();
 	?>
@@ -2548,10 +2612,18 @@ function navItemModuleButton( $module, $pageModuleName ) {
 	return ob_get_clean();
 }
 
-function navItemModuleDropdown( $module ) {
+function navItemDropdownModule( $module ) {
 	ob_start();
 	?>
 	<a class="dropdown-item" href="<?= $module->URLFull ?>"><?= $module->FontAwesome . STR_NBSP . $module->NamePlural ?></a>
+	<?php
+	return ob_get_clean();
+}
+
+function navItemDropdownCustom( $label, $onClickJS ) {
+	ob_start();
+	?>
+	<a class="dropdown-item" onclick="<?= $onClickJS ?>"><?= $label ?></a>
 	<?php
 	return ob_get_clean();
 }
@@ -2878,6 +2950,10 @@ function dbNumberDisplayAsPercentage( $columnName, $tableName, $columnValue ) {
 	$columnValue = ( $columnValue * 100 ) . '%';
 	$columnValue = trim( $columnValue );
 	return $columnValue;
+}
+
+function emailAddressIsValid( $emailAddress ){
+         return ( !preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $emailAddress) ) ? true : false;
 }
 
 
