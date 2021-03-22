@@ -1,6 +1,6 @@
 <?php
 // Modal
-$xanDoDo = 'UsersPasswordChange';
+$xanDoDo = 'UsersPasswordReplace';
 $modal = new \xan\eleModal( $xanDoDo );
 $modal->buttonActionDanger = true;
 $modal->buttonActionAutoDismiss = false;
@@ -13,13 +13,6 @@ $table = new xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 $tagsEleLabel = new xan\tags( [ 'small' ], [], [] );
 $tagsEleInput = new xan\tags( [ 'col' ], [], [] );
-
-// Old Password
-$tableRowIndex++;
-$eleLabel = new \xan\eleLabel( 'Current Password', '', '', $tagsEleLabel );
-$eleInput = new \xan\eleTextReveal( '', 'PasswordOld', '', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $eleLabel->render() );
-$table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $eleInput->render() );
 
 // New Password
 $tableRowIndex++;
@@ -38,15 +31,15 @@ $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $eleInput->render() );
 // Modal Init
 $modalInitJS = <<< JS
 $( "#{$xanDoDo}_Modal" ).on( "shown.bs.modal", function () {
-	$( "#PasswordOld" ).trigger( "select" );
+	$( "#PasswordNewOne" ).trigger( "select" );
 } );
 JS;
 
 // Button Action IDs
 $messageID = $xanDoDo . 'Message';
 $buttonActionID = $xanDoDo . '_Modal_ButtonAction';
-$buttonActionSpinnerID = $buttonActionID . 'Spinner';
 $buttonActionOnClickFunctionName = $buttonActionID . 'OnClick';
+$buttonActionSpinnerID = $buttonActionID . 'Spinner';
 
 // Button Action On Click Call
 $buttonActionOnClick = /** @lang JavaScript */
@@ -55,8 +48,7 @@ $buttonActionOnClick = /** @lang JavaScript */
 // Button Action On Click Function
 $resp->scriptsExtraA[] = <<< JS
 function {$buttonActionOnClickFunctionName}(){
-	xanDo( { "Do": "{$xanDoDo}", "Msg": "Password Change", "URL":"{$mmUsersT->URLDoRelative}", "IDUsers": "{$_SESSION[SESS_USER][UUIDUSERS]}", "PasswordOld": $( "#PasswordOld" ).val(), "PasswordNewOne": $( "#PasswordNewOne" ).val(), "PasswordNewTwo": $( "#PasswordNewTwo" ).val() } );
-    $("#PasswordOld").val("");
+	xanDo( { "Do": "{$xanDoDo}", "Msg": "Password Replace", "URL":"{$mmUsersT->URLDoRelative}", "IDUsers": "{$resp->reqID}", "PasswordNewOne": $( "#PasswordNewOne" ).val(), "PasswordNewTwo": $( "#PasswordNewTwo" ).val() } );
     $("#PasswordNewOne").val("");
     $("#PasswordNewTwo").val("");
 }
@@ -64,7 +56,7 @@ JS;
 
 // Modal Append
 $buttonActionSpinnerSpan = '<span id="' . $buttonActionSpinnerID . '" style="display: none;">' . STR_NBSP . FA_SPINNER . '</span>';
-$buttonActionLabel = FA_PASSWORD . STR_NBSP . 'Password Change' . STR_NBSP . $buttonActionSpinnerSpan;
+$buttonActionLabel = FA_PASSWORD . STR_NBSP . 'Password Replace' . STR_NBSP . $buttonActionSpinnerSpan;
 $buttonActionMessage = '<span id="' . $messageID . '"></span>';
-$resp->contentEndA[] = $modal->renderModalWButtons( 'Change your Password?', '', $table->render(), $buttonActionMessage, 'Cancel', $buttonActionLabel, [ "onclick='" . $buttonActionOnClick . "'" ], $modalInitJS );
+$resp->contentEndA[] = $modal->renderModalWButtons( 'Replace the Password for this User?', '', $table->render(), $buttonActionMessage, 'Cancel', $buttonActionLabel, [ "onclick='" . $buttonActionOnClick . "'" ], $modalInitJS );
 ?>
