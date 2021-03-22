@@ -61,36 +61,8 @@ JS;
 JS;
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	// Users Password Update - Modal
-	$xanDoDo = 'UsersPasswordReplace';
-	$modal = new \xan\eleModal( $xanDoDo );
-	
-	// Table
-	$tagsCellEmpty = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-	$tagsCellRightMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_MIDDLE ], [], [] );
-	$tagsCellLeftMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-	$table = new xan\eleTable( $tagsCellEmpty );
-	$tableRowIndex = -1;
-	
-	$tableRowIndex++;
-	$tagsEleLabel = new xan\tags( [ 'small' ], [], [] );
-	$tagsEleInput = new xan\tags( [ 'col' ], [], [] );
-	$testLabel = new \xan\eleLabel( 'New Password', 'passwordUpdateLabel', '', $tagsEleLabel );
-	$testInput = new \xan\eleTextReveal( '', 'passwordUpdateInput', '', $tagsEleInput );
-	$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $testLabel->render() );
-	$table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $testInput->render() );
-	// Modal Init
-	$modalInitJS = <<< JS
-        // On Modal Shown, put cursor in Search Term
-        $( "#{$xanDoDo}_Modal" ).on( "shown.bs.modal", function () {
-            $( "#passwordUpdateInput" ).trigger( "select" );
-        } );
-JS;
-	// OnClick
-	$modalButtonActionOnClick = /** @lang JavaScript */
-		"xanDo( { 'Do': '{$xanDoDo}', 'Msg': 'Password Replace', 'URL': '{$mmUsersT->URLDoRelative}', 'IDUsers': '{$resp->reqID}', 'PasswordNew': $( '#passwordUpdateInput' ).val() } ); $( '#passwordUpdateInput' ).val( '' )";
-	$resp->contentEndA[] = $modal->renderModalWButtons( 'Replace the Password for this User?', '', $table->render(), '', 'Cancel', 'Replace Password', [ 'onclick="' . $modalButtonActionOnClick . '"' ], $modalInitJS );
-	
+	// Users Password Replace - Modal
+	require_once( 'contentModal-users-passwordReplace.php' );
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Users Rec Duplicate - Modal

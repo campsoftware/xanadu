@@ -8,7 +8,7 @@ $resp->jsSetHTMLProperty( '#formButton', 'disabled', false );
 
 // Validate Init
 $ValidationMsgA = array();
-$messageIfMatchEmailSent = 'If a matching Login was found, an email was sent with a new current password and a One Time Login Link';
+$messageIfMatchEmailSent = 'If a matching Login was found, an email was sent with a temporary password.';
 
 // Validate Login
 if ( \xan\isEmpty( $doParam[ 'Login' ] ) ) {
@@ -54,12 +54,9 @@ $PasswordReplace = \xan\strRight( strtoupper( xan\strUUID() ), APP_PASSWORD_LENG
 $PasswordHashSeed = xan\strUUID();
 $PasswordHashed = hash( 'sha256', $PasswordHashSeed . $PasswordReplace );
 
-// One Time Login Code
-$LoginKeyOneTime = xan\strUUID();
-
 // User Update
 $userUpdate = new xan\recs( $mmUsersT );
-$userUpdate->recordUpdate( $userSelect->rowsD[ 0 ][ UUIDUSERS ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed, 'LoginKeyOneTime' => $LoginKeyOneTime ) );
+$userUpdate->recordUpdate( $userSelect->rowsD[ 0 ][ UUIDUSERS ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ) );
 // Error Check
 if ( $userUpdate->errorB ) {
 	$ValidationMsgA[] = 'User Update Error: ' . $userUpdate->messageExtra . ';' . $userUpdate->messageSQL;
@@ -78,7 +75,7 @@ if ( !empty( $ValidationMsgA ) ) {
 }
 
 // Send Email
-$emailMessage = 'Once logged in, please reest your ' . APP_NAME . ' password using "' . $PasswordReplace . '" as your new current password. One Time Login Link: ' . "\r\n" . URL_BASE . 'login/otc/' . $userSelect->rowsD[ 0 ][ UUIDUSERS ] . '/' . $LoginKeyOneTime;
+$emailMessage = 'Your temporary ' . APP_NAME . ' password is "' . $PasswordReplace . '". Please change your password when you login.';
 $sender = new \xan\sender();
 if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'EmailAddress' ] ) ) {
 	$sender->sendEmail( true, APP_EMAIL_FROM, $userSelect->rowsD[ 0 ][ 'EmailAddress' ], APP_NAME . " - Password Reset", $emailMessage, $emailMessage );
