@@ -506,7 +506,7 @@ INSERT INTO `Contacts` VALUES ('Mcintyre Mcintyre & Mcintyre', NULL, NULL, 'Beve
 INSERT INTO `Contacts` VALUES ('Chesapeake Telephone Systems', NULL, NULL, 'Audra', NULL, 'Cantu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'image.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.0000, 0.00, '2020-05-11 21:35:19', NULL, NULL, 'F1CC6D3D-159B-4D8E-BB90-88E2D8B3B6DB', 'Xanadu');
 INSERT INTO `Contacts` VALUES ('National Paper & Envelope Corp', NULL, NULL, 'Cyril', NULL, 'Behen', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'image.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.0000, 0.00, '2020-05-11 21:35:19', NULL, NULL, 'F1DFB8E4-FEA9-4335-8755-B29BC9181BBC', 'Xanadu');
 INSERT INTO `Contacts` VALUES ('Hamilton Financial Corp', NULL, NULL, 'Meredith', NULL, 'Ivrin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'image.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.0000, 0.00, '2020-05-11 21:35:19', NULL, NULL, 'F1E6B2B7-E376-42EB-A801-FAEE5D7CBCD2', 'Xanadu');
-INSERT INTO `Contacts` VALUES ('A B C Lock', 'Boss', 'Mr.', 'Lyndon', '', 'Bellerdine', 'III', 'Yes', 'Client', 'Artist', 'CampSoftware.com', 30, 'MD', 'image.png', 'This is a note. :)', '2021-02-04', '09:00:00', '17:00:00', '2020-12-31 23:59:59', 'Call', 123456780, 1234.5678, 123456.78, '2021-03-01 22:21:08', 'hal@campsoftware.com', '5d79605467d01144708478', 'F30BB9DD-DE9A-4F13-91B1-79BA4A776585', 'Xanadu');
+INSERT INTO `Contacts` VALUES ('A B C Lock', 'Boss', 'Mr.', 'Lyndon', '', 'Bellerdine', 'III', 'Yes', 'Client', 'Artist', 'CampSoftware.com', 30, 'MD', 'image.png', 'This is a note. :)', '2021-02-04', '09:00:00', '17:00:00', '2020-12-31 23:59:59', 'Call', 123456780, 1234.5678, 123456.78, '2021-03-22 19:25:02', 'hal@campsoftware.com', '605124a4ae2e5367427369', 'F30BB9DD-DE9A-4F13-91B1-79BA4A776585', 'Xanadu');
 INSERT INTO `Contacts` VALUES ('Wrigley, Robert I Esq', NULL, NULL, 'Sal', NULL, 'Pindell', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'image.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.0000, 0.00, '2020-05-11 21:35:19', NULL, NULL, 'F33C4EDA-418E-403D-BBA0-56781C6D3936', 'Xanadu');
 INSERT INTO `Contacts` VALUES ('Security Marketing Agency', NULL, NULL, 'Amelia', NULL, 'Caputo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'image.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.0000, 0.00, '2020-05-11 21:35:19', NULL, NULL, 'F3901B14-FB6A-4BD2-BE9D-14D39A64CA5D', 'Xanadu');
 INSERT INTO `Contacts` VALUES ('Uniglobe Transeas Travel', NULL, NULL, 'Carol', NULL, 'Krisman', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'image.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.0000, 0.00, '2020-05-11 21:35:20', NULL, NULL, 'F390DE5A-7A0B-4580-B61D-8C3E3B383DBA', 'Xanadu');
@@ -1313,6 +1313,7 @@ INSERT INTO `ContactsComms` VALUES ('Web', NULL, NULL, 'http://www.reinareisenau
 INSERT INTO `ContactsComms` VALUES ('Address', NULL, NULL, NULL, '7846 Clybourn Ave', 'Sun Valley', 'CA', '91352', 'Los Angeles', NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '5FB6362C-C433-47B1-B32D-7CCCE660A28D', 'Xanadu', '3B7893F3-3E83-4447-B4F6-7000ABF75BF7');
 INSERT INTO `ContactsComms` VALUES ('Email', NULL, NULL, 'nadia@wilshire.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '5FDCADCD-E2FE-4EAC-B346-76C8F0B8579D', 'Xanadu', 'C180EC39-7CF2-4D5B-A2FA-03E795CF9B27');
 INSERT INTO `ContactsComms` VALUES ('Phone', NULL, 'No', '845-343-2313', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '6024B87D-B44C-44EC-88E7-E977E7EA714F', 'Xanadu', 'E7296003-9AFE-4DF5-ADAF-0E79C0469B9D');
+INSERT INTO `ContactsComms` VALUES ('Email', 'Cell', 'Yes', 'Ajax', '', '', '', '', '', '', '', '', '2021-03-19 19:56:45', 'hal@campsoftware.com', '605124a4ae2e5367427369', '6054d44c999ce055683206', 'Xanadu', '6054d3db3ddbc667530875');
 INSERT INTO `ContactsComms` VALUES ('Email', NULL, NULL, 'madonna@cosby.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '60874C94-B01D-4C29-8AD2-0513CD4C1AAE', 'Xanadu', 'ECB3BD9E-3A83-4469-BA09-381EB76F2FB2');
 INSERT INTO `ContactsComms` VALUES ('Email', NULL, NULL, 'claire@moyerman.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '609984A2-0C06-41A7-BCE2-9C5DD3DFDBAF', 'Xanadu', 'F72B95DC-213F-4248-82B8-178A7751DC3B');
 INSERT INTO `ContactsComms` VALUES ('Email', NULL, NULL, 'mack@jurasin.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '60ADC196-04D4-4C29-89A9-1779C888EDB2', 'Xanadu', '123FF0A7-C1C0-4A3C-B7EC-10D7C0761428');
@@ -1625,6 +1626,10 @@ INSERT INTO `ContactsComms` VALUES ('Web', NULL, NULL, 'http://www.bessmarso.com
 INSERT INTO `ContactsComms` VALUES ('Phone', NULL, NULL, '904-260-2345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '856C5116-F2BB-4478-8035-BA3C668CBD01', 'Xanadu', '5AFFCA9D-D93F-4D94-AEE4-0A96FE17FBA0');
 INSERT INTO `ContactsComms` VALUES ('Address', NULL, NULL, NULL, '200 Broadhollow Rd', 'Melville', 'NY', '11747', 'Suffolk', NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '856F10E4-3B25-4D2F-AA13-CCEA33294140', 'Xanadu', 'EEFA84BE-0212-4B96-B5DB-DB24F99D849A');
 INSERT INTO `ContactsComms` VALUES ('Email', NULL, NULL, 'reina@wolchesky.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '85A05CB8-D440-415B-8E8F-3A224ED9C19C', 'Xanadu', 'FB17C588-27BE-45C0-89DC-0A9B7A7EAF05');
+INSERT INTO `ContactsComms` VALUES ('Address', 'Home', 'Yes', 'bob@mac.com', '200 California St', 'San Francisco', 'CA', '94111', '', 'USA', '', '', '2021-03-19 19:58:49', 'hal@campsoftware.com', '5d79605467d01144708478', '85b3c295-88ed-11eb-bd6f-0ef4d221d102', 'Xanadu', '6055027998547923819056');
+INSERT INTO `ContactsComms` VALUES ('Email', 'Work', 'Yes', 'lyndon@bellerdine.com', '', '', '', '', 'San Fran', '', '', '', '2021-03-19 19:58:49', 'hal@campsoftware.com', '5d79605467d01144708478', '85b3c38c-88ed-11eb-bd6f-0ef4d221d102', 'Xanadu', '6055027998547923819056');
+INSERT INTO `ContactsComms` VALUES ('Web', 'Work', 'Yes', 'bellerdine.com', '', '', '', '', '', '', '', '', '2021-03-19 19:58:49', 'hal@campsoftware.com', '5d79605467d01144708478', '85b3c3cb-88ed-11eb-bd6f-0ef4d221d102', 'Xanadu', '6055027998547923819056');
+INSERT INTO `ContactsComms` VALUES ('Phone', 'Home', 'No', '415-705-1956', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-03-19 19:58:49', 'Hal', NULL, '85b3c48a-88ed-11eb-bd6f-0ef4d221d102', 'Xanadu', '6055027998547923819056');
 INSERT INTO `ContactsComms` VALUES ('Address', NULL, NULL, NULL, '39 W 21st St', 'Northampton', 'PA', '18067', 'Northampton', NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '85BD5282-FB3A-409D-BAE3-16BABCDABA82', 'Xanadu', '85EF372E-9CAB-488B-9F9E-EAF5813C1E29');
 INSERT INTO `ContactsComms` VALUES ('Web', NULL, NULL, 'http://www.faustomarks.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '85C7203A-C476-4B8F-B28D-42CD769641A9', 'Xanadu', '524FE6DA-F6F3-483E-B36B-A9A685011D9F');
 INSERT INTO `ContactsComms` VALUES ('Email', NULL, NULL, 'essie@vaill.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-06 17:41:36', NULL, NULL, '85E3959E-65B5-42CA-A94C-ACB67CD70F8F', 'Xanadu', 'FB7DC921-D128-4C21-A3E4-B1C9F5DAAA03');
@@ -2871,7 +2876,7 @@ CREATE TABLE `Settings` (
 -- Records of Settings
 -- ----------------------------
 BEGIN;
-INSERT INTO `Settings` VALUES ('Yes', 'Xanadu', '/images/logo50.png', '/images/logo1024.png', 'https://campsoftware.com/products/xanadu-for-xojo.php', '$', 'foo@bar.com', 3600, 'm/d/Y', 'm/d/Y g:ia', 'm/d/Y g:i:sa', 'g:ia', 'myGoogleMapsKey', 'myStripeKeyLivePrivate', 'myStripeKeyLivePublic', 'myStripeKeyTestPrivate', 'myStripeKeyTestPublic', 'usd', 'smtpServer', 587, 'smtpLogin', 'smtpPassword', 'Yes', 'tls', '+14075551212', 'APIKey', 'APISecret', '2021-03-10 20:14:29', NULL, NULL, '100', 'Xanadu');
+INSERT INTO `Settings` VALUES ('Yes', 'Xanadu', '/images/logo50.png', '/images/logo1024.png', 'https://campsoftware.com/products/xanadu-for-xojo.php', '$', 'foo@bar.com', 3600, 'm/d/Y', 'm/d/Y g:ia', 'm/d/Y g:i:sa', 'g:ia', 'myGoogleMapsKey', 'myStripeKeyLivePrivate', 'myStripeKeyLivePublic', 'myStripeKeyTestPrivate', 'myStripeKeyTestPublic', 'usd', 'smtpServer', 587, 'smtpLogin', 'smtpPassword', 'Yes', 'tls', '+14075551212', 'APIKey', 'APISecret', '2021-03-08 21:16:08', NULL, NULL, '100', 'Xanadu');
 COMMIT;
 
 -- ----------------------------
@@ -2907,37 +2912,31 @@ CREATE TABLE `Users` (
   `NameLast` varchar(255) DEFAULT NULL,
   `NameFull` varchar(255) DEFAULT NULL,
   `EmailAddress` varchar(255) DEFAULT NULL,
+  `Registered` varchar(3) DEFAULT 'No',
   `Active` varchar(3) DEFAULT 'Yes',
   `PrivAdmin` varchar(3) DEFAULT 'No',
   `PrivMember` varchar(3) DEFAULT 'No',
   `PhoneWork` varchar(255) DEFAULT NULL,
   `PhoneMobile` varchar(255) DEFAULT NULL,
+  `PhoneTwoFactor` varchar(255) DEFAULT NULL,
+  `TwoFactorString` varchar(10) DEFAULT NULL,
+  `TwoFactorExpiresTS` timestamp NULL DEFAULT NULL,
   `PathLast` text,
   `LoginKey` varchar(255) DEFAULT NULL,
+  `LoginKeyOneTime` varchar(255) DEFAULT NULL,
   `PasswordHashSeed` varchar(255) DEFAULT NULL,
   `PasswordHashed` varchar(255) DEFAULT NULL,
-  `LoginKeyOneTime` varchar(255) DEFAULT NULL,
   `RegisterTS` timestamp NULL DEFAULT NULL,
-  `Registered` varchar(3) DEFAULT 'No',
   `ModTS` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ModName` varchar(255) DEFAULT NULL,
   `ModUUIDUsers` varchar(255) DEFAULT NULL,
   `UUIDUsers` varchar(255) NOT NULL,
   `UUIDTenants` varchar(255) DEFAULT NULL,
-  `TwoFactorString` varchar(10) DEFAULT NULL,
-  `TwoFactorExpiresTS` timestamp NULL DEFAULT NULL,
-  `PhoneTwoFactor` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`UUIDUsers`),
   UNIQUE KEY `UUIDUsers` (`UUIDUsers`),
   KEY `Index_2` (`LoginKey`) USING BTREE,
   KEY `index_UUIDTenant` (`UUIDTenants`),
   KEY `index_ModUUIDUser10` (`ModUUIDUsers`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Users
--- ----------------------------
-BEGIN;
-COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

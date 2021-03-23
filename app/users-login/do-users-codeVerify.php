@@ -65,7 +65,7 @@ if ( empty( $ValidationMsgA ) ) {
 // Validate Response
 if ( !empty( $ValidationMsgA ) ) {
 	// Actions Return as JSON
-	$resp->jsSetHTML( '#formMessage', implode( ', ', $ValidationMsgA ) );
+	$resp->jsSetHTML( '#formMessageCode', implode( ', ', $ValidationMsgA ) );
 	$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
 	return;
 }
