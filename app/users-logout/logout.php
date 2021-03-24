@@ -13,8 +13,8 @@ if ( $logEvent->errorB ) {
 }
 
 // Cookies Remove
-setcookie( COOKIE_REMEMBERME, "", time() - 3600, '/' );
-setcookie( COOKIE_LOGIN, "", time() - 3600, '/' );
+setcookie( COOKIE_REMEMBERME, "", ['expires' => time() - 3600, 'path' => '/', 'httponly' => true, 'secure' => true ] );
+setcookie( COOKIE_LOGIN, "", ['expires' => time() - 3600, 'path' => '/', 'httponly' => true, 'secure' => true ] );
 
 // Session Remove
 session_unset();

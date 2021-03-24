@@ -78,7 +78,7 @@ $RememberMeIsUpdated = false;
 if ( $doParam[ 'RememberMe' ] === '1' ) {
 	$RememberMeID = xan\strUUID();
 	$UUIDUsers = $userSelect->rowsD[ 0 ][ UUIDUSERS ];
-	setcookie( COOKIE_REMEMBERME, $RememberMeID, time() + ( 86400 * APP_COOKIE_LOGIN_DAYS ), '/' );
+	setcookie( COOKIE_REMEMBERME, $RememberMeID, ['expires' => time() + ( 86400 * APP_COOKIE_LOGIN_DAYS ), 'path' => '/', 'httponly' => true, 'secure' => true ] );
 	
 	// User Update
 	$userUpdate = new xan\recs( $mmUsersT );
