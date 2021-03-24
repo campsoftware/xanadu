@@ -32,8 +32,7 @@ namespace aloe {
 		}
 		
 		// Force the PHP session cookie to expire after "SESSION_TIMEOUT" minutes of inactivity.
-		//setcookie( session_name(), session_id(), time() + $timeout, '/', 'campsoftware.com', TRUE, TRUE );
-		setcookie( session_name(), session_id(), time() + $timeout, '/' );
+		setcookie( session_name(), session_id(), ['expires' => time() + $timeout, 'path' => '/', 'httponly' => true, 'secure' => true ] );
 	}
 	
 	function session_terminate() {
@@ -44,7 +43,7 @@ namespace aloe {
 		@session_destroy();
 		
 		// Kill the cookie.
-		@setcookie( session_name(), session_id(), time() - 3600, '/' );
+		@setcookie( session_name(), session_id(), ['expires' => time() - 3600, 'path' => '/', 'httponly' => true, 'secure' => true ] );
 		
 	}
 	

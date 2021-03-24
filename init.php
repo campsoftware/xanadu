@@ -18,6 +18,10 @@ ini_set( 'error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED );
 ini_set( 'display_errors', 1 );
 ini_set( "allow_url_fopen", 1 );
 
+// Secure Cookies
+ini_set('session.cookie_httponly',1);
+ini_set('session.cookie_secure', 1);
+
 // RAM and Disk
 // ini_set( 'memory_limit', '128M' ); // max php script RAM
 // ini_set( 'upload_max_filesize', '100M' ); // max file size upload

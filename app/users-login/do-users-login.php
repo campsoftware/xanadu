@@ -8,7 +8,7 @@ $resp->jsSetHTMLProperty( '#formButtonLogin', 'disabled', false );
 
 // Set Login Cookie
 if ( \xan\isNotEmpty( $doParam[ 'Login' ] ) ) {
-	setcookie( COOKIE_LOGIN, $doParam[ 'Login' ], time() + ( 86400 * APP_COOKIE_LOGIN_DAYS ), '/' );
+	setcookie( COOKIE_LOGIN, $doParam[ 'Login' ], ['expires' => time() + ( 86400 * APP_COOKIE_LOGIN_DAYS ), 'path' => '/', 'httponly' => true, 'secure' => true ] );
 }
 
 // Validate Init
