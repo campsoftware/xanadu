@@ -17,7 +17,7 @@ ob_start();
         <meta name="Referer" content="no-referrer, strict-origin-when-cross-origin">
         <meta name="Strict-Transport-Security" content="max-age=63072000">
         <meta name="X-Content-Type-Options" content="nosniff">
-        <meta name="X-Frame-Options" content="deny">
+        <meta name="X-Frame-Options" content="sameorigin">
         <meta name="X-XSS-Protection" content="1; mode=block">
 
 		<?php if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) : ?>
