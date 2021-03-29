@@ -30,12 +30,12 @@ $cardTemp = new \xan\eleCard( '', '', '');
 
 // Query Search Term Prep
 $queryColumns = array( 'NameCompany', 'NameFirst', 'NameLast' );
-$queryWhere = UUIDTENANTS . ' = ? ' . ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? '' : 'AND ( ' . xan\dbSearchTermSQL( $queryColumns ) . ' )' );
-$queryTermBindNames = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : xan\dbSearchTermBindNames( $queryColumns ) );
-$queryTermBindValues = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : xan\dbSearchTermBindValues( $queryColumns, $doParam[ 'SearchTerm' ] ) );
+$queryWhere = UUIDTENANTS . ' = ? ' . ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? '' : 'AND ( ' . \xan\dbSearchTermSQL( $queryColumns ) . ' )' );
+$queryTermBindNames = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : \xan\dbSearchTermBindNames( $queryColumns ) );
+$queryTermBindValues = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : \xan\dbSearchTermBindValues( $queryColumns, $doParam[ 'SearchTerm' ] ) );
 
 // Query Actual
-$recs = new xan\recs( $mmContactsT );
+$recs = new \xan\recs( $mmContactsT );
 $recs->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . $queryWhere . ' ORDER BY NameCompany ASC, NameLast ASC ' . ' LIMIT 500 ';
 $recs->queryBindNamesA = array_merge( array( UUIDTENANTS ), $queryTermBindNames );
 $recs->queryBindValuesA = array_merge( array( $_SESSION[ SESS_USER ][ UUIDTENANTS ] ), $queryTermBindValues );;

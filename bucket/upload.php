@@ -10,7 +10,7 @@ $uploadOk = 1;
 // Result Init
 $resultArray[ 'Message' ] = '';
 $resultArray[ 'Log' ] = '';
-$resultArray[ 'Log' ] .= 'disk_free_space = ' . xan\numBytesToString( disk_free_space( "/" ) ) . ' ';
+$resultArray[ 'Log' ] .= 'disk_free_space = ' . \xan\numBytesToString( disk_free_space( "/" ) ) . ' ';
 $resultArray[ 'Log' ] .= 'upload_max_filesize = ' . ini_get( 'upload_max_filesize' ) . ' ';
 $resultArray[ 'Log' ] .= 'post_max_size = ' . ini_get( 'post_max_size' ) . ' ';
 $resultArray[ 'Log' ] .= 'file_uploads = ' . ini_get( 'file_uploads' ) . ' ';
@@ -96,7 +96,7 @@ if ( isset( $_POST[ "submit" ] ) ) {
 // Check file size
 $sizeMaxBytes = ( 1024 * 1024 ) * 10; // MB
 if ( $_FILES[ $filesArrayName ][ "size" ] > $sizeMaxBytes ) {
-	$resultArray[ 'Message' ] .= 'File is too large. Must be less than ' . xan\numBytesToString( $sizeMaxBytes ) . ' but is ' . xan\numBytesToString( $_FILES[ $filesArrayName ][ "size" ] ) . '. ';
+	$resultArray[ 'Message' ] .= 'File is too large. Must be less than ' . \xan\numBytesToString( $sizeMaxBytes ) . ' but is ' . \xan\numBytesToString( $_FILES[ $filesArrayName ][ "size" ] ) . '. ';
 	$uploadOk = 0;
 }
 

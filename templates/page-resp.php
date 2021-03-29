@@ -335,29 +335,29 @@ ob_start();
                         <ul class="navbar-nav mt-2 mt-sm-0">
 
                             <!-- ------ -->
-							<?= xan\navItemButtonModule( $mmHome, $resp->moduleName ) ?>
+							<?= \xan\navItemButtonModule( $mmHome, $resp->moduleName ) ?>
                             <!-- ------ -->
-							<?= xan\navItemButtonModule( $mmContactsT, $resp->moduleName ) ?>
+							<?= \xan\navItemButtonModule( $mmContactsT, $resp->moduleName ) ?>
                             <!-- ------ -->
                             <li class="nav-item dropdown">
                                 <a class="nav-item-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $mmUsersT->FontAwesome ?></i></a>
                                 <div class="dropdown-menu text" aria-labelledby="navbarDropdown">
 									<?php
 									if ( $_SESSION[ SESS_USER ][ 'PrivAdmin' ] === 'Yes' ) {
-										echo xan\navItemDropdownModule( $mmServerStats );
-										echo xan\navDivider();
-										echo xan\navItemDropdownModule( $mmSettingsT );
-										echo xan\navItemDropdownModule( $mmUsersT );
-										echo xan\navDivider();
+										echo \xan\navItemDropdownModule( $mmServerStats );
+										echo \xan\navDivider();
+										echo \xan\navItemDropdownModule( $mmSettingsT );
+										echo \xan\navItemDropdownModule( $mmUsersT );
+										echo \xan\navDivider();
 									}
 									if ( \xan\isNotEmpty( $_SESSION[ SESS_USER ][ UUIDUSERS ] ) ) {
 										echo \xan\navItemDropdownCustom( FA_PASSWORD . STR_NBSP . 'Change My Password', /** @lang JavaScript */ "$('#UsersPasswordChange_Modal').modal('show');" );
-										echo xan\navDivider();
+										echo \xan\navDivider();
 										require_once( PATH_ROOT_APP . 'settings-users/contentModal-users-passwordChange.php' );
 									}
 									?>
-									<?= xan\navItemDropdownModule( $mmUsersLogout ) ?>
-									<?= xan\navDivider() ?>
+									<?= \xan\navItemDropdownModule( $mmUsersLogout ) ?>
+									<?= \xan\navDivider() ?>
                                     <span class="dropdown-item disabled">Session Info</span>
                                     <span class="dropdown-item disabled">Email: <?= $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?></span>
                                     <span class="dropdown-item disabled">Tenant: <?= $_SESSION[ SESS_USER ][ UUIDTENANTS ] ?></span>
@@ -389,7 +389,7 @@ ob_start();
 
                 <!-- Stages Begin -->
                 <div id="pageContentBody" class="d-flex flex-wrap ml-n3" style="width: 99vw;">
-					<?= xan\respAToString( $resp->contentAreaA ) ?>
+					<?= \xan\respAToString( $resp->contentAreaA ) ?>
                 </div>
                 <!-- Stages End -->
 
@@ -402,7 +402,7 @@ ob_start();
     <!-- Wrapper End -->
 
     <!-- Content End -->
-	<?= xan\respAToString( $resp->contentEndA ) ?>
+	<?= \xan\respAToString( $resp->contentEndA ) ?>
 
     <script>
         function xanDo( params ) {
@@ -533,7 +533,7 @@ ob_start();
             $( '.xanDoSave' ).off( 'change', xanDoSave ).on( 'change', xanDoSave );
 
             // Scripts DoInit
-			<?= xan\respAToString( $resp->scriptsDoInitA ) ?>
+			<?= \xan\respAToString( $resp->scriptsDoInitA ) ?>
 
             // Console Display
             xanConsoleDisplay();
@@ -601,7 +601,7 @@ ob_start();
         }
 
         // Scripts Extra
-		<?= xan\respAToString( $resp->scriptsExtraA ) ?>
+		<?= \xan\respAToString( $resp->scriptsExtraA ) ?>
 
         // On Load
         $( function () {
@@ -625,10 +625,10 @@ ob_start();
             }, false );
             
             // Message Display
-            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_STOPWATCH ?> <span class='text-success'>Load Page <?= xan\microsecsDiff( $pageload_begin ) ?></span>", true, true );
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_STOPWATCH ?> <span class='text-success'>Load Page <?= \xan\microsecsDiff( $pageload_begin ) ?></span>", true, true );
 
             // Scripts Onload
-			<?= xan\respAToString( $resp->scriptsOnLoadA ) ?>
+			<?= \xan\respAToString( $resp->scriptsOnLoadA ) ?>
         } );
     </script>
     </body>

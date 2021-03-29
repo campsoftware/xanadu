@@ -1,6 +1,6 @@
 <?php
 
-class moduleMetaUsersT extends xan\moduleMeta {
+class moduleMetaUsersT extends \xan\moduleMeta {
 	// Constructor
 	public function __construct() {
 		parent::__construct();
@@ -14,7 +14,7 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		$this->QueryBuilderDefault = '{ field: "Users.NameFirst", id: "querybuilder_Users_NameFirst", operator: "begins_with", value: "" }';
 		
 		$this->QueryOrderByDefault = 'Active DESC, PrivAdmin DESC, NameLast ASC, NameFirst ASC';
-		$this->QueryOrderByExtraBegin .= xan\dbQueryOrderByItem( $this->NameTable, 'Active DESC, PrivAdmin DESC, NameLast ASC, NameFirst ASC', 'Active ASC, PrivAdmin ASC, NameLast ASC, NameFirst ASC', 'Admin, Active' );
+		$this->QueryOrderByExtraBegin .= \xan\dbQueryOrderByItem( $this->NameTable, 'Active DESC, PrivAdmin DESC, NameLast ASC, NameFirst ASC', 'Active ASC, PrivAdmin ASC, NameLast ASC, NameFirst ASC', 'Admin, Active' );
 		$this->QueryOrderByExtraBegin .= '<hr />';
 		
 		$this->NamePlural = 'Users';
@@ -35,9 +35,9 @@ class moduleMetaUsersT extends xan\moduleMeta {
 	
 	
 	///////////////////////////////////////////////////////////
-	// Functions Required by xan\moduleMeta
+	// Functions Required by \xan\moduleMeta
 	
-	public function getDisplayName( xan\recs $recs ) {
+	public function getDisplayName( \xan\recs $recs ) {
 		// Name
 		$code = trim( $recs->rowsD[ $recs->rowIndex ][ 'NameFirst' ] . " " . $recs->rowsD[ $recs->rowIndex ][ 'NameLast' ] );
 		
@@ -49,7 +49,7 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		return $code;
 	}
 	
-	public function getDisplayList( xan\recs $recs ) {
+	public function getDisplayList( \xan\recs $recs ) {
 		// Name
 		$code = $this->getDisplayName( $recs );
 		
@@ -72,14 +72,14 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		return $code;
 	}
 	
-	public function getListItem( $idPrefix, xan\recs $recs, $onClick ) {
+	public function getListItem( $idPrefix, \xan\recs $recs, $onClick ) {
 		$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
 		$idListItemLabel = $idListItem . 'Label';
 		
 		// Table Init
-		$tagsCellEmpty = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-		$tagsCellRightMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
-		$table = new xan\eleTable( $tagsCellEmpty );
+		$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+		$tagsCellRightMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
+		$table = new \xan\eleTable( $tagsCellEmpty );
 		
 		// Info Cell
 		$info = '<span id="' . $idListItemLabel . '" class="list-group-item-text">' . $this->getDisplayList( $recs ) . '</span>';
@@ -242,10 +242,10 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		return $colMeta;
 	}
 	
-	public function getColEleRender( $colName, $typeAs, xan\tags $tags, xan\recs $recs, xan\formTag $formTag, xan\response &$resp ) {
+	public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
 		// Get Col Ele Meta
 		$colMeta = $this->getColMeta( $colName, $typeAs );
-		$code = xan\eleDBMetaRender( $colMeta, $tags, $recs, $formTag, $resp );
+		$code = \xan\eleDBMetaRender( $colMeta, $tags, $recs, $formTag, $resp );
 		return $code;
 	}
 	
@@ -255,7 +255,7 @@ class moduleMetaUsersT extends xan\moduleMeta {
 	
 	public function setPathLast( $pPath ) {
 		// User Update
-		$userUpdate = new xan\recs( $this );
+		$userUpdate = new \xan\recs( $this );
 		$userUpdate->querySQL = 'UPDATE ' . $this->NameTable . ' SET PathLast = ? WHERE ' . UUIDTENANTS . ' = ? AND ' . UUIDUSERS . ' = ?';;
 		$userUpdate->queryBindNamesA = array( 'PathLast', UUIDTENANTS, UUIDUSERS );
 		$userUpdate->queryBindValuesA = array( $pPath, $_SESSION[ SESS_USER ][ UUIDTENANTS ], $_SESSION[ SESS_USER ][ UUIDUSERS ] );
@@ -296,7 +296,7 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		$_SESSION[ SESS_USER ] = $userSelect->rowsD[ 0 ];
 		
 		// Log
-		$logEvent = xan\logEventToSQL( 'Login', $loginMethod, '', $_SERVER[ 'PHP_SELF' ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
+		$logEvent = \xan\logEventToSQL( 'Login', $loginMethod, '', $_SERVER[ 'PHP_SELF' ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
 		// Error Check
 		if ( $logEvent->errorB ) {
 			return 'Error: ' . '500 Internal Service Error: ' . 'LogAudit Error; ' . $logEvent->messageExtra . '; ' . $logEvent->messageSQL;

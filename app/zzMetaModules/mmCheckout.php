@@ -39,7 +39,7 @@ class metaCheckout {
 //        $this->QueryBuilderDefault = '{ field: "Contacts.NameCompany", id: "querybuilder_Contacts_NameCompany", operator: "begins_with", value: "" }';
 
 //        $this->QueryOrderByDefault = 'NameCompany ASC, NameLast ASC, NameFirst ASC';
-//        $this->QueryOrderByExtraBegin .= xan\xanQueryOrderByItem( $this->NameTable, 'NameCompany ASC, NameLast ASC, NameFirst ASC', 'NameCompany DESC, NameLast DESC, NameFirst DESC', 'Company, Last Name' );
+//        $this->QueryOrderByExtraBegin .= \xan\xanQueryOrderByItem( $this->NameTable, 'NameCompany ASC, NameLast ASC, NameFirst ASC', 'NameCompany DESC, NameLast DESC, NameFirst DESC', 'Company, Last Name' );
 //        $this->QueryOrderByExtraBegin .= '<hr />';
 
         $this->NamePlural = 'Checkout';

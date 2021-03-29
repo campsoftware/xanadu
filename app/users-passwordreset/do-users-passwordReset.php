@@ -22,7 +22,7 @@ if ( \xan\emailAddressIsValid( $doParam[ 'Login' ] ) ) {
 if ( empty( $ValidationMsgA ) ) {
 	
 	// User Select
-	$userSelect = new xan\recs( $mmUsersT );
+	$userSelect = new \xan\recs( $mmUsersT );
 	$userSelect->querySQL = 'SELECT * FROM Users WHERE EmailAddress = ?';
 	$userSelect->queryBindNamesA = array( 'EmailAddress' );
 	$userSelect->queryBindValuesA = array( $doParam[ 'Login' ] );
@@ -50,12 +50,12 @@ if ( !empty( $ValidationMsgA ) ) {
 }
 
 // New Passowrd
-$PasswordReplace = \xan\strRight( strtoupper( xan\strUUID() ), APP_PASSWORD_LENGTH_GENERATED );
-$PasswordHashSeed = xan\strUUID();
+$PasswordReplace = \xan\strRight( strtoupper( \xan\strUUID() ), APP_PASSWORD_LENGTH_GENERATED );
+$PasswordHashSeed = \xan\strUUID();
 $PasswordHashed = hash( 'sha256', $PasswordHashSeed . $PasswordReplace );
 
 // User Update
-$userUpdate = new xan\recs( $mmUsersT );
+$userUpdate = new \xan\recs( $mmUsersT );
 $userUpdate->recordUpdate( $userSelect->rowsD[ 0 ][ UUIDUSERS ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ) );
 // Error Check
 if ( $userUpdate->errorB ) {

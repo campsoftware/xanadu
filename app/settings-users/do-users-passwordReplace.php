@@ -54,11 +54,11 @@ if ( !empty( $ValidationMsgA ) ) {
 }
 
 // Password Calculate
-$PasswordHashSeed = xan\strUUID();
+$PasswordHashSeed = \xan\strUUID();
 $PasswordHashed = hash( 'sha256', $PasswordHashSeed . $doParam[ 'PasswordNewOne' ] );
 
 // Password Update
-$recsDetail = new xan\recs( $mmUsersT );
+$recsDetail = new \xan\recs( $mmUsersT );
 $recsDetail->recordUpdate( $doParam[ 'IDUsers' ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ));
 // Error Check
 if ( $recsDetail->errorB ) {

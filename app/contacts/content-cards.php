@@ -4,11 +4,11 @@
 if ( true ) {
 	// Card Init
 	$cardHeaderContent = $mmContactsT->FontAwesomeList . STR_NBSP . $mmContactsT->NamePlural;
-	$card = new xan\eleCard( CARD_WIDTH, CARD_HEIGHT_MAX, true );
+	$card = new \xan\eleCard( CARD_WIDTH, CARD_HEIGHT_MAX, true );
 	
 	// Query
-	$recsList = new xan\recs( $mmContactsT );
-	$searchBarEle = new xan\eleSearchBarListDB( $mmContactsT, $aloe_request->post, $resp );
+	$recsList = new \xan\recs( $mmContactsT );
+	$searchBarEle = new \xan\eleSearchBarListDB( $mmContactsT, $aloe_request->post, $resp );
 	$searchBarList = $searchBarEle->render();
 	$recsList->querySQL = $searchBarList[ 'querySQL' ];
 	$recsList->queryBindNamesA = $searchBarList[ 'queryBindNames' ];
@@ -55,7 +55,7 @@ if ( true ) {
 // Detail
 if ( \xan\isNotEmpty( $resp->reqID ) ) {
 	// Query
-	$recsDetail = new xan\recs( $mmContactsT );
+	$recsDetail = new \xan\recs( $mmContactsT );
 	$recsDetail->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
 	$recsDetail->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey );
 	$recsDetail->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $resp->reqID );
@@ -78,16 +78,16 @@ if ( \xan\isNotEmpty( $resp->reqID ) ) {
 		$resp->contentHeader .= '<span id="pageContentHeaderDetails">' . ': ' . $mmContactsT->getDisplayName( $recsDetail ) . '</span>';
 		
 		// Tags Cell
-		$tagsCellEmpty = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-		$tagsCellLeftMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-		$tagsCellLeftTop = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
-		$tagsCellRightMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_MIDDLE ], [], [] );
-		$tagsCellRightTop = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_TOP ], [], [] );
+		$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+		$tagsCellLeftMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+		$tagsCellLeftTop = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
+		$tagsCellRightMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_MIDDLE ], [], [] );
+		$tagsCellRightTop = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_TOP ], [], [] );
 		
 		// Tags Ele
-		$tagsEleLabel = new xan\tags( [ 'small' ], [], [] );
-		$tagsEleInput = new xan\tags( [ 'col' ], [], [] );
-		$tagsEleSelector = new xan\tags( [], [], [] );
+		$tagsEleLabel = new \xan\tags( [ 'small' ], [], [] );
+		$tagsEleInput = new \xan\tags( [ 'col' ], [], [] );
+		$tagsEleSelector = new \xan\tags( [], [], [] );
 		
 		// Detail Cards Append
 		require_once( 'contentCard-contacts-contact.php' );
@@ -128,12 +128,12 @@ if ( \xan\isNotEmpty( $resp->reqID ) ) {
 		$resp->contentHeader .= $actionsMenu;
 		
 		// ScrollTos
-		$resp->scriptsOnLoadA[] = xan\jsScrollTo( '#' . $mmContactsT->NamePlural . 'List' . $resp->reqID );
-		$resp->scriptsOnLoadA[] = xan\jsScrollToTop();
+		$resp->scriptsOnLoadA[] = \xan\jsScrollTo( '#' . $mmContactsT->NamePlural . 'List' . $resp->reqID );
+		$resp->scriptsOnLoadA[] = \xan\jsScrollToTop();
 		
 		// Scripts Extra
 		// $resp->scriptsOnLoadA[] = '';
-		// $resp->scriptsExtraA[] = xan\jsConsoleMsgAppend( 'Test: ' . 'Hey now!' );
+		// $resp->scriptsExtraA[] = \xan\jsConsoleMsgAppend( 'Test: ' . 'Hey now!' );
 	}
 }
 ?>

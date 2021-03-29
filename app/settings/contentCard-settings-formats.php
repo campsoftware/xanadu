@@ -1,12 +1,12 @@
 <?php
 // Card
-$cardHeaderContent = xan\iconFA( 'fas fa-calendar-alt' ) . STR_NBSP . 'Formats';
-$card = new xan\eleCard( CARD_WIDTH, '', false );
+$cardHeaderContent = \xan\iconFA( 'fas fa-calendar-alt' ) . STR_NBSP . 'Formats';
+$card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
 
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows

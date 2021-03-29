@@ -36,7 +36,7 @@ if ( $doParam[ 'Password' ] !== $doParam[ 'PasswordVerify' ] ) {
 if ( empty( $ValidationMsgA ) ) {
 	
 	// User Select
-	$userSelect = new xan\recs( $mmUsersT );
+	$userSelect = new \xan\recs( $mmUsersT );
 	$userSelect->querySQL = 'SELECT * FROM Users WHERE EmailAddress = ?';
 	$userSelect->queryBindNamesA = array( 'EmailAddress' );
 	$userSelect->queryBindValuesA = array( $doParam[ 'Login' ] );
@@ -61,15 +61,15 @@ if ( !empty( $ValidationMsgA ) ) {
 }
 
 // Create User
-$UUIDUsers = xan\strUUID();
+$UUIDUsers = \xan\strUUID();
 $Registered = 'No';
-$RegisterTS = xan\dateTimeNowSQL();
-$LoginKeyOneTime = xan\strUUID();
-$PasswordSeed = xan\strUUID();
+$RegisterTS = \xan\dateTimeNowSQL();
+$LoginKeyOneTime = \xan\strUUID();
+$PasswordSeed = \xan\strUUID();
 $PasswordHash = hash( 'sha256', $PasswordSeed . $doParam[ 'Password' ] );
 
 // Does Login Exist?
-$userSelect = new xan\recs( $mmUsersT );
+$userSelect = new \xan\recs( $mmUsersT );
 $userSelect->querySQL = 'SELECT * FROM Users WHERE EmailAddress = ?';
 $userSelect->queryBindNamesA = array( 'EmailAddress' );
 $userSelect->queryBindValuesA = array( $doParam[ 'Login' ] );
@@ -80,9 +80,9 @@ if ( $userSelect->errorB ) {
 } elseif ( $userSelect->rowCount < 1 ) {
 	
 	// User Insert
-	$userInsert = new xan\recs( $mmUsersT );
+	$userInsert = new \xan\recs( $mmUsersT );
 	$sqlCols = array( 'UUIDUsers', 'UUIDTenants', 'EmailAddress', 'PasswordHashSeed', 'PasswordHashed', 'RegisterTS', 'Registered', 'LoginKeyOneTime' );
-	$userInsert->querySQL = 'INSERT INTO Users ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
+	$userInsert->querySQL = 'INSERT INTO Users ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . \xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
 	$userInsert->queryBindNamesA = $sqlCols;
 	$userInsert->queryBindValuesA = array( $UUIDUsers, $GLOBALS[ UUIDTENANTS ], $doParam[ 'Login' ], $PasswordSeed, $PasswordHash, $RegisterTS, $Registered, $LoginKeyOneTime );
 	$userInsert->query();
@@ -98,7 +98,7 @@ if ( $userSelect->errorB ) {
 } elseif ( $userSelect->rowCount > 0 ) {
 	
 	// User Update
-	$userUpdate = new xan\recs( $mmUsersT );
+	$userUpdate = new \xan\recs( $mmUsersT );
 	$userUpdate->querySQL = 'UPDATE Users SET PasswordHashSeed = ?, PasswordHashed = ?, RegisterTS = ?, Registered = ?, LoginKeyOneTime = ? WHERE EmailAddress = ?';
 	$userUpdate->queryBindNamesA = array( 'PasswordHashSeed', 'PasswordHashed', 'RegisterTS', 'Registered', 'LoginKeyOneTime', 'EmailAddress' );
 	$userUpdate->queryBindValuesA = array( $PasswordSeed, $PasswordHash, $RegisterTS, $Registered, $LoginKeyOneTime, $doParam[ 'Login' ] );
@@ -123,7 +123,7 @@ if ( !empty( $ValidationMsgA ) ) {
 }
 
 // User Select
-$userSelect = new xan\recs( $mmUsersT );
+$userSelect = new \xan\recs( $mmUsersT );
 $userSelect->querySQL = 'SELECT * FROM Users WHERE EmailAddress = ?';
 $userSelect->queryBindNamesA = array( 'EmailAddress' );
 $userSelect->queryBindValuesA = array( $doParam[ 'Login' ] );

@@ -1,6 +1,6 @@
 <?php
 
-class moduleMetaSettingsT extends xan\moduleMeta {
+class moduleMetaSettingsT extends \xan\moduleMeta {
 	// Constructor
 	public function __construct() {
 		parent::__construct();
@@ -14,7 +14,7 @@ class moduleMetaSettingsT extends xan\moduleMeta {
 		// $this->QueryBuilderDefault = '{ field: "Users.NameFirst", id: "querybuilder_Users_NameFirst", operator: "begins_with", value: "" }';
 		//
 		// $this->QueryOrderByDefault = 'Active DESC, PrivAdmin DESC, NameLast ASC, NameFirst ASC';
-		// $this->QueryOrderByExtraBegin .= xan\dbQueryOrderByItem( $this->NameTable, 'Active DESC, PrivAdmin DESC, NameLast ASC, NameFirst ASC', 'Active ASC, PrivAdmin ASC, NameLast ASC, NameFirst ASC', 'Admin, Active' );
+		// $this->QueryOrderByExtraBegin .= \xan\dbQueryOrderByItem( $this->NameTable, 'Active DESC, PrivAdmin DESC, NameLast ASC, NameFirst ASC', 'Active ASC, PrivAdmin ASC, NameLast ASC, NameFirst ASC', 'Admin, Active' );
 		// $this->QueryOrderByExtraBegin .= '<hr />';
 		
 		$this->NamePlural = 'Settings';
@@ -32,21 +32,21 @@ class moduleMetaSettingsT extends xan\moduleMeta {
 	
 	
 	///////////////////////////////////////////////////////////
-	// Functions Required by xan\moduleMeta
+	// Functions Required by \xan\moduleMeta
 	
-	public function getDisplayList( xan\recs $recs ) {
+	public function getDisplayList( \xan\recs $recs ) {
 		$code = $this->getDisplayName( $recs );
 		$code = trim( $code );
 		return $code;
 	}
 	
-	public function getDisplayName( xan\recs $recs ) {
+	public function getDisplayName( \xan\recs $recs ) {
 		$code = '';
 		$code = trim( $code );
 		return $code;
 	}
 	
-	public function getListItem( $idPrefix, xan\recs $recs, $onClick ) {
+	public function getListItem( $idPrefix, \xan\recs $recs, $onClick ) {
 		$code = '';
 		return $code;
 	}
@@ -228,10 +228,10 @@ class moduleMetaSettingsT extends xan\moduleMeta {
 		return $colMeta;
 	}
 	
-	public function getColEleRender( $colName, $typeAs, xan\tags $tags, xan\recs $recs, xan\formTag $formTag, xan\response &$resp ) {
+	public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
 		// Get Col Ele Meta
 		$colMeta = $this->getColMeta( $colName, $typeAs );
-		$code = xan\eleDBMetaRender( $colMeta, $tags, $recs, $formTag, $resp );
+		$code = \xan\eleDBMetaRender( $colMeta, $tags, $recs, $formTag, $resp );
 		return $code;
 	}
 	

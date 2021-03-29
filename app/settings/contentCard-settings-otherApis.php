@@ -1,12 +1,12 @@
 <?php
 // Card
-$cardHeaderContent = xan\iconFA( 'fas fa-external-link-square-alt' ) . STR_NBSP . 'Other APIs';
-$card = new xan\eleCard( CARD_WIDTH, '', false );
+$cardHeaderContent = \xan\iconFA( 'fas fa-external-link-square-alt' ) . STR_NBSP . 'Other APIs';
+$card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
 
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows

@@ -5,7 +5,7 @@ $loginUUIDUser = $path_components[ 2 ];
 $LoginKeyOneTime = $path_components[ 3 ];
 if ( $loginMethod === 'otc' and \xan\isNotEmpty( $loginUUIDUser ) and \xan\isNotEmpty( $LoginKeyOneTime ) ) {
 	// User Select
-	$userSelect = new xan\recs( $mmUsersT );
+	$userSelect = new \xan\recs( $mmUsersT );
 	$userSelect->querySQL = 'SELECT * FROM Users WHERE UUIDUsers = ? AND LoginKeyOneTime = ?';
 	$userSelect->queryBindNamesA = array( UUIDUSERS, 'LoginKeyOneTime' );
 	$userSelect->queryBindValuesA = array( $loginUUIDUser, $LoginKeyOneTime );
@@ -18,7 +18,7 @@ if ( $loginMethod === 'otc' and \xan\isNotEmpty( $loginUUIDUser ) and \xan\isNot
 	} elseif ( $userSelect->rowCount > 0 ) {
 		
 		// User Update
-		$userUpdate = new xan\recs( $mmUsersT );
+		$userUpdate = new \xan\recs( $mmUsersT );
 		$userUpdate->querySQL = 'UPDATE Users SET Registered = ?, LoginKeyOneTime = ? WHERE UUIDUsers = ?';
 		$userUpdate->queryBindNamesA = array( 'Registered', 'LoginKeyOneTime', UUIDUSERS );
 		$userUpdate->queryBindValuesA = array( 'Yes', '', $loginUUIDUser );
@@ -44,7 +44,7 @@ if ( $loginMethod === 'otc' and \xan\isNotEmpty( $loginUUIDUser ) and \xan\isNot
 $CookieRememberMe = $_COOKIE[ COOKIE_REMEMBERME ] ?? '';
 if ( \xan\isNotEmpty( $CookieRememberMe ) ) {
 	// User Select
-	$userSelect = new xan\recs( $mmUsersT );
+	$userSelect = new \xan\recs( $mmUsersT );
 	$userSelect->querySQL = 'SELECT * FROM Users WHERE LoginKey = ?';
 	$userSelect->queryBindNamesA = array( 'LoginKey' );
 	$userSelect->queryBindValuesA = array( $CookieRememberMe );
@@ -68,24 +68,24 @@ if ( \xan\isNotEmpty( $CookieRememberMe ) ) {
 // Form Display
 
 // Tags Cell
-$tagsCellEmpty = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-$tagsCellLeftMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-$tagsCellLeftTop = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
-$tagsCellRightMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_MIDDLE ], [], [] );
-$tagsCellRightTop = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_TOP ], [], [] );
-$tagsCellCenterMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_CENTER, TABLE_ALIGN_MIDDLE ], [], [] );
+$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+$tagsCellLeftMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+$tagsCellLeftTop = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
+$tagsCellRightMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_MIDDLE ], [], [] );
+$tagsCellRightTop = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_TOP ], [], [] );
+$tagsCellCenterMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_CENTER, TABLE_ALIGN_MIDDLE ], [], [] );
 
 // Tags Ele
-$tagsEleLabel = new xan\tags( [ 'small' ], [], [] );
-$tagsEleInput = new xan\tags( [ 'col' ], [], [] );
-$tagsEleSelector = new xan\tags( [], [], [] );
+$tagsEleLabel = new \xan\tags( [ 'small' ], [], [] );
+$tagsEleInput = new \xan\tags( [ 'col' ], [], [] );
+$tagsEleSelector = new \xan\tags( [], [], [] );
 
 // Detail Cards Append
 require_once( 'contentCard-user-login.php' );
 
 // Scripts Extra
 // $resp->scriptsOnLoadA[] = '';
-// $resp->scriptsExtraA[] = xan\jsConsoleMsgAppend( 'Test: ' . 'Hey now!' );
+// $resp->scriptsExtraA[] = \xan\jsConsoleMsgAppend( 'Test: ' . 'Hey now!' );
 // }
 
 ?>

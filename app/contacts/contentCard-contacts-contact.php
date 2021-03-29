@@ -1,22 +1,22 @@
 <?php
 // Card
 $cardHeaderContent = $mmContactsT->FontAwesome . STR_NBSP . 'Contact';
-$card = new xan\eleCard( CARD_WIDTH, '', false );
+$card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
-$tagsEleInput_Photo = new xan\tags( [ 'col', 'img-thumbnail' ], [ 'height' => CARD_HEIGHT_QUARTER, 'width' => 'auto' ], [] );
-$tagsEleInput_PhotoUploadButton = new xan\tags( [ 'col' ], [], [] );
-$tagsEleInput_NameUpdate = new xan\tags( [ 'col', 'ContactsNameUpdate' ], [], [] );
+$tagsEleInput_Photo = new \xan\tags( [ 'col', 'img-thumbnail' ], [ 'height' => CARD_HEIGHT_QUARTER, 'width' => 'auto' ], [] );
+$tagsEleInput_PhotoUploadButton = new \xan\tags( [ 'col' ], [], [] );
+$tagsEleInput_NameUpdate = new \xan\tags( [ 'col', 'ContactsNameUpdate' ], [], [] );
 
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Photo Upload JS
 $jsA = [];
 $jsA[] = /** @lang JavaScript */ '$( "#' . $mmContactsT->NameTable . 'List' . $recsDetail->rowsD[ $recsDetail->rowIndex ][ $mmContactsT->NameTableKey ] . 'Image" ).attr( "src", pURL ); // Set the List img URL';
 $jsA[] = /** @lang JavaScript */ '$( "#xf_' . $recsDetail->rowsD[ $recsDetail->rowIndex ][ $mmContactsT->NameTableKey ] . '_PhotoFN" ).val( filename ).trigger( "change" ); // Set the Input and Trigger a Save';
-$tagsEleInput_PhotoUploadButton->otherD[ 'fileUploadSuccess' ] = xan\arrayJSCodeToString( $jsA );
+$tagsEleInput_PhotoUploadButton->otherD[ 'fileUploadSuccess' ] = \xan\arrayJSCodeToString( $jsA );
 $tagsEleInput_PhotoUploadButton->otherD[ 'fileUploadProblem' ] = '';
 
 // Photo Label and Upload Button
