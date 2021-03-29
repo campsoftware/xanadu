@@ -51,7 +51,7 @@ class sender {
 			$this->resultSMS = \xan\urlContent( 'https://' . SMS_APIKEY_TWILLO . ':' . SMS_APISECRET_TWILLO . '@api.twilio.com/2010-04-01/Accounts/' . SMS_APIKEY_TWILLO . '/Messages.xml', array( 'To' => $toPhone, 'From' => SMS_PHONENUM_TWILLO, 'Body' => $pText ) );
 			// Check for Error
 			$sendInfo = ( \xan\strPatternCount( $sendResult, '<ErrorCode/>' ) > 0 ? 'Success' : 'Error' );
-			\xan\logEventToFile( 'Send Text via Twillo', $sendInfo . '; ' . $toPhone . '; ' . $pText . '; ', $sendResult, \xan\paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
+			\xan\logEventToFile( 'Send Text via Twillo', $sendInfo . '; ' . $toPhone . '; ' . $pText . '; ', $sendResult, $_SERVER[ 'PHP_SELF' ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
 		}
 		
 		// Return
@@ -108,7 +108,7 @@ class sender {
 			$this->resultEmail = $mail->ErrorInfo;
 		} catch ( \PHPMailer\PHPMailer\Exception $e ) {
 			$errorInfo = print_r( $e, true );
-			\xan\logEventToFile( "Catch", "xanPHPMailer: " . $mail->ErrorInfo, $errorInfo, paramEncode( $_SERVER[ "PHP_SELF" ] ), $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? "No", $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? "No" );
+			\xan\logEventToFile( "Catch", "xanPHPMailer: " . $mail->ErrorInfo, $errorInfo, $_SERVER[ "PHP_SELF" ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? "No", $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? "No" );
 			$this->resultEmail = "Error: " . $errorInfo;
 		}
 	}

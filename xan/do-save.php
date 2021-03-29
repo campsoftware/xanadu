@@ -1,30 +1,30 @@
 <?php
 // Get Vars
-$theAjaxAction = xan\valuePOST( "ajaxAction" );
-$theAjaxLabel = xan\valuePOST( "ajaxLabel" );
+$theAjaxAction = \xan\paramEncode( $aloe_request->post[ 'ajaxAction' ] );
+$theAjaxLabel = \xan\paramEncode( $aloe_request->post[ 'ajaxLabel' ] );
 
 // Meta
-$theFormMetaRaw = xan\valuePOST( "ajaxMeta", '', false );
+$theFormMetaRaw = $aloe_request->post[ 'ajaxMeta' ]; // Encode within if
 if ( FORM_OBFUSCATE ) {
 	// Decrypt
 	$theFormMetaPartsRaw = explode( '|', $theFormMetaRaw );
-	$theTime = $theFormMetaPartsRaw[ 0 ];
+	$theTime = \xan\paramEncode( $theFormMetaPartsRaw[ 0 ] );
 	$theFormMeta = $theFormMetaPartsRaw[ 1 ];
 	$theFormMeta = xan\decrypt( $theFormMeta, $theTime . FORM_OBFUSCATE_KEY );
 	// Get Parts
 	$theFormMetaParts = explode( '|', $theFormMeta );
-	$theTableName = $theFormMetaParts[ 0 ];
-	$theTableKeyName = $theFormMetaParts[ 1 ];
-	$theTableKeyValue = $theFormMetaParts[ 2 ];
+	$theTableName = \xan\paramEncode( $theFormMetaParts[ 0 ] );
+	$theTableKeyName = \xan\paramEncode( $theFormMetaParts[ 1 ] );
+	$theTableKeyValue = \xan\paramEncode( $theFormMetaParts[ 2 ] );
 } else {
 	// No Decryption
 	$theFormMeta = $theFormMetaRaw;
 	// Get Parts
 	$theFormMetaParts = explode( '|', $theFormMeta );
-	$theTime = $theFormMetaParts[ 0 ];
-	$theTableName = $theFormMetaParts[ 1 ];
-	$theTableKeyName = $theFormMetaParts[ 2 ];
-	$theTableKeyValue = $theFormMetaParts[ 3 ];
+	$theTime = \xan\paramEncode( $theFormMetaParts[ 0 ] );
+	$theTableName = \xan\paramEncode( $theFormMetaParts[ 1 ] );
+	$theTableKeyName = \xan\paramEncode( $theFormMetaParts[ 2 ] );
+	$theTableKeyValue = \xan\paramEncode( $theFormMetaParts[ 3 ] );
 }
 
 // Debug
@@ -38,20 +38,20 @@ if ( FORM_OBFUSCATE ) {
 $ValidationMsgA = array();
 
 // Check Action
-if ( $theAjaxAction !== "ajaxSave" ) {
-	$ValidationMsgA[] = "Invalid Action";
+if ( $theAjaxAction !== 'ajaxSave' ) {
+	$ValidationMsgA[] = 'Invalid Action';
 }
 
 // Check Table and Key Value
-if ( $theTime === "" or $theTableName === "" or $theTableKeyValue === "" ) {
+if ( $theTime === '' or $theTableName === '' or $theTableKeyValue === '' ) {
 	$ValidationMsgA[] = "Invalid Action Data";
 }
 
 // Check Time
-$timeValidUntil = strtotime( "now" ) - FORM_TIMEOUT_SECONDS;
+$timeValidUntil = strtotime( 'now' ) - FORM_TIMEOUT_SECONDS;
 $timeLeft = $theTime - $timeValidUntil;
 if ( $timeLeft < 0 ) {
-	$ValidationMsgA[] = "Form Expired: " . round( abs( $timeLeft ) / 60, 1 ) . 'min Ago';
+	$ValidationMsgA[] = 'Form Expired: ' . round( abs( $timeLeft ) / 60, 1 ) . 'min Ago';
 }
 
 // Respond Not Valid
@@ -77,14 +77,14 @@ if ( $recsTable->errorB ) {
 	$aloe_response->status_set( '500 Internal Service Error: ' . 'Select Before Not Found' );
 	$aloe_response->content_set( 'Error' );
 	return;
-// } else {
-// 	// Recs Loop
-// 	$cardContent = '';
-// 	$recsTable->rowIndex = -1;
-// 	foreach ( $recsTable->rowsD as $recsTableRow ) {
-// 		$recsTable->rowIndex++;
-//		
-// 	}
+	// } else {
+	// 	// Recs Loop
+	// 	$cardContent = '';
+	// 	$recsTable->rowIndex = -1;
+	// 	foreach ( $recsTable->rowsD as $recsTableRow ) {
+	// 		$recsTable->rowIndex++;
+	//
+	// 	}
 }
 
 // Update Table Values
@@ -97,15 +97,15 @@ foreach ( $GLOBALS[ 'schema' ][ $theTableName ] as $theTableSchema ) {
 	$TableSchemaRecsIndex = $TableSchemaRecsIndex + 1;
 	
 	// Get Column Name and Posted Name
-	$colName = $theTableSchema[ "COLUMN_NAME" ];
+	$colName = $theTableSchema[ 'COLUMN_NAME' ];
 	$columnNamePost = xan\formObfuscate( $colName, $theTime );
 	
 	// Get Column Value from the Table and Post
 	$colValueTable = $recsTable->rowsD[ 0 ][ $colName ];
-	$colValuePost = xan\valuePOST( $columnNamePost, "[USE_DB_VALUE]" );
+	$colValuePost = \xan\paramEncode( $aloe_request->post[ $columnNamePost ] ) ?? '[USE_DB_VALUE]';
 	
 	// Use the Post Value if available
-	if ( $colValuePost == "[USE_DB_VALUE]" ) {
+	if ( $colValuePost == '[USE_DB_VALUE]' ) {
 		$colValue = $colValueTable;
 	} else {
 		$colValue = $colValuePost;
@@ -139,10 +139,10 @@ foreach ( $GLOBALS[ 'schema' ][ $theTableName ] as $theTableSchema ) {
 ///////////////////////////////////////////////////////////
 
 // Update ModTS and ModName
-$sqlSetPairs[ UUIDTENANTS ] = $_SESSION[ SESS_USER ][ UUIDTENANTS ] ?? "";
+$sqlSetPairs[ UUIDTENANTS ] = $_SESSION[ SESS_USER ][ UUIDTENANTS ] ?? '';
 $sqlSetPairs[ 'ModTS' ] = xan\dateTimeNowSQL();
-$sqlSetPairs[ 'Mod' . UUIDUSERS ] = $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? "";
-$sqlSetPairs[ 'ModName' ] = $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? "";
+$sqlSetPairs[ 'Mod' . UUIDUSERS ] = $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '';
+$sqlSetPairs[ 'ModName' ] = $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '';
 
 // Get the SQL SET Statement and Bind Values
 $sqlSet = '';
@@ -163,7 +163,7 @@ foreach ( $sqlSetPairs as $colName => $colValue ) {
 			$sqlSet = $sqlSet . ", ";
 		}
 		// Set Statement Add Assignement
-		$sqlSet = $sqlSet . $colName . " = ?";
+		$sqlSet = $sqlSet . $colName . ' = ?';
 		
 		// Bind Append Column Names and Values
 		$bindNameA[] = $colName;
@@ -246,8 +246,8 @@ foreach ( $recsTable->rowsD as &$rowTable ) {
 
 // Get Load Time End
 $page[ PAGE_MESSAGE_LOADTIME ] = xan\microsecsDiff( $pageload_begin );
-$recsTable->rowsD[ 0 ][ "AjaxLoadTime" ] = $page[ PAGE_MESSAGE_LOADTIME ];
-$recsTable->rowsD[ 0 ][ "AjaxColumnLabel" ] = $theAjaxLabel;
+$recsTable->rowsD[ 0 ][ 'AjaxLoadTime' ] = $page[ PAGE_MESSAGE_LOADTIME ];
+$recsTable->rowsD[ 0 ][ 'AjaxColumnLabel' ] = $theAjaxLabel;
 
 // Records to JSON
 $resultJSON = json_encode( $recsTable->rowsD );
@@ -260,7 +260,7 @@ if ( $logAudit->errorB ) {
 	$aloe_response->content_set( 'Error' );
 	return;
 } elseif ( $logAudit->rowCount < 1 ) {
-	$aloe_response->status_set( '500 Internal Service Error: ' . 'LogAudit Not Found; '. $logAudit->messageExtra . '; ' . $logAudit->messageSQL );
+	$aloe_response->status_set( '500 Internal Service Error: ' . 'LogAudit Not Found; ' . $logAudit->messageExtra . '; ' . $logAudit->messageSQL );
 	$aloe_response->content_set( 'Error' );
 	return;
 }
