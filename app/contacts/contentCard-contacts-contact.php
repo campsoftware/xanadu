@@ -23,36 +23,29 @@ $tagsEleInput_PhotoUploadButton->otherD[ 'fileUploadProblem' ] = '';
 $PhotoFNCode = $mmContactsT->getColEleRender( 'PhotoFN', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp );
 $PhotoFNCode .= $mmContactsT->getColEleRender( 'PhotoFN', ELE_AS_FILEUPLOADBUTTON, $tagsEleInput_PhotoUploadButton, $recsDetail, $formTagDetail, $resp );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightTop, $PhotoFNCode );
+
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightTop, $PhotoFNCode );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmContactsT->getColEleRender( 'PhotoFN', ELE_AS_DEFINED, $tagsEleInput_Photo, $recsDetail, $formTagDetail, $resp ) );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameCompany', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameCompany', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmContactsT->getColEleRender( 'NameCompany', ELE_AS_DEFINED, $tagsEleInput_NameUpdate, $recsDetail, $formTagDetail, $resp ) );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameTitle', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameTitle', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmContactsT->getColEleRender( 'NameTitle', ELE_AS_DEFINED, $tagsEleInput, $recsDetail, $formTagDetail, $resp ) );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NamePrefix', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NamePrefix', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmContactsT->getColEleRender( 'NamePrefix', ELE_AS_DEFINED, $tagsEleInput, $recsDetail, $formTagDetail, $resp ) );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameFirst', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameFirst', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmContactsT->getColEleRender( 'NameFirst', ELE_AS_DEFINED, $tagsEleInput_NameUpdate, $recsDetail, $formTagDetail, $resp ) );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameMiddle', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameMiddle', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmContactsT->getColEleRender( 'NameMiddle', ELE_AS_DEFINED, $tagsEleInput, $recsDetail, $formTagDetail, $resp ) );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameLast', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameLast', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmContactsT->getColEleRender( 'NameLast', ELE_AS_DEFINED, $tagsEleInput_NameUpdate, $recsDetail, $formTagDetail, $resp ) );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameSuffix', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'NameSuffix', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmContactsT->getColEleRender( 'NameSuffix', ELE_AS_DEFINED, $tagsEleInput, $recsDetail, $formTagDetail, $resp ) );
 
 // Card Append

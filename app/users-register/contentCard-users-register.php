@@ -13,30 +13,23 @@ $table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows
-$tableRowIndex++;
 $logoEle = new \xan\eleURLImage( APP_ICON_URL_1024, false, '', 'Xanadu', 'Xanadu', $tagsEleInput_Logo );
-$table->cellSet( $tableRowIndex, 0, $tagsCellCenterMiddle, $logoEle->render() );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellCenterMiddle, $logoEle->render() );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Email<div class="float-right small"><a href="' . $mmUsersLogin->URLRelative . '">Login</a></div>' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, 'Email<div class="float-right small"><a href="' . $mmUsersLogin->URLRelative . '">Login</a></div>' );
 
-$tableRowIndex++;
 $loginEle = new \xan\eleText( $CookieLogin ?? '', 'Login', 'Login', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $loginEle->render() );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $loginEle->render() );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Password' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, 'Password' );
 
-$tableRowIndex++;
 $pwEle = new \xan\eleTextReveal( '', 'Password', 'Password', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
 
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, 'Password Verify' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, 'Password Verify' );
 
-$tableRowIndex++;
 $pwEle = new \xan\eleTextReveal( '', 'PasswordVerify', 'PasswordVerify', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render() );
 
 // Button Click
 $formButtonOnClick = /** @lang JavaScript */
@@ -50,15 +43,13 @@ function formButtonOnClick(){
 JS;
 
 // Button
-$tableRowIndex++;
 $formButtonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ "onclick='" . $formButtonOnClick . "'" ] );
 $formButtonSpinner = '<span id="formButtonSpinner" style="display: none;">' . STR_NBSP . FA_SPINNER . '</span>';
 $buttonEle = new \xan\eleButton( $mmUsersRegister->FontAwesome . STR_NBSP . $mmUsersRegister->NameModule . $formButtonSpinner, 'formButton', '', $formButtonTags );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
 // Message
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<span id="formMessage"></span>' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, '<span id="formMessage"></span>' );
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
