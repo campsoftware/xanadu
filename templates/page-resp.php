@@ -82,7 +82,7 @@ ob_start();
         <script src="https://js.stripe.com/v3/"></script>
 
         <!-- Xanadu Javascript -->
-        <script src="/include/xan.js"></script>
+        <script src="/xan/xan.js"></script>
 
         <!-- FontAwesome     https://fontawesome.com/icons -->
         <link href="/include/fontawesome/5.15.2_pro/css/all.min.css" rel="stylesheet" type="text/css">
