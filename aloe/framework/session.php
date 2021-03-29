@@ -3,7 +3,7 @@
 
 namespace aloe {
 	
-	use function xan\dateTimeFromString;
+	use function \xan\dateTimeFromString;
 	
 	function session_init( $timeout, $regenerate, $info ) {
 		

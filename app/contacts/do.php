@@ -6,7 +6,7 @@ $doParam = json_decode( $aloe_request->post[ 'params' ], true );
 $ValidationMsgA = array();
 
 // Validate From Ajax
-if ( xan\isAjax() === false ) {
+if ( \xan\isAjax() === false ) {
 	$ValidationMsgA[] = "Call Method Error";
 }
 
@@ -38,7 +38,7 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	// Response Actions Append
 	$resp->jsSetPageTitle( $resp->headTitle );
 	$resp->jsSetHTML( '#pageContentHeader', $resp->headTitle );
-	$resp->jsSetHTML( '#pageContentBody', xan\respAToString( $resp->contentAreaA ) );
+	$resp->jsSetHTML( '#pageContentBody', \xan\respAToString( $resp->contentAreaA ) );
 	$resp->jsRunInit();
 	
 	// Actions Return as JSON

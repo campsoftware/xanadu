@@ -54,7 +54,7 @@ if ( $doParam[ 'PasswordNewOne' ] !== $doParam[ 'PasswordNewTwo' ] ) {
 if ( empty( $ValidationMsgA ) ) {
 	
 	// User Select
-	$userSelect = new xan\recs( $mmUsersT );
+	$userSelect = new \xan\recs( $mmUsersT );
 	$userSelect->querySQL = 'SELECT * FROM Users WHERE UUIDUsers = ?';
 	$userSelect->queryBindNamesA = array( UUIDUSERS );
 	$userSelect->queryBindValuesA = array( $doParam[ 'IDUsers' ] );
@@ -102,11 +102,11 @@ if ( !empty( $ValidationMsgA ) ) {
 }
 
 // Password Calculate
-$PasswordHashSeed = xan\strUUID();
+$PasswordHashSeed = \xan\strUUID();
 $PasswordHashed = hash( 'sha256', $PasswordHashSeed . $doParam[ 'PasswordNewOne' ] );
 
 // Password Update
-$recsDetail = new xan\recs( $mmUsersT );
+$recsDetail = new \xan\recs( $mmUsersT );
 $recsDetail->recordUpdate( $doParam[ 'IDUsers' ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ));
 // Error Check
 if ( $recsDetail->errorB ) {

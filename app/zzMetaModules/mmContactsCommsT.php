@@ -1,6 +1,6 @@
 <?php
 
-class moduleMetaContactsCommsT extends xan\moduleMeta {
+class moduleMetaContactsCommsT extends \xan\moduleMeta {
 	// Constructor
 	public function __construct() {
 		parent::__construct();
@@ -14,7 +14,7 @@ class moduleMetaContactsCommsT extends xan\moduleMeta {
 		// $this->QueryBuilderDefault = '{ field: "Contacts.NameCompany", id: "querybuilder_Contacts_NameCompany", operator: "begins_with", value: "" }';
 		//
 		// $this->QueryOrderByDefault = 'NameCompany ASC, NameLast ASC, NameFirst ASC';
-		// $this->QueryOrderByExtraBegin .= xan\dbQueryOrderByItem( $this->NameTable, 'NameCompany ASC, NameLast ASC, NameFirst ASC', 'NameCompany DESC, NameLast DESC, NameFirst DESC', 'Company, Last, First' );
+		// $this->QueryOrderByExtraBegin .= \xan\dbQueryOrderByItem( $this->NameTable, 'NameCompany ASC, NameLast ASC, NameFirst ASC', 'NameCompany DESC, NameLast DESC, NameFirst DESC', 'Company, Last, First' );
 		// $this->QueryOrderByExtraBegin .= '<hr />';
 		
 		$this->NamePlural = 'Comms';
@@ -32,21 +32,21 @@ class moduleMetaContactsCommsT extends xan\moduleMeta {
 	
 	
 	///////////////////////////////////////////////////////////
-	// Functions Required by xan\moduleMeta
+	// Functions Required by \xan\moduleMeta
 	
-	public function getDisplayList( xan\recs $recs ) {
+	public function getDisplayList( \xan\recs $recs ) {
 		$code = $this->getDisplayName( $recs );
 		$code = trim( $code );
 		return $code;
 	}
 	
-	public function getDisplayName( xan\recs $recs ) {
+	public function getDisplayName( \xan\recs $recs ) {
 		$code = '';
 		$code = trim( $code );
 		return $code;
 	}
 	
-	public function getListItem( $idPrefix, xan\recs $recs, $onClick ) {
+	public function getListItem( $idPrefix, \xan\recs $recs, $onClick ) {
 		$code = '';
 		return $code;
 	}
@@ -77,14 +77,14 @@ class moduleMetaContactsCommsT extends xan\moduleMeta {
 			case 'Type':
 				$colEle->colLabelEN = 'Type';
 				$colEle->eleType = ELE_TYPE_SELECT_DB;
-				$arrays = xan\choicesAFromSQLCols( $this->NameTable, "SELECT DISTINCT `Type` From ContactsComms WHERE LENGTH( `Type` ) > 0 ORDER BY `Type` ASC" );
+				$arrays = \xan\choicesAFromSQLCols( $this->NameTable, "SELECT DISTINCT `Type` From ContactsComms WHERE LENGTH( `Type` ) > 0 ORDER BY `Type` ASC" );
 				$colEle->choicesAValues = $arrays[ 0 ];
 				$colEle->choicesADisplay = $arrays[ 0 ];
 				break;
 			case 'Label':
 				$colEle->colLabelEN = 'Label';
 				$colEle->eleType = ELE_TYPE_SELECT_DB;
-				$arrays = xan\choicesAFromSQLCols( $this->NameTable, "SELECT DISTINCT `Label` From ContactsComms WHERE LENGTH( `Label` ) > 0 ORDER BY `Label` ASC" );
+				$arrays = \xan\choicesAFromSQLCols( $this->NameTable, "SELECT DISTINCT `Label` From ContactsComms WHERE LENGTH( `Label` ) > 0 ORDER BY `Label` ASC" );
 				$colEle->choicesAValues = $arrays[ 0 ];
 				$colEle->choicesADisplay = $arrays[ 0 ];
 				break;
@@ -166,10 +166,10 @@ class moduleMetaContactsCommsT extends xan\moduleMeta {
 		return $colEle;
 	}
 	
-	public function getColEleRender( $colName, $typeAs, xan\tags $tags, xan\recs $recs, xan\formTag $formTag, xan\response &$resp ) {
+	public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
 		// Get Col Ele Meta
 		$colEle = $this->getColMeta( $colName, $typeAs );
-		$code = xan\eleDBMetaRender( $colEle, $tags, $recs, $formTag, $resp );
+		$code = \xan\eleDBMetaRender( $colEle, $tags, $recs, $formTag, $resp );
 		return $code;
 	}
 	
@@ -177,7 +177,7 @@ class moduleMetaContactsCommsT extends xan\moduleMeta {
 	///////////////////////////////////////////////////////////
 	// Functions For This Module
 	
-	public function getURL( xan\recs $recs ) {
+	public function getURL( \xan\recs $recs ) {
 		$url = '';
 		$row = $recs->rowsD[ $recs->rowIndex ];
 		
@@ -199,7 +199,7 @@ class moduleMetaContactsCommsT extends xan\moduleMeta {
 		return $url;
 	}
 	
-	public function getAddress( xan\recs $recs, $format ) {
+	public function getAddress( \xan\recs $recs, $format ) {
 		$return = '';
 		$row = $recs->rowsD[ $recs->rowIndex ];
 		

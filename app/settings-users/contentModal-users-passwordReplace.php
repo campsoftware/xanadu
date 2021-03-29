@@ -6,13 +6,13 @@ $modal->buttonActionDanger = true;
 $modal->buttonActionAutoDismiss = false;
 
 // Table
-$tagsCellEmpty = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-$tagsCellRightMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_MIDDLE ], [], [] );
-$tagsCellLeftMiddle = new xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-$table = new xan\eleTable( $tagsCellEmpty );
+$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+$tagsCellRightMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_RIGHT, TABLE_ALIGN_MIDDLE ], [], [] );
+$tagsCellLeftMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+$table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
-$tagsEleLabel = new xan\tags( [ 'small' ], [], [] );
-$tagsEleInput = new xan\tags( [ 'col' ], [], [] );
+$tagsEleLabel = new \xan\tags( [ 'small' ], [], [] );
+$tagsEleInput = new \xan\tags( [ 'col' ], [], [] );
 
 // New Password
 $tableRowIndex++;

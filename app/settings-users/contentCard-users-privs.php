@@ -1,13 +1,13 @@
 <?php
 // Card
 $cardHeaderContent = \xan\iconFA( FA_PASSWORD ) . STR_NBSP . 'Privs';
-$card = new xan\eleCard( CARD_WIDTH, '', false );
+$card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
-$tagsEleInput_PathLast = new xan\tags( [ 'col', ], [ 'height' => ELE_HEIGHT_4X ], [] );
+$tagsEleInput_PathLast = new \xan\tags( [ 'col', ], [ 'height' => ELE_HEIGHT_4X ], [] );
 
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows

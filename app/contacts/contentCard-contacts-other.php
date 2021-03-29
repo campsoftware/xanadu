@@ -1,12 +1,12 @@
 <?php
 // Card
-$cardHeaderContent = xan\iconFA( 'fas fa-trailer' ) . STR_NBSP . 'Other';
-$card = new xan\eleCard( CARD_WIDTH, '', false );
+$cardHeaderContent = \xan\iconFA( 'fas fa-trailer' ) . STR_NBSP . 'Other';
+$card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
 
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$table = new \xan\eleTable( $tagsCellEmpty );
 
 // Table Rows
 $table->cellSet( 0, 0, $tagsCellRightMiddle, $mmContactsT->getColEleRender( 'ContactedDate', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );

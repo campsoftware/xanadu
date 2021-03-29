@@ -784,7 +784,7 @@ class recs {
         // $recs = new \xan\recs( $mmContactsT );
         // $recs->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable;
         // $recs->query();
-        // $filename = 'Xan_' . $mmContactsT->NameTable . '_' . xan\dateTimeFromString( 'now', DATETIME_FORMAT_LOG ) . '.sql';
+        // $filename = 'Xan_' . $mmContactsT->NameTable . '_' . \xan\dateTimeFromString( 'now', DATETIME_FORMAT_LOG ) . '.sql';
         // $filename = 'Xan_Contacts_20210223_194453.sql';
         // $recs->dumpSQL( $filename );
         
@@ -2971,7 +2971,7 @@ function buttonStripeProduct( $label, $id, $code, $name, $desc, $qty, $price, $i
 	// Calling Example
 	if ( false ) {
 		// Stripe Product
-		$stripeButtonProduct = xan\ButtonStripeProduct( 'Product $20', 'buttonProduct20', 'ProdCode', 'Product Name', 'Product Description', 1, 2000, 'https://xandev.xanweb.app/images/logo1024.png', $_SESSION[ 'urlCurrent' ] );
+		$stripeButtonProduct = \xan\ButtonStripeProduct( 'Product $20', 'buttonProduct20', 'ProdCode', 'Product Name', 'Product Description', 1, 2000, 'https://xandev.xanweb.app/images/logo1024.png', $_SESSION[ 'urlCurrent' ] );
 		if ( $stripeButtonProduct !== null ) {
 			$page[ PAGE_CONTENT_AREA ] .= '<p class="ml-3">' . $stripeButtonProduct[ 'Button' ] . '</p>';
 			$page[ PAGE_SCRIPTS_ONLOAD ] .= $stripeButtonProduct[ 'InitJavaScript' ];
@@ -3026,7 +3026,7 @@ function buttonStripeSubscription( $label, $id, $code, $stripePriceID, $qty, $ca
 	// Calling Example
 	if ( false ) {
 		// Stripe Subscription
-		$stripeButtonSubscription = xan\ButtonStripeSubscription( 'Subscription $1/month', 'buttonSubscription1', 'SubCode', 'monthly', 1, $_SESSION[ 'urlCurrent' ] );
+		$stripeButtonSubscription = \xan\ButtonStripeSubscription( 'Subscription $1/month', 'buttonSubscription1', 'SubCode', 'monthly', 1, $_SESSION[ 'urlCurrent' ] );
 		if ( $stripeButtonSubscription !== null ) {
 			$page[ PAGE_CONTENT_AREA ] .= '<p class="ml-3">' . $stripeButtonSubscription[ 'Button' ] . '</p>';
 			$page[ PAGE_SCRIPTS_ONLOAD ] .= $stripeButtonSubscription[ 'InitJavaScript' ];

@@ -7,13 +7,13 @@ $sessionFilePaths = glob( '/tmp/sess_*' );
 // echo print_r( $sessionFilePaths, true );
 
 // Card
-$cardHeaderContent = xan\iconFA( 'fas fa-handshake' ) . STR_NBSP . 'Sessions';
-$card = new xan\eleCard( CARD_WIDTH_3X, CARD_HEIGHT_MAX, true );
+$cardHeaderContent = \xan\iconFA( 'fas fa-handshake' ) . STR_NBSP . 'Sessions';
+$card = new \xan\eleCard( CARD_WIDTH_3X, CARD_HEIGHT_MAX, true );
 
 // Tags Special
 
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Header

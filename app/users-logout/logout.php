@@ -1,6 +1,6 @@
 <?php
 // Log
-$logEvent = xan\logEventToSQL( 'Logout', "", "", $_SERVER[ 'PHP_SELF' ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
+$logEvent = \xan\logEventToSQL( 'Logout', "", "", $_SERVER[ 'PHP_SELF' ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
 // Error Check
 if ( $logEvent->errorB ) {
 	$aloe_response->status_set( '500 Internal Service Error: ' . 'LogAudit Error; ' . $logEvent->messageExtra . '; ' . $logEvent->messageSQL );

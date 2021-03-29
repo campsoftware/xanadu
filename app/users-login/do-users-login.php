@@ -31,7 +31,7 @@ if ( \xan\isEmpty( $doParam[ 'Password' ] ) ) {
 if ( empty( $ValidationMsgA ) ) {
 	
 	// User Select
-	$userSelect = new xan\recs( $mmUsersT );
+	$userSelect = new \xan\recs( $mmUsersT );
 	$userSelect->querySQL = 'SELECT * FROM Users WHERE EmailAddress = ?';
 	$userSelect->queryBindNamesA = array( 'EmailAddress' );
 	$userSelect->queryBindValuesA = array( $doParam[ 'Login' ] );

@@ -1,13 +1,13 @@
 <?php
 // Card
 $cardHeaderContent = $mmUsersT->FontAwesome . STR_NBSP . 'User';
-$card = new xan\eleCard( CARD_WIDTH, '', false );
+$card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
-$tagsEleInput_NameUpdate = new xan\tags( [ 'col', 'UsersNameUpdate' ], [], [] );
+$tagsEleInput_NameUpdate = new \xan\tags( [ 'col', 'UsersNameUpdate' ], [], [] );
 
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows

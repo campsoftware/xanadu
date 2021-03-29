@@ -1,15 +1,15 @@
 <?php
 // Card
 $cardHeaderContent = 'Welcome to ' . APP_NAME . '!';
-$card = new xan\eleCard( CARD_WIDTH, '', false );
+$card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
-$tagsEleInput_Logo = new xan\tags( [ 'col', '' ], [ 'height' => ELE_HEIGHT_6X, 'width' => 'auto' ], [] );
+$tagsEleInput_Logo = new \xan\tags( [ 'col', '' ], [ 'height' => ELE_HEIGHT_6X, 'width' => 'auto' ], [] );
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Table
-$table = new xan\eleTable( $tagsCellEmpty );
+$table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows

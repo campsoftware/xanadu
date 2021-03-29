@@ -139,7 +139,7 @@ xan\dbRecsSchemaSet(); // Sets: $GLOBALS[ 'schema' ]
 ///////////////////////////////////////////////////////////
 // Session recsUsersCURRENT Init ;
 // Example: $_SESSION[ SESS_USER ][ 'NameFirst' ]
-$recsUserCURRENT = new xan\recs( $mmUsersT );
+$recsUserCURRENT = new \xan\recs( $mmUsersT );
 $recsUserCURRENT->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . $mmUsersT->NameTableKey . ' = ?';
 $recsUserCURRENT->queryBindNamesA = array( $mmUsersT->NameTableKey );
 $recsUserCURRENT->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDUSERS ] );
@@ -161,7 +161,7 @@ $_SESSION[ 'urlCurrent' ] = 'http://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQ
 
 ///////////////////////////////////////////////////////////
 // Settings Select
-$recsSettings = new xan\recs( $mmSettingsT );
+$recsSettings = new \xan\recs( $mmSettingsT );
 $recsSettings->querySQL = 'SELECT * FROM ' . $mmSettingsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . 'Active = ?';
 $recsSettings->queryBindNamesA = array( UUIDTENANTS, 'Active' );
 $recsSettings->queryBindValuesA = array( $GLOBALS[ UUIDTENANTS ], 'Yes' );
