@@ -15,11 +15,10 @@ $card = new \xan\eleCard( CARD_WIDTH_3X, CARD_HEIGHT_MAX, true );
 // Table
 $table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
+$tableColIndex = -1;
 
 // Table Header
-$tableRowIndex++;
-$tableColIndex = -1;
-$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, '#' );
+$table->cellSet( ++$tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, '#' );
 $table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, 'TENANT' );
 $table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, 'Login / User ID' );
 $table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, 'SES_PATH / SES_INFO' );
@@ -51,9 +50,8 @@ foreach ( $sessionFilePaths as $sessionName ) {
 			$sessionIndex++;
 			
 			// Table Rows
-			$tableRowIndex++;
 			$tableColIndex = -1;
-			$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $sessionIndex );
+			$table->cellSet( ++$tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $sessionIndex );
 			$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $_SESSION[ SESS_USER ][ UUIDTENANTS ] );
 			$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $_SESSION[ SESS_USER ][ 'EmailAddress' ] . STR_BR . $_SESSION[ SESS_USER ][ UUIDUSERS ] );
 			$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $_SESSION[ SES_PATH ] .STR_BR . $_SESSION[ SES_INFO ] );

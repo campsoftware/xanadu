@@ -10,9 +10,8 @@ $table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows
-$tableRowIndex++;
 $poolProcesses = shell_exec( "ps -ef | grep 'php-fpm: pool' | grep -v 'grep'" );
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<pre style="white-space: pre-wrap;">' . $poolProcesses . '</pre>', '1', '2' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, '<pre style="white-space: pre-wrap;">' . $poolProcesses . '</pre>', '1', '2' );
 
 // Card Append
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $table->render() );

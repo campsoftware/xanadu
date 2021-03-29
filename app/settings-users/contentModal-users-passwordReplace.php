@@ -15,17 +15,15 @@ $tagsEleLabel = new \xan\tags( [ 'small' ], [], [] );
 $tagsEleInput = new \xan\tags( [ 'col' ], [], [] );
 
 // New Password
-$tableRowIndex++;
 $eleLabel = new \xan\eleLabel( 'New Password', '', '', $tagsEleLabel );
 $eleInput = new \xan\eleTextReveal( '', 'PasswordNewOne', '', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $eleLabel->render() );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $eleLabel->render() );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $eleInput->render() );
 
 // New Password Verify
-$tableRowIndex++;
 $eleLabel = new \xan\eleLabel( 'New Password Verify', '', '', $tagsEleLabel );
 $eleInput = new \xan\eleTextReveal( '', 'PasswordNewTwo', '', $tagsEleInput );
-$table->cellSet( $tableRowIndex, 0, $tagsCellRightMiddle, $eleLabel->render() );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $eleLabel->render() );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $eleInput->render() );
 
 // Modal Init

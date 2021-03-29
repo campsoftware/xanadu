@@ -10,8 +10,7 @@ $table = new \xan\eleTable( $tagsCellEmpty );
 $tableRowIndex = -1;
 
 // Table Rows
-$tableRowIndex++;
-$table->cellSet( $tableRowIndex, 0, $tagsCellLeftMiddle, '<pre style="white-space: pre-wrap;">' . $sessionAsText . '</pre>', '1', '2' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, '<pre style="white-space: pre-wrap;">' . $sessionAsText . '</pre>', '1', '2' );
 
 // Card Append
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $table->render() );
