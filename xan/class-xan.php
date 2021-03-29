@@ -355,7 +355,7 @@ class recs {
             $newDB = new \PDO( "mysql:host=$servername;port=$serverport;dbname=$dbname", $username, $password, $optDB );
             return $newDB;
         } catch ( \PDOException $e ) {
-            logEventToFile( 'Catch', 'DBConnect', $e->getMessage(), paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? 'No', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? 'No' );
+            logEventToFile( 'Catch', 'DBConnect', $e->getMessage(), $_SERVER[ 'PHP_SELF' ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? 'No', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? 'No' );
             return 'Error: ' . $e->getMessage();
         }
     }
@@ -417,7 +417,7 @@ class recs {
             }
         } catch ( \PDOException $e ) {
             // Log Error
-            logEventToFile( 'Catch', 'DBSelect: ' . $this->querySQL, $e->getMessage(), paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? 'No', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? 'No' );
+            logEventToFile( 'Catch', 'DBSelect: ' . $this->querySQL, $e->getMessage(), $_SERVER[ 'PHP_SELF' ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? 'No', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? 'No' );
             $this->errorB = true;
             $this->rowsD = [];
             $this->rowCount = 0;
@@ -2025,24 +2025,26 @@ class eleSearchBarSimpleDB extends element {
 class eleSearchBarListDB extends element {
 	// Vars
 	public moduleMeta $mm;
+	public $postEncoded;
 	public response $resp;
 	public $idPrefix;
 
-	public function __construct( moduleMeta $mm, response &$resp ) {
+	public function __construct( moduleMeta $mm, $postEncoded, response &$resp ) {
 		parent::__construct();
 		$this->mm = $mm;
+		$this->postEncoded = $postEncoded;
 		$this->resp = $resp;
 		$this->idPrefix = $mm->NameTable . '';
 	}
 
 	public function render(){
 		// Search Session Vars Init
-		$_SESSION[ $this->idPrefix . 'SearchTerm' ] = ( isset( $_POST[ $this->idPrefix . 'SearchTerm' ] ) ? valuePOST( $this->idPrefix . 'SearchTerm' ) : $_SESSION[ $this->idPrefix . 'SearchTerm' ] );
-		$_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] = ( isset( $_POST[ $this->idPrefix . 'SearchQBStringWhere' ] ) ? valuePOST( $this->idPrefix . 'SearchQBStringWhere', '', false ) : $_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] );
-		$_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] = ( isset( $_POST[ $this->idPrefix . 'SearchQBBindWhere' ] ) ? valuePOST( $this->idPrefix . 'SearchQBBindWhere', '', false ) : $_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] );
-		$_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] = ( isset( $_POST[ $this->idPrefix . 'SearchQBBindParams' ] ) ? valuePOST( $this->idPrefix . 'SearchQBBindParams', '', false ) : $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
-		$_SESSION[ $this->idPrefix . 'SearchQBRules' ] = ( isset( $_POST[ $this->idPrefix . 'SearchQBRules' ] ) ? valuePOST( $this->idPrefix . 'SearchQBRules', '', false ) : $_SESSION[ $this->idPrefix . 'SearchQBRules' ] );
-		$_SESSION[ $this->idPrefix . 'SearchSort' ] = ( isset( $_POST[ $this->idPrefix . 'SearchSort' ] ) ? valuePOST( $this->idPrefix . 'SearchSort', '', false ) : $_SESSION[ $this->idPrefix . 'SearchSort' ] );
+		$_SESSION[ $this->idPrefix . 'SearchTerm' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchTerm' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchTerm' ] : $_SESSION[ $this->idPrefix . 'SearchTerm' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchQBStringWhere' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchQBStringWhere' ] : $_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchQBBindWhere' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchQBBindWhere' ] : $_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchQBBindParams' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchQBBindParams' ] : $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBRules' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchQBRules' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchQBRules' ] : $_SESSION[ $this->idPrefix . 'SearchQBRules' ] );
+		$_SESSION[ $this->idPrefix . 'SearchSort' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchSort' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchSort' ] : $_SESSION[ $this->idPrefix . 'SearchSort' ] );
 
 		// Order By Init
 		if ( isEmpty( $_SESSION[ $this->idPrefix . 'SearchSort' ] ) ) {

@@ -8,7 +8,7 @@ if ( true ) {
 	
 	// Query
 	$recsList = new xan\recs( $mmContactsT );
-	$searchBarEle = new xan\eleSearchBarListDB( $mmContactsT, $resp );
+	$searchBarEle = new xan\eleSearchBarListDB( $mmContactsT, $aloe_request->post, $resp );
 	$searchBarList = $searchBarEle->render();
 	$recsList->querySQL = $searchBarList[ 'querySQL' ];
 	$recsList->queryBindNamesA = $searchBarList[ 'queryBindNames' ];
@@ -29,7 +29,7 @@ if ( true ) {
 		$recsList->rowIndex = -1;
 		foreach ( $recsList->rowsD as $recsListRow ) {
 			$recsList->rowIndex++;
-		 
+			
 			$idPrefix = $mmContactsT->NamePlural . 'List';
 			$onClick = 'window.location.href = \'' . $mmContactsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmContactsT->NameTableKey ] . '\';';
 			$itemContent = $mmContactsT->getListItem( $idPrefix, $recsList, $onClick );

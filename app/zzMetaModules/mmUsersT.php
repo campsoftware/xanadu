@@ -296,7 +296,7 @@ class moduleMetaUsersT extends xan\moduleMeta {
 		$_SESSION[ SESS_USER ] = $userSelect->rowsD[ 0 ];
 		
 		// Log
-		$logEvent = xan\logEventToSQL( 'Login', $loginMethod, '', xan\paramEncode( $_SERVER[ 'PHP_SELF' ] ), $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
+		$logEvent = xan\logEventToSQL( 'Login', $loginMethod, '', $_SERVER[ 'PHP_SELF' ], $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?? '', $_SESSION[ SESS_USER ][ UUIDUSERS ] ?? '' );
 		// Error Check
 		if ( $logEvent->errorB ) {
 			return 'Error: ' . '500 Internal Service Error: ' . 'LogAudit Error; ' . $logEvent->messageExtra . '; ' . $logEvent->messageSQL;

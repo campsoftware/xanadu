@@ -43,7 +43,7 @@ if ( ( $path_components[ 0 ] == 'login' ) ) {
 // Login Do
 if ( ( $path_components[ 0 ] == 'login-do' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
-	$_SESSION[ SES_INFO ] = $path . '>' . print_r( $_POST, true );
+	$_SESSION[ SES_INFO ] = $path . '>' . print_r( $aloe_request->post, true );
 	require_once( 'app/users-login/do.php' );
 	return;
 }
@@ -60,7 +60,7 @@ if ( ( $path_components[ 0 ] == 'register' ) ) {
 // Register Do
 if ( ( $path_components[ 0 ] == 'register-do' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
-	$_SESSION[ SES_INFO ] = $path . '>' . print_r( $_POST, true );
+	$_SESSION[ SES_INFO ] = $path . '>' . print_r( $aloe_request->post, true );
 	require_once( 'app/users-register/do.php' );
 	return;
 }
@@ -77,7 +77,7 @@ if ( ( $path_components[ 0 ] == 'passwordreset' ) ) {
 // PassworedReset Do
 if ( ( $path_components[ 0 ] == 'passwordreset-do' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
-	$_SESSION[ SES_INFO ] = $path . '>' . print_r( $_POST, true );
+	$_SESSION[ SES_INFO ] = $path . '>' . print_r( $aloe_request->post, true );
 	require_once( 'app/users-passwordreset/do.php' );
 	return;
 }
@@ -136,7 +136,7 @@ if ( ( $path_components[ 0 ] == 'contacts-do' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_INFO ] = $path . '>' . print_r( $_POST, true );
+		$_SESSION[ SES_INFO ] = $path . '>' . print_r( $aloe_request->post, true );
 		require_once( 'app/contacts/do.php' );
 		return;
 	}
@@ -165,7 +165,7 @@ if ( ( $path_components[ 0 ] == 'settings-do' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_INFO ] = $path . '>' . print_r( $_POST, true );
+		$_SESSION[ SES_INFO ] = $path . '>' . print_r( $aloe_request->post, true );
 		require_once( 'app/settings/do.php' );
 		return;
 	}
@@ -204,7 +204,7 @@ if ( ( $path_components[ 0 ] == 'settings-users-do' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_INFO ] = $path . '>' . print_r( $_POST, true );
+		$_SESSION[ SES_INFO ] = $path . '>' . print_r( $aloe_request->post, true );
 		require_once( 'app/settings-users/do.php' );
 		return;
 	}

@@ -224,16 +224,17 @@ function arrayImplodeDictAsCSSStyle( $pDict ) {
 // Param Handling
 function paramEncode( $valueOrArray, $encodeHTMLEntities = false ) {
 	if ( is_array( $valueOrArray ) ) {
-		array_walk_recursive($valueOrArray, function(&$thisValue) {
+		array_walk_recursive( $valueOrArray, function ( &$thisValue ) {
+			$thisValue = $thisValue ?? '';
 			$thisValue = htmlspecialchars( $thisValue, ENT_QUOTES, 'UTF-8', $encodeHTMLEntities );
-			$thisValue = str_replace( 'javascript:', '<span>javacsc</span>ript:', $thisValue );
+			$thisValue = str_replace( 'javascript:', 'java scrip t:', $thisValue );
 			$thisValue = trim( $thisValue );
-		});
-		// array_walk_recursive( $valueOrArray, "htmlspecialcharsForArrayWalkRecursive", $encodeHTMLEntities );
+		} );
 		return $valueOrArray;
 	} else if ( is_scalar( $valueOrArray ) ) {
+		$valueOrArray = $valueOrArray ?? '';
 		$valueOrArray = htmlspecialchars( $valueOrArray, ENT_QUOTES, 'UTF-8', $encodeHTMLEntities );
-		$valueOrArray = str_replace( 'javascript:', '<span>javacsc</span>ript:', $valueOrArray );
+		$valueOrArray = str_replace( 'javascript:', 'java scrip t:', $valueOrArray );
 		$valueOrArray = trim( $valueOrArray );
 		return $valueOrArray;
 	} else {
@@ -242,27 +243,9 @@ function paramEncode( $valueOrArray, $encodeHTMLEntities = false ) {
 }
 
 function paramDecode( $data ) {
+	// $data = strip_tags( $data );
 	$data = htmlspecialchars_decode( $data, ENT_QUOTES );
 	return $data;
-}
-
-
-///////////////////////////////////////////////////////////
-// Value Handling
-function valuePOST( $name, $default = '', $sanitize = true ) {
-	if ( $sanitize ) {
-		return paramEncode( $_POST[ $name ] ?? $default );
-	} else {
-		return $_POST[ $name ] ?? $default;
-	}
-}
-
-function valueGET( $name, $default = '', $sanitize = true ) {
-	if ( $sanitize ) {
-		return paramEncode( $_GET[ $name ] ?? $default );
-	} else {
-		return $_GET[ $name ] ?? $default;
-	}
 }
 
 ///////////////////////////////////////////////////////////

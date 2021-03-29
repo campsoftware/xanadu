@@ -1,6 +1,6 @@
 <?php
 // Params Get
-$doParam = json_decode( $_POST[ 'params' ], true );
+$doParam = json_decode( $aloe_request->post[ 'params' ], true );
 
 // Validate Init
 $ValidationMsgA = array();
