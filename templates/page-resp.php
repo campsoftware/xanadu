@@ -11,7 +11,7 @@ ob_start();
         </script>
 
         <!-- XSS Protection -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;  img-src 'self';  connect-src 'self';  font-src 'self' https://fonts.gstatic.com;  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'self';  ">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;  img-src 'self';  connect-src 'self';  font-src 'self' https://fonts.gstatic.com;  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'self' <?= URL_BASE ?>;  ">
         <meta name="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
         <meta name="referrer" content="strict-origin-when-cross-origin">
         <meta name="Referer" content="no-referrer, strict-origin-when-cross-origin">

@@ -34,6 +34,22 @@ $tagsElePhoto = new xan\tags( [ 'img-thumbnail p-2' ], [ 'height' => CARD_HEIGHT
 $imgEle = new \xan\eleURLImage( URL_BASE . 'include/barcode/2018-10-03/barcode.php?f=png&s=qr&p=-14&d=http://campsoftware.com ', false, '', '', 'CampSoftware.com', $tagsElePhoto );
 $table->cellSet( $tableRowIndex, 0, $tagsCellCenterMiddle, $imgEle->render() . STR_BR . 'CampSoftware.com' );
 
+///////////////////////////////////////////////////////////
+
+$theString = '<div id="123"><script>alert("Hello World One!");</script><a href="javascript:location.href=\'http://stackoverflow.com\';">Hello</a></div>';
+
+$theArray = [];
+$theArray[] = 1;
+$theArray[] = '<div id="123"><script>alert("Hello World One!");</script><a href="javascript:location.href=\'http://stackoverflow.com\';">Hello</a></div>';
+$theArray[] = 3;
+$theArray[] = '<br />';
+$theArray[] = 5;
+
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellCenterMiddle, \xan\paramEncode( $theString, true ) );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellCenterMiddle, print_r( \xan\paramEncode( $theArray, true ), true ) );
+
+///////////////////////////////////////////////////////////
+
 // Card Append
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $table->render() );
 ?>
