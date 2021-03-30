@@ -3,8 +3,8 @@
 $redirectToLogin = false;
 
 // Get Path Parts
-$path = $aloe_request->path_get();
-$path_components = $aloe_request->path_components_get();
+$path = \xan\paramEncode( $aloe_request->path_get() );
+$path_components = \xan\paramEncode( $aloe_request->path_components_get() );
 
 // Note:
 // - aloe\session_init Regenerate = True for Pages; False for Ajax;

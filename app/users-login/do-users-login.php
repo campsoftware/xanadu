@@ -1,7 +1,4 @@
 <?php
-// Response Init
-$resp = new \xan\response;
-
 // Spinner Hide; Button Enable
 $resp->jsHideOrShow( '#formButtonLoginSpinner', 'Hide' );
 $resp->jsSetHTMLProperty( '#formButtonLogin', 'disabled', false );

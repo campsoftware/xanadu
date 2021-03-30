@@ -8,11 +8,11 @@ function xanEventReturnFalse( e ) {
 // Messages
 
 function xanMessageDisplay( selector, html, doFadeOut, doConsoleLog ) {
-    let theDate = new Date();
-    let theID = theDate.getMilliseconds();
-    let theMsg = "<span id='" + theID + "'>" + html + "&nbsp;&nbsp;</span>";
-    $( selector ).append( theMsg );
-    // $( "#" + theID ).fadeIn( "fast" );
+    let theID = Math.floor((Math.random() * 999999999) + 1);
+    let theMsg = "<span id='" + theID + "'>" + html + "</span>";
+    let row = document.getElementById( "xanMessage" );
+    let cell = row.insertCell( -1 );
+    cell.innerHTML = theMsg;
     if ( doFadeOut === true ) {
         $( "#" + theID ).delay( 3000 ).fadeOut( 'slow' );
     }
@@ -29,10 +29,12 @@ function xanConsoleDisplay() {
 }
 
 function xanConsoleCleanHTML( html ) {
-    html = html.trim();
+    html = html.replaceAll( "<br />", " " );
     html = strip_tags( html );
     html = addslashes( html );
+    html = html.replaceAll( "&nbsp;", " " );
     html = html.replace( /\s+/g, " " );
+    html = html.trim();
     return html;
 }
 

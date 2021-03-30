@@ -8,8 +8,10 @@ if ( $_SESSION[ SESS_USER ][ 'PrivAdmin' ] !== 'Yes' ) {
 
 // Response
 $resp = new \xan\response;
-$resp->reqPath = $aloe_request->path_get();
-$resp->reqID = $aloe_request->path_components_get()[ 1 ];
+$resp->reqPath = \xan\paramEncode( $aloe_request->path_get() );
+$resp->reqPathComponents = \xan\paramEncode( $aloe_request->path_components_get() );
+$resp->reqPost = \xan\paramEncode( $aloe_request->post );
+// $resp->reqID = $resp->reqPathComponents[ 1 ];
 $resp->moduleName = $mmSettingsT->NameModule;
 $resp->headTitle = $mmSettingsT->NameModule;
 $resp->headLogoutAuto = true;

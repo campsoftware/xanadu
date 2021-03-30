@@ -1,6 +1,13 @@
 <?php
+// Response Init
+$resp = new \xan\response;
+$resp->reqPath = \xan\paramEncode( $aloe_request->path_get() );
+$resp->reqPathComponents = \xan\paramEncode( $aloe_request->path_components_get() );
+$resp->reqPost = \xan\paramEncode( $aloe_request->post );
+
 // Params Get
 $doParam = json_decode( $aloe_request->post[ 'params' ], true );
+$doParam = \xan\paramEncode( $doParam );
 
 // Validate Init
 $ValidationMsgA = array();
@@ -20,9 +27,6 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // Do ContentLoadAll
 if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
-	// Response Init
-	$resp = new \xan\response;
-	$resp->reqPath = $aloe_request->path_get();
 	$resp->reqID = $doParam[ 'IDUsers' ];
 	$resp->moduleName = $mmUsersT->NameModule;
 	$resp->headTitle = $mmUsersT->NameModule;
@@ -48,9 +52,6 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 
 // Do Init
 if ( $doParam[ 'Do' ] === 'Init' ) {
-	// Response Init
-	$resp = new \xan\response;
-	
 	// Response Actions Append
 	$resp->jsRunInit();
 	

@@ -7,9 +7,6 @@ $buttonActionID = $xanDoDo . '_Modal_ButtonAction';
 $buttonActionSpinnerID = $buttonActionID . 'Spinner';
 $buttonActionOnClickFunctionName = $buttonActionID . 'OnClick';
 
-// Response Init
-$resp = new \xan\response;
-
 // Spinner Hide; Button Enable
 $resp->jsHideOrShow( '#' . $buttonActionSpinnerID, 'Hide' );
 $resp->jsSetHTMLProperty( '#' . $buttonActionID, 'disabled', false );

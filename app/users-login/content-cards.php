@@ -1,8 +1,8 @@
 <?php
 // One Time Code Login
-$loginMethod = $path_components[ 1 ];
-$loginUUIDUser = $path_components[ 2 ];
-$LoginKeyOneTime = $path_components[ 3 ];
+$loginMethod = $resp->reqPathComponents[ 1 ];
+$loginUUIDUser = $resp->reqPathComponents[ 2 ];
+$LoginKeyOneTime = $resp->reqPathComponents[ 3 ];
 if ( $loginMethod === 'otc' and \xan\isNotEmpty( $loginUUIDUser ) and \xan\isNotEmpty( $LoginKeyOneTime ) ) {
 	// User Select
 	$userSelect = new \xan\recs( $mmUsersT );
