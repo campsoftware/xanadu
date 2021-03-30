@@ -39,7 +39,7 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 	
 	public function getDisplayName( \xan\recs $recs ) {
 		// Name
-		$code = trim( $recs->rowsD[ $recs->rowIndex ][ 'NameFirst' ] . " " . $recs->rowsD[ $recs->rowIndex ][ 'NameLast' ] );
+		$code = trim( $recs->rowsD[ $recs->rowIndex ][ 'NameFull' ] );
 		
 		// Company
 		$code .= ( \xan\isNotEmpty( $code ) && \xan\isNotEmpty( $recs->rowsD[ $recs->rowIndex ][ 'NameCompany' ] ) ? ', ' : '' );

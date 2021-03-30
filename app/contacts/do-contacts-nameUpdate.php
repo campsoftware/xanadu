@@ -1,7 +1,4 @@
 <?php
-// Response Init
-$resp = new \xan\response;
-
 // Validate Init
 $ValidationMsgA = array();
 
@@ -38,7 +35,7 @@ if ( $recsDetail->errorB ) {
     
     // Actions
 	$resp->jsSetHTML( '#ContactsList' . $doParam[ 'IDContacts' ] . 'Label', $mmContactsT->getDisplayList( $recsDetail ) );
-	$resp->jsSetHTML( '#pageContentHeaderDetails', $mmContactsT->getDisplayName( $recsDetail ) );
+	$resp->jsSetHTML( '#pageContentHeaderDetails', ': ' . $mmContactsT->getDisplayName( $recsDetail ) );
 
     //    }
 

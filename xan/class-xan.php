@@ -112,6 +112,7 @@ define( 'PORTAL_BUTTON_WIDTH', '2rem' );
 define( 'PORTAL_REC_GAP_BEGIN_HEIGHT', '1rem' );
 define( 'PORTAL_REC_GAP_END_HEIGHT', '.7rem' );
 define( 'PORTAL_LABEL_FONT_SIZE', '9px' );
+define( 'ICON_SIZE_XANMESSAGE', '1.5em' );
 
 // Depth
 define( 'ZINDEX_BELOW', '-1' );
@@ -119,32 +120,31 @@ define( 'ZINDEX_NAVBAR', '500' );
 define( 'ZINDEX_TOP', '1000' );
 
 // FontAwesome
-define( 'FA_SORT_ASC', 'Asc' );
-define( 'FA_SORT_DESC', 'Desc' );
-define( 'FA_LIST', '<i class=\'fas fa-th-list\'></i>' );
-define( 'FA_SEARCH', '<i class=\'fas fa-search\'></i>' );
-define( 'FA_SEARCHPLUS', '<i class=\'fas fa-search-plus\'></i>' );
-define( 'FA_SORT', '<i class=\'fas fa-sort\'></i>' );
-define( 'FA_CLEAR', '<i class=\'fas fa-times-circle\'></i>' );
-define( 'FA_UPLOAD', '<i class=\'fas fa-file-upload\'></i>' ); // fa-file-upload, fa-cloud-upload
-define( 'FA_PASSWORD', '<i class=\'fas fa-key\'></i>' );
-define( 'FA_STOPWATCH', '<i class=\'fas fa-stopwatch\'></i>' );
-define( 'FA_CLOUD', '<i class=\'fas fa-cloud\'></i>' );
-define( 'FA_SPINNER', '<i class=\'fas fa-spinner fa-spin\'></i>' );
+define( 'FA_LIST', "<i class='fas fa-th-list'></i>" );
+define( 'FA_SEARCH', "<i class='fas fa-search'></i>" );
+define( 'FA_SEARCHPLUS', "<i class='fas fa-search-plus'></i>" );
+define( 'FA_SORT', "<i class='fas fa-sort'></i>" );
+define( 'FA_CLEAR', "<i class='fas fa-times-circle'></i>" );
+define( 'FA_UPLOAD', "<i class='fas fa-file-upload'></i>" ); // fa-file-upload, fa-cloud-upload
+define( 'FA_PASSWORD', "<i class='fas fa-key'></i>" );
+define( 'FA_STOPWATCH', "<i class='fas fa-stopwatch'></i>" );
+define( 'FA_CLOUD', "<i class='fas fa-cloud'></i>" );
+define( 'FA_SPINNER', "<i class='fas fa-spinner fa-spin'></i>" );
 
-define( 'FA_NEW', '<i class=\'fas fa-plus\'></i>' );
-define( 'FA_DUPLICATE', '<i class=\'fas fa-clone\'></i>' );
-define( 'FA_DELETE', '<i class=\'fas fa-minus\'></i>' );
+define( 'FA_NEW', "<i class='fas fa-plus'></i>" );
+define( 'FA_DUPLICATE', "<i class='fas fa-clone'></i>" );
+define( 'FA_DELETE', "<i class='fas fa-minus'></i>" );
 
-define( 'FA_ACTION', '<i class=\'fas fa-running\'></i>' );
-define( 'FA_PRINT', '<i class=\'fas fa-print\'></i>' );
+define( 'FA_ACTION', "<i class='fas fa-running'></i>" );
+define( 'FA_PRINT', "<i class='fas fa-print'></i>" );
 
-define( 'FA_MENU', '<i class=\'fas fa-bars\'></i>' );
-define( 'FA_SELECT', '<i class=\'fas fa-caret-down\'></i>' );
+define( 'FA_MENU', "<i class='fas fa-bars'></i>" );
+define( 'FA_SELECT', "<i class='fas fa-caret-down'></i>" );
 
-define( 'FA_PSOS_BEGIN', '<i class=\'fas fa-cloud\'></i>' );
-define( 'FA_PSOS_STOPWATCH', '<i class=\'fas fa-stopwatch\'></i>' );
-define( 'FA_PSOS_ERROR', '<i class=\'fas fa-exclamation-triangle\'></i>' );
+define( 'FA_PSOS_STOPWATCH', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ;'><i class='fas fa-stopwatch'></i></span>" );
+define( 'FA_PSOS_CLOUD', "<span class='mr-1' style='font-size: 1.7em;'><i class='fas fa-cloud'></i></span>" );
+define( 'FA_PSOS_SAVE', "<span class='mr-1' style='font-size: 1.7em;'><i class='fas fa-save'></i></span>" );
+define( 'FA_PSOS_ERROR', "<span class='mr-1' style='font-size: 1.7em;'><i class='fas fa-exclamation-triangle'></i></span>" );
 
 // Bucket File Types
 define( 'FILE_TYPES_IMAGES', 'Images' );
@@ -188,6 +188,8 @@ define( 'FORM_KEYVALUE', 'KeyValue' );
 class response {
 	// Request
 	public $reqPath = '';
+	public $reqPathComponents = [];
+	public $reqPost = [];
 	public $reqID = '';
 
 	// Module
@@ -1969,11 +1971,11 @@ class eleFileBucketImageDB extends element {
 			$( "#<?= $idFormFile ?>" ).val( null ); // Clear the Form File
 			$( "#<?= $idImg ?>" ).attr( "src", pURL ); // Set the img URL
 			<?= $jsSuccess ?>
-			xanMessageDisplay( "#xanMessage", "<span class='text-success'>Upload Done." + "</span>", true, true );
+			xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_SAVE ?> <span class='text-success'>Upload Done." + "</span>&nbsp;", true, true );
 		}
 		function <?= $jsfnNameProblem ?>( pMessage ) {
 			<?= $jsProblem ?>
-			xanMessageDisplay( "#xanMessage", "<span class='text-danger'>Upload Problem: " + pMessage + "</span>", false, true );
+			xanMessageDisplay( "#xanMessage", "<span class='text-danger'><?= FA_PSOS_ERROR ?> Upload Problem: " + pMessage + "</span>&nbsp;", false, true );
 		}
 		</script>
 		<?php

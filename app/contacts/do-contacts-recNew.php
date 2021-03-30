@@ -1,6 +1,4 @@
 <?php
-// Response Init
-$resp = new \xan\response;
 
 // Validate Init
 $ValidationMsgA = array();

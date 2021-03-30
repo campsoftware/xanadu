@@ -371,7 +371,7 @@ ob_start();
                     </div>
 
                     <!-- Message and Spinner -->
-                    <span id="xanMessage" class="small text-muted mr-1"></span>
+                    <table><tr id="xanMessage"></tr></table>
 				
 				<?php endif ?>
 
@@ -403,10 +403,10 @@ ob_start();
 
     <!-- Content End -->
 	<?= \xan\respAToString( $resp->contentEndA ) ?>
-
+    
     <script>
         function xanDo( params ) {
-            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_BEGIN ?>", true, false );
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_CLOUD ?>", true, false );
             // alert( "xanDo params = " + JSON.stringify( params ) );
             let timeBegin = new Date();
             // Window in Current or New Window
@@ -503,10 +503,10 @@ ob_start();
                     // Notify
                     let timeEnd = new Date();
                     let timeSecs = ( timeEnd.getMilliseconds() - timeBegin.getMilliseconds() ) / 1000;
-                    xanMessageDisplay( "#xanMessage", "<span class='text-success'> " + params[ "Msg" ] + " " + Math.abs( timeSecs ) + "s</span>", true, true );
+                    xanMessageDisplay( "#xanMessage", "<div class='small text-success'>" + params[ "Msg" ] + "<br />" + Math.abs( timeSecs ) + "s</div>", true, true );
                 },
                 error: function ( xhr, status, error ) {
-                    xanMessageDisplay( "#xanMessage", "<span class='text-danger'><?= FA_PSOS_ERROR ?> " + params[ "Msg" ] + " Error:" + error + "</span>", false, true );
+                    xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_ERROR ?><span class='small text-danger'> " + params[ "Msg" ] + " Error:" + error + "</span>", false, true );
                 }
             } );
         }
@@ -540,9 +540,9 @@ ob_start();
         }
 
         function xanDoSave( event ) {
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_SAVE ?>", true, false );
+            
             thisInput = $( this );
-            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_BEGIN ?>", true, false );
-
             let thisInputID = $( thisInput ).attr( "id" );
             let thisInputName = $( thisInput ).attr( "name" );
             let thisInputValue = $( thisInput ).val();
@@ -590,11 +590,11 @@ ob_start();
                                 }
                             }
                         }
-                        xanMessageDisplay( "#xanMessage", "<span class='text-success'> Saved " + result[ 0 ][ 'AjaxColumnLabel' ] + " " + result[ 0 ][ "AjaxLoadTime" ] + "</span>", true, true );
+                        xanMessageDisplay( "#xanMessage", "<div class='small text-success'>Saved " + result[ 0 ][ 'AjaxColumnLabel' ] + "<br />" + result[ 0 ][ "AjaxLoadTime" ] + "</div>", true, true );
                     },
                     error: function ( xhr, status, error ) {
                         //alert( "Error: " + status + " / " + error );
-                        xanMessageDisplay( "#xanMessage", "<span class='text-danger'><?= FA_PSOS_ERROR ?>" + " Saving Error: " + error + "</span>", false, true );
+                        xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_ERROR ?><span class='small text-danger'>" + " Saving Error: " + error + "</span>", false, true );
                     }
                 } );
             }
@@ -625,7 +625,8 @@ ob_start();
             }, false );
             
             // Message Display
-            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_STOPWATCH ?> <span class='text-success'>Load Page <?= \xan\microsecsDiff( $pageload_begin ) ?></span>", true, true );
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_STOPWATCH ?>", true, true );
+            xanMessageDisplay( "#xanMessage", "<div class='small text-success'>Load Page<br /><?= \xan\microsecsDiff( $pageload_begin ) ?></div>", true, true );
 
             // Scripts Onload
 			<?= \xan\respAToString( $resp->scriptsOnLoadA ) ?>

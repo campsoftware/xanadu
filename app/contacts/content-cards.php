@@ -8,7 +8,7 @@ if ( true ) {
 	
 	// Query
 	$recsList = new \xan\recs( $mmContactsT );
-	$searchBarEle = new \xan\eleSearchBarListDB( $mmContactsT, $aloe_request->post, $resp );
+	$searchBarEle = new \xan\eleSearchBarListDB( $mmContactsT, $resp->reqPost, $resp );
 	$searchBarList = $searchBarEle->render();
 	$recsList->querySQL = $searchBarList[ 'querySQL' ];
 	$recsList->queryBindNamesA = $searchBarList[ 'queryBindNames' ];

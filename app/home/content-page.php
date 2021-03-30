@@ -1,16 +1,18 @@
 <?php
-// User Save Path Last
-$mmUsersT->setPathLast( $aloe_request->path_get() );
-
 // Response
 $resp = new \xan\response;
-$resp->reqPath = $aloe_request->path_get();
-$resp->reqID = $aloe_request->path_components_get()[ 1 ];
+$resp->reqPath = \xan\paramEncode( $aloe_request->path_get() );
+$resp->reqPathComponents = \xan\paramEncode( $aloe_request->path_components_get() );
+$resp->reqPost = \xan\paramEncode( $aloe_request->post );
+$resp->reqID = $resp->reqPathComponents[ 1 ];
 $resp->moduleName = $mmHome->NameModule;
 $resp->headTitle = $mmHome->NameModule;
 $resp->headLogoutAuto = true;
 $resp->navInclude = true;
 $resp->contentHeader = $mmHome->FontAwesome . STR_NBSP . $mmHome->NameModule . STR_NBSP;
+
+// User Save Path Last
+$mmUsersT->setPathLast( $resp->reqPath );
 
 ///////////////////////////////////////////////////////////
 // Content Load Now

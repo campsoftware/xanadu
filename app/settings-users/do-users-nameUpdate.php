@@ -1,10 +1,4 @@
 <?php
-// Response Init
-$resp = new \xan\response;
-
-// Spinner Hide
-$resp->jsHideOrShow( '#xanMessageSpinner', 'Hide' );
-
 // Validate Init
 $ValidationMsgA = array();
 
