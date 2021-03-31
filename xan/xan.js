@@ -7,14 +7,16 @@ function xanEventReturnFalse( e ) {
 ///////////////////////////////////////////////////////////
 // Messages
 
-function xanMessageDisplay( selector, html, doFadeOut, doConsoleLog ) {
-    let theID = Math.floor((Math.random() * 999999999) + 1);
-    let theMsg = "<span id='" + theID + "'>" + html + "</span>";
-    let row = document.getElementById( "xanMessage" );
-    let cell = row.insertCell( -1 );
-    cell.innerHTML = theMsg;
-    if ( doFadeOut === true ) {
-        $( "#" + theID ).delay( 3000 ).fadeOut( 'slow' );
+function xanMessageDisplay( selector, html, id, doFadeOutID, doFadeOut, doConsoleLog ) {
+    if ( document.getElementById( "xanMessage" ) ) {
+        let cell = document.getElementById( "xanMessage" ).insertCell( -1 );
+        cell.innerHTML = "<span id='" + id + "'>" + html + "</span>";
+        if ( doFadeOutID !== '' ) {
+            $( "#" + doFadeOutID ).delay( 3000 ).fadeOut( 'slow' );
+        }
+        if ( doFadeOut === true ) {
+            $( "#" + id ).delay( 3000 ).fadeOut( 'slow' );
+        }
     }
     if ( doConsoleLog === true ) {
         console.log( xanConsoleCleanHTML( html ) );
