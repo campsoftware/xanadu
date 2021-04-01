@@ -124,6 +124,8 @@ define( 'FA_LIST', "<i class='fas fa-th-list'></i>" );
 define( 'FA_SEARCH', "<i class='fas fa-search'></i>" );
 define( 'FA_SEARCHPLUS', "<i class='fas fa-search-plus'></i>" );
 define( 'FA_SORT', "<i class='fas fa-sort'></i>" );
+define( 'FA_SORT_ASC', "<i class='fas fa-arrow-alt-down'></i>" );
+define( 'FA_SORT_DESC', "<i class='fas fa-arrow-alt-up'></i>" );
 define( 'FA_CLEAR', "<i class='fas fa-times-circle'></i>" );
 define( 'FA_UPLOAD', "<i class='fas fa-file-upload'></i>" ); // fa-file-upload, fa-cloud-upload
 define( 'FA_PASSWORD', "<i class='fas fa-key'></i>" );
@@ -141,10 +143,10 @@ define( 'FA_PRINT', "<i class='fas fa-print'></i>" );
 define( 'FA_MENU', "<i class='fas fa-bars'></i>" );
 define( 'FA_SELECT', "<i class='fas fa-caret-down'></i>" );
 
-define( 'FA_PSOS_STOPWATCH', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ;'><i class='fas fa-stopwatch'></i></span>" );
-define( 'FA_PSOS_CLOUD', "<span class='mr-1' style='font-size: 1.7em;'><i class='fas fa-cloud'></i></span>" );
-define( 'FA_PSOS_SAVE', "<span class='mr-1' style='font-size: 1.7em;'><i class='fas fa-save'></i></span>" );
-define( 'FA_PSOS_ERROR', "<span class='mr-1' style='font-size: 1.7em;'><i class='fas fa-exclamation-triangle'></i></span>" );
+define( 'FA_PSOS_STOPWATCH', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'><i class='fas fa-stopwatch'></i></span>" );
+define( 'FA_PSOS_CLOUD', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'><i class='fas fa-cloud'></i></span>" );
+define( 'FA_PSOS_SAVE', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'><i class='fas fa-save'></i></span>" );
+define( 'FA_PSOS_ERROR', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'><i class='fas fa-exclamation-triangle'></i></span>" );
 
 // Bucket File Types
 define( 'FILE_TYPES_IMAGES', 'Images' );
@@ -1971,11 +1973,15 @@ class eleFileBucketImageDB extends element {
 			$( "#<?= $idFormFile ?>" ).val( null ); // Clear the Form File
 			$( "#<?= $idImg ?>" ).attr( "src", pURL ); // Set the img URL
 			<?= $jsSuccess ?>
-			xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_SAVE ?> <span class='text-success'>Upload Done." + "</span>&nbsp;", true, true );
+			let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
+			xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_SAVE ?>", iconID, '', true, false );
+			let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
+			xanMessageDisplay( "#xanMessage", "<span class='text-success'>Uploaded</span>", messageID, iconID, true, true );
 		}
 		function <?= $jsfnNameProblem ?>( pMessage ) {
 			<?= $jsProblem ?>
-			xanMessageDisplay( "#xanMessage", "<span class='text-danger'><?= FA_PSOS_ERROR ?> Upload Problem: " + pMessage + "</span>&nbsp;", false, true );
+			xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_ERROR ?>", "", "", false, false );
+			xanMessageDisplay( "#xanMessage", "<span class='text-danger'>Upload Problem: " + pMessage + "</span>", "", "", false, true );
 		}
 		</script>
 		<?php

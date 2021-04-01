@@ -50,7 +50,6 @@ if ( true ) {
 	$resp->contentAreaA[] = $card->renderCardWithList( $cardHeaderContent, $cardContent );
 }
 
-
 ///////////////////////////////////////////////////////////
 // Detail
 if ( \xan\isNotEmpty( $resp->reqID ) ) {

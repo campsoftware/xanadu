@@ -122,4 +122,9 @@ function sendEmailDebug( $subject, $message ) {
 	$sender->sendEmail( true, APP_EMAIL_FROM, APP_EMAIL_TO_DEBUG, $subject, '', $message );
 }
 
+function sendSMSDebug( $message ) {
+	$sender = new \xan\sender();
+	$sender->sendSMS( APP_SMS_TO_DEBUG, $message);
+}
+
 ?>

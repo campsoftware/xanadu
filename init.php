@@ -1,51 +1,17 @@
 <?php
 ///////////////////////////////////////////////////////////
-// LoadTime Begin
-$pageload_begin = microtime( true );
-
-
-///////////////////////////////////////////////////////////
 // PHP Settings: /opt/bitnami/php/etc/php.ini;
 // PHP Restart: sudo /opt/bitnami/ctlscript.sh restart php-fpm;
-
-// Set Values
 
 // Precompiling PHP
 ini_set( "opcache.enable", 0 ); // 0 for dev, 1 for production; default = 1; improves PHP performance by storing precompiled script bytecode in shared memory, thereby removing the need for PHP to load and parse scripts on each request
 
-// Errors
-ini_set( 'error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED );
-ini_set( 'display_errors', 1 );
-ini_set( "allow_url_fopen", 1 );
-
-// Secure Cookies
-ini_set('session.cookie_httponly',1);
-ini_set('session.cookie_secure', 1);
-
-// RAM and Disk
-// ini_set( 'memory_limit', '128M' ); // max php script RAM
-// ini_set( 'upload_max_filesize', '100M' ); // max file size upload
-// ini_set( 'post_max_size', '100M' ); // max post size [normally > upload_max_filesize]
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Get Values
-
-// Precompiling PHP
-// echo 'opcache.enable: ' . ini_get( 'opcache.enable' ) . '; ';
-// echo 'opcache.revalidate_freq: ' . ini_get( 'opcache.revalidate_freq' ) . '; ';
-
-// Errors
-// echo 'error_reporting: ' . ini_get( 'error_reporting' ) . '; ';
-// echo 'display_errors: ' . ini_get( 'display_errors' ) . '; ';
-// echo 'allow_url_fopen: ' . ini_get( 'allow_url_fopen' ) . '; ';
-
-// RAM and Disk
-// echo 'memory_limit: ' . ini_get( 'memory_limit' ) . '; ';
-// echo 'upload_max_filesize: ' . ini_get( 'upload_max_filesize' ) . '; ';
-// echo 'post_max_size: ' . ini_get( 'post_max_size' ) . '; ';
+///////////////////////////////////////////////////////////
+// LoadTime Begin
+$pageload_begin = microtime( true );
 
 ///////////////////////////////////////////////////////////
-// Resources
+// Init Private
 if ( false ) {
 	
 	// Database
@@ -61,6 +27,10 @@ if ( false ) {
 	
 	// Form Obfuscate Key
 	define( 'FORM_OBFUSCATE_KEY', '123456' );
+	
+	// Debug
+	define( 'APP_EMAIL_TO_DEBUG', 'dev@foo.com' );
+	define( 'APP_SMS_TO_DEBUG', '4075551212' );
 	
 } else {
 	
@@ -79,6 +49,31 @@ define( 'PATH_ROOT_LOGS', PATH_ROOT_OS . 'logs/' );
 define( 'PATH_ROOT_BRIEF', PATH_ROOT_OS . 'brief/' );
 define( 'PATH_ROOT_TEMPLATES', PATH_ROOT_OS . 'templates/' );
 define( 'PATH_PAGE_RESP', PATH_ROOT_TEMPLATES . 'page-resp.php' );
+
+
+///////////////////////////////////////////////////////////
+
+
+// Errors
+ini_set( 'error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED );
+ini_set( 'display_errors', 1 );
+ini_set( "log_errors", 1 );
+ini_set( "error_log", PATH_ROOT_LOGS . date( 'Ymd' ) . "_Errors.txt" );
+
+// Allow Opening of URLs as Remote Files
+ini_set( "allow_url_fopen", 1 );
+
+// Secure Cookies
+ini_set( 'session.cookie_httponly', 1 );
+ini_set( 'session.cookie_secure', 1 );
+
+// RAM and Disk
+// ini_set( 'memory_limit', '128M' ); // max php script RAM
+// ini_set( 'upload_max_filesize', '100M' ); // max file size upload
+// ini_set( 'post_max_size', '100M' ); // max post size [normally > upload_max_filesize]
+// echo 'memory_limit: ' . ini_get( 'memory_limit' ) . '; ';
+// echo 'upload_max_filesize: ' . ini_get( 'upload_max_filesize' ) . '; ';
+// echo 'post_max_size: ' . ini_get( 'post_max_size' ) . '; ';
 
 
 ///////////////////////////////////////////////////////////
@@ -184,7 +179,6 @@ define( 'APP_ICON_URL_1024', $recsSettings->rowsD[ 0 ][ 'AppIconURL1024' ] );
 define( 'APP_ICON_URL_LINK', $recsSettings->rowsD[ 0 ][ 'AppIconURLLink' ] );
 define( 'APP_CURRENCY', $recsSettings->rowsD[ 0 ][ 'AppCurrency' ] );
 define( 'APP_EMAIL_FROM', $recsSettings->rowsD[ 0 ][ 'AppEmailFrom' ] );
-define( 'APP_EMAIL_TO_DEBUG', 'hal@campsoftware.com' );
 define( 'APP_LANG_CODE', 'en' ); // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
 // Features
