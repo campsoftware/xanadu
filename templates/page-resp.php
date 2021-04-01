@@ -8,6 +8,7 @@ ob_start();
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <script>
             var xanConsoleMsgs = []; // <?= 'Session Updated: ' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . ';' ?>
+
         </script>
 
         <!-- XSS Protection -->
@@ -19,12 +20,12 @@ ob_start();
         <meta name="X-Content-Type-Options" content="nosniff">
         <meta name="X-Frame-Options" content="sameorigin">
         <meta name="X-XSS-Protection" content="1; mode=block">
-
+		
 		<?php if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) : ?>
             <!-- Auto Logout -->
             <meta http-equiv="refresh" content="<?= LOGOUT_AUTO_SECONDS ?>;url=<?= $mmUsersLogout->URLRelative ?>">
 		<?php endif ?>
-        
+
         <!-- Title and Icons -->
         <title><?= $resp->headTitle ?></title>
         <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
@@ -311,7 +312,6 @@ ob_start();
 
     </head>
     <body>
-
     <noscript class="noscript">
         <div id="noscriptdiv"><?= APP_NAME ?> cannot load without JavaScript. <br/>Here's how to enable JavaScript: <br/><a href="https://www.google.com/search?client=safari&rls=en&q=how+to+enable+javascript&ie=UTF-8&oe=UTF-8/" target="_blank">Google Search</a> <br/>or <br/><a href="https://www.enable-javascript.com/" target="_blank">https://www.enable-javascript.com</a></div>
     </noscript>
@@ -370,8 +370,10 @@ ob_start();
                         </ul>
                     </div>
 
-                    <!-- Message and Spinner -->
-                    <table><tr id="xanMessage"></tr></table>
+                    <!-- xanMessage -->
+                    <table class="small" style="padding: 0; margin: 0; line-height: 1.1;">
+                        <tr id="xanMessage"></tr>
+                    </table>
 				
 				<?php endif ?>
 
@@ -403,10 +405,11 @@ ob_start();
 
     <!-- Content End -->
 	<?= \xan\respAToString( $resp->contentEndA ) ?>
-    
+
     <script>
         function xanDo( params ) {
-            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_CLOUD ?>", true, false );
+            let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_CLOUD ?>", iconID, '', false, false );
             // alert( "xanDo params = " + JSON.stringify( params ) );
             let timeBegin = new Date();
             // Window in Current or New Window
@@ -422,7 +425,7 @@ ob_start();
                 data: "params=" + encodeURIComponent( JSON.stringify( params ) ),
                 success: function ( successResult, status, xhr ) {
                     // JSON Get
-                    // alert( "Success: " + successResult );
+                    // alert( "xanDo Success: " + successResult );
                     if ( successResult === "" ) {
                         alert( "Error: xanDo Result is Blank; Params: " + JSON.stringify( params ) );
                         return;
@@ -503,10 +506,12 @@ ob_start();
                     // Notify
                     let timeEnd = new Date();
                     let timeSecs = ( timeEnd.getMilliseconds() - timeBegin.getMilliseconds() ) / 1000;
-                    xanMessageDisplay( "#xanMessage", "<div class='small text-success'>" + params[ "Msg" ] + "<br />" + Math.abs( timeSecs ) + "s</div>", true, true );
+                    let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
+                    xanMessageDisplay( "#xanMessage", "<span class='text-success'>" + params[ "Msg" ] + "<br />" + Math.abs( timeSecs ) + "s</span>", messageID, iconID, true, true );
                 },
                 error: function ( xhr, status, error ) {
-                    xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_ERROR ?><span class='small text-danger'> " + params[ "Msg" ] + " Error:" + error + "</span>", false, true );
+                    xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_ERROR ?>", '', '', false, false );
+                    xanMessageDisplay( "#xanMessage", "<span class='text-danger'>" + params[ "Msg" ] + " Error:" + error + "</span>", '', '', false, true );
                 }
             } );
         }
@@ -540,8 +545,8 @@ ob_start();
         }
 
         function xanDoSave( event ) {
-            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_SAVE ?>", true, false );
-            
+            let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_SAVE ?>", iconID, '', false, false );
             thisInput = $( this );
             let thisInputID = $( thisInput ).attr( "id" );
             let thisInputName = $( thisInput ).attr( "name" );
@@ -590,11 +595,13 @@ ob_start();
                                 }
                             }
                         }
-                        xanMessageDisplay( "#xanMessage", "<div class='small text-success'>Saved " + result[ 0 ][ 'AjaxColumnLabel' ] + "<br />" + result[ 0 ][ "AjaxLoadTime" ] + "</div>", true, true );
+                        let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
+                        xanMessageDisplay( "#xanMessage", "<span class='text-success'>Saved " + result[ 0 ][ 'AjaxColumnLabel' ] + "<br />" + result[ 0 ][ "AjaxLoadTime" ] + "</span>", messageID, iconID, true, true );
                     },
                     error: function ( xhr, status, error ) {
                         //alert( "Error: " + status + " / " + error );
-                        xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_ERROR ?><span class='small text-danger'>" + " Saving Error: " + error + "</span>", false, true );
+                        xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_ERROR ?>", '', '', false, false );
+                        xanMessageDisplay( "#xanMessage", "<span class='text-danger'>Saving Error: " + error + "</span>", '', '', false, true );
                     }
                 } );
             }
@@ -623,13 +630,16 @@ ob_start();
                     e.preventDefault();
                 }
             }, false );
-            
+
             // Message Display
-            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_STOPWATCH ?>", true, true );
-            xanMessageDisplay( "#xanMessage", "<div class='small text-success'>Load Page<br /><?= \xan\microsecsDiff( $pageload_begin ) ?></div>", true, true );
+            let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
+            xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_STOPWATCH ?>", iconID, '', true, false );
+            let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
+            xanMessageDisplay( "#xanMessage", "<span class='text-success'>Load Page<br /><?= \xan\microsecsDiff( $pageload_begin ) ?></span>", messageID, iconID, true, true );
 
             // Scripts Onload
 			<?= \xan\respAToString( $resp->scriptsOnLoadA ) ?>
+
         } );
     </script>
     </body>
