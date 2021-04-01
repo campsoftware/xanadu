@@ -12,13 +12,13 @@ ob_start();
         </script>
 
         <!-- XSS Protection -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;  img-src 'self';  connect-src 'self';  font-src 'self' https://fonts.gstatic.com;  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'self' <?= URL_BASE ?>;  ">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;  img-src 'self';  connect-src 'self';  font-src 'self' https://fonts.gstatic.com;  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'none';  ">
         <meta name="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
         <meta name="referrer" content="strict-origin-when-cross-origin">
         <meta name="Referer" content="no-referrer, strict-origin-when-cross-origin">
         <meta name="Strict-Transport-Security" content="max-age=63072000">
         <meta name="X-Content-Type-Options" content="nosniff">
-        <meta name="X-Frame-Options" content="sameorigin">
+        <meta name="X-Frame-Options" content="deny">
         <meta name="X-XSS-Protection" content="1; mode=block">
 		
 		<?php if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) : ?>
@@ -217,7 +217,7 @@ ob_start();
                 background-color: var(--xan-bg-color) !important;
                 border-color: var(--xan-border-color);
             }
-            .nav-item-link {
+            .nav-hamburger, .nav-item-link {
                 color: var(--xan-text-color);
                 font-size: var(--xan-nav-item-link-font-size);
                 padding-top: var(--xan-nav-item-link-padding-top-bottom);
@@ -328,7 +328,7 @@ ob_start();
 				<?php if ( $resp->navInclude ) : ?>
 
                     <!-- Menu Hamburger -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><?= FA_MENU . STR_NBSP ?>Menu</button>
+                    <button class="navbar-toggler nav-hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><?= FA_MENU . STR_NBSP ?>Menu</button>
 
                     <!-- Menu Expanded -->
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
