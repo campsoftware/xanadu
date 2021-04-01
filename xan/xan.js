@@ -358,10 +358,10 @@ function xanLocationGet( pCallbackFunction ) {
             function ( err ) {
                 let result = {};
                 result[ 'ErrorCode' ] = err.code;
-                result[ 'ErrorDesc' ] = ''; // err.message;
+                result[ 'ErrorDesc' ] += ''; // err.message;
                 result[ 'ErrorDesc' ] += ( err.code === 1 ) ? "The acquisition of the geolocation information failed because the page didn't have the permission to do it." : "";
-                result[ 'ErrorDesc' ] += ( err.code === 2 ) ? "The acquisition of the geolocation failed because one or several internal sources of position returned an internal error." : "";
-                result[ 'ErrorDesc' ] += ( err.code === 3 ) ? "The time allowed to acquire the geolocation, defined by PositionOptions.timeout information that was reached before the information was obtained." : "";
+                result[ 'ErrorDesc' ] += ( err.code === 2 ) ? "The acquisition of the geolocation failed. Using Safari on Mac OS? Enable System Preferences > Security and Privacy > Privacy > Location Services > Safari." : "";
+                result[ 'ErrorDesc' ] += ( err.code === 3 ) ? "The time allowed to acquire the geolocation, was reached before the information was obtained." : "";
                 pCallbackFunction( result );
             },
             {
