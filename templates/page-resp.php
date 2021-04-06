@@ -89,7 +89,7 @@ ob_start();
         <link href="/include/fontawesome/5.15.2_pro/css/all.min.css" rel="stylesheet" type="text/css">
 
         <!-- Fonts and Styles -->
-        <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet"> -->
         <!-- family=IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif|IBM+Plex+Mono&display=swap -->
 
         <style>
@@ -142,12 +142,13 @@ ob_start();
             }
             /* Styles */
             body {
-                font-family: 'IBM Plex Sans', 'Arial', sans-serif;
+                font-family: 'Arial', sans-serif;
                 font-size: medium;
                 font-weight: var(--xan-font-weight);
                 position: relative;
             }
             /*
+            font-family: 'IBM Plex Sans', 'Arial', sans-serif;
             font-family: 'IBM Plex Sans', sans-serif;
             font-family: 'IBM Plex Sans Condensed', sans-serif;
             font-family: 'IBM Plex Serif', serif;
