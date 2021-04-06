@@ -6,14 +6,20 @@ ob_start();
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<?php
+		if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
+			echo "\r";
+			echo "\t\t" . '<!-- Session Updated:' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; -->' . "\r";
+			echo "\t\t" . '<meta http-equiv="refresh" content="' . LOGOUT_AUTO_SECONDS . ';url=' . $mmUsersLogout->URLRelative . '">' . "\r\r";
+		}
+		?>
+        <!-- Init Messages -->
         <script>
-            // <?= 'Session Updated: ' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . ';' ?> //
             var xanConsoleMsgs = [];
         </script>
-
-        <!-- XSS Protection with Self and Stripe -->
+	
+		<!-- XSS Protection with Self and Stripe -->
         <meta http-equiv="Content-Security-Policy" content="default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline';  img-src 'self';  connect-src 'self';  font-src 'self';  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'none';  ">
-        <!-- XSS Protection with Self, Stripe, and Google Fonts <meta http-equiv="Content-Security-Policy" content="default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;  img-src 'self';  connect-src 'self';  font-src 'self' https://fonts.gstatic.com;  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'none';  "> -->
         <meta name="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
         <meta name="referrer" content="strict-origin-when-cross-origin">
         <meta name="Referer" content="no-referrer, strict-origin-when-cross-origin">
@@ -21,11 +27,10 @@ ob_start();
         <meta name="X-Content-Type-Options" content="nosniff">
         <meta name="X-Frame-Options" content="deny">
         <meta name="X-XSS-Protection" content="1; mode=block">
-		
-		<?php if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) : ?>
-            <!-- Auto Logout -->
-            <meta http-equiv="refresh" content="<?= LOGOUT_AUTO_SECONDS ?>;url=<?= $mmUsersLogout->URLRelative ?>">
-		<?php endif ?>
+		<?php
+        // XSS Protection with Self, Stripe, and Google Fonts:
+        // <meta http-equiv="Content-Security-Policy" content="default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;  img-src 'self';  connect-src 'self';  font-src 'self' https://fonts.gstatic.com;  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'none';  ">
+        ?>
 
         <!-- Title and Icons -->
         <title><?= $resp->headTitle ?></title>
