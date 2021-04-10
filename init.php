@@ -11,8 +11,8 @@ ini_set( "opcache.enable", 0 ); // 0 for dev, 1 for production; default = 1; imp
 $pageload_begin = microtime( true );
 
 ///////////////////////////////////////////////////////////
-// Init Private
 if ( false ) {
+	// Init Constants
 	
 	// Database
 	define( 'DBS_SERVERNAME', 'db.foo.com' );
@@ -33,8 +33,15 @@ if ( false ) {
 	define( 'APP_SMS_TO_DEBUG', '4075551212' );
 	
 } else {
-	
-	require_once( 'init_private.php' ); // Sets the values above. Not shared in Github.
+	// Init File based on Domain like: xanadu.xanweb.app
+	$init_filename = 'init_' . $_SERVER[ 'SERVER_NAME' ] . '.php'; // File like: init_xanadu.xanweb.app.php
+	$init_path = dirname( __FILE__ ) . '/' . $init_filename;
+	if ( file_exists( $init_path ) ) {
+		require_once( $init_path ); // Sets the above CONSTANTS. Not shared in Github.
+	} else {
+		echo '<html><head><title>404 Not Found</title></head><body"><h1>404 Not Found</h1></body></html>';
+		return;
+	}
 	
 }
 
@@ -172,6 +179,7 @@ if ( $recsSettings->errorB ) {
 
 //xan\xanEmailDebug( 'Xan Settings Test', $querySQL . print_r( $recsSettings->rowsD, true ) );
 
+
 // App
 define( 'APP_NAME', $recsSettings->rowsD[ 0 ][ 'AppName' ] );
 define( 'APP_ICON_URL_50', $recsSettings->rowsD[ 0 ][ 'AppIconURL50' ] );
@@ -238,5 +246,4 @@ define( 'ARRAY_STATES_ABBREV', array( 'AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 
 define( 'ARRAY_DAYSTOPAY', array( '5', '10', '15', '30', '45', '60', '90' ) );
 
 define( 'ARRAY_SMTP_AUTHTYPE', array( 'tls', 'ssl' ) );
-
 ?>
