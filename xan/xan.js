@@ -303,7 +303,7 @@ function xanEleFlatpickrSet( pIDSelect, pIDFlatpickr, pTypeFlatpickr, pValue ) {
     }
 }
 
-function xanFileUploadToBucket( formSelector, callbackSuccess, callbackProblem ) {
+function xanFileUploadToBucket( formSelector, postURL, callbackSuccess, callbackProblem ) {
     // Submit Directly
     // $( formSelector ).submit();
     // return;
@@ -312,7 +312,7 @@ function xanFileUploadToBucket( formSelector, callbackSuccess, callbackProblem )
     // alert( JSON.stringify( thisData ) );
     $.ajax( {
         type: "POST",
-        url: "/bucket/upload.php",
+        url: postURL,
         data: thisData,
         cache: false,
         contentType: false,

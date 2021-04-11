@@ -11,9 +11,13 @@ ini_set( "opcache.enable", 0 ); // 0 for dev, 1 for production; default = 1; imp
 $pageload_begin = microtime( true );
 
 ///////////////////////////////////////////////////////////
+// App Domain
+define( 'APP_DOMAIN', strtolower( $_SERVER[ 'SERVER_NAME' ] ) );
+
+///////////////////////////////////////////////////////////
 if ( false ) {
-	// Init Constants
 	
+	// Init Constants
 	// Database
 	define( 'DBS_SERVERNAME', 'db.foo.com' );
 	define( 'DBS_SERVERPORT', '3306' );
@@ -33,8 +37,9 @@ if ( false ) {
 	define( 'APP_SMS_TO_DEBUG', '4075551212' );
 	
 } else {
-	// Init File based on Domain like: xanadu.xanweb.app
-	$init_filename = 'init_' . $_SERVER[ 'SERVER_NAME' ] . '.php'; // File like: init_xanadu.xanweb.app.php
+	
+	// Init File per Domain like: xanadu.xanweb.app
+	$init_filename = 'init_' . APP_DOMAIN . '.php'; // File like: init_xanadu.xanweb.app.php
 	$init_path = dirname( __FILE__ ) . '/' . $init_filename;
 	if ( file_exists( $init_path ) ) {
 		require_once( $init_path ); // Sets the above CONSTANTS. Not shared in Github.
@@ -45,18 +50,30 @@ if ( false ) {
 	
 }
 
+
 ///////////////////////////////////////////////////////////
-// Paths
-// Try to use Relative paths when possible.
-// However, using '../' to got up a directory
+// Paths Shared: Try to use Relative paths when possible.
 define( 'PATH_ROOT_XAN', PATH_ROOT_OS . 'xan/' );
 define( 'PATH_ROOT_APP', PATH_ROOT_OS . 'app/' );
 define( 'PATH_ROOT_INCLUDE', PATH_ROOT_OS . 'include/' );
-define( 'PATH_ROOT_LOGS', PATH_ROOT_OS . 'logs/' );
-define( 'PATH_ROOT_BRIEF', PATH_ROOT_OS . 'brief/' );
 define( 'PATH_ROOT_TEMPLATES', PATH_ROOT_OS . 'templates/' );
 define( 'PATH_PAGE_RESP', PATH_ROOT_TEMPLATES . 'page-resp.php' );
 
+// URLs Shared
+define( 'URL_IMAGES', URL_BASE . 'images/' );
+define( 'URL_IMAGES_PLACEHOLDER', URL_IMAGES . 'imagePlaceholder.png' );
+
+// Files per Domain
+define( 'PATH_ROOT_FILES', PATH_ROOT_OS . 'files/' . APP_DOMAIN . '/' );
+define( 'PATH_ROOT_LOGS', PATH_ROOT_FILES . 'logs/' );
+define( 'PATH_ROOT_BRIEF', PATH_ROOT_FILES . 'brief/' );
+define( 'PATH_ROOT_BUCKET', PATH_ROOT_FILES . 'bucket/' );
+
+// URLs per Domain
+define( 'URL_ROOT_FILES', URL_BASE . 'files/' . APP_DOMAIN . '/' );
+define( 'URL_BRIEF', URL_ROOT_FILES . 'brief/' );
+define( 'URL_BUCKET', URL_ROOT_FILES . 'bucket/' );
+define( 'URL_BUCKET_UPLOAD_PAGE', '/files/' . APP_DOMAIN . '/bucket/upload.php' );
 
 ///////////////////////////////////////////////////////////
 
@@ -81,14 +98,6 @@ ini_set( 'session.cookie_secure', 1 );
 // echo 'memory_limit: ' . ini_get( 'memory_limit' ) . '; ';
 // echo 'upload_max_filesize: ' . ini_get( 'upload_max_filesize' ) . '; ';
 // echo 'post_max_size: ' . ini_get( 'post_max_size' ) . '; ';
-
-
-///////////////////////////////////////////////////////////
-// URLs
-define( 'URL_BRIEF', URL_BASE . 'brief/' );
-define( 'URL_BUCKET', URL_BASE . 'bucket/' );
-define( 'URL_IMAGES', URL_BASE . 'images/' );
-define( 'URL_IMAGES_PLACEHOLDER', URL_IMAGES . 'imagePlaceholder.png' );
 
 
 ///////////////////////////////////////////////////////////

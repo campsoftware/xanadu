@@ -1959,12 +1959,12 @@ class eleFileBucketImageDB extends element {
 		// Form
 		ob_start();
 		?>
-		<form method="post" action="/bucket/upload.php" enctype="multipart/form-data" id="<?= $idForm ?>">
+		<form method="post" action="<?= URL_BUCKET_UPLOAD_PAGE ?>" enctype="multipart/form-data" id="<?= $idForm ?>">
 			<input type="hidden" name="fileKey" value="<?= $this->fileBucketKey ?>">
 			<input type="hidden" name="fileTypes" value="<?= $this->fileTypes ?>">
 			<div class="form-file-area float-right bg-primary" style="width: 2rem; height: 2rem;">
 			<div class="form-file-icon"><?= FA_UPLOAD ?></div>
-			<input class="form-file-input" type="file" name="file" id="<?= $idFormFile ?>" onChange='xanFileUploadToBucket( "#<?= $idForm ?>", <?= $jsfnNameSuccess ?>, <?= $jsfnNameProblem ?> );'>
+			<input class="form-file-input" type="file" name="file" id="<?= $idFormFile ?>" onChange='xanFileUploadToBucket( "#<?= $idForm ?>", "<?= URL_BUCKET_UPLOAD_PAGE ?>", <?= $jsfnNameSuccess ?>, <?= $jsfnNameProblem ?> );'>
 			</div>
 		</form>
 		<script>
