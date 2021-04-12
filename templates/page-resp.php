@@ -17,11 +17,11 @@ ob_start();
         <script>
             var xanConsoleMsgs = [];
         </script>
-	
-		<!-- XSS Protection with Self and Stripe -->
+
+        <!-- XSS Protection with Self and Stripe -->
 		<?php
 		$aloe_response->header_set( 'Content-Security-Policy', "default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline';  img-src 'self';  connect-src 'self';  font-src 'self';  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'none';  " );
-        ?>
+		?>
         <meta name="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
         <meta name="referrer" content="strict-origin-when-cross-origin">
         <meta name="Referer" content="no-referrer, strict-origin-when-cross-origin">
@@ -85,9 +85,11 @@ ob_start();
 
         <!-- Stripe.com     https://github.com/stripe/stripe-php -->
         <script src="https://js.stripe.com/v3/"></script>
-
-        <!-- Xanadu Javascript -->
-        <script src="/xan/xan.js"></script>
+		
+		<?php if ( $resp->includeStripeB === true ) : ?>
+            <!-- Xanadu Javascript -->
+            <script src="/xan/xan.js"></script>
+		<?php endif; ?>
 
         <!-- FontAwesome     https://fontawesome.com/icons -->
         <link href="/include/fontawesome/5.15.2_pro/css/all.min.css" rel="stylesheet" type="text/css">

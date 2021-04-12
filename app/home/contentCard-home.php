@@ -20,6 +20,7 @@ $buttonEle = new \xan\eleButton( 'Get Location!', 'ButtonGeoLocation', 'ButtonGe
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
 // Stripe Purchase Button
+$resp->includeStripeB = true;
 $stripeButtonProduct = \xan\buttonStripeProduct( 'Product $20', 'buttonProduct20', 'ProdCode', 'Product Name', 'Product Description', 1, 2000, 'https://xandev.xanweb.app/images/logo1024.png', $_SESSION[ 'urlCurrent' ] );
 $stripeButtonSubscription = \xan\buttonStripeSubscription( 'Subscription $1/month', 'buttonSubscription1pm', 'SubCode', 'monthly', 1, $_SESSION[ 'urlCurrent' ] );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $stripeButtonProduct[ 'Button' ] . ' ' . $stripeButtonSubscription[ 'Button' ] );
