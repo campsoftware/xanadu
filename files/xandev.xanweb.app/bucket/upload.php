@@ -48,11 +48,11 @@ $resultArray[ 'Log' ] .= '$target_dir = ' . $target_dir . ' ';
 
 // Append Path
 if ( !is_dir( $target_dir . $ds ) ) {
-	$mkdirResult = mkdir( $target_dir . $ds, 0777, true );
+	$mkdirResult = mkdir( $target_dir . $ds, 0755, true );
 	$resultArray[ 'Log' ] .= 'Dir Created = ' . $mkdirResult . ' ';
 } else {
 	$resultArray[ 'Log' ] .= 'Dir Exists ; ';
-	$chmodResult = chmod( $target_dir . $ds, 0777 );
+	$chmodResult = chmod( $target_dir . $ds, 0755 );
 	if ( $chmodResult = true ) {
 		$resultArray[ 'Log' ] .= 'Chmod ok ; ';
 	} else {
