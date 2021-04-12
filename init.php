@@ -12,7 +12,7 @@ $pageload_begin = microtime( true );
 
 ///////////////////////////////////////////////////////////
 // App Domain
-define( 'APP_DOMAIN', strtolower( $_SERVER[ 'SERVER_NAME' ] ) );
+define( 'APP_DOMAIN', strtolower( $_SERVER[ 'HTTP_HOST' ] ) );
 
 ///////////////////////////////////////////////////////////
 if ( false ) {
@@ -40,7 +40,7 @@ if ( false ) {
 	
 	// Init File per Domain like: xanadu.xanweb.app
 	$init_filename = 'init_' . APP_DOMAIN . '.php'; // File like: init_xanadu.xanweb.app.php
-	$init_path = dirname( __FILE__ ) . '/' . $init_filename;
+	$init_path =  __DIR__ . '/' . $init_filename;
 	if ( file_exists( $init_path ) ) {
 		require_once( $init_path ); // Sets the above CONSTANTS. Not shared in Github.
 	} else {
