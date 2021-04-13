@@ -6,22 +6,21 @@ ob_start();
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		
 		<?php
 		if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
-			echo "\r";
-			echo "\t\t" . '<!-- Session Updated:' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; -->' . "\r";
-			echo "\t\t" . '<meta http-equiv="refresh" content="' . LOGOUT_AUTO_SECONDS . ';url=' . $mmUsersLogout->URLRelative . '">' . "\r\r";
+			echo '<!-- Session Updated: ' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; -->';
+			echo "\r\t\t" . '<meta http-equiv="refresh" content="' . LOGOUT_AUTO_SECONDS . ';url=' . $mmUsersLogout->URLRelative . '">';
+			echo "\r\r";
 		}
 		?>
+
         <!-- Init Messages -->
         <script>
             var xanConsoleMsgs = [];
         </script>
 
-        <!-- XSS Protection with Self and Stripe -->
-		<?php
-		$aloe_response->header_set( 'Content-Security-Policy', "default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline';  img-src 'self';  connect-src 'self';  font-src 'self';  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'none';  " );
-		?>
+        <!-- XSS Protection with Self and Stripe Exceptions <?php $aloe_response->header_set( 'Content-Security-Policy', "default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline';  img-src 'self';  connect-src 'self';  font-src 'self';  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'none';  " ); ?> -->
         <meta name="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
         <meta name="referrer" content="strict-origin-when-cross-origin">
         <meta name="Referer" content="no-referrer, strict-origin-when-cross-origin">
@@ -83,13 +82,16 @@ ob_start();
         <!-- LazyLoad     https://www.andreaverlicchi.eu/lazyload/ -->
         <script src="/include/lazyload/14.0.0/lazyload.min.js"></script>
 
-        <!-- Stripe.com     https://github.com/stripe/stripe-php -->
-        <script src="https://js.stripe.com/v3/"></script>
+        <!-- Xanadu Javascript -->
+        <script src="/xan/xan.js"></script>
 		
-		<?php if ( $resp->includeStripeB === true ) : ?>
-            <!-- Xanadu Javascript -->
-            <script src="/xan/xan.js"></script>
-		<?php endif; ?>
+		<?php
+		if ( $resp->includeStripeB === true ) {
+			echo '<!-- Stripe.com     https://github.com/stripe/stripe-php -->';
+			echo "\r\t\t" . '<script src="https://js.stripe.com/v3/"></script>';
+			echo "\r\r";
+		}
+		?>
 
         <!-- FontAwesome     https://fontawesome.com/icons -->
         <link href="/include/fontawesome/5.15.2_pro/css/all.min.css" rel="stylesheet" type="text/css">
