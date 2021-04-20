@@ -369,7 +369,6 @@ ob_start();
 									<?= \xan\navDivider() ?>
                                     <span class="dropdown-item disabled">Session Info</span>
                                     <span class="dropdown-item disabled">Email: <?= $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?></span>
-                                    <span class="dropdown-item disabled">Tenant: <?= $_SESSION[ SESS_USER ][ UUIDTENANTS ] ?></span>
                                     <span class="dropdown-item disabled">User: <?= $_SESSION[ SESS_USER ][ UUIDUSERS ] ?></span>
                                     <span class="dropdown-item disabled">Active: <?= $_SESSION[ SESS_USER ][ 'Active' ] ?></span>
                                     <span class="dropdown-item disabled">Admin: <?= $_SESSION[ SESS_USER ][ 'PrivAdmin' ] ?></span>

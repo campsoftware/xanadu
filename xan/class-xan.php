@@ -482,31 +482,25 @@ class recs {
 	}
 
 	public function recordInsert( $columnsValuesArray = array() ) {
-		// Set Tenant
-		$columnNames = UUIDTENANTS;
-		$columnValuesQuestions = '?';
-		$columnArrayNames = array( UUIDTENANTS );
-		$columnArrayValues = array( userTenant() );
-
 		// Set Table Key
 		$tableKeyValueNew = strUUID();
-		$columnNames .= ', ' . $this->moduleMeta->NameTableKey;
-		$columnValuesQuestions .= ', ?';
-		$columnArrayNames[] = $this->moduleMeta->NameTableKey;
-		$columnArrayValues[] = $tableKeyValueNew;
+		$columnNames = $this->moduleMeta->NameTableKey;
+		$columnValuesQuestions = '?';
+		$columnNamesA = array( $this->moduleMeta->NameTableKey );
+		$columnValuesA = array( $tableKeyValueNew );
 
 		// Set Passed Columns
 		foreach ( $columnsValuesArray as $colName => $colValue ) {
 			$columnNames .= ', ' . $colName;
 			$columnValuesQuestions .= ', ?';
-			$columnArrayNames[] = $colName;
-			$columnArrayValues[] = $colValue;
+			$columnNamesA[] = $colName;
+			$columnValuesA[] = $colValue;
 		}
 
 		// Insert
 		$this->querySQL = 'INSERT INTO ' . $this->moduleMeta->NameTable . ' ( ' . $columnNames . ' ) VALUES ( ' . $columnValuesQuestions . ' )';
-		$this->queryBindNamesA = $columnArrayNames;
-		$this->queryBindValuesA = $columnArrayValues;
+		$this->queryBindNamesA = $columnNamesA;
+		$this->queryBindValuesA = $columnValuesA;
 		$this->query();
 		if ($this->errorB ){
 			$this->messageExtra = 'Insert Error';
@@ -518,9 +512,9 @@ class recs {
 		}
 
 		// Select
-		$this->querySQL = 'SELECT * FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? and ' . $this->moduleMeta->NameTableKey . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $this->moduleMeta->NameTableKey );
-		$this->queryBindValuesA = array( userTenant(), $tableKeyValueNew );
+		$this->querySQL = 'SELECT * FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . $this->moduleMeta->NameTableKey . ' = ?';
+		$this->queryBindNamesA = array( $this->moduleMeta->NameTableKey );
+		$this->queryBindValuesA = array( $tableKeyValueNew );
 		$this->query();
 		if ($this->errorB ){
 			$this->messageExtra = 'Select Error';
@@ -535,30 +529,25 @@ class recs {
 	public function recordUpdate( $tableKeyValue, $colNameValuesD = array() ) {
         // Set Init
         $columnAssignments = '';
-        $columnArrayNames = array();
-        $columnArrayValues = array();
+        $columnNamesA = array();
+        $columnValuesA = array();
         
         // Append Passed Columns
         foreach ( $colNameValuesD as $colName => $colValue ) {
             $columnAssignments .= ( isEmpty( $columnAssignments ) ? '' : ', ' );
             $columnAssignments .= $colName . ' = ?';
-            $columnArrayNames[] = $colName;
-            $columnArrayValues[] = $colValue;
+            $columnNamesA[] = $colName;
+            $columnValuesA[] = $colValue;
         }
         
-        // Append Tenant
-        $tenant = ( isNotEmpty( $_SESSION[ SESS_USER ][ UUIDTENANTS ] ) ? $_SESSION[ SESS_USER ][ UUIDTENANTS ] : $GLOBALS[ UUIDTENANTS ] );
-        $columnArrayNames[] = UUIDTENANTS;
-        $columnArrayValues[] = $tenant;
-        
         // Append Key
-        $columnArrayNames[] = $this->moduleMeta->NameTableKey;
-        $columnArrayValues[] = $tableKeyValue;
+        $columnNamesA[] = $this->moduleMeta->NameTableKey;
+        $columnValuesA[] = $tableKeyValue;
         
         // Update
-        $this->querySQL = 'UPDATE ' . $this->moduleMeta->NameTable . ' SET ' . $columnAssignments . ' WHERE ' . UUIDTENANTS . ' = ? and ' . $this->moduleMeta->NameTableKey . ' = ?';
-		$this->queryBindNamesA = $columnArrayNames;
-		$this->queryBindValuesA = $columnArrayValues;
+        $this->querySQL = 'UPDATE ' . $this->moduleMeta->NameTable . ' SET ' . $columnAssignments . ' WHERE ' . $this->moduleMeta->NameTableKey . ' = ?';
+		$this->queryBindNamesA = $columnNamesA;
+		$this->queryBindValuesA = $columnValuesA;
 		$this->query();
 		if ($this->errorB ){
 			$this->messageExtra = 'Update Error';
@@ -570,9 +559,9 @@ class recs {
 		}
 		
         // Select
-        $this->querySQL = 'SELECT ' . $this->moduleMeta->NameTableKey . ' FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? and ' . $this->moduleMeta->NameTableKey . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $this->moduleMeta->NameTableKey );
-		$this->queryBindValuesA = array( $tenant, $tableKeyValue );
+        $this->querySQL = 'SELECT ' . $this->moduleMeta->NameTableKey . ' FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . $this->moduleMeta->NameTableKey . ' = ?';
+		$this->queryBindNamesA = array( $this->moduleMeta->NameTableKey );
+		$this->queryBindValuesA = array( $tableKeyValue );
 		$this->query();
 		if ($this->errorB ){
 			$this->messageExtra = 'Select Error';
@@ -586,9 +575,9 @@ class recs {
 
 	public function recordDelete( $tableKeyValue ) {
 		// Delete
-		$this->querySQL = 'DELETE FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? and ' . $this->moduleMeta->NameTableKey . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $this->moduleMeta->NameTableKey );
-		$this->queryBindValuesA = array( userTenant(), $tableKeyValue );
+		$this->querySQL = 'DELETE FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . $this->moduleMeta->NameTableKey . ' = ?';
+		$this->queryBindNamesA = array( $this->moduleMeta->NameTableKey );
+		$this->queryBindValuesA = array( $tableKeyValue );
 		$this->query();
 		if ($this->errorB ){
 			$this->messageExtra = 'Delete Error';
@@ -605,9 +594,9 @@ class recs {
 		$tableKeyValueNew = strUUID();
 		
 		// Select Check
-		$this->querySQL = 'SELECT ' . $this->moduleMeta->NameTableKey . ' FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? and ' . $this->moduleMeta->NameTableKey . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $this->moduleMeta->NameTableKey );
-		$this->queryBindValuesA = array( userTenant(), $tableKeyValue );
+		$this->querySQL = 'SELECT ' . $this->moduleMeta->NameTableKey . ' FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . $this->moduleMeta->NameTableKey . ' = ?';
+		$this->queryBindNamesA = array( $this->moduleMeta->NameTableKey );
+		$this->queryBindValuesA = array( $tableKeyValue );
 		$this->query(  );
 		if ($this->errorB ){
 			$this->messageExtra = 'Select Check Error';
@@ -619,9 +608,9 @@ class recs {
 		}
 		
 		// Duplicate to Temp Table
-		$this->querySQL = 'CREATE TEMPORARY TABLE tmptableDup SELECT * FROM ' . $this->moduleMeta->NameTable . '  WHERE ' . UUIDTENANTS . ' = ? and ' . $this->moduleMeta->NameTableKey . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $this->moduleMeta->NameTableKey );
-		$this->queryBindValuesA = array( userTenant(), $tableKeyValue );
+		$this->querySQL = 'CREATE TEMPORARY TABLE tmptableDup SELECT * FROM ' . $this->moduleMeta->NameTable . '  WHERE ' . $this->moduleMeta->NameTableKey . ' = ?';
+		$this->queryBindNamesA = array( $this->moduleMeta->NameTableKey );
+		$this->queryBindValuesA = array( $tableKeyValue );
 		$this->query(  );
 		if ($this->errorB ){
 			$this->messageExtra = 'Create Temp Error';
@@ -671,9 +660,9 @@ class recs {
 		}
 	 
 		// Select
-		$this->querySQL = 'SELECT * FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? and ' . $this->moduleMeta->NameTableKey . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $this->moduleMeta->NameTableKey );
-		$this->queryBindValuesA = array( userTenant(), $tableKeyValueNew );
+		$this->querySQL = 'SELECT * FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . $this->moduleMeta->NameTableKey . ' = ?';
+		$this->queryBindNamesA = array( $this->moduleMeta->NameTableKey );
+		$this->queryBindValuesA = array( $tableKeyValueNew );
 		$this->query(  );
 		if ($this->errorB ){
 			$this->messageExtra = 'Select Duplicate Error';
@@ -688,9 +677,9 @@ class recs {
 	
 	function recordDuplicateRelated( $foreignTableKeyName, $foreignTableKeyValueOld, $foreignTableKeyValueNew ) {
 		// Select Check
-		$this->querySQL = 'SELECT ' . $this->moduleMeta->NameTableKey . ' FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? and ' . $foreignTableKeyName . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $foreignTableKeyName );
-		$this->queryBindValuesA = array( userTenant(), $foreignTableKeyValueOld );
+		$this->querySQL = 'SELECT ' . $this->moduleMeta->NameTableKey . ' FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . $foreignTableKeyName . ' = ?';
+		$this->queryBindNamesA = array( $foreignTableKeyName );
+		$this->queryBindValuesA = array( $foreignTableKeyValueOld );
 		$this->query(  );
 		if ($this->errorB ){
 			$this->messageExtra = 'Select Check Error';
@@ -702,9 +691,9 @@ class recs {
 		}
 		
 		// Duplicate to Temp Table
-		$this->querySQL = 'CREATE TEMPORARY TABLE tmptableDup SELECT * FROM ' . $this->moduleMeta->NameTable . '  WHERE ' . UUIDTENANTS . ' = ? and ' . $foreignTableKeyName . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $foreignTableKeyName );
-		$this->queryBindValuesA = array( userTenant(), $foreignTableKeyValueOld );
+		$this->querySQL = 'CREATE TEMPORARY TABLE tmptableDup SELECT * FROM ' . $this->moduleMeta->NameTable . '  WHERE ' . $foreignTableKeyName . ' = ?';
+		$this->queryBindNamesA = array( $foreignTableKeyName );
+		$this->queryBindValuesA = array( $foreignTableKeyValueOld );
 		$this->query(  );
 		if ($this->errorB ){
 			$this->messageExtra = 'Create Temp Error';
@@ -768,9 +757,9 @@ class recs {
 		}
 		
 		// Select
-		$this->querySQL = 'SELECT * FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? and ' . $foreignTableKeyName . ' = ?';
-		$this->queryBindNamesA = array( UUIDTENANTS, $foreignTableKeyName );
-		$this->queryBindValuesA = array( userTenant(), $foreignTableKeyValueNew );
+		$this->querySQL = 'SELECT * FROM ' . $this->moduleMeta->NameTable . ' WHERE ' . $foreignTableKeyName . ' = ?';
+		$this->queryBindNamesA = array( $foreignTableKeyName );
+		$this->queryBindValuesA = array( $foreignTableKeyValueNew );
 		$this->query(  );
 		if ($this->errorB ){
 			$this->messageExtra = 'Select Duplicate Error';
@@ -2178,23 +2167,23 @@ class eleSearchBarListDB extends element {
 			if ( $searchTermBlankAction === 'Show None' ) {
 				$searchTermQuery = ( isEmpty( $_SESSION[ $this->idPrefix . 'SearchTerm' ] ) ? '0Will1Not2Ever3Find4This5' : $_SESSION[ $this->idPrefix . 'SearchTerm' ] );
 			}
-			$searchWhere = ( isEmpty( $searchTermQuery ) ? '' : 'AND ( ' . dbSearchTermSQL( $this->mm->QuerySimpleDefault ) . ' )' );
-			$searchTerBindNames = ( isEmpty( $searchTermQuery ) ? array() : dbSearchTermBindNames( $this->mm->QuerySimpleDefault ) );
-			$searchTerBindValues = ( isEmpty( $searchTermQuery ) ? array() : dbSearchTermBindValues( $this->mm->QuerySimpleDefault, $searchTermQuery ) );
+			$searchWhere = ( isEmpty( $searchTermQuery ) ? '' : 'WHERE ( ' . dbSearchTermSQL( $this->mm->QuerySimpleDefault ) . ' )' );
+			$searchTermBindNamesA = ( isEmpty( $searchTermQuery ) ? array() : dbSearchTermBindNamesA( $this->mm->QuerySimpleDefault ) );
+			$searchTermBindValuesA = ( isEmpty( $searchTermQuery ) ? array() : dbSearchTermBindValuesA( $this->mm->QuerySimpleDefault, $searchTermQuery ) );
 		} else {
 			// Search Builder
-			$searchWhere = 'AND ( ' . $_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] . ' )';
-			$searchTerBindNames = array();
-			$searchTerBindValues = json_decode( $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
+			$searchWhere = 'WHERE ( ' . $_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] . ' )';
+			$searchTermBindNamesA = array();
+			$searchTermBindValuesA = json_decode( $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
 		}
 
 		// List Query SQL
-		$queryWhere = UUIDTENANTS . ' = ? ' . $searchWhere;
+		$queryWhere = $searchWhere;
 		$queryOrderBy = ' ORDER BY ' . $_SESSION[ $this->idPrefix . 'SearchSort' ] . ' ';
-		$result[ 'queryBindNames' ] = array_merge( array( UUIDTENANTS ), $searchTerBindNames );
-		$result[ 'queryBindValues' ] = array_merge( array( $_SESSION[ SESS_USER ][ UUIDTENANTS ] ), $searchTerBindValues );
-		$result[ 'querySQL' ] = 'SELECT * FROM ' . $this->mm->NameTable . ' WHERE ' . $queryWhere . $queryOrderBy;
-
+		$result[ 'queryBindNames' ] = $searchTermBindNamesA;
+		$result[ 'queryBindValues' ] = $searchTermBindValuesA;
+		$result[ 'querySQL' ] = 'SELECT * FROM ' . $this->mm->NameTable . ' ' . $queryWhere . $queryOrderBy;
+		
 		// Button Search
 		$buttonSearchSimpleTags = new tags( [ ELE_CLASS_BUTTON_SM_SEARCHBAR ], [], [ 'onclick="$( \'#' . $this->idPrefix . 'SearchForm' .'\' ).submit();"' ] );
 		$buttonSearchSimpleEle = new eleButton( FA_SEARCH, $this->idPrefix . 'SearchButtonDo', '', $buttonSearchSimpleTags );
@@ -2532,12 +2521,6 @@ function arrayJSCodeToString( $classArray ) {
 
 ///////////////////////////////////////////////////////////
 // User Is
-function userTenant(){
-	$tenantValue = $_SESSION[ SESS_USER ][ UUIDTENANTS ];
-	$tenantDefault = $GLOBALS[ UUIDTENANTS ];
-	return ( isNotEmpty( $tenantValue ) ? $tenantValue : $tenantDefault );
-}
-
 function userIsAuthenticated(){
 	if ( isset( $_SESSION[ SESS_USER ][ UUIDUSERS ] ) ){
 		return true;
@@ -2583,21 +2566,21 @@ function logEventToSQL( $type, $desc1, $desc2, $pageName, $userLogin, $userID ) 
 
 ///////////////////////////////////////////////////////////
 // LogAudit
-function logAuditToFile( $UUIDTenant, $UUIDUsers, $userLogin, $action, $tableName, $tableUUIDName, $tableUUID, $fieldValues ) {
+function logAuditToFile( $UUIDUsers, $userLogin, $action, $tableName, $tableUUIDName, $tableUUID, $fieldValues ) {
 	$path = PATH_ROOT_LOGS . date( 'Ymd' ) . '_Audit.txt';
 
 	$dateNow = \DateTime::createFromFormat( 'U.u', microtime( true ) );
 	$dateFormatted = $dateNow->format( 'Ymd-His.u' );
 
-	file_put_contents( $path, $dateFormatted . '|' . ipOfBrowser() . '|' . $UUIDTenant . '|' . $UUIDUsers . '|' . $userLogin . '|' . $action . '|' . $tableName . '|' . $tableUUIDName . '|' . $tableUUID . '|' . $fieldValues . PHP_EOL, FILE_APPEND );
+	file_put_contents( $path, $dateFormatted . '|' . ipOfBrowser() . '|' . $UUIDUsers . '|' . $userLogin . '|' . $action . '|' . $tableName . '|' . $tableUUIDName . '|' . $tableUUID . '|' . $fieldValues . PHP_EOL, FILE_APPEND );
 }
 
-function logAuditToSQL( $UUIDTenant, $UUIDUsers, $userLogin, $action, $tableName, $tableUUIDName, $tableUUID, $fieldValues ) {
+function logAuditToSQL( $UUIDUsers, $userLogin, $action, $tableName, $tableUUIDName, $tableUUID, $fieldValues ) {
 	global $mm; // Get Access To $mm
 	$insert = new recs( $mm[ MM_LOGAUDIT_T ] );
-	$insert->querySQL = 'INSERT INTO LogAudit ( UUIDLogAudit, ModTS, ' . UUIDTENANTS . ', Mod' . UUIDUSERS . ', ModName, Action, TableName, TableUUIDName, TableUUID, FieldValues ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? ,?, ? )';
-	$insert->queryBindNamesA = array( 'UUIDLogAudit', 'ModTS', UUIDTENANTS, 'Mod' . UUIDUSERS, 'ModName', 'Action', 'TableName', 'TableUUIDName', 'TableUUID', 'FieldValues' );
-	$insert->queryBindValuesA = array( strUUID(), dateTimeNowSQL(), $UUIDTenant, $UUIDUsers, $userLogin, $action, $tableName, $tableUUIDName, $tableUUID, $fieldValues );
+	$insert->querySQL = 'INSERT INTO LogAudit ( UUIDLogAudit, ModTS, Mod' . UUIDUSERS . ', ModName, Action, TableName, TableUUIDName, TableUUID, FieldValues ) VALUES ( ?, ?, ?, ?, ?, ?, ? ,?, ? )';
+	$insert->queryBindNamesA = array( 'UUIDLogAudit', 'ModTS', 'Mod' . UUIDUSERS, 'ModName', 'Action', 'TableName', 'TableUUIDName', 'TableUUID', 'FieldValues' );
+	$insert->queryBindValuesA = array( strUUID(), dateTimeNowSQL(), $UUIDUsers, $userLogin, $action, $tableName, $tableUUIDName, $tableUUID, $fieldValues );
 	$insert->query();
 	return $insert;
 }
@@ -2675,7 +2658,7 @@ function dbSearchTermSQL( $colNameArray ) {
 	return $sql;
 }
 
-function dbSearchTermBindNames( $colNameArray ) {
+function dbSearchTermBindNamesA( $colNameArray ) {
 	$bindNames = array();
 	foreach ( $colNameArray as $value ) {
 		$bindNames[] = $value . 'zLIKE01';
@@ -2684,7 +2667,7 @@ function dbSearchTermBindNames( $colNameArray ) {
 	return $bindNames;
 }
 
-function dbSearchTermBindValues( $colNameArray, $sqlWhereTerm ) {
+function dbSearchTermBindValuesA( $colNameArray, $sqlWhereTerm ) {
 	$bindValues = array();
 	foreach ( $colNameArray as $value ) {
 		$bindValues[] = $sqlWhereTerm . '%';

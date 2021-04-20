@@ -1,9 +1,9 @@
 <?php
 // Query
 $recsContactsComms = new \xan\recs( $mmContactsCommsT );
-$recsContactsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
-$recsContactsComms->queryBindNamesA = array( UUIDTENANTS, $mmContactsCommsT->NameTableKey );
-$recsContactsComms->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $resp->reqID );
+$recsContactsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
+$recsContactsComms->queryBindNamesA = array( $mmContactsCommsT->NameTableKey );
+$recsContactsComms->queryBindValuesA = array( $resp->reqID );
 $recsContactsComms->query();
 $recsContactsComms->rowsMassageForGUI( false );
 

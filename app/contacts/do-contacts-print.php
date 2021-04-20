@@ -29,9 +29,9 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // Contacts
 $recsContacts = new \xan\recs( $mmContactsT );
-$recsContacts->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
-$recsContacts->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey );
-$recsContacts->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
+$recsContacts->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
+$recsContacts->queryBindNamesA = array( $mmContactsT->NameTableKey );
+$recsContacts->queryBindValuesA = array( $doParam[ 'IDContacts' ] );
 $recsContacts->query();
 $recsContacts->rowsMassageForGUI( true );
 
@@ -44,9 +44,9 @@ if ( $recsContacts->errorB ) {
 
 // ContactsComms
 $recsContactsComms = new \xan\recs( $mmContactsCommsT );
-$recsContactsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
-$recsContactsComms->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey );
-$recsContactsComms->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
+$recsContactsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
+$recsContactsComms->queryBindNamesA = array( $mmContactsT->NameTableKey );
+$recsContactsComms->queryBindValuesA = array( $doParam[ 'IDContacts' ] );
 $recsContactsComms->query();
 $recsContactsComms->rowsMassageForGUI( true );
 

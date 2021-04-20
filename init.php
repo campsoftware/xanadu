@@ -115,7 +115,6 @@ define( 'APP_COOKIE_REMEMBERME_DAYS', 7 );
 
 ///////////////////////////////////////////////////////////
 // Globally used Primary Keys
-define( 'UUIDTENANTS', 'UUIDTenants' );
 define( 'UUIDUSERS', 'UUIDUsers' );
 
 
@@ -135,11 +134,6 @@ $mm = [];
 foreach ( glob( PATH_ROOT_APP . "zzMetaModules/mm*.php" ) as $filename ) {
 	require_once( $filename );
 }
-
-
-///////////////////////////////////////////////////////////
-// Tenant Default
-$GLOBALS[ UUIDTENANTS ] = 'Xanadu'; // Current User: $_SESSION[ SESS_USER ][ UUIDTENANTS ].
 
 
 ///////////////////////////////////////////////////////////
@@ -173,9 +167,9 @@ $_SESSION[ 'urlCurrent' ] = 'http://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQ
 ///////////////////////////////////////////////////////////
 // Settings Select
 $recsSettings = new \xan\recs( $mmSettingsT );
-$recsSettings->querySQL = 'SELECT * FROM ' . $mmSettingsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . 'Active = ?';
-$recsSettings->queryBindNamesA = array( UUIDTENANTS, 'Active' );
-$recsSettings->queryBindValuesA = array( $GLOBALS[ UUIDTENANTS ], 'Yes' );
+$recsSettings->querySQL = 'SELECT * FROM ' . $mmSettingsT->NameTable . ' WHERE ' . 'Active = ?';
+$recsSettings->queryBindNamesA = array( 'Active' );
+$recsSettings->queryBindValuesA = array( 'Yes' );
 $recsSettings->query();
 // Error Check
 if ( $recsSettings->errorB ) {

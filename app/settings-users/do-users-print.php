@@ -30,9 +30,9 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // Users
 $recsUsers = new \xan\recs( $mmUsersT );
-$recsUsers->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmUsersT->NameTableKey . ' = ?';
-$recsUsers->queryBindNamesA = array( UUIDTENANTS, $mmUsersT->NameTableKey );
-$recsUsers->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDUsers' ] );
+$recsUsers->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . $mmUsersT->NameTableKey . ' = ?';
+$recsUsers->queryBindNamesA = array( $mmUsersT->NameTableKey );
+$recsUsers->queryBindValuesA = array( $doParam[ 'IDUsers' ] );
 $recsUsers->query();
 $recsUsers->rowsMassageForGUI( true );
 

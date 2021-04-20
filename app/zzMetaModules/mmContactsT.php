@@ -238,12 +238,6 @@ class moduleMetaContactsT extends \xan\moduleMeta {
                 $colMeta->isKeyPrimary = true;
                 $colMeta->isKeyForeign = false;
                 break;
-            case 'UUIDTenants':
-                $colMeta->colLabelEN = 'Tenants ID';
-                $colMeta->isKey = true;
-                $colMeta->isKeyPrimary = false;
-                $colMeta->isKeyForeign = true;
-                break;
         }
 
         // Set the Label
