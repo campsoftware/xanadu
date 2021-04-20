@@ -486,21 +486,21 @@ class recs {
 		$tableKeyValueNew = strUUID();
 		$columnNames = $this->moduleMeta->NameTableKey;
 		$columnValuesQuestions = '?';
-		$columnArrayNames = array( $this->moduleMeta->NameTableKey );
-		$columnArrayValues = array( $tableKeyValueNew );
+		$columnNamesA = array( $this->moduleMeta->NameTableKey );
+		$columnValuesA = array( $tableKeyValueNew );
 
 		// Set Passed Columns
 		foreach ( $columnsValuesArray as $colName => $colValue ) {
 			$columnNames .= ', ' . $colName;
 			$columnValuesQuestions .= ', ?';
-			$columnArrayNames[] = $colName;
-			$columnArrayValues[] = $colValue;
+			$columnNamesA[] = $colName;
+			$columnValuesA[] = $colValue;
 		}
 
 		// Insert
 		$this->querySQL = 'INSERT INTO ' . $this->moduleMeta->NameTable . ' ( ' . $columnNames . ' ) VALUES ( ' . $columnValuesQuestions . ' )';
-		$this->queryBindNamesA = $columnArrayNames;
-		$this->queryBindValuesA = $columnArrayValues;
+		$this->queryBindNamesA = $columnNamesA;
+		$this->queryBindValuesA = $columnValuesA;
 		$this->query();
 		if ($this->errorB ){
 			$this->messageExtra = 'Insert Error';
@@ -529,25 +529,25 @@ class recs {
 	public function recordUpdate( $tableKeyValue, $colNameValuesD = array() ) {
         // Set Init
         $columnAssignments = '';
-        $columnArrayNames = array();
-        $columnArrayValues = array();
+        $columnNamesA = array();
+        $columnValuesA = array();
         
         // Append Passed Columns
         foreach ( $colNameValuesD as $colName => $colValue ) {
             $columnAssignments .= ( isEmpty( $columnAssignments ) ? '' : ', ' );
             $columnAssignments .= $colName . ' = ?';
-            $columnArrayNames[] = $colName;
-            $columnArrayValues[] = $colValue;
+            $columnNamesA[] = $colName;
+            $columnValuesA[] = $colValue;
         }
         
         // Append Key
-        $columnArrayNames[] = $this->moduleMeta->NameTableKey;
-        $columnArrayValues[] = $tableKeyValue;
+        $columnNamesA[] = $this->moduleMeta->NameTableKey;
+        $columnValuesA[] = $tableKeyValue;
         
         // Update
         $this->querySQL = 'UPDATE ' . $this->moduleMeta->NameTable . ' SET ' . $columnAssignments . ' WHERE ' . $this->moduleMeta->NameTableKey . ' = ?';
-		$this->queryBindNamesA = $columnArrayNames;
-		$this->queryBindValuesA = $columnArrayValues;
+		$this->queryBindNamesA = $columnNamesA;
+		$this->queryBindValuesA = $columnValuesA;
 		$this->query();
 		if ($this->errorB ){
 			$this->messageExtra = 'Update Error';
