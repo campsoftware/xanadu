@@ -87,6 +87,15 @@ function strCode2FA() {
 	return strRight( strFilterKeepNumbers( \xan\strUUID() ), 6 );
 }
 
+// strAsciiSum
+function strAsciiSum( $string ) {
+	$sum = 0;
+	for ( $i = 0; $i < strlen( $string ); $i++ )
+		$sum += ord( $string[ $i ] );
+	
+	return $sum;
+}
+
 ///////////////////////////////////////////////////////////
 // Numbers
 function numDisplay( $num, $decimals = 0 ) {
