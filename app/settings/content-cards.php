@@ -1,9 +1,9 @@
 <?php
 // Query
 $recsDetail = new \xan\recs( $mmSettingsT );
-$recsDetail->querySQL = 'SELECT * FROM ' . $mmSettingsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND Active = ?';
-$recsDetail->queryBindNamesA = array( UUIDTENANTS, 'Active' );
-$recsDetail->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], 'Yes' );
+$recsDetail->querySQL = 'SELECT * FROM ' . $mmSettingsT->NameTable . ' WHERE Active = ?';
+$recsDetail->queryBindNamesA = array( 'Active' );
+$recsDetail->queryBindValuesA = array( 'Yes' );
 $recsDetail->query();
 $recsDetail->rowsMassageForGUI( false );
 
