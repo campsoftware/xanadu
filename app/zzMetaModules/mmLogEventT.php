@@ -103,12 +103,6 @@ class moduleMetaLogEventT extends \xan\moduleMeta {
                 $colEle->isKeyPrimary = false;
                 $colEle->isKeyForeign = true;
                 break;
-            case 'UUIDTenants':
-                $colEle->colLabelEN = 'Tenants ID';
-                $colEle->isKey = true;
-                $colEle->isKeyPrimary = false;
-                $colEle->isKeyForeign = true;
-                break;
         }
 
         // Set the Label

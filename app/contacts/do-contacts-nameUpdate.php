@@ -16,9 +16,9 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // Query
 $recsDetail = new \xan\recs( $mmContactsT );
-$recsDetail->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmContactsT->NameTableKey . ' = ?';
-$recsDetail->queryBindNamesA = array( UUIDTENANTS, $mmContactsT->NameTableKey );
-$recsDetail->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $doParam[ 'IDContacts' ] );
+$recsDetail->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
+$recsDetail->queryBindNamesA = array( $mmContactsT->NameTableKey );
+$recsDetail->queryBindValuesA = array( $doParam[ 'IDContacts' ] );
 $recsDetail->query();
 
 // Error Check

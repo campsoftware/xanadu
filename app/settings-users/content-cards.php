@@ -56,9 +56,9 @@ if ( true ) {
 if ( \xan\isNotEmpty( $resp->reqID ) ) {
 	// Query
 	$recsDetail = new \xan\recs( $mmUsersT );
-	$recsDetail->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . UUIDTENANTS . ' = ? AND ' . $mmUsersT->NameTableKey . ' = ?';
-	$recsDetail->queryBindNamesA = array( UUIDTENANTS, $mmUsersT->NameTableKey );
-	$recsDetail->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDTENANTS ], $resp->reqID );
+	$recsDetail->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . $mmUsersT->NameTableKey . ' = ?';
+	$recsDetail->queryBindNamesA = array( $mmUsersT->NameTableKey );
+	$recsDetail->queryBindValuesA = array( $resp->reqID );
 	$recsDetail->query();
 	$recsDetail->rowsMassageForGUI( false );
 	

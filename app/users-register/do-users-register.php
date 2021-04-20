@@ -78,10 +78,10 @@ if ( $userSelect->errorB ) {
 	
 	// User Insert
 	$userInsert = new \xan\recs( $mmUsersT );
-	$sqlCols = array( 'UUIDUsers', 'UUIDTenants', 'EmailAddress', 'PasswordHashSeed', 'PasswordHashed', 'RegisterTS', 'Registered', 'LoginKeyOneTime' );
+	$sqlCols = array( 'UUIDUsers', 'EmailAddress', 'PasswordHashSeed', 'PasswordHashed', 'RegisterTS', 'Registered', 'LoginKeyOneTime' );
 	$userInsert->querySQL = 'INSERT INTO Users ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . \xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
 	$userInsert->queryBindNamesA = $sqlCols;
-	$userInsert->queryBindValuesA = array( $UUIDUsers, $GLOBALS[ UUIDTENANTS ], $doParam[ 'Login' ], $PasswordSeed, $PasswordHash, $RegisterTS, $Registered, $LoginKeyOneTime );
+	$userInsert->queryBindValuesA = array( $UUIDUsers, $doParam[ 'Login' ], $PasswordSeed, $PasswordHash, $RegisterTS, $Registered, $LoginKeyOneTime );
 	$userInsert->query();
 	// Error Check
 	if ( $userInsert->errorB ) {

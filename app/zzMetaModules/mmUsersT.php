@@ -227,12 +227,6 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 				$colMeta->isKeyPrimary = true;
 				$colMeta->isKeyForeign = false;
 				break;
-			case 'UUIDTenants':
-				$colMeta->colLabelEN = 'Tenants ID';
-				$colMeta->isKey = true;
-				$colMeta->isKeyPrimary = false;
-				$colMeta->isKeyForeign = true;
-				break;
 		}
 		
 		// Set the Label
@@ -256,9 +250,9 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 	public function setPathLast( $pPath ) {
 		// User Update
 		$userUpdate = new \xan\recs( $this );
-		$userUpdate->querySQL = 'UPDATE ' . $this->NameTable . ' SET PathLast = ? WHERE ' . UUIDTENANTS . ' = ? AND ' . UUIDUSERS . ' = ?';;
-		$userUpdate->queryBindNamesA = array( 'PathLast', UUIDTENANTS, UUIDUSERS );
-		$userUpdate->queryBindValuesA = array( $pPath, $_SESSION[ SESS_USER ][ UUIDTENANTS ], $_SESSION[ SESS_USER ][ UUIDUSERS ] );
+		$userUpdate->querySQL = 'UPDATE ' . $this->NameTable . ' SET PathLast = ? WHERE ' . UUIDUSERS . ' = ?';;
+		$userUpdate->queryBindNamesA = array( 'PathLast', UUIDUSERS );
+		$userUpdate->queryBindValuesA = array( $pPath, $_SESSION[ SESS_USER ][ UUIDUSERS ] );
 		$userUpdate->query();
 		
 		// Error Check
