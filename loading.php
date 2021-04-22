@@ -42,7 +42,7 @@
 
 <div class="text-center p-5 m-5">
     <div class="spinner-border" style="width: 2rem; height: 2rem;" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only">Loading... </span>
     </div>
     <br /><?= htmlspecialchars( $_GET["label"], ENT_QUOTES, 'UTF-8' ); ?>
 </div>

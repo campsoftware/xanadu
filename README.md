@@ -1,6 +1,6 @@
 # Xanadu
 
-Xanadu is a framework for developing Database Driven Web Apps.
+Xanadu is a framework for developing Database Driven Web Apps. 
 
 Xanadu uses PHP, MySQL, HTML, Bootstrap, CSS, and Javascript with several amazing includes.
 
