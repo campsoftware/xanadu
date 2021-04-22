@@ -15,7 +15,7 @@ $tableRowIndex = -1;
 // $table->cellSet( 0, 0, $tagsCellLeftMiddle, 'Welcome Home!' );
 
 // Get Location
-$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ 'onclick="xanLocationGet( function ( coords ) { alert( coords[\'ErrorCode\'] + \', \' + coords[\'ErrorDesc\'] + \', \' + coords[\'Latitude\'] + \', \' + coords[\'Longitude\'] + \', \' + coords[\'Altitude\'] ); } );"' ] );
+$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ 'onclick="xanLocationGet( function ( coords ) { alert( coords[`ErrorCode`] + `, ` + coords[`ErrorDesc`] + `, ` + coords[`Latitude`] + `, ` + coords[`Longitude`] + `, ` + coords[`Altitude`] ); } );"' ] );
 $buttonEle = new \xan\eleButton( 'Get Location!', 'ButtonGeoLocation', 'ButtonGeoLocation', $buttonTags );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
