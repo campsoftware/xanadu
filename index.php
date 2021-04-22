@@ -2,7 +2,7 @@
 // Globals Load
 require_once( 'init.php' );
 
-// Aloe Load
+// Aloe  Load
 require_once( 'aloe/framework/load.php' );
 
 // Request Route
