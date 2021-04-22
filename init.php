@@ -191,6 +191,7 @@ define( 'APP_ICON_URL_LINK', $recsSettings->rowsD[ 0 ][ 'AppIconURLLink' ] );
 define( 'APP_CURRENCY', $recsSettings->rowsD[ 0 ][ 'AppCurrency' ] );
 define( 'APP_EMAIL_FROM', $recsSettings->rowsD[ 0 ][ 'AppEmailFrom' ] );
 define( 'APP_LANG_CODE', 'en' ); // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+define( 'APP_TIMEZONE_ID', 'America/New_York' ); // https://www.php.net/manual/en/timezones.php
 
 // Features
 define( 'CONTENT_LOAD_NOW', true );

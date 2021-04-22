@@ -144,6 +144,14 @@ function microsecsDiff( $pMicrosecs ) {
 	return round( ( microsecsNow() - $pMicrosecs ), 4 ) . "s";
 }
 
+function hourOfDay( $timezoneID = APP_TIMEZONE_ID ){
+	$timezoneIDNow = date_default_timezone_get();
+	date_default_timezone_set( $timezoneID );
+	$hourOfDay = round( date( "H" ), 0 );
+	date_default_timezone_set( $timezoneIDNow );
+	return $hourOfDay;
+}
+
 ///////////////////////////////////////////////////////////
 // IP Addresses
 function ipOfBrowser() {
