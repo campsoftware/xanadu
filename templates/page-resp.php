@@ -453,6 +453,10 @@ ob_start();
 
                             switch ( xanDoJS[ i ][ "xanDo_Action" ] ) {
 
+                                case "alert":
+                                    alert( xanDoJS[ i ][ "xanDo_Value" ] );
+                                    break;
+                                
                                 case "setPageTitle":
                                     document.title = xanDoJS[ i ][ "xanDo_Value" ];
                                     break;
