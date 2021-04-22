@@ -136,20 +136,32 @@ function timeNowSQL() {
 	return date( 'H:i:s' );
 }
 
+function hourOfDay( $timezoneID = APP_TIMEZONE_ID ) {
+	$timezoneIDNow = date_default_timezone_get();
+	date_default_timezone_set( $timezoneID );
+	$hourOfDay = round( date( "H" ), 0 );
+	date_default_timezone_set( $timezoneIDNow );
+	return $hourOfDay;
+}
+
+// hourOfDay Example
+if ( false ) {
+	// If NOT between 5am and 8pm
+	$hourOfDay = \xan\hourOfDay();
+	if ( $hourOfDay > 5 and $hourOfDay < 20 ) {
+		$hourOK = 'No';
+		// $ValidationMsgA[] = "Cannot Run at This Time of Day";
+	} else {
+		$hourOK = 'Yes';
+	}
+}
+
 function microsecsNow() {
 	return microtime( true );
 }
 
 function microsecsDiff( $pMicrosecs ) {
 	return round( ( microsecsNow() - $pMicrosecs ), 4 ) . "s";
-}
-
-function hourOfDay( $timezoneID = APP_TIMEZONE_ID ){
-	$timezoneIDNow = date_default_timezone_get();
-	date_default_timezone_set( $timezoneID );
-	$hourOfDay = round( date( "H" ), 0 );
-	date_default_timezone_set( $timezoneIDNow );
-	return $hourOfDay;
 }
 
 ///////////////////////////////////////////////////////////
