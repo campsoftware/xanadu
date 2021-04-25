@@ -140,7 +140,6 @@ if ( $processType === 'now' ) {
 		// Success
 	}
 	
-	// \xan\sendSMSDebug( json_encode( $resp->api ) );
 	$aloe_response->content_set( json_encode( $resp->api ) );
 	return;
 }
