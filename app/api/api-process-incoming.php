@@ -129,8 +129,8 @@ if ( $processType === 'now' ) {
 	$sqlCols = array( 'UUIDAPIRequests', 'Auth', 'Action', 'ActionID', 'ResponseURL', 'ResponseAuth', 'RequestIsProcessed', 'RequestIsSent', 'RequestTS', 'RequestData', 'ResponseIsProcessed', 'ResponseTS', 'ResponseData' );
 	$sql = 'INSERT INTO APIRequests ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . \xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
 	$bindValues = array( \xan\strUUID(), $resp->reqPost[ 'Auth' ], $resp->reqPost[ 'Action' ], $resp->reqPost[ 'ActionID' ], $responseURL, $responseAuth, 'Yes', 'Yes', $tsNowSQL, json_encode( $resp->reqPost ), $ResponseIsProcessed, $tsNowSQL, json_encode( $resp->api ) );
-	$requestInsert = \xan\recsQuerySimple( $sql, $sqlCols, $bindValues );// Error Check
-	if ( $requestInsert->errorB or $requestInsert->rowCount < 1 ) {
+	$apirequestsInsert = \xan\recsQuerySimple( $sql, $sqlCols, $bindValues );// Error Check
+	if ( $apirequestsInsert->errorB or $apirequestsInsert->rowCount < 1 ) {
 		$resp->api[ 'Code' ] = 'Error';
 		$resp->api[ 'Message' ] = 'Request Save Error';
 		$aloe_response->status_set( '500 Internal Service Error' );
@@ -154,10 +154,10 @@ if ( $processType === 'queued' ) {
 	$sqlCols = array( 'UUIDAPIRequests', 'Auth', 'Action', 'ActionID', 'ResponseURL', 'ResponseAuth', 'RequestIsProcessed', 'RequestIsSent', 'RequestTS', 'RequestData', 'ResponseIsProcessed', 'ResponseTS', 'ResponseData' );
 	$sql = 'INSERT INTO APIRequests ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . \xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
 	$bindValues = array( $requestUUID, $resp->reqPost[ 'Auth' ], $resp->reqPost[ 'Action' ], $resp->reqPost[ 'ActionID' ], $responseURL, $responseAuth, $RequestIsProcessed, $RequestIsSent, $tsNowSQL, json_encode( $resp->reqPost ), $ResponseIsProcessed, $tsNowSQL, json_encode( $resp->api ) );
-	$requestInsert = \xan\recsQuerySimple( $sql, $sqlCols, $bindValues );
+	$apirequestsInsert = \xan\recsQuerySimple( $sql, $sqlCols, $bindValues );
 	
 	// Error Check
-	if ( $requestInsert->errorB or $requestInsert->rowCount < 1 ) {
+	if ( $apirequestsInsert->errorB or $apirequestsInsert->rowCount < 1 ) {
 		$resp->api[ 'Code' ] = 'Error';
 		$resp->api[ 'Message' ] = 'Request Save Error';
 		$aloe_response->status_set( '500 Internal Service Error' );
