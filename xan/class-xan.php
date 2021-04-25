@@ -208,6 +208,7 @@ class response {
 	public $scriptsDoInitA = [];
 	public $scriptsExtraA = [];
 	public $scriptsOnLoadA = [];
+	public $api = [];
 	
 	// Do Actions
 	public $jsActionsA = [];
@@ -215,6 +216,12 @@ class response {
 	// Constructor
 	public function __construct() {
 	}
+	
+	public function jsAlert( $value ){
+        $index = count( $this->jsActionsA );
+        $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'alert';
+        $this->jsActionsA[ $index ][ 'xanDo_Value' ] = $value;
+    }
 	
 	public function jsSetPageTitle( $value ){
         $index = count( $this->jsActionsA );
