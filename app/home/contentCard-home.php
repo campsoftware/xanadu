@@ -32,6 +32,17 @@ $tagsElePhoto = new \xan\tags( [ 'img-thumbnail p-2' ], [ 'height' => CARD_HEIGH
 $imgEle = new \xan\eleURLImage( URL_BASE . 'include/barcode/2018-10-03/barcode.php?f=png&s=qr&p=-14&d=http://campsoftware.com ', false, '', '', 'CampSoftware.com', $tagsElePhoto );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellCenterMiddle, $imgEle->render() . STR_BR . 'CampSoftware.com' );
 
+// Button RandomAmount
+$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ "onclick=\"xanDo( { 'Do': 'apiRequestRandomAmount', 'Msg': 'API Request Random Amount', 'URL': '/home-do' } );\"" ] );
+$buttonEle = new \xan\eleButton( 'API Random Amount', '', '', $buttonTags );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
+
+// Button dDQueued
+$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ "onclick=\"xanDo( { 'Do': 'apiProcessQueued', 'Msg': 'API Process Queued', 'URL': '/home-do' } );\"" ] );
+$buttonEle = new \xan\eleButton( 'API Process Queued', '', '', $buttonTags );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
+
+
 // Card Append
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $table->render() );
 ?>

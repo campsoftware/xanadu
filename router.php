@@ -10,6 +10,18 @@ $path_components = \xan\paramEncode( $aloe_request->path_components_get() );
 // - aloe\session_init Regenerate = True for Pages; False for  Ajax;
 
 ///////////////////////////////////////////////////////////
+// API
+if ( ( $path_components[ 0 ] == 'api' ) ) {
+	require_once( 'app/api/api-process-incoming.php' );
+	return;
+}
+
+if ( ( $path_components[ 0 ] == 'api-do-queued' ) ) {
+	require_once( 'app/api/api-process-queued.php' );
+	return;
+}
+
+///////////////////////////////////////////////////////////
 // xanDoSave
 if ( ( $path_components[ 0 ] == 'xanDoSave' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
@@ -112,6 +124,19 @@ if ( ( $path_components[ 0 ] == 'home' ) || ( $aloe_request->path_get() == '' ) 
 		$_SESSION[ SES_PATH ] = $path;
 		$_SESSION[ SES_INFO ] = '';
 		require_once( 'app/home/content-page.php' );
+		return;
+	}
+}
+
+// Home Do
+if ( ( $path_components[ 0 ] == 'home-do' ) ) {
+	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
+	if ( !xan\userIsAuthenticated() ) {
+		$redirectToLogin = true;
+	} else {
+		$_SESSION[ SES_PATH ] = $path;
+		$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+		require_once( 'app/home/do.php' );
 		return;
 	}
 }
