@@ -153,6 +153,7 @@ if ( $apirequestsRecs->errorB ) {
 			curl_setopt( $ch, CURLOPT_POST, true );
 			curl_setopt( $ch, CURLOPT_POSTFIELDS, $apiParamString );
 			curl_setopt( $ch, CURLOPT_HEADER, true );
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 			$curlResult = curl_exec( $ch );
 			$curlHeaderSize = curl_getinfo( $ch, CURLINFO_HEADER_SIZE );
@@ -186,11 +187,10 @@ if ( $apirequestsRecs->errorB ) {
 		$apirequestsRecsRow[ 'Log' ] .= 'Send Time: ' . $timer[ 'ResponseSendTime' ] . "; ";
 		
 		// Request Update
-		$newResponseData = $priorResponseData . $apirequestsRecsRow[ 'ResponseData' ];
 		$apirequestsUpdate = new \xan\recs( $mmAPIRequestsT );
 		$apirequestsUpdate->querySQL = 'UPDATE APIRequests SET RequestIsProcessed = ?, RequestIsSent = ?, Log = ?, RequestIsProcessed = ?, ResponseTS = ?, ResponseData = ?, ResponseCode = ?, ResponseMessage = ? WHERE UUIDAPIRequests = ?';
 		$apirequestsUpdate->queryBindNamesA = array( 'RequestIsProcessed', 'RequestIsSent', 'Log', 'RequestIsProcessed', 'ResponseTS', 'ResponseData', 'ResponseCode', 'ResponseMessage', 'UUIDAPIRequests' );
-		$apirequestsUpdate->queryBindValuesA = array( $apirequestsRecsRow[ 'RequestIsProcessed' ], $apirequestsRecsRow[ 'RequestIsSent' ], $apirequestsRecsRow[ 'Log' ], $apirequestsRecsRow[ 'RequestIsProcessed' ], $apirequestsRecsRow[ 'ResponseTS' ], $newResponseData, $apirequestsRecsRow[ 'ResponseCode' ], $apirequestsRecsRow[ 'ResponseMessage' ], $apirequestsRecsRow[ 'UUIDAPIRequests' ] );
+		$apirequestsUpdate->queryBindValuesA = array( $apirequestsRecsRow[ 'RequestIsProcessed' ], $apirequestsRecsRow[ 'RequestIsSent' ], $apirequestsRecsRow[ 'Log' ], $apirequestsRecsRow[ 'RequestIsProcessed' ], $apirequestsRecsRow[ 'ResponseTS' ], $apirequestsRecsRow[ 'ResponseData' ], $apirequestsRecsRow[ 'ResponseCode' ], $apirequestsRecsRow[ 'ResponseMessage' ], $apirequestsRecsRow[ 'UUIDAPIRequests' ] );
 		$apirequestsUpdate->query();
 		
 		// Error Check

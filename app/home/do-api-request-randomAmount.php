@@ -27,6 +27,7 @@ curl_setopt( $ch, CURLOPT_URL, URL_BASE . 'api' );
 curl_setopt( $ch, CURLOPT_POST, true );
 curl_setopt( $ch, CURLOPT_POSTFIELDS, $apiParamString );
 curl_setopt( $ch, CURLOPT_HEADER, true );
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 $curlResult = curl_exec( $ch );
 $curlHeaderSize = curl_getinfo( $ch, CURLINFO_HEADER_SIZE );
