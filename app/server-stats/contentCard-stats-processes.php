@@ -19,17 +19,14 @@ $table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, \xan\environ_http_conn
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, 'Processes' );
 $table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, \xan\environ_number_processes() );
 
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, 'Processes' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, 'Uptime' );
 $table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, \xan\environ_server_uptime() );
 
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, 'Uptime' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, 'Cores' );
 $table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, \xan\environ_system_cores() );
 
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, 'Cores' );
-$table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, \xan\environ_system_load( \xan\environ_system_cores(), 1 ) );
-
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, 'Load' );
-$table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, \xan\dateTimeNowSQL() );
+$table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, \xan\environ_system_load( \xan\environ_system_cores(), 1 ) );
 
 // Card Append
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $table->render() );

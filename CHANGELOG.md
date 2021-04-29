@@ -1,5 +1,9 @@
 # Xanadu Change Log
 
+2021-04-29-15-31-29
+- Added Stats Versions for OS, PHP, and wkHTMLtoPDF. Added section dividers.
+- Fixed Processes values that were off by one row.
+
 2021-04-29-14-36-51
 - Updated references to GET and POST parameters for ID within comments.
 - Fixed the missing $ for 'mmUsersT->NameSingular'.
