@@ -277,6 +277,12 @@ function paramDecode( $data ) {
 	return $data;
 }
 
+function paramDecodeQuotes( $data ) {
+	$data = strSubstitute( $data, '&#039;', "'");
+	$data = strSubstitute( $data, '&quot;', '"');
+	return $data;
+}
+
 ///////////////////////////////////////////////////////////
 // Files
 function fileRead( $file_path ) {

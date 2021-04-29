@@ -1,5 +1,13 @@
 # Xanadu Change Log
 
+2021-04-28-20-11-42
+- Added functions-utility.php function paramDecodeQuotes to decode just quotes.
+- Update eleSearchBarListDB to remove an extra parameter.
+- Fixed eleSearchBarListDB Simple Query and Query Builder as both stopped working.
+- Fixed eleSearchBarListDB so Table Keys and Mod Columns would not appear in Query Builder.
+- Added metaModule property NameTableParam used for GET and POST params.
+- Updated mmCheckout.php as it was missed.
+
 2021-04-27-13-01-06
 - Updated page-resp.php to make UTF-8 be capitalized.
 - Update API calls to follow redirects.

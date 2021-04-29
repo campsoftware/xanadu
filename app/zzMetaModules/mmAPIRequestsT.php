@@ -8,6 +8,7 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 		$this->NameModuleLower = strtolower( $this->NameModule );
 		$this->NameTable = 'APIRequests';
 		$this->NameTableKey = 'UUIDAPIRequests';
+		$this->NameTableParam = \xan\strSubstitute( $this->NameTableKey, 'UU', '' );
 		
 		// QueryBuilder Operators: equal, not_equal, in, not_in, less, less_or_equal, greater, greater_or_equal, between, not_between, begins_with, not_begins_with, contains, not_contains, ends_with, not_ends_with, is_empty, is_not_empty, is_null, is_not_null
 		// $this->QuerySimpleDefault = array( 'NameCompany', 'NameLast', 'NameFirst', 'EmailAddress', 'PhoneWork', 'PhoneMobile' );
