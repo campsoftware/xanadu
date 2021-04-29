@@ -14,7 +14,7 @@ $resp->jsSetHTMLProperty( '#' . $buttonActionID, 'disabled', false );
 // Validate Init
 $ValidationMsgA = array();
 
-// Validate Users ID
+// Validate ID
 if ( \xan\isEmpty( $doParam[ $mmUsersT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = "User ID is Blank";
 }
@@ -59,9 +59,9 @@ $recsDetail = new \xan\recs( $mmUsersT );
 $recsDetail->recordUpdate( $doParam[ $mmUsersT->NameTableParam ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ));
 // Error Check
 if ( $recsDetail->errorB ) {
-	$ValidationMsgA[] = mmUsersT->NameSingular . ' Update Error: ' . $recsDetail->messageExtra . ';' .  $recsDetail->messageSQL;
+	$ValidationMsgA[] = $mmUsersT->NameSingular . ' Update Error: ' . $recsDetail->messageExtra . ';' .  $recsDetail->messageSQL;
 } elseif ( $recsDetail->rowCount < 1 ) {
-	$ValidationMsgA[] = mmUsersT->NameSingular . ' Update None Found';
+	$ValidationMsgA[] = $mmUsersT->NameSingular . ' Update None Found';
 } elseif ( $recsDetail->rowCount > 0 ) {
 	// Success
 }

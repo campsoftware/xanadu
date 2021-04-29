@@ -2,7 +2,7 @@
 // Validate Init
 $ValidationMsgA = array();
 
-// Validate Contact ID
+// Validate ID
 if ( \xan\isEmpty( $doParam[ $mmUsersT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = "Users ID is Blank";
 }
@@ -20,7 +20,7 @@ $recs->recordDelete( $doParam[ $mmUsersT->NameTableParam ] );
 
 // Error Check
 if ( $recs->errorB ) {
-	$ValidationMsgA[] = mmUsersT->NameSingular . ' Delete Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
+	$ValidationMsgA[] = $mmUsersT->NameSingular . ' Delete Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 }
 
 // Validate Response

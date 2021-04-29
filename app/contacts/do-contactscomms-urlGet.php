@@ -2,7 +2,7 @@
 // Validate Init
 $ValidationMsgA = array();
 
-// Validate ContactsComms ID
+// Validate ID
 if ( \xan\isEmpty( $doParam[ $mmContactsCommsT->NameTableParam ] ) ) {
     $ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Blank';
 }

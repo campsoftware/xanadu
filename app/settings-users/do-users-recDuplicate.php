@@ -2,7 +2,7 @@
 // Validate Init
 $ValidationMsgA = array();
 
-// Validate Contact ID
+// Validate ID
 if ( \xan\isEmpty( $doParam[ $mmUsersT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = "User ID is Blank";
 }
@@ -23,7 +23,7 @@ $recs->recordDuplicate( $doParam[ $mmUsersT->NameTableParam ] );
 
 // Error Check
 if ( $recs->errorB || $recs->rowCount < 1 ) {
-	$ValidationMsgA[] = mmUsersT->NameSingular . ' Duplicate Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
+	$ValidationMsgA[] = $mmUsersT->NameSingular . ' Duplicate Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 } else {
 	// Recs Loop
 	$recs->rowIndex = -1;

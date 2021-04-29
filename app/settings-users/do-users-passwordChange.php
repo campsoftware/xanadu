@@ -14,7 +14,7 @@ $resp->jsSetHTMLProperty( '#' . $buttonActionID, 'disabled', false );
 // Validate Init
 $ValidationMsgA = array();
 
-// Validate Users ID
+// Validate ID
 if ( \xan\isEmpty( $doParam[ $mmUsersT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = "User ID is Blank";
 }
