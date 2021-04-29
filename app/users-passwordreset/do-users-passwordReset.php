@@ -56,9 +56,9 @@ $userUpdate = new \xan\recs( $mmUsersT );
 $userUpdate->recordUpdate( $userSelect->rowsD[ 0 ][ UUIDUSERS ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ) );
 // Error Check
 if ( $userUpdate->errorB ) {
-	$ValidationMsgA[] = mmUsersT->NameSingular . ' Update Error: ' . $userUpdate->messageExtra . ';' . $userUpdate->messageSQL;
+	$ValidationMsgA[] = $mmUsersT->NameSingular . ' Update Error: ' . $userUpdate->messageExtra . ';' . $userUpdate->messageSQL;
 } elseif ( $userUpdate->rowCount < 1 ) {
-	$ValidationMsgA[] = mmUsersT->NameSingular . ' Update Not Found';
+	$ValidationMsgA[] = $mmUsersT->NameSingular . ' Update Not Found';
 } elseif ( $userUpdate->rowCount > 0 ) {
 	// OK to Continue, User Updated
 }

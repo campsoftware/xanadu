@@ -1,5 +1,9 @@
 # Xanadu Change Log
 
+2021-04-29-14-36-51
+- Updated references to GET and POST parameters for ID within comments.
+- Fixed the missing $ for 'mmUsersT->NameSingular'.
+
 2021-04-29-13-54-22
 - Updated references to GET and POST parameters for ID to use metaModule property NameTableParam.
 - Fixed case on api-process-queued Semaphore Error Messages.

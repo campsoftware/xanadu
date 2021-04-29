@@ -2,7 +2,7 @@
 // Validate Init
 $ValidationMsgA = array();
 
-// Validate Contact ID
+// Validate ID
 if ( \xan\isEmpty( $doParam[ $mmContactsT->NameTableParam ] ) ) {
     $ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Blank';
 }
@@ -28,17 +28,17 @@ if ( !empty( $ValidationMsgA ) ) {
 // Records Get
 
 // Contacts
-$recsContacts = new \xan\recs( $mmContactsT );
-$recsContacts->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
-$recsContacts->queryBindNamesA = array( $mmContactsT->NameTableKey );
-$recsContacts->queryBindValuesA = array( $doParam[ $mmContactsT->NameTableParam ] );
-$recsContacts->query();
-$recsContacts->rowsMassageForGUI( true );
+$recs = new \xan\recs( $mmContactsT );
+$recs->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
+$recs->queryBindNamesA = array( $mmContactsT->NameTableKey );
+$recs->queryBindValuesA = array( $doParam[ $mmContactsT->NameTableParam ] );
+$recs->query();
+$recs->rowsMassageForGUI( true );
 
 // Error Check
-if ( $recsContacts->errorB ) {
-	$ValidationMsgA[] = $mmContactsT->NameSingular . ' Print Error' . $recsContacts->messageExtra . '; ' . $recsContacts->messageSQL;
-} elseif ( $recsContacts->rowCount < 1 ) {
+if ( $recs->errorB ) {
+	$ValidationMsgA[] = $mmContactsT->NameSingular . ' Print Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
+} elseif ( $recs->rowCount < 1 ) {
 } else {
 }
 
@@ -66,22 +66,22 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // HTML Create
 ob_start();
-foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
+foreach ( $recs->rowsD as $recsRow ) : ?>
 
     <div class="floater">
         <h2>Contact</h2>
         <table class="tableBorderNone">
             <tr>
                 <td class="cellLabelBorderNone cellRight">Company</td>
-                <td class="cellBorder cellLeft"><?= $recsContactsRow[ 'NameCompany' ] ?></td>
+                <td class="cellBorder cellLeft"><?= $recsRow[ 'NameCompany' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">First</td>
-                <td class="cellBorder cellLeft"><?= $recsContactsRow[ 'NameFirst' ] ?></td>
+                <td class="cellBorder cellLeft"><?= $recsRow[ 'NameFirst' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Last</td>
-                <td class="cellBorder cellLeft"><?= $recsContactsRow[ 'NameLast' ] ?></td>
+                <td class="cellBorder cellLeft"><?= $recsRow[ 'NameLast' ] ?></td>
             </tr>
             <tr>
                 <td class="cellBorderNone"><?= STR_NBSP ?></td>
@@ -89,15 +89,15 @@ foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Active</td>
-                <td class="cellBorder cellLeft"><?= $recsContactsRow[ 'Active' ] ?></td>
+                <td class="cellBorder cellLeft"><?= $recsRow[ 'Active' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Type</td>
-                <td class="cellBorder cellLeft"><?= $recsContactsRow[ 'Type' ] ?></td>
+                <td class="cellBorder cellLeft"><?= $recsRow[ 'Type' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Status</td>
-                <td class="cellBorder cellLeft"><?= $recsContactsRow[ 'Status' ] ?></td>
+                <td class="cellBorder cellLeft"><?= $recsRow[ 'Status' ] ?></td>
             </tr>
         </table>
     </div>
@@ -107,7 +107,7 @@ foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
         <table class="tableBorderNone">
             <tr>
                 <td>
-                    <img class="cellBorder" src='<?= \xan\fileBucketURL( $mmContactsT->NameTable, $recsContactsRow[ $mmContactsT->NameTableKey ], 'PhotoFN', $recsContactsRow[ 'PhotoFN' ] ) ?>' style="max-width: auto; max-height: 12rem;" alt="Photo">
+                    <img class="cellBorder" src='<?= \xan\fileBucketURL( $mmContactsT->NameTable, $recsRow[ $mmContactsT->NameTableKey ], 'PhotoFN', $recsRow[ 'PhotoFN' ] ) ?>' style="max-width: auto; max-height: 12rem;" alt="Photo">
                 </td>
             </tr>
         </table>
@@ -118,15 +118,15 @@ foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
         <table class="tableBorderNone">
             <tr>
                 <td class="cellLabelBorderNone cellRight">Time Open</td>
-                <td class="cellBorder cellRight"><?= $recsContactsRow[ 'TimeOpen' ] ?></td>
+                <td class="cellBorder cellRight"><?= $recsRow[ 'TimeOpen' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Time Closed</td>
-                <td class="cellBorder cellRight"><?= $recsContactsRow[ 'TimeClosed' ] ?></td>
+                <td class="cellBorder cellRight"><?= $recsRow[ 'TimeClosed' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Contacted Date</td>
-                <td class="cellBorder cellRight"><?= $recsContactsRow[ 'ContactedDate' ] ?></td>
+                <td class="cellBorder cellRight"><?= $recsRow[ 'ContactedDate' ] ?></td>
             </tr>
             <tr>
                 <td class="cellBorderNone"><?= STR_NBSP ?></td>
@@ -134,11 +134,11 @@ foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Follow Up At</td>
-                <td class="cellBorder cellRight"><?= $recsContactsRow[ 'FollowUpTS' ] ?></td>
+                <td class="cellBorder cellRight"><?= $recsRow[ 'FollowUpTS' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Follow Up Action</td>
-                <td class="cellBorder cellLeft"><?= $recsContactsRow[ 'FollowUpAction' ] ?></td>
+                <td class="cellBorder cellLeft"><?= $recsRow[ 'FollowUpAction' ] ?></td>
             </tr>
             <tr>
                 <td class="cellBorderNone"><?= STR_NBSP ?></td>
@@ -146,15 +146,15 @@ foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Number Integer</td>
-                <td class="cellBorder cellRight"><?= $recsContactsRow[ 'NumberInteger' ] ?></td>
+                <td class="cellBorder cellRight"><?= $recsRow[ 'NumberInteger' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Number Decimal</td>
-                <td class="cellBorder cellRight"><?= $recsContactsRow[ 'NumberDecimal' ] ?></td>
+                <td class="cellBorder cellRight"><?= $recsRow[ 'NumberDecimal' ] ?></td>
             </tr>
             <tr>
                 <td class="cellLabelBorderNone cellRight">Number Currency</td>
-                <td class="cellBorder cellRight"><?= $recsContactsRow[ 'NumberCurrency' ] ?></td>
+                <td class="cellBorder cellRight"><?= $recsRow[ 'NumberCurrency' ] ?></td>
             </tr>
         </table>
     </div>
@@ -163,7 +163,7 @@ foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
         <h2>Notes</h2>
         <table class="tableBorderNone">
             <tr>
-                <td class="cellBorder"><?= $recsContactsRow[ 'Notes' ] ?></td>
+                <td class="cellBorder"><?= $recsRow[ 'Notes' ] ?></td>
             </tr>
         </table>
     </div>
@@ -211,7 +211,7 @@ $docFooter[ '[[LEFT]]' ] = '';
 $docFooter[ '[[CENTER]]' ] = '';
 $docFooter[ '[[RIGHT]]' ] = '';
 
-$docTitle = 'Contact - ' . $mmContactsT->getDisplayName( $recsContacts );
+$docTitle = 'Contact - ' . $mmContactsT->getDisplayName( $recs );
 $docParams = '--quiet --page-size Letter --orientation Portrait --lowquality --enable-forms --header-line --footer-line --margin-top 25 --margin-bottom 25 --header-spacing 5 --footer-spacing 5';
 
 // Doc Create

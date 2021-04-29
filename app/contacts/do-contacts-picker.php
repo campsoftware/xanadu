@@ -2,7 +2,7 @@
 // Validate Init
 $ValidationMsgA = array();
 
-// Validate Contact ID for Foreign Keys
+// Validate ID for Foreign Keys
 if ( \xan\isEmpty( $doParam[ $mmContactsT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Invalid';
 }
