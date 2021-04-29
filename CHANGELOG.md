@@ -1,5 +1,9 @@
 # Xanadu Change Log
 
+2021-04-29-16-33-46
+- Updated Stats Sessions to first look in ini_get( 'session.save_path' ) and then /tmp/. If no sessions found, now shows "$sessionsPath: /var/lib/php/sessions/ does not seem to be accessible."
+- Changed the Stats Card order to show Sessions above Process Pools.
+
 2021-04-29-15-31-29
 - Added Stats Versions for OS, PHP, and wkHTMLtoPDF. Added section dividers.
 - Fixed Processes values that were off by one row.

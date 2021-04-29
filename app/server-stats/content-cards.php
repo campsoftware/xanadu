@@ -15,8 +15,8 @@ $tagsEleSelector = new \xan\tags( [], [], [] );
 require_once( 'contentCard-stats-diskRam.php' );
 require_once( 'contentCard-stats-diskDir.php' );
 require_once( 'contentCard-stats-processes.php' );
-require_once( 'contentCard-stats-processesPools.php' );
 require_once( 'contentCard-stats-sessions.php' );
+require_once( 'contentCard-stats-processesPools.php' );
 // require_once( 'contentCard-stats-sessionsArray.php' );
 
 ?>
