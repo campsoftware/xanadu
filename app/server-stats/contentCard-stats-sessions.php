@@ -1,9 +1,22 @@
 <?php
-// Session File Names
-// $sessionNames = scandir( session_save_path() );
-// $sessionNames = scandir( ini_get( 'session.save_path' ) );
-// $sessionNames = scandir( '/var/lib/php/sessions/' );
-$sessionFilePaths = glob( '/tmp/sess_*' );
+// Session File Path
+$sessionsPath = ini_get( 'session.save_path' );
+if ( \xan\isEmpty( $sessionsPath) ) {
+	$sessionsPath = '/tmp/';
+} else {
+	$sessionsPath .= '/';
+}
+
+// Sessions Paths
+$sessionFilePaths = glob( $sessionsPath . 'sess_*' );
+
+// Debug
+// echo scandir( session_save_path() );
+// echo scandir( ini_get( 'session.save_path' ) );
+// echo scandir( '/var/lib/php/sessions/' );
+// echo scandir( '/tmp/' );
+
+// echo scandir( $sessionsPath );
 // echo print_r( $sessionFilePaths, true );
 
 // Card
@@ -33,34 +46,38 @@ $sessionCountEmpty = 0;
 $sessionCount = 0;
 $sessionAsText = '';
 
-$allSessions = [];
-foreach ( $sessionFilePaths as $sessionName ) {
-	$sessionName = str_replace( "/tmp/sess_", "", $sessionName );
-	if ( strpos( $sessionName, "." ) === false ) { // This skips temp files that aren't sessions
-		
-		// Load $sessionName
-		session_abort();
-		session_id( $sessionName );
-		session_start();
-		
-		if ( strpos( $_SESSION[ SES_BEGIN ], "20" ) === 0 ) { // Starts with 20 like 2021-02-18 19:03:49
+// Check Session Count
+if ( count( $sessionFilePaths ) === 0 ) {
+	$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftTop, '$sessionsPath: ' . $sessionsPath . ' does not seem to be accessible.', 1, 5 );
+} else {
+	foreach ( $sessionFilePaths as $sessionName ) {
+		$sessionName = str_replace( "/tmp/sess_", "", $sessionName );
+		if ( strpos( $sessionName, "." ) === false ) { // This skips temp files that aren't sessions
 			
-			$sessionCount++;
-			$sessionIndex++;
+			// Load $sessionName
+			session_abort();
+			session_id( $sessionName );
+			session_start();
 			
-			// Table Rows
-			$tableColIndex = -1;
-			$table->cellSet( ++$tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $sessionIndex );
-			$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $_SESSION[ SESS_USER ][ 'EmailAddress' ] . STR_BR . $_SESSION[ SESS_USER ][ UUIDUSERS ] );
-			$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $_SESSION[ SES_PATH ] .STR_BR . $_SESSION[ SES_INFO ] );
-			$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellRightTop, $_SESSION[ SES_BEGIN ] );
-			$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellRightTop, $_SESSION[ SES_CHANGE ] );
-			$sessionAsText .= $sessionIndex . ' - ' . print_r( $_SESSION, true ) . '<hr/>';
+			if ( strpos( $_SESSION[ SES_BEGIN ], "20" ) === 0 ) { // Starts with 20 like 2021-02-18 19:03:49
+				
+				$sessionCount++;
+				$sessionIndex++;
+				
+				// Table Rows
+				$tableColIndex = -1;
+				$table->cellSet( ++$tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $sessionIndex );
+				$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $_SESSION[ SESS_USER ][ 'EmailAddress' ] . STR_BR . $_SESSION[ SESS_USER ][ UUIDUSERS ] );
+				$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellLeftTop, $_SESSION[ SES_PATH ] . STR_BR . $_SESSION[ SES_INFO ] );
+				$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellRightTop, $_SESSION[ SES_BEGIN ] );
+				$table->cellSet( $tableRowIndex, ++$tableColIndex, $tagsCellRightTop, $_SESSION[ SES_CHANGE ] );
+				$sessionAsText .= $sessionIndex . ' - ' . print_r( $_SESSION, true ) . '<hr/>';
+				
+			} else {
+				$sessionCountEmpty++;
+			}
 			
-		} else {
-			$sessionCountEmpty++;
 		}
-		
 	}
 }
 
