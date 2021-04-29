@@ -15,7 +15,7 @@ $resp->jsSetHTMLProperty( '#' . $buttonActionID, 'disabled', false );
 $ValidationMsgA = array();
 
 // Validate Users ID
-if ( \xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
+if ( \xan\isEmpty( $doParam[ $mmUsersT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = "User ID is Blank";
 }
 
@@ -56,12 +56,12 @@ $PasswordHashed = hash( 'sha256', $PasswordHashSeed . $doParam[ 'PasswordNewOne'
 
 // Password Update
 $recsDetail = new \xan\recs( $mmUsersT );
-$recsDetail->recordUpdate( $doParam[ 'IDUsers' ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ));
+$recsDetail->recordUpdate( $doParam[ $mmUsersT->NameTableParam ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ));
 // Error Check
 if ( $recsDetail->errorB ) {
-	$ValidationMsgA[] = 'User Update Error: ' . $recsDetail->messageExtra . ';' .  $recsDetail->messageSQL;
+	$ValidationMsgA[] = mmUsersT->NameSingular . ' Update Error: ' . $recsDetail->messageExtra . ';' .  $recsDetail->messageSQL;
 } elseif ( $recsDetail->rowCount < 1 ) {
-	$ValidationMsgA[] = 'User Update None Found';
+	$ValidationMsgA[] = mmUsersT->NameSingular . ' Update None Found';
 } elseif ( $recsDetail->rowCount > 0 ) {
 	// Success
 }
@@ -78,8 +78,8 @@ if ( !empty( $ValidationMsgA ) ) {
 if ( empty( $ValidationMsgA ) ){
 	$resp->jsHideOrShowModal( '#' . $modalID, 'Hide' );
 	// Update Inputs
-	$resp->jsSetHTML( '#xf_' . $doParam[ 'IDUsers' ] . '_PasswordHashSeed', $PasswordHashSeed );
-	$resp->jsSetHTML( '#xf_' . $doParam[ 'IDUsers' ] . '_PasswordHashed', $PasswordHashed );
+	$resp->jsSetHTML( '#xf_' . $doParam[ $mmUsersT->NameTableParam ] . '_PasswordHashSeed', $PasswordHashSeed );
+	$resp->jsSetHTML( '#xf_' . $doParam[ $mmUsersT->NameTableParam ] . '_PasswordHashed', $PasswordHashed );
 }
 
 // Actions Return as JSON

@@ -3,8 +3,8 @@
 $ValidationMsgA = array();
 
 // Validate Contacts ID
-if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
-    $ValidationMsgA[] = "Contact ID is Blank";
+if ( \xan\isEmpty( $doParam[ $mmContactsT->NameTableParam ] ) ) {
+    $ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Blank';
 }
 
 // Validate Response
@@ -18,7 +18,7 @@ if ( !empty( $ValidationMsgA ) ) {
 $recsDetail = new \xan\recs( $mmContactsT );
 $recsDetail->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
 $recsDetail->queryBindNamesA = array( $mmContactsT->NameTableKey );
-$recsDetail->queryBindValuesA = array( $doParam[ 'IDContacts' ] );
+$recsDetail->queryBindValuesA = array( $doParam[ $mmContactsT->NameTableParam ] );
 $recsDetail->query();
 
 // Error Check
@@ -34,7 +34,7 @@ if ( $recsDetail->errorB ) {
     $recsDetail->rowIndex++;
     
     // Actions
-	$resp->jsSetHTML( '#ContactsList' . $doParam[ 'IDContacts' ] . 'Label', $mmContactsT->getDisplayList( $recsDetail ) );
+	$resp->jsSetHTML( '#ContactsList' . $doParam[ $mmContactsT->NameTableParam ] . 'Label', $mmContactsT->getDisplayList( $recsDetail ) );
 	$resp->jsSetHTML( '#pageContentHeaderDetails', ': ' . $mmContactsT->getDisplayName( $recsDetail ) );
 
     //    }

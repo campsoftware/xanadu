@@ -17,14 +17,14 @@ if ( false ) {
 	$semaphore = sem_get( $semaphoreKey, 1, 0666, 1 );
 	if ( $semaphore === false ) {
 		$resp->api[ 'Code' ] = 'Error';
-		$resp->api[ 'Message' ] = 'SEMAPHORE NOT AVAILABLE';
+		$resp->api[ 'Message' ] = 'Semaphore not Available';
 		$aloe_response->status_set( '503 Service Unavailable' );
 		$aloe_response->content_set( json_encode( $resp->api ) );
 		return;
 	} else {
 		if ( sem_acquire( $semaphore, true ) === false ) {
 			$resp->api[ 'Code' ] = 'Error';
-			$resp->api[ 'Message' ] = 'SEMAPHORE IN USE';
+			$resp->api[ 'Message' ] = 'Semaphore in Use';
 			$aloe_response->status_set( '503 Service Unavailable' );
 			$aloe_response->content_set( json_encode( $resp->api ) );
 			return;

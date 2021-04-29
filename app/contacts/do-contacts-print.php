@@ -3,8 +3,8 @@
 $ValidationMsgA = array();
 
 // Validate Contact ID
-if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
-    $ValidationMsgA[] = "Contact ID is Blank";
+if ( \xan\isEmpty( $doParam[ $mmContactsT->NameTableParam ] ) ) {
+    $ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Blank';
 }
 
 // Validate Format
@@ -31,29 +31,29 @@ if ( !empty( $ValidationMsgA ) ) {
 $recsContacts = new \xan\recs( $mmContactsT );
 $recsContacts->querySQL = 'SELECT * FROM ' . $mmContactsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
 $recsContacts->queryBindNamesA = array( $mmContactsT->NameTableKey );
-$recsContacts->queryBindValuesA = array( $doParam[ 'IDContacts' ] );
+$recsContacts->queryBindValuesA = array( $doParam[ $mmContactsT->NameTableParam ] );
 $recsContacts->query();
 $recsContacts->rowsMassageForGUI( true );
 
 // Error Check
 if ( $recsContacts->errorB ) {
-	$ValidationMsgA[] = 'Contact Print Error' . $recsContacts->messageExtra . '; ' . $recsContacts->messageSQL;
+	$ValidationMsgA[] = $mmContactsT->NameSingular . ' Print Error' . $recsContacts->messageExtra . '; ' . $recsContacts->messageSQL;
 } elseif ( $recsContacts->rowCount < 1 ) {
 } else {
 }
 
 // ContactsComms
-$recsContactsComms = new \xan\recs( $mmContactsCommsT );
-$recsContactsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
-$recsContactsComms->queryBindNamesA = array( $mmContactsT->NameTableKey );
-$recsContactsComms->queryBindValuesA = array( $doParam[ 'IDContacts' ] );
-$recsContactsComms->query();
-$recsContactsComms->rowsMassageForGUI( true );
+$recsComms = new \xan\recs( $mmContactsCommsT );
+$recsComms->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . $mmContactsT->NameTableKey . ' = ?';
+$recsComms->queryBindNamesA = array( $mmContactsT->NameTableKey );
+$recsComms->queryBindValuesA = array( $doParam[ $mmContactsT->NameTableParam ] );
+$recsComms->query();
+$recsComms->rowsMassageForGUI( true );
 
 // Error Check
-if ( $recsContactsComms->errorB ) {
-	$ValidationMsgA[] = 'Contact Print Error' . $recsContactsComms->messageExtra . '; ' . $recsContactsComms->messageSQL;
-} elseif ( $recsContactsComms->rowCount < 1 ) {
+if ( $recsComms->errorB ) {
+	$ValidationMsgA[] = $mmContactsT->NameSingular . ' Print Error' . $recsComms->messageExtra . '; ' . $recsComms->messageSQL;
+} elseif ( $recsComms->rowCount < 1 ) {
 } else {
 }
 
@@ -169,7 +169,7 @@ foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
     </div>
 
     <div class="floater">
-        <h2>Comms: <?= $recsContactsComms->rowCount ?></h2>
+        <h2>Comms: <?= $recsComms->rowCount ?></h2>
         <table class="tableBorderNone">
             <tr>
                 <td class="cellHeaderBorderNone cellLeft">Type</td>
@@ -177,16 +177,16 @@ foreach ( $recsContacts->rowsD as $recsContactsRow ) : ?>
                 <td class="cellHeaderBorderNone cellLeft">Main</td>
                 <td class="cellHeaderBorderNone cellLeft">Info</td>
             </tr>
-			<?php foreach ( $recsContactsComms->rowsD as $recsContactsCommsRow ) : ?>
+			<?php foreach ( $recsComms->rowsD as $recsCommsRow ) : ?>
                 <tr>
-                    <td class="cellBorder cellLeft"><?= $recsContactsCommsRow[ 'Type' ] ?></td>
-                    <td class="cellBorder cellLeft"><?= $recsContactsCommsRow[ 'Label' ] ?></td>
-                    <td class="cellBorder cellLeft"><?= $recsContactsCommsRow[ 'Main' ] ?></td>
+                    <td class="cellBorder cellLeft"><?= $recsCommsRow[ 'Type' ] ?></td>
+                    <td class="cellBorder cellLeft"><?= $recsCommsRow[ 'Label' ] ?></td>
+                    <td class="cellBorder cellLeft"><?= $recsCommsRow[ 'Main' ] ?></td>
                     <td class="cellBorder cellLeft">
-						<?php if ( $recsContactsCommsRow[ 'Type' ] === 'Address' ) {
-							echo $mmContactsCommsT->getAddress( $recsContactsComms, 'PostalWithAll' );
+						<?php if ( $recsCommsRow[ 'Type' ] === 'Address' ) {
+							echo $mmContactsCommsT->getAddress( $recsComms, 'PostalWithAll' );
 						} else {
-							echo $recsContactsCommsRow[ 'Data' ];
+							echo $recsCommsRow[ 'Data' ];
 						} ?>
                     </td>
                 </tr>

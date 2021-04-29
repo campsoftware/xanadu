@@ -15,7 +15,7 @@ $resp->jsSetHTMLProperty( '#' . $buttonActionID, 'disabled', false );
 $ValidationMsgA = array();
 
 // Validate Users ID
-if ( \xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
+if ( \xan\isEmpty( $doParam[ $mmUsersT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = "User ID is Blank";
 }
 
@@ -54,7 +54,7 @@ if ( empty( $ValidationMsgA ) ) {
 	$userSelect = new \xan\recs( $mmUsersT );
 	$userSelect->querySQL = 'SELECT * FROM Users WHERE UUIDUsers = ?';
 	$userSelect->queryBindNamesA = array( UUIDUSERS );
-	$userSelect->queryBindValuesA = array( $doParam[ 'IDUsers' ] );
+	$userSelect->queryBindValuesA = array( $doParam[ $mmUsersT->NameTableParam ] );
 	$userSelect->query();
 	// Error Check
 	if ( $userSelect->errorB ) {
@@ -104,7 +104,7 @@ $PasswordHashed = hash( 'sha256', $PasswordHashSeed . $doParam[ 'PasswordNewOne'
 
 // Password Update
 $recsDetail = new \xan\recs( $mmUsersT );
-$recsDetail->recordUpdate( $doParam[ 'IDUsers' ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ));
+$recsDetail->recordUpdate( $doParam[ $mmUsersT->NameTableParam ], array( 'PasswordHashSeed' => $PasswordHashSeed, 'PasswordHashed' => $PasswordHashed ));
 // Error Check
 if ( $recsDetail->errorB ) {
 	$ValidationMsgA[] = 'Login Update Error: ' . $recsDetail->messageExtra . ';' .  $recsDetail->messageSQL;

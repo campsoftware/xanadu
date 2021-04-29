@@ -4,8 +4,8 @@
 $ValidationMsgA = array();
 
 // Validate Contact ID
-//if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
-//    $ValidationMsgA[] = "Contact ID is Blank";
+//if ( \xan\isEmpty( $doParam[ $mmContactsT->NameTableParam ] ) ) {
+//    $ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Blank';
 //}
 
 // Validate Response
@@ -24,7 +24,7 @@ $recs->recordInsert( array( 'NameCompany' => 'A New Contact' ) );
 
 // Error Check
 if ( $recs->errorB || $recs->rowCount < 1 ) {
-	$ValidationMsgA[] = 'Contact Create Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
+	$ValidationMsgA[] = $mmContactsT->NameSingular . ' Create Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 } else {
     // Recs Loop
     $recs->rowIndex = -1;

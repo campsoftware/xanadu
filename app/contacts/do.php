@@ -29,7 +29,7 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // Do ContentLoadAll
 if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
-	$resp->reqID = $doParam[ 'IDContacts' ];
+	$resp->reqID = $doParam[ $mmContactsT->NameTableParam ];
 	$resp->moduleName = $mmContactsT->NameModule;
 	$resp->headTitle = $mmContactsT->NameModule;
 	$resp->headLogoutAuto = false;

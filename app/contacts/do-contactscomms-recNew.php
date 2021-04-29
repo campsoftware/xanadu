@@ -3,7 +3,7 @@
 $ValidationMsgA = array();
 
 // Validate ContactsComms ID
-if ( \xan\isEmpty( $doParam[ 'IDContactsComms' ] ) ) {
+if ( \xan\isEmpty( $doParam[ $mmContactsCommsT->NameTableParam ] ) ) {
     $ValidationMsgA[] = "Comm ID is Blank";
 }
 
@@ -19,11 +19,11 @@ $UUIDNew = "";
 
 // Insert
 $recs = new \xan\recs( $mmContactsCommsT );
-$recs->recordInsert( array( $mmContactsT->NameTableKey => $doParam[ 'IDContactsComms' ] ) );
+$recs->recordInsert( array( $mmContactsT->NameTableKey => $doParam[ $mmContactsCommsT->NameTableParam ] ) );
 
 // Error Check
 if ( $recs->errorB || $recs->rowCount < 1 ) {
-    $ValidationMsgA[] = 'Comm Create Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
+    $ValidationMsgA[] = $mmContactsCommsT->NameSingular . ' Create Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 } else {
     // Recs Loop
     $recs->rowIndex = -1;
@@ -43,7 +43,7 @@ if ( !empty( $ValidationMsgA ) ) {
 }
 
 // Go to the Record
-$resp->jsSetPageURL( $mmContactsT->URLFull . $doParam[ 'IDContactsComms' ] );
+$resp->jsSetPageURL( $mmContactsT->URLFull . $doParam[ $mmContactsCommsT->NameTableParam ] );
 
 // Set Focus
 $resp->jsSetFocus( '#xf_' . $UUIDNew . '_Data' );
