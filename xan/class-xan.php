@@ -2029,27 +2029,30 @@ class eleSearchBarSimpleDB extends element {
 class eleSearchBarListDB extends element {
 	// Vars
 	public moduleMeta $mm;
-	public $postEncoded;
 	public response $resp;
 	public $idPrefix;
 
-	public function __construct( moduleMeta $mm, $postEncoded, response &$resp ) {
+	public function __construct( moduleMeta $mm, response &$resp ) {
 		parent::__construct();
 		$this->mm = $mm;
-		$this->postEncoded = $postEncoded;
 		$this->resp = $resp;
 		$this->idPrefix = $mm->NameTable . '';
 	}
 
 	public function render(){
 		// Search Session Vars Init
-		$_SESSION[ $this->idPrefix . 'SearchTerm' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchTerm' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchTerm' ] : $_SESSION[ $this->idPrefix . 'SearchTerm' ] );
-		$_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchQBStringWhere' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchQBStringWhere' ] : $_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] );
-		$_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchQBBindWhere' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchQBBindWhere' ] : $_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] );
-		$_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchQBBindParams' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchQBBindParams' ] : $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
-		$_SESSION[ $this->idPrefix . 'SearchQBRules' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchQBRules' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchQBRules' ] : $_SESSION[ $this->idPrefix . 'SearchQBRules' ] );
-		$_SESSION[ $this->idPrefix . 'SearchSort' ] = ( isset( $this->postEncoded[ $this->idPrefix . 'SearchSort' ] ) ? $this->postEncoded[ $this->idPrefix . 'SearchSort' ] : $_SESSION[ $this->idPrefix . 'SearchSort' ] );
+		$_SESSION[ $this->idPrefix . 'SearchTerm' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchTerm' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchTerm' ] : $_SESSION[ $this->idPrefix . 'SearchTerm' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchQBStringWhere' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchQBStringWhere' ] : $_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchQBBindWhere' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchQBBindWhere' ] : $_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchQBBindParams' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchQBBindParams' ] : $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBRules' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchQBRules' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchQBRules' ] : $_SESSION[ $this->idPrefix . 'SearchQBRules' ] );
+		$_SESSION[ $this->idPrefix . 'SearchSort' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchSort' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchSort' ] : $_SESSION[ $this->idPrefix . 'SearchSort' ] );
 
+		// Decode ONLY Double and Single Quotes
+		$_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] = paramDecodeQuotes( $_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] = paramDecodeQuotes( $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
+		$_SESSION[ $this->idPrefix . 'SearchQBRules' ] = paramDecodeQuotes( $_SESSION[ $this->idPrefix . 'SearchQBRules' ] );
+		
 		// Order By Init
 		if ( isEmpty( $_SESSION[ $this->idPrefix . 'SearchSort' ] ) ) {
 			$_SESSION[ $this->idPrefix . 'SearchSort' ] = $this->mm->QueryOrderByDefault;
@@ -2082,8 +2085,12 @@ class eleSearchBarListDB extends element {
 						$qrItems = '';
 						if ( $GLOBALS[ 'schema' ] !== null ) {
 							foreach ( $GLOBALS[ 'schema' ][ $this->mm->NameTable ] as $key => $val ) {
-								$colLabel = ( isEmpty( $val[ 'label_en' ] ) ? $val[ 'COLUMN_NAME' ] : $val[ 'label_en' ] );
-								if ( strPatternCount( $val[ 'type' ], 'Key' ) === 0 && strPatternCount( $val[ 'type' ], 'Mod' ) === 0 ) {
+								// Get Column Name Label
+							    $tableColMeta = $this->mm->getColMeta($val[ 'COLUMN_NAME' ]);
+							    $colLabel = $tableColMeta->colLabel;
+								
+								// Add to QueryBuilder IF NOT A KEY AND NOT A MOD
+								if ( $tableColMeta->isKey === false and $tableColMeta->isMod === false ) {
 									$qrItems .= dbQueryBuilderFindFilter( $this->mm->NameTable, $val[ 'COLUMN_NAME' ], $colLabel ) . ', ';
 								}
 							}
