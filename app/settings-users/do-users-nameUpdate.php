@@ -3,7 +3,7 @@
 $ValidationMsgA = array();
 
 // Validate Contacts ID
-if ( \xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
+if ( \xan\isEmpty( $doParam[ $mmUsersT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = "User ID is Blank";
 }
 
@@ -18,14 +18,14 @@ if ( !empty( $ValidationMsgA ) ) {
 $recsDetail = new \xan\recs( $mmUsersT );
 $recsDetail->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . $mmUsersT->NameTableKey . ' = ?';
 $recsDetail->queryBindNamesA = array( $mmUsersT->NameTableKey );
-$recsDetail->queryBindValuesA = array( $doParam[ 'IDUsers' ] );
+$recsDetail->queryBindValuesA = array( $doParam[ $mmUsersT->NameTableParam ] );
 $recsDetail->query();
 
 // Error Check
 if ( $recsDetail->errorB ) {
-	$ValidationMsgA[] = 'User Select Error' . $recsDetail->messageExtra . '; ' . $recsDetail->messageSQL;
+	$ValidationMsgA[] = mmUsersT->NameSingular . ' Select Error' . $recsDetail->messageExtra . '; ' . $recsDetail->messageSQL;
 } elseif ( $recsDetail->rowCount < 1 ) {
-	$ValidationMsgA[] = 'User Select None Found';
+	$ValidationMsgA[] = mmUsersT->NameSingular . ' Select None Found';
 } elseif ( $recsDetail->rowCount > 0 ) {
 	
 	// Recs Loop
@@ -34,7 +34,7 @@ if ( $recsDetail->errorB ) {
 	$recsDetail->rowIndex++;
 	
 	// Process
-	$resp->jsSetHTML( '#UsersList' . $doParam[ 'IDUsers' ] . 'Label', $mmUsersT->getDisplayList( $recsDetail ) );
+	$resp->jsSetHTML( '#UsersList' . $doParam[ $mmUsersT->NameTableParam ] . 'Label', $mmUsersT->getDisplayList( $recsDetail ) );
 	$resp->jsSetHTML( '#pageContentHeaderDetails', ': ' . $mmUsersT->getDisplayName( $recsDetail ) );
 	
 	//    }

@@ -26,9 +26,9 @@ if ( empty( $ValidationMsgA ) ) {
 	$userSelect->query();
 	// Error Check
 	if ( $userSelect->errorB ) {
-		$ValidationMsgA[] = ' Login and/or Password Error: ' . $userSelect->messageExtra . '; ' . $userSelect->messageSQL;
+		$ValidationMsgA[] = 'Login and/or Password Error: ' . $userSelect->messageExtra . '; ' . $userSelect->messageSQL;
 	} elseif ( $userSelect->rowCount < 1 ) {
-		$ValidationMsgA[] = ' Login and/or Password: None Found';
+		$ValidationMsgA[] = 'Login and/or Password: None Found';
 	} elseif ( $userSelect->rowCount > 0 ) {
 		
 		// Validate User Active

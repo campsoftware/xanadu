@@ -3,8 +3,8 @@
 $ValidationMsgA = array();
 
 // Validate ContactsComms ID
-if ( \xan\isEmpty( $doParam[ 'IDContactsComms' ] ) ) {
-    $ValidationMsgA[] = "Contact ID is Blank";
+if ( \xan\isEmpty( $doParam[ $mmContactsCommsT->NameTableParam ] ) ) {
+    $ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Blank';
 }
 
 // Validate Response
@@ -18,14 +18,14 @@ if ( !empty( $ValidationMsgA ) ) {
 $recs = new \xan\recs( $mmContactsCommsT );
 $recs->querySQL = 'SELECT * FROM ' . $mmContactsCommsT->NameTable . ' WHERE ' . $mmContactsCommsT->NameTableKey . ' = ?';
 $recs->queryBindNamesA = array( $mmContactsCommsT->NameTableKey );
-$recs->queryBindValuesA = array( $doParam[ 'IDContactsComms' ] );
+$recs->queryBindValuesA = array( $doParam[ $mmContactsCommsT->NameTableParam ] );
 $recs->query();
 
 // Error Check
 if ( $recs->errorB ) {
-    $ValidationMsgA[] = 'Comms URL Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
+    $ValidationMsgA[] = $mmContactsCommsT->NameSingular . ' URL Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 } elseif ( $recs->rowCount < 1 ) {
-    $ValidationMsgA[] = 'Comms URL None Found';
+    $ValidationMsgA[] = $mmContactsCommsT->NameSingular . ' URL None Found';
 } elseif ( $recs->rowCount > 0 ) {
 
     // Recs Loop

@@ -3,8 +3,8 @@
 $ValidationMsgA = array();
 
 // Validate Contact ID for Foreign Keys
-if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
-	$ValidationMsgA[] = 'Contact ID is Invalid';
+if ( \xan\isEmpty( $doParam[ $mmContactsT->NameTableParam ] ) ) {
+	$ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Invalid';
 }
 
 // Validate Search Term // Blank is OK to Find All

@@ -3,7 +3,7 @@
 $ValidationMsgA = array();
 
 // Validate User ID
-if ( \xan\isEmpty( $doParam[ 'IDUsers' ] ) ) {
+if ( \xan\isEmpty( $doParam[ $mmUsersT->NameTableParam ] ) ) {
 	$ValidationMsgA[] = "User ID is Blank";
 }
 
@@ -32,13 +32,13 @@ if ( !empty( $ValidationMsgA ) ) {
 $recsUsers = new \xan\recs( $mmUsersT );
 $recsUsers->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . $mmUsersT->NameTableKey . ' = ?';
 $recsUsers->queryBindNamesA = array( $mmUsersT->NameTableKey );
-$recsUsers->queryBindValuesA = array( $doParam[ 'IDUsers' ] );
+$recsUsers->queryBindValuesA = array( $doParam[ $mmUsersT->NameTableParam ] );
 $recsUsers->query();
 $recsUsers->rowsMassageForGUI( true );
 
 // Error Check
 if ( $recsUsers->errorB ) {
-	$ValidationMsgA[] = 'User Print Error' . $recsUsers->messageExtra . '; ' . $recsUsers->messageSQL;
+	$ValidationMsgA[] = mmUsersT->NameSingular . ' Print Error' . $recsUsers->messageExtra . '; ' . $recsUsers->messageSQL;
 } elseif ( $recsUsers->rowCount < 1 ) {
 } else {
 }

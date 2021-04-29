@@ -1,5 +1,9 @@
 # Xanadu Change Log
 
+2021-04-29-13-54-22
+- Updated references to GET and POST parameters for ID to use metaModule property NameTableParam.
+- Fixed case on api-process-queued Semaphore Error Messages.
+
 2021-04-28-20-11-42
 - Added functions-utility.php function paramDecodeQuotes to decode just quotes.
 - Update eleSearchBarListDB to remove an extra parameter.

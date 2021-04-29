@@ -3,8 +3,8 @@
 $ValidationMsgA = array();
 
 // Validate ContactsComms ID
-// if ( \xan\isEmpty( $doParam[ 'IDContactsComms' ] ) ) {
-//     $ValidationMsgA[] = "Contact ID is Blank";
+// if ( \xan\isEmpty( $doParam[ $mmContactsCommsT->NameTableParam ] ) ) {
+//     $ValidationMsgA[] = $mmContactsT->NameSingular . ' ID is Blank';
 // }
 
 // Validate Response

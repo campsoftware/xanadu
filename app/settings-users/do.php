@@ -27,7 +27,7 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // Do ContentLoadAll
 if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
-	$resp->reqID = $doParam[ 'IDUsers' ];
+	$resp->reqID = $doParam[ $mmUsersT->NameTableParam ];
 	$resp->moduleName = $mmUsersT->NameModule;
 	$resp->headTitle = $mmUsersT->NameModule;
 	$resp->headLogoutAuto = false;

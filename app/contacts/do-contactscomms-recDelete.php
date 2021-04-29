@@ -3,12 +3,12 @@
 $ValidationMsgA = array();
 
 // Validate Contacts ID
-if ( \xan\isEmpty( $doParam[ 'IDContacts' ] ) ) {
+if ( \xan\isEmpty( $doParam[ $mmContactsT->NameTableParam ] ) ) {
     $ValidationMsgA[] = $mmContactsT->NameSingular . " Contact ID is Blank";
 }
 
 // Validate ContactsComms ID
-if ( \xan\isEmpty( $doParam[ 'IDContactsComms' ] ) ) {
+if ( \xan\isEmpty( $doParam[ $mmContactsCommsT->NameTableParam ] ) ) {
     $ValidationMsgA[] = $mmContactsCommsT->NameSingular . "Comm ID is Blank";
 }
 
@@ -21,11 +21,11 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // Delete
 $recs = new \xan\recs( $mmContactsCommsT );
-$recs->recordDelete( $doParam[ 'IDContactsComms' ] );
+$recs->recordDelete( $doParam[ $mmContactsCommsT->NameTableParam ] );
 
 // Error Check
 if ( $recs->errorB ) {
-    $ValidationMsgA[] = 'Comm Delete Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
+    $ValidationMsgA[] = $mmContactsCommsT->NameSingular . ' Delete Error' . $recs->messageExtra . '; ' . $recs->messageSQL;
 }
 
 // Validate Response
@@ -36,7 +36,7 @@ if ( !empty( $ValidationMsgA ) ) {
 }
 
 // Reload
-$resp->jsSetPageURL( $mmContactsT->URLFull . $doParam[ 'IDContacts' ] );
+$resp->jsSetPageURL( $mmContactsT->URLFull . $doParam[ $mmContactsT->NameTableParam ] );
 
 // Actions Return as JSON
 $aloe_response->content_set( json_encode( $resp->jsActionsA ) );
