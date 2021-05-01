@@ -41,6 +41,17 @@ function xanConsoleCleanHTML( html ) {
 }
 
 ///////////////////////////////////////////////////////////
+// Auto Logout
+function xanSchedAutoLogout( schedID, secs ) {
+    clearTimeout( schedID );
+    schedID = setTimeout( function () {
+        location.href = "/logout";
+    }, secs * 1000 );
+    console.log( "AutoLogout at " + moment().add( secs, 'seconds' ).format( 'hh:mm:ss A' ) );
+    return schedID;
+}
+
+///////////////////////////////////////////////////////////
 // PHP Equivalents
 
 function addslashes( str ) {

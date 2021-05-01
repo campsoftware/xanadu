@@ -8,16 +8,19 @@ ob_start();
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		
 		<?php
-		if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
-			echo '<!-- Session Updated: ' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; -->';
-			echo "\r\t\t" . '<meta http-equiv="refresh" content="' . LOGOUT_AUTO_SECONDS . ';url=' . $mmUsersLogout->URLRelative . '">';
-			echo "\r\r";
+		if ( false ) {
+			if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
+				echo '<!-- Session Updated: ' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; -->';
+				echo "\r\t\t" . '<meta http-equiv="refresh" content="' . LOGOUT_AUTO_SECONDS . ';url=' . $mmUsersLogout->URLRelative . '">';
+				echo "\r\r";
+			}
 		}
 		?>
 
         <!-- Init Messages -->
         <script>
             var xanConsoleMsgs = [];
+            var xanSchedAutoLogoutID = -1;
         </script>
 
         <!-- XSS Protection with Self and Stripe Exceptions <?php $aloe_response->header_set( 'Content-Security-Policy', "default-src 'none';  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;  style-src 'self' 'unsafe-inline';  img-src 'self';  connect-src 'self';  font-src 'self';  object-src 'self';  media-src 'self';  frame-src 'self' https://js.stripe.com;  child-src 'self';  form-action 'self';  frame-ancestors 'none';  " ); ?> -->
@@ -456,7 +459,7 @@ ob_start();
                                 case "alert":
                                     alert( xanDoJS[ i ][ "xanDo_Value" ] );
                                     break;
-                                
+
                                 case "setPageTitle":
                                     document.title = xanDoJS[ i ][ "xanDo_Value" ];
                                     break;
@@ -480,8 +483,7 @@ ob_start();
                                         $( xanDoJS[ i ][ "xanDo_Selector" ] ).modal( "show" );
                                     }
                                     break;
-
-
+                                
                                 case "setHTML":
                                     $( xanDoJS[ i ][ "xanDo_Selector" ] ).html( xanDoJS[ i ][ "xanDo_Value" ] );
                                     break;
@@ -506,7 +508,14 @@ ob_start();
 
                         }
                     }
-
+                    
+                    // Auto Logout Schedule
+					<?php
+					if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
+						echo 'xanSchedAutoLogoutID = xanSchedAutoLogout( xanSchedAutoLogoutID, ' . LOGOUT_AUTO_SECONDS . '  );';
+					}
+					?>
+                    
                     // Focus from Session
 					<?php
 					if ( $_SESSION[ SESS_FOCUS_SELECTOR ] !== '' ) {
@@ -607,6 +616,15 @@ ob_start();
                                 }
                             }
                         }
+
+                        // Auto Logout Schedule
+						<?php
+						if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
+							echo 'xanSchedAutoLogoutID = xanSchedAutoLogout( xanSchedAutoLogoutID, ' . LOGOUT_AUTO_SECONDS . '  );';
+						}
+						?>
+                        
+                        // Notify
                         let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
                         xanMessageDisplay( "#xanMessage", "<span class='text-success'>Saved " + result[ 0 ][ 'AjaxColumnLabel' ] + "<br />" + result[ 0 ][ "AjaxLoadTime" ] + "</span>", messageID, iconID, true, true );
                     },
@@ -624,6 +642,14 @@ ob_start();
 
         // On Load
         $( function () {
+            
+            // Auto Logout Schedule
+			<?php
+			if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
+				echo 'xanSchedAutoLogoutID = xanSchedAutoLogout( xanSchedAutoLogoutID, ' . LOGOUT_AUTO_SECONDS . '  );';
+			}
+			?>
+
 
             // Disable Right Click
             $( document ).bind( "contextmenu", xanEventReturnFalse );
