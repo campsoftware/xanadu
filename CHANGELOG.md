@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-01-15-06-37
+- Removed AutoLogout HTML Meta Refresh tag and replaced with a Javascript function that can push the Logout time out after AJAX calls.
+
 2021-04-29-16-33-46
 - Updated Stats Sessions to first look in ini_get( 'session.save_path' ) and then /tmp/. If no sessions found, now shows "$sessionsPath: /var/lib/php/sessions/ does not seem to be accessible."
 - Changed the Stats Card order to show Sessions above Process Pools.
