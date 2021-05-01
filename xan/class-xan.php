@@ -137,6 +137,11 @@ define( 'FA_NEW', "<i class='fas fa-plus'></i>" );
 define( 'FA_DUPLICATE', "<i class='fas fa-clone'></i>" );
 define( 'FA_DELETE', "<i class='fas fa-minus'></i>" );
 
+define( 'FA_MORE_UP', "<i class='fas fa-angle-double-up'></i>" );
+define( 'FA_MORE_DOWN', "<i class='fas fa-angle-double-down'></i>" );
+define( 'FA_MORE_LEFT', "<i class='fas fa-angle-double-left'></i>" );
+define( 'FA_MORE_RIGHT', "<i class='fas fa-angle-double-right'></i>" );
+
 define( 'FA_ACTION', "<i class='fas fa-running'></i>" );
 define( 'FA_PRINT', "<i class='fas fa-print'></i>" );
 
@@ -1087,19 +1092,32 @@ class eleTable extends element {
 		$this->cells[ $rowIndex ][ $colIndex ][ 'SkipB' ] = true;
 	}
 
-	public function render() {
+	public function render( $tableHeadRowCount = 0 ) {
 		$code = '<div class="p-0">';
 		$code .= '<table class="table table-sm table-hover mb-0 p-0">';
 
+		// Next Row Init
 		$rowIndex = 0;
 		$colIndex = 0;
+		
+		// $tableHeadRowCount Adjust
+		$tableHeadRowCount--;
 
 		// For each Cell
 		foreach ( $this->cells as $rowKey => $rowValue ) {
+		    
+		    // Head or Body
+		    if ( $tableHeadRowCount >= $rowIndex ){
+		        $code .= '<thead>';
+		    }
+		    if ( $tableHeadRowCount === 0 ){
+		        $code .= '<tbody>';
+		    }
+		    
 			// Start a Row
 			$code .= "<tr>"; // Currently not supporting table row tags. Set Cell instead.
 
-			// Start a new Row
+			// Start Skipped Rows
 			while ( $rowIndex < $rowKey ) {
 				$code .= "<tr></tr>"; // Currently not supporting table row tags. Set Cell instead.
 				$rowIndex++;
@@ -1115,7 +1133,12 @@ class eleTable extends element {
 						$classTag = 'class="' . classAToString( $this->tagsCellsEmpty->classA ) . '"';
 						$styleTag = 'style="' . styleDToString( $this->tagsCellsEmpty->styleD ) . '"';
 						$extrasTag = extrasAToString( $this->tagsCellsEmpty->extrasA );
-						$code .= "<td $classTag $styleTag $extrasTag></td>";
+						// $code .= "<td $classTag $styleTag $extrasTag></td>";
+						if ( $tableHeadRowCount >= $rowIndex ){
+						    $code .= "<th $classTag $styleTag $extrasTag></th>";
+						} else {
+						    $code .= "<td $classTag $styleTag $extrasTag></td>";
+						}
 					}
 					$colIndex++;
 				}
@@ -1127,7 +1150,12 @@ class eleTable extends element {
 					$extrasTag = extrasAToString( $colAttributes[ 'Tags' ]->extrasA );
 					$colSpan = ( $colAttributes[ 'ColSpan' ] == '' ? '' : 'colspan="' . $colAttributes[ 'ColSpan' ] . '"' );
 					$rowSpan = ( $colAttributes[ 'RowSpan' ] == '' ? '' : 'rowspan="' . $colAttributes[ 'RowSpan' ] . '"' );
-					$code .= "<td $classTag $styleTag $extrasTag $colSpan $rowSpan>" . $colAttributes[ 'Content' ] . "</td>";
+					// $code .= "<td $classTag $styleTag $extrasTag $colSpan $rowSpan>" . $colAttributes[ 'Content' ] . "</td>";
+					if ( $tableHeadRowCount >= $rowIndex ){
+						    $code .= "<th $classTag $styleTag $extrasTag $colSpan $rowSpan>" . $colAttributes[ 'Content' ] . "</th>";
+						} else {
+						    $code .= "<td $classTag $styleTag $extrasTag $colSpan $rowSpan>" . $colAttributes[ 'Content' ] . "</td>";
+						}
 				}
 				$colIndex++;
 
@@ -1135,9 +1163,19 @@ class eleTable extends element {
 
 			// End Row
 			$code .= "</tr>";
+			
+			// Head or Body
+		    if ( $tableHeadRowCount >= $rowIndex ){
+		        $code .= '</thead><tbody>';
+		    }
+			
+			// Next Row Init
 			$rowIndex++;
 			$colIndex = 0;
 		}
+		
+		// End Body
+		$code .= '</tbody>';
 
 		// End Table
 		$code .= '</table>';

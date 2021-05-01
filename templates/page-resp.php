@@ -271,6 +271,14 @@ ob_start();
                 background-color: var(--xan-bg-color-active);
                 border-radius: var(--xan-border-radius);
             }
+            th {
+                background-color: var(--xan-bg-color);
+            }
+            td.active {
+                color: var(--xan-text-color-active);
+                background-color: var(--xan-bg-color-active);
+                border-radius: 5px;
+            }
             select {
                 -moz-appearance: none;
                 -webkit-appearance: none;
@@ -357,6 +365,7 @@ ob_start();
 									<?php
 									if ( $_SESSION[ SESS_USER ][ 'PrivAdmin' ] === 'Yes' ) {
 										echo \xan\navItemDropdownModule( $mmServerStats );
+										echo \xan\navItemDropdownModule( $mmAPIRequestsT );
 										echo \xan\navDivider();
 										echo \xan\navItemDropdownModule( $mmSettingsT );
 										echo \xan\navItemDropdownModule( $mmUsersT );
