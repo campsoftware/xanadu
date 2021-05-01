@@ -9,3 +9,5 @@ We've been developing Database Apps for decades with FileMaker and Xojo. FileMak
 Xanadu is FREE because we want to help others. If there's enough interest, we hope to build a community of developers.
 
 Read more about Xanadu: https://campsoftware.com/products/xanadu.php
+
+ChangeLog: https://github.com/campsoftware/xanadu/blob/master/CHANGELOG.md

@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-01-18-08-00
+- Added a link to the ChangeLog in the ReadMe.
+
 2021-05-01-17-58-33
 - Updated APIRequests getListItemRowHeader and getListItemRow functions to a single function getListRow as an option to getListItem.
 - Updated APIRequests List Card Styles from mini/wide to items/rows.
