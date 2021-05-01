@@ -13,10 +13,10 @@ $resp->reqPathComponents = \xan\paramEncode( $aloe_request->path_components_get(
 $resp->reqPost = \xan\paramEncode( $aloe_request->post );
 // $resp->reqID = $resp->reqPathComponents[ 1 ];
 $resp->moduleName = $mmServerStats->NameModule;
-$resp->headTitle = $mmServerStats->NameModule;
+$resp->headTitle = $mmServerStats->NamePlural;
 $resp->headLogoutAuto = false;
 $resp->navInclude = true;
-$resp->contentHeader = $mmServerStats->FontAwesome . STR_NBSP . $mmServerStats->NameModule;
+$resp->contentHeader = $mmServerStats->FontAwesome . STR_NBSP . $mmServerStats->NamePlural . STR_NBSP;
 
 // User Save Path Last
 $mmUsersT->setPathLast( $resp->reqPath );

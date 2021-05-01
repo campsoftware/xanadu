@@ -31,10 +31,10 @@ if ( !empty( $ValidationMsgA ) ) {
 if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->reqID = $doParam[ $mmContactsT->NameTableParam ];
 	$resp->moduleName = $mmContactsT->NameModule;
-	$resp->headTitle = $mmContactsT->NameModule;
+	$resp->headTitle = $mmContactsT->NamePlural;
 	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
-	$resp->contentHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NameModule . STR_NBSP;
+	$resp->contentHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NamePlural . STR_NBSP;
 	
 	// Content Area Load
 	require_once( 'content-cards.php' );

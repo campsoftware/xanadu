@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-01-16-29-11
+- Fixed usages of NameModule, NamePlural, and NameSingular.
+
 2021-05-01-16-04-10
 - Added, for Admins, a APIRequests Module with a 100% Wide List Table and Sticky Header Row. Left most Column has a Button with the Row Index to view Details in Cards below the list.
 

@@ -29,10 +29,10 @@ if ( !empty( $ValidationMsgA ) ) {
 if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->reqID = $doParam[ $mmUsersT->NameTableParam ];
 	$resp->moduleName = $mmUsersT->NameModule;
-	$resp->headTitle = $mmUsersT->NameModule;
+	$resp->headTitle = $mmUsersT->NamePlural;
 	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
-	$resp->contentHeader = $mmUsersT->FontAwesome . STR_NBSP . $mmUsersT->NameModule . STR_NBSP;
+	$resp->contentHeader = $mmUsersT->FontAwesome . STR_NBSP . $mmUsersT->NamePlural . STR_NBSP;
 	
 	// Content Area Load
 	require_once( 'content-cards.php' );

@@ -6,10 +6,10 @@ $resp->reqPathComponents = \xan\paramEncode( $aloe_request->path_components_get(
 $resp->reqPost = \xan\paramEncode( $aloe_request->post );
 // $resp->reqID = $resp->reqPathComponents[ 1 ];
 $resp->moduleName = $mmUsersPasswordReset->NameModule;
-$resp->headTitle = $mmUsersPasswordReset->NameModule;
+$resp->headTitle = $mmUsersPasswordReset->NamePlural;
 $resp->headLogoutAuto = false;
 $resp->navInclude = false;
-$resp->contentHeader = $mmUsersPasswordReset->FontAwesome . STR_NBSP . $mmUsersPasswordReset->NameModule;
+$resp->contentHeader = $mmUsersPasswordReset->FontAwesome . STR_NBSP . $mmUsersPasswordReset->NamePlural . STR_NBSP;
 
 ///////////////////////////////////////////////////////////
 // Content Load Now
