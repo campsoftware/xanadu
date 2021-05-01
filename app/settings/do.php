@@ -32,10 +32,10 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	// Response Init
 	// $resp->reqID = $doParam[ $mmContactsT->NameTableParam ];
 	$resp->moduleName = $mmSettingsT->NameModule;
-	$resp->headTitle = $mmSettingsT->NameModule;
+	$resp->headTitle = $mmSettingsT->NamePlural;
 	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
-	$resp->contentHeader = $mmSettingsT->FontAwesome . STR_NBSP . $mmSettingsT->NameModule . STR_NBSP;
+	$resp->contentHeader = $mmSettingsT->FontAwesome . STR_NBSP . $mmSettingsT->NamePlural . STR_NBSP;
 	
 	// Content Area Load
 	require_once( 'content-cards.php' );

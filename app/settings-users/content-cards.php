@@ -30,7 +30,7 @@ if ( true ) {
 		foreach ( $recsList->rowsD as $recsListRow ) {
 			$recsList->rowIndex++;
 			
-			$idPrefix = $mmUsersT->NamePlural . 'List';
+			$idPrefix = $mmUsersT->NameModule . 'List';
 			$onClick = 'window.location.href = \'' . $mmUsersT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmUsersT->NameTableKey ] . '\';';
 			$itemContent = $mmUsersT->getListItem( $idPrefix, $recsList, $onClick );
 			$itemID = $idPrefix . $recsList->rowsD[ $recsList->rowIndex ][ $mmUsersT->NameTableKey ];
@@ -122,7 +122,7 @@ if ( \xan\isNotEmpty( $resp->reqID ) ) {
 		$resp->contentHeader .= $actionsMenu;
 		
 		// ScrollTos
-		$resp->scriptsOnLoadA[] = \xan\jsScrollTo( '#' . $mmUsersT->NamePlural . 'List' . $resp->reqID );
+		$resp->scriptsOnLoadA[] = \xan\jsScrollTo( '#' . $mmUsersT->NameModule . 'List' . $resp->reqID );
 		$resp->scriptsOnLoadA[] = \xan\jsScrollToTop();
 		
 		// Scripts Extra

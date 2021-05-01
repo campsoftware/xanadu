@@ -6,10 +6,10 @@ $resp->reqPathComponents = \xan\paramEncode( $aloe_request->path_components_get(
 $resp->reqPost = \xan\paramEncode( $aloe_request->post );
 $resp->reqID = $resp->reqPathComponents[ 1 ];
 $resp->moduleName = $mmCheckout->NameModule;
-$resp->headTitle = $mmCheckout->NameModule;
+$resp->headTitle = $mmCheckout->NamePlural;
 $resp->headLogoutAuto = false;
 $resp->navInclude = false;
-$resp->contentHeader = $mmCheckout->FontAwesome . STR_NBSP . $mmCheckout->NameModule . STR_NBSP;
+$resp->contentHeader = $mmCheckout->FontAwesome . STR_NBSP . $mmCheckout->NamePlural . STR_NBSP;
 
 // Stripe Init
 require_once( 'include/stripe/7.48.0/init.php' );

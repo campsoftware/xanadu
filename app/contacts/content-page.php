@@ -6,10 +6,10 @@ $resp->reqPathComponents = \xan\paramEncode( $aloe_request->path_components_get(
 $resp->reqPost = \xan\paramEncode( $aloe_request->post );
 $resp->reqID = $resp->reqPathComponents[ 1 ];
 $resp->moduleName = $mmContactsT->NameModule;
-$resp->headTitle = $mmContactsT->NameModule;
+$resp->headTitle = $mmContactsT->NamePlural;
 $resp->headLogoutAuto = true;
 $resp->navInclude = true;
-$resp->contentHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NameModule;
+$resp->contentHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NamePlural . STR_NBSP;
 
 // User Save Path Last
 $mmUsersT->setPathLast( $resp->reqPath );

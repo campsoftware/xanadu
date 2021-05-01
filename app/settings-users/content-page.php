@@ -13,10 +13,10 @@ $resp->reqPathComponents = \xan\paramEncode( $aloe_request->path_components_get(
 $resp->reqPost = \xan\paramEncode( $aloe_request->post );
 $resp->reqID = $resp->reqPathComponents[ 1 ];
 $resp->moduleName = $mmUsersT->NameModule;
-$resp->headTitle = $mmUsersT->NameModule;
+$resp->headTitle = $mmUsersT->NamePlural;
 $resp->headLogoutAuto = true;
 $resp->navInclude = true;
-$resp->contentHeader = $mmUsersT->FontAwesome . STR_NBSP . $mmUsersT->NameModule;
+$resp->contentHeader = $mmUsersT->FontAwesome . STR_NBSP . $mmUsersT->NamePlural . STR_NBSP;
 
 ///////////////////////////////////////////////////////////
 // Content Load Now or Later. Now is faster due to less 'round trips'. Later uses Ajax which is fast, but an extra 'round trip'.
