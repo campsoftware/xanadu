@@ -3,8 +3,16 @@
 // List
 if ( true ) {
 	// Card Init
+    $listStyle = 'wide'; // mini or wide
+    if ( $listStyle === 'mini' ){
+        $cardWidth = CARD_WIDTH;
+    }
+	if ( $listStyle === 'wide' ){
+		$cardWidth = '100%';
+	}
+ 
 	$cardHeaderContent = $mmAPIRequestsT->FontAwesomeList . STR_NBSP . $mmAPIRequestsT->NamePlural;
-	$card = new \xan\eleCard( "100%", '50rem', true );
+	$card = new \xan\eleCard( $cardWidth, '50rem', true );
 	
 	// Query
 	$recsList = new \xan\recs( $mmAPIRequestsT );
@@ -25,8 +33,8 @@ if ( true ) {
 		$cardHeaderContent .= ': ' . $recsList->rowCount;
 		$cardContent = '';
 		
-		if ( false ) {
-		    // Mini Tables
+		// Mini Tables
+		if ( $listStyle === 'mini' ) {
 			$recsList->rowIndex = -1;
 			foreach ( $recsList->rowsD as $recsListRow ) {
 				$recsList->rowIndex++;
@@ -39,7 +47,10 @@ if ( true ) {
 				$cardContent .= $card->renderListItemLink( $itemContent, $recsList->rowIndex + 1, $itemID, $isSelected, $onClick );
 				
 			}
-		} else {
+		}
+		
+		// Mini Tables
+		if ( $listStyle === 'wide' ) {
 		    // Big Table
 			$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
 			$table = new \xan\eleTable( $tagsCellEmpty );

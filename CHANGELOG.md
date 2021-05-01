@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-01-17-06-03
+- Updated APIRequests to have an option to have Mini or Wide List.
+
 2021-05-01-16-58-12
 - Updated APIRequests 100% Wide List Table to use Column Labels rather than Column Names.
 
