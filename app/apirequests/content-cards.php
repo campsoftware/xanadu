@@ -2,17 +2,20 @@
 ///////////////////////////////////////////////////////////
 // List
 if ( true ) {
-	// Card Init
-    $listStyle = 'wide'; // mini or wide
-    if ( $listStyle === 'mini' ){
-        $cardWidth = CARD_WIDTH;
-    }
-	if ( $listStyle === 'wide' ){
-		$cardWidth = '100%';
+	// List Style
+	$listStyle = 'rows'; // items or rows
+	if ( $listStyle === 'items' ) {
+		$cardWidth = CARD_WIDTH;
+		$cardHeight = CARD_HEIGHT_MAX;
 	}
- 
+	if ( $listStyle === 'rows' ) {
+		$cardWidth = '100%';
+		$cardHeight = '50rem';
+	}
+	
+	// Card Init
 	$cardHeaderContent = $mmAPIRequestsT->FontAwesomeList . STR_NBSP . $mmAPIRequestsT->NamePlural;
-	$card = new \xan\eleCard( $cardWidth, '50rem', true );
+	$card = new \xan\eleCard( $cardWidth, $cardHeight, true );
 	
 	// Query
 	$recsList = new \xan\recs( $mmAPIRequestsT );
@@ -34,7 +37,7 @@ if ( true ) {
 		$cardContent = '';
 		
 		// Mini Tables
-		if ( $listStyle === 'mini' ) {
+		if ( $listStyle === 'items' ) {
 			$recsList->rowIndex = -1;
 			foreach ( $recsList->rowsD as $recsListRow ) {
 				$recsList->rowIndex++;
@@ -45,19 +48,18 @@ if ( true ) {
 				$itemID = $idPrefix . $recsList->rowsD[ $recsList->rowIndex ][ $mmAPIRequestsT->NameTableKey ];
 				$isSelected = ( $resp->reqID == $recsList->rowsD[ $recsList->rowIndex ][ $mmAPIRequestsT->NameTableKey ] ? true : false );
 				$cardContent .= $card->renderListItemLink( $itemContent, $recsList->rowIndex + 1, $itemID, $isSelected, $onClick );
-				
 			}
 		}
 		
 		// Mini Tables
-		if ( $listStyle === 'wide' ) {
-		    // Big Table
+		if ( $listStyle === 'rows' ) {
+			// Big Table
 			$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
 			$table = new \xan\eleTable( $tagsCellEmpty );
 			
 			// Header
 			$recsList->rowIndex = 0;
-			$mmAPIRequestsT->getListItemRowHeader( '', $recsList, '', $table, '' );
+			$mmAPIRequestsT->getListRow( 'header', $recsList, $table, '', '', '', '', '' );
 			
 			// Recs Loop
 			$recsList->rowIndex = -1;
@@ -66,7 +68,7 @@ if ( true ) {
 				
 				$idPrefix = $mmAPIRequestsT->NameModule . 'List';
 				$onClick = 'window.location.href = \'' . $mmAPIRequestsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmAPIRequestsT->NameTableKey ] . '\';';
-				$mmAPIRequestsT->getListItemRow( $idPrefix, $recsList, $onClick, $table, $resp->reqID );
+				$mmAPIRequestsT->getListRow( 'data', $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
 			}
 			
 			// Content

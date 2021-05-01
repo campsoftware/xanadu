@@ -68,76 +68,64 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 		return $code;
 	}
 	
-	public function getListItemRow( $idPrefix, \xan\recs $recs, $onClick, \xan\eleTable &$table, $idSselected ) {
-		$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
-		$isActive = ( $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] === $idSselected ? 'active' : '' );
-		$colIndex = 0;
-		$rowIndexTable = $recs->rowIndex + 1;
-		
-		// Cell Tag
-		$tagsCell = new \xan\tags( [ $isActive, 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
-		
-		// Cell Left
-		$buttonMoreTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY, 'mb-2' ], [], [ 'id="' . $idListItem . '"', 'onclick="window.location.href = \'' . $this->URLFull . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] . '\';"' ] );
-		$buttonMoreEle = new \xan\eleButton( $rowIndexTable, '', '', $buttonMoreTags );
-		$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: 100px; overflow-y: auto;">' . $buttonMoreEle->render() . '</div>' );
-		
-		// Cells
-		foreach ( $recs->rowsD[ $recs->rowIndex ] as $key => $value ) {
-			$colIndex++;
-			switch ( $key ) {
-				case 'RequestData':
-					$width = 400;
-					break;
-				case 'ResponseURL':
-					$width = 200;
-					break;
-				case 'ResponseData':
-					$width = 500;
-					break;
-				case 'Log':
-					$width = 300;
-					break;
-				default:
-					$width = 100;
-			}
+	public function getListRow( $rowType, \xan\recs $recs, \xan\eleTable &$table, $dataIDPrefix, $dataIDSelected, $dataOnClick, $dataRowHeight, $dataColWidth ) {
+		if ( $rowType === 'header' ) {
+			// Init Indexes
+			$colIndex = 0;
 			
-			$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: 100px; width: ' . $width . 'px; overflow-y: auto;">' . $value . '</div>' );
+			// Cell Tag
+			$tagsCell = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [ 'position' => '-webkit-sticky', 'position' => '-moz-sticky', 'position' => '-ms-sticky', 'position' => '-o-sticky', 'position' => 'sticky', 'top' => 0 ], [] );
+			
+			// Cell Left
+			$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, '' );
 		}
 		
-	}
-	
-	public function getListItemRowHeader( $idPrefix, \xan\recs $recs, $onClick, \xan\eleTable &$table, $idSselected ) {
-		$colIndex = 0;
+		if ( $rowType === 'data' ) {
+			// Init Indexes
+			$colIndex = 0;
+			$rowIndexTable = $recs->rowIndex + 1;
+			
+			// Cell Tag
+			$isActive = ( $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] === $dataIDSelected ? 'active' : '' );
+			$tagsCell = new \xan\tags( [ $isActive, 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
+			
+			// Cell Left
+			$idListItem = $dataIDPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
+			$buttonMoreTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY, 'mb-2' ], [], [ 'id="' . $idListItem . '"', 'onclick="window.location.href = \'' . $this->URLFull . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] . '\';"' ] );
+			$buttonMoreEle = new \xan\eleButton( $rowIndexTable, '', '', $buttonMoreTags );
+			$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $dataRowHeight . '; overflow-y: auto;">' . $buttonMoreEle->render() . '</div>' );
+		}
 		
-		// Cell Tag
-		$tagsCell = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [ 'position' => '-webkit-sticky', 'position' => '-moz-sticky', 'position' => '-ms-sticky', 'position' => '-o-sticky', 'position' => 'sticky', 'top' => 0 ], [] );
-		
-		// Cell Left
-		$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, '<div style="overflow-y: auto; "></div>' );
-		
-		// Cells
+		// For Each Header or Data Row Cell
 		foreach ( $recs->rowsD[ $recs->rowIndex ] as $key => $value ) {
 			$colIndex++;
+			
+			// Column Width Overrides
 			switch ( $key ) {
 				case 'RequestData':
-					$width = 400;
+					$width = '400px';
 					break;
 				case 'ResponseURL':
-					$width = 200;
+					$width = '200px';
 					break;
 				case 'ResponseData':
-					$width = 500;
+					$width = '500px';
 					break;
 				case 'Log':
-					$width = 300;
+					$width = '300px';
 					break;
 				default:
-					$width = 100;
+					$width = $dataColWidth;
 			}
 			
-			$headerLabelColMeta = $this->getColMeta( $key );
-			$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, '<div style="width: ' . $width . 'px; overflow-y: auto;">' . $headerLabelColMeta->colLabel . '</div>' );
+			if ( $rowType === 'header' ) {
+				$headerLabelColMeta = $this->getColMeta( $key );
+				$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, $headerLabelColMeta->colLabel );
+			}
+			
+			if ( $rowType === 'data' ) {
+				$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $dataRowHeight . '; width: ' . $width . '; overflow-y: auto;">' . $value . '</div>' );
+			}
 		}
 		
 	}

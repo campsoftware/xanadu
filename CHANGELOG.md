@@ -1,5 +1,10 @@
 # Xanadu Change Log
 
+2021-05-01-17-58-33
+- Updated APIRequests getListItemRowHeader and getListItemRow functions to a single function getListRow as an option to getListItem.
+- Updated APIRequests List Card Styles from mini/wide to items/rows.
+- Updated APIRequests List Card Styles to also set the Card Width.
+
 2021-05-01-17-06-03
 - Updated APIRequests to have an option to have Mini or Wide List.
 
