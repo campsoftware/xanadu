@@ -102,7 +102,6 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 					$width = 100;
 			}
 			
-			// $tagsCell = new \xan\tags( [ $isActive, 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
 			$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: 100px; width: ' . $width . 'px; overflow-y: auto;">' . $value . '</div>' );
 		}
 		
@@ -137,8 +136,8 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 					$width = 100;
 			}
 			
-			// $tagsCell = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
-			$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, '<div style="width: ' . $width . 'px; overflow-y: auto;">' . $key . '</div>' );
+			$headerLabelColMeta = $this->getColMeta( $key );
+			$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, '<div style="width: ' . $width . 'px; overflow-y: auto;">' . $headerLabelColMeta->colLabel . '</div>' );
 		}
 		
 	}
@@ -177,14 +176,14 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 				$colMeta->colLabelEN = 'Action ID';
 				break;
 			case 'RequestIsProcessed':
-				$colMeta->colLabelEN = 'Is Processed';
+				$colMeta->colLabelEN = 'Req Processed';
 				$colMeta->eleType = ELE_TYPE_SELECT_DB;
 				$colMeta->choicesAValues = ARRAY_YESNO;
 				$colMeta->choicesADisplay = ARRAY_YESNO;
 				$colMeta->choicesOtherLabel = '';
 				break;
 			case 'RequestIsSent':
-				$colMeta->colLabelEN = 'Is Sent';
+				$colMeta->colLabelEN = 'Req Sent';
 				$colMeta->eleType = ELE_TYPE_SELECT_DB;
 				$colMeta->choicesAValues = ARRAY_YESNO;
 				$colMeta->choicesADisplay = ARRAY_YESNO;
@@ -201,6 +200,13 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 			case 'ResponseTS':
 				$colMeta->colLabelEN = 'Response TS';
 				$colMeta->eleType = ELE_TYPE_DATETIME_DB;
+				break;
+			case 'ResponseIsProcessed':
+				$colMeta->colLabelEN = ' Resp Processed';
+				$colMeta->eleType = ELE_TYPE_SELECT_DB;
+				$colMeta->choicesAValues = ARRAY_YESNO;
+				$colMeta->choicesADisplay = ARRAY_YESNO;
+				$colMeta->choicesOtherLabel = '';
 				break;
 			case 'ResponseData':
 				$colMeta->colLabelEN = 'Response Data';

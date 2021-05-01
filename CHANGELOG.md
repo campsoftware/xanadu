@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-01-16-58-12
+- Updated APIRequests 100% Wide List Table to use Column Labels rather than Column Names.
+
 2021-05-01-16-29-11
 - Fixed usages of NameModule, NamePlural, and NameSingular.
 
