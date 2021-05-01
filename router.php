@@ -173,9 +173,48 @@ if ( ( $path_components[ 0 ] == 'contacts-do' ) ) {
 
 
 ///////////////////////////////////////////////////////////
-// Settings Area
+// Admin Stats, APIRequests, Settings, and Users
 
-// Settings PAge
+// Stats Page
+if ( ( $path_components[ 0 ] == 'server-stats' ) ) {
+	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
+	if ( !xan\userIsAuthenticated() or !xan\userIsAdmin() ) {
+		$redirectToLogin = true;
+	} else {
+		$_SESSION[ SES_PATH ] = $path;
+		$_SESSION[ SES_INFO ] = '';
+		require_once( 'app/server-stats/content-page.php' );
+		return;
+	}
+}
+
+// APIRequests Page
+if ( ( $path_components[ 0 ] == 'apirequests' ) ) {
+	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
+	if ( !xan\userIsAuthenticated() ) {
+		$redirectToLogin = true;
+	} else {
+		$_SESSION[ SES_PATH ] = $path;
+		$_SESSION[ SES_INFO ] = '';
+		require_once( 'app/apirequests/content-page.php' );
+		return;
+	}
+}
+
+// APIRequests Do
+if ( ( $path_components[ 0 ] == 'apirequests-do' ) ) {
+	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
+	if ( !xan\userIsAuthenticated() ) {
+		$redirectToLogin = true;
+	} else {
+		$_SESSION[ SES_PATH ] = $path;
+		$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+		require_once( 'app/apirequests/do.php' );
+		return;
+	}
+}
+
+// Settings Page
 if ( ( $path_components[ 0 ] == 'settings' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
 	if ( !xan\userIsAuthenticated() or !xan\userIsAdmin() ) {
@@ -197,20 +236,6 @@ if ( ( $path_components[ 0 ] == 'settings-do' ) ) {
 		$_SESSION[ SES_PATH ] = $path;
 		$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
 		require_once( 'app/settings/do.php' );
-		return;
-	}
-}
-
-
-// Stats Page
-if ( ( $path_components[ 0 ] == 'server-stats' ) ) {
-	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
-	if ( !xan\userIsAuthenticated() or !xan\userIsAdmin() ) {
-		$redirectToLogin = true;
-	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = '';
-		require_once( 'app/server-stats/content-page.php' );
 		return;
 	}
 }
