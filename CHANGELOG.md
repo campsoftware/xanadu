@@ -1,5 +1,9 @@
 # Xanadu Change Log
 
+2021-05-04-16-46-46
+- Commented out XanDo javascript alert.
+- Touched images and index.php.
+
 2021-05-04-15-48-16
 - Summary: Simplifying List Cards while adding options: Items Text, Items Image + Text, or a Table Row.
 - Removed three functions from moduleMeta class and each subclass. Replaced with sharable moduleMeta functions.
