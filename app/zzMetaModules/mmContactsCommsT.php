@@ -33,7 +33,7 @@ class moduleMetaContactsCommsT extends \xan\moduleMeta {
 	
 	
 	///////////////////////////////////////////////////////////
-	// Functions Required by \xan\moduleMeta
+	// Abstract Functions Required by \xan\moduleMeta
 	
 	public function getDisplayList( \xan\recs $recs ) {
 		$code = $this->getDisplayName( $recs );
@@ -47,125 +47,110 @@ class moduleMetaContactsCommsT extends \xan\moduleMeta {
 		return $code;
 	}
 	
-	public function getListItem( $idPrefix, \xan\recs $recs, $onClick ) {
-		$code = '';
-		return $code;
-	}
-	
-	public function getColLabel( $colName ) {
-		// Get Col Ele Meta
-		$colEle = $this->getColMeta( $colName, ELE_AS_LABEL );
-		return $colEle->colLabel;
-	}
-	
 	public function getColMeta( $colName, $typeAs = ELE_AS_DEFINED ) {
 		// Init
-		$colEle = new \xan\colMeta();
-		$colEle->eleType = ELE_TYPE_TEXT_DB; // Default to Text Input
-		$colEle->eleTypeAs = $typeAs;
-		$colEle->colName = $colName;
-		$colEle->colLabelEN = $colEle->colName;
-		$colEle->colLabel = $colEle->colName;
+		$colMeta = new \xan\colMeta();
+		$colMeta->eleType = ELE_TYPE_TEXT_DB; // Default to Text Input
+		$colMeta->eleTypeAs = $typeAs;
+		$colMeta->colName = $colName;
+		$colMeta->colLabelEN = $colMeta->colName;
+		$colMeta->colLabel = $colMeta->colName;
 		
 		// Choices
-		$colEle->choicesAValues = [];
-		$colEle->choicesADisplay = [];
-		$colEle->choicesClearLabel = STR_CLEAR; // Add Clear
-		$colEle->choicesOtherLabel = STR_OTHER; // Add Other
+		$colMeta->choicesAValues = [];
+		$colMeta->choicesADisplay = [];
+		$colMeta->choicesClearLabel = STR_CLEAR; // Add Clear
+		$colMeta->choicesOtherLabel = STR_OTHER; // Add Other
+		
+		// Sizes
+		$colMeta->widthForTable = ''; // No Default for Overrides Closer to Renderers
 		
 		// Columns Specifics
 		switch ( $colName ) {
 			case 'Type':
-				$colEle->colLabelEN = 'Type';
-				$colEle->eleType = ELE_TYPE_SELECT_DB;
+				$colMeta->colLabelEN = 'Type';
+				$colMeta->eleType = ELE_TYPE_SELECT_DB;
 				$arrays = \xan\choicesAFromSQLCols( $this->NameTable, "SELECT DISTINCT `Type` From ContactsComms WHERE LENGTH( `Type` ) > 0 ORDER BY `Type` ASC" );
-				$colEle->choicesAValues = $arrays[ 0 ];
-				$colEle->choicesADisplay = $arrays[ 0 ];
+				$colMeta->choicesAValues = $arrays[ 0 ];
+				$colMeta->choicesADisplay = $arrays[ 0 ];
 				break;
 			case 'Label':
-				$colEle->colLabelEN = 'Label';
-				$colEle->eleType = ELE_TYPE_SELECT_DB;
+				$colMeta->colLabelEN = 'Label';
+				$colMeta->eleType = ELE_TYPE_SELECT_DB;
 				$arrays = \xan\choicesAFromSQLCols( $this->NameTable, "SELECT DISTINCT `Label` From ContactsComms WHERE LENGTH( `Label` ) > 0 ORDER BY `Label` ASC" );
-				$colEle->choicesAValues = $arrays[ 0 ];
-				$colEle->choicesADisplay = $arrays[ 0 ];
+				$colMeta->choicesAValues = $arrays[ 0 ];
+				$colMeta->choicesADisplay = $arrays[ 0 ];
 				break;
 			case 'Main':
-				$colEle->colLabelEN = 'Main';
-				$colEle->eleType = ELE_TYPE_SELECT_DB;
-				$colEle->choicesAValues = ARRAY_YESNO;
-				$colEle->choicesADisplay = ARRAY_YESNO;
-				$colEle->choicesOtherLabel = '';
+				$colMeta->colLabelEN = 'Main';
+				$colMeta->eleType = ELE_TYPE_SELECT_DB;
+				$colMeta->choicesAValues = ARRAY_YESNO;
+				$colMeta->choicesADisplay = ARRAY_YESNO;
+				$colMeta->choicesOtherLabel = '';
 				break;
 			case 'Data':
-				$colEle->colLabelEN = 'Data';
+				$colMeta->colLabelEN = 'Data';
 				break;
 			case 'AddressStreet':
-				$colEle->colLabelEN = 'Street';
+				$colMeta->colLabelEN = 'Street';
 				break;
 			case 'AddressCity':
-				$colEle->colLabelEN = 'City';
+				$colMeta->colLabelEN = 'City';
 				break;
 			case 'AddressState':
-				$colEle->colLabelEN = 'State';
+				$colMeta->colLabelEN = 'State';
 				break;
 			case 'AddressZip':
-				$colEle->colLabelEN = 'Zip';
+				$colMeta->colLabelEN = 'Zip';
 				break;
 			case 'AddressCounty':
-				$colEle->colLabelEN = 'County';
+				$colMeta->colLabelEN = 'County';
 				break;
 			case 'AddressCountry':
-				$colEle->colLabelEN = 'Country';
+				$colMeta->colLabelEN = 'Country';
 				break;
 			case 'AddressLatitude':
-				$colEle->colLabelEN = 'Latitude';
+				$colMeta->colLabelEN = 'Latitude';
 				break;
 			case 'AddressLongitude':
-				$colEle->colLabelEN = 'Longitude';
+				$colMeta->colLabelEN = 'Longitude';
 				break;
 			
 			// Mod
 			case 'ModTS':
-				$colEle->colLabelEN = 'Mod TS';
-				$colEle->isMod = true;
+				$colMeta->colLabelEN = 'Mod TS';
+				$colMeta->isMod = true;
 				break;
 			case 'ModName':
-				$colEle->colLabelEN = 'Mod Name';
-				$colEle->isMod = true;
+				$colMeta->colLabelEN = 'Mod Name';
+				$colMeta->isMod = true;
 				break;
 			case 'ModUUIDUsers':
-				$colEle->colLabelEN = 'Mod Users ID';
-				$colEle->isMod = true;
-				$colEle->isKey = true;
+				$colMeta->colLabelEN = 'Mod Users ID';
+				$colMeta->isMod = true;
+				$colMeta->isKey = true;
 				break;
 			
 			// UUID
 			case 'UUIDContactsComms':
-				$colEle->colLabelEN = 'Comms ID';
-				$colEle->isKey = true;
-				$colEle->isKeyPrimary = true;
-				$colEle->isKeyForeign = false;
+				$colMeta->colLabelEN = 'Comms ID';
+				$colMeta->isKey = true;
+				$colMeta->isKeyPrimary = true;
+				$colMeta->isKeyForeign = false;
 				break;
 			case 'UUIDContacts':
-				$colEle->colLabelEN = 'Contacts ID';
-				$colEle->isKey = true;
-				$colEle->isKeyPrimary = false;
-				$colEle->isKeyForeign = true;
+				$colMeta->colLabelEN = 'Contacts ID';
+				$colMeta->isKey = true;
+				$colMeta->isKeyPrimary = false;
+				$colMeta->isKeyForeign = true;
 				break;
 		}
 		
 		// Set the Label
-		$colEle->colLabel = $colEle->colLabelEN;
+		$colMeta->colLabel = $colMeta->colLabelEN;
 		
 		// Return the Element
-		return $colEle;
-	}
-	
-	public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
-		// Get Col Ele Meta
-		$colEle = $this->getColMeta( $colName, $typeAs );
-		$code = \xan\eleDBMetaRender( $colEle, $tags, $recs, $formTag, $resp );
-		return $code;
+		return $colMeta;
 	}
 	
 	

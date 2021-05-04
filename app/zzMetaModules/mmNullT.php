@@ -30,7 +30,7 @@ class moduleMetaNullT extends \xan\moduleMeta {
 
 
     ///////////////////////////////////////////////////////////
-    // Functions Required by \xan\moduleMeta
+	// Abstract Functions Required by \xan\moduleMeta
 
     public function getDisplayList( \xan\recs $recs ) {
         $code = $this->getDisplayName( $recs );
@@ -44,53 +44,38 @@ class moduleMetaNullT extends \xan\moduleMeta {
         return $code;
     }
 
-    public function getListItem( $idPrefix, \xan\recs $recs, $onClick ) {
-        $code = '';
-        return $code;
-    }
-
-    public function getColLabel( $colName ) {
-        // Get Col Ele Meta
-        $colEle = $this->getColMeta( $colName, ELE_AS_LABEL );
-        return $colEle->colLabel;
-    }
-
     public function getColMeta( $colName, $typeAs = ELE_AS_DEFINED ) {
         // Init
-        $colEle = new \xan\colMeta();
-        $colEle->eleType = ELE_TYPE_TEXT_DB; // Default to Text Input
-        $colEle->eleTypeAs = $typeAs;
-        $colEle->colName = $colName;
-        $colEle->colLabelEN = $colEle->colName;
-        $colEle->colLabel = $colEle->colName;
+        $colMeta = new \xan\colMeta();
+        $colMeta->eleType = ELE_TYPE_TEXT_DB; // Default to Text Input
+        $colMeta->eleTypeAs = $typeAs;
+        $colMeta->colName = $colName;
+        $colMeta->colLabelEN = $colMeta->colName;
+        $colMeta->colLabel = $colMeta->colName;
 
         // Choices
-        $colEle->choicesAValues = [];
-        $colEle->choicesADisplay = [];
-        $colEle->choicesClearLabel = STR_CLEAR; // Add Clear
-        $colEle->choicesOtherLabel = STR_OTHER; // Add Other
-
+        $colMeta->choicesAValues = [];
+        $colMeta->choicesADisplay = [];
+        $colMeta->choicesClearLabel = STR_CLEAR; // Add Clear
+        $colMeta->choicesOtherLabel = STR_OTHER; // Add Other
+	
+		// Sizes
+		$colMeta->widthForTable = ''; // No Default for Overrides Closer to Renderers
+		
         // Columns Specifics
         switch ( $colName ) {
             case 'NULL':
-                $colEle->colLabelEN = 'NULL';
+                $colMeta->colLabelEN = 'NULL';
                 break;
         }
 
         // Set the Label
-        $colEle->colLabel = $colEle->colLabelEN;
+        $colMeta->colLabel = $colMeta->colLabelEN;
 
         // Return the Element
-        return $colEle;
+        return $colMeta;
     }
-
-    public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
-        // Get Col Ele Meta
-        $colEle = $this->getColMeta( $colName, $typeAs );
-        $code = \xan\eleDBMetaRender( $colEle, $tags, $recs, $formTag, $resp );
-        return $code;
-    }
-
+    
 
     ///////////////////////////////////////////////////////////
     // Functions For This Module

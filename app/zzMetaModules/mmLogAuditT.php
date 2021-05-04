@@ -30,7 +30,7 @@ class moduleMetaLogAuditT extends \xan\moduleMeta {
 
 
     ///////////////////////////////////////////////////////////
-    // Functions Required by \xan\moduleMeta
+	// Abstract Functions Required by \xan\moduleMeta
 
     public function getDisplayList( \xan\recs $recs ) {
         $code = $this->getDisplayName( $recs );
@@ -43,87 +43,73 @@ class moduleMetaLogAuditT extends \xan\moduleMeta {
         $code = trim( $code );
         return $code;
     }
-
-    public function getListItem( $idPrefix, \xan\recs $recs, $onClick ) {
-        $code = '';
-        return $code;
-    }
-
-    public function getColLabel( $colName ) {
-        // Get Col Ele Meta
-        $colEle = $this->getColMeta( $colName, ELE_AS_LABEL );
-        return $colEle->colLabel;
-    }
+    
 
     public function getColMeta( $colName, $typeAs = ELE_AS_DEFINED ) {
         // Init
-        $colEle = new \xan\colMeta();
-        $colEle->eleType = ELE_TYPE_TEXT_DB; // Default to Text Input
-        $colEle->eleTypeAs = $typeAs;
-        $colEle->colName = $colName;
-        $colEle->colLabelEN = $colEle->colName;
-        $colEle->colLabel = $colEle->colName;
+        $colMeta = new \xan\colMeta();
+        $colMeta->eleType = ELE_TYPE_TEXT_DB; // Default to Text Input
+        $colMeta->eleTypeAs = $typeAs;
+        $colMeta->colName = $colName;
+        $colMeta->colLabelEN = $colMeta->colName;
+        $colMeta->colLabel = $colMeta->colName;
 
         // Choices
-        $colEle->choicesAValues = [];
-        $colEle->choicesADisplay = [];
-        $colEle->choicesClearLabel = STR_CLEAR; // Add Clear
-        $colEle->choicesOtherLabel = STR_OTHER; // Add Other
-
+        $colMeta->choicesAValues = [];
+        $colMeta->choicesADisplay = [];
+        $colMeta->choicesClearLabel = STR_CLEAR; // Add Clear
+        $colMeta->choicesOtherLabel = STR_OTHER; // Add Other
+	
+		// Sizes
+		$colMeta->widthForTable = ''; // No Default for Overrides Closer to Renderers
+		
         // Columns Specifics
         switch ( $colName ) {
             case 'Action':
-                $colEle->colLabelEN = 'Action';
+                $colMeta->colLabelEN = 'Action';
                 break;
             case 'TableName':
-                $colEle->colLabelEN = 'Table Name';
+                $colMeta->colLabelEN = 'Table Name';
                 break;
             case 'TableUUIDName':
-                $colEle->colLabelEN = 'Table Key Name';
+                $colMeta->colLabelEN = 'Table Key Name';
                 break;
             case 'TableUUID':
-                $colEle->colLabelEN = 'Table Key Value';
+                $colMeta->colLabelEN = 'Table Key Value';
                 break;
             case 'FieldValues':
-                $colEle->colLabelEN = 'Field Values';
+                $colMeta->colLabelEN = 'Field Values';
                 break;
 	
 			// Mod
 			case 'ModTS':
-				$colEle->colLabelEN = 'Mod TS';
-				$colEle->isMod = true;
+				$colMeta->colLabelEN = 'Mod TS';
+				$colMeta->isMod = true;
 				break;
 			case 'ModName':
-				$colEle->colLabelEN = 'Mod Name';
-				$colEle->isMod = true;
+				$colMeta->colLabelEN = 'Mod Name';
+				$colMeta->isMod = true;
 				break;
 			case 'ModUUIDUsers':
-				$colEle->colLabelEN = 'Mod Users ID';
-				$colEle->isMod = true;
-				$colEle->isKey = true;
+				$colMeta->colLabelEN = 'Mod Users ID';
+				$colMeta->isMod = true;
+				$colMeta->isKey = true;
 				break;
 
             // UUID
             case 'UUIDLogAudit':
-                $colEle->colLabelEN = 'Log Audit ID';
-                $colEle->isKey = true;
-                $colEle->isKeyPrimary = true;
-                $colEle->isKeyForeign = false;
+                $colMeta->colLabelEN = 'Log Audit ID';
+                $colMeta->isKey = true;
+                $colMeta->isKeyPrimary = true;
+                $colMeta->isKeyForeign = false;
                 break;
         }
 
         // Set the Label
-        $colEle->colLabel = $colEle->colLabelEN;
+        $colMeta->colLabel = $colMeta->colLabelEN;
 
         // Return the Element
-        return $colEle;
-    }
-
-    public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
-        // Get Col Ele Meta
-        $colEle = $this->getColMeta( $colName, $typeAs );
-        $code = \xan\eleDBMetaRender( $colEle, $tags, $recs, $formTag, $resp );
-        return $code;
+        return $colMeta;
     }
 
 

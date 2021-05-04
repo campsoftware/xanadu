@@ -36,7 +36,7 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 	
 	
 	///////////////////////////////////////////////////////////
-	// Functions Required by \xan\moduleMeta
+	// Abstract Functions Required by \xan\moduleMeta
 	
 	public function getDisplayName( \xan\recs $recs ) {
 		// Name
@@ -73,30 +73,6 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 		return $code;
 	}
 	
-	public function getListItem( $idPrefix, \xan\recs $recs, $onClick ) {
-		$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
-		$idListItemLabel = $idListItem . 'Label';
-		
-		// Table Init
-		$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
-		$tagsCellRightMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
-		$table = new \xan\eleTable( $tagsCellEmpty );
-		
-		// Info Cell
-		$info = '<span id="' . $idListItemLabel . '" class="list-group-item-text">' . $this->getDisplayList( $recs ) . '</span>';
-		$table->cellSet( $recs->rowIndex, 0, $tagsCellRightMiddle, $info );
-		
-		// Content
-		$code = $table->render();
-		return $code;
-	}
-	
-	public function getColLabel( $colName ) {
-		// Get Col Ele Meta
-		$colEle = $this->getColMeta( $colName, ELE_AS_LABEL );
-		return $colEle->colLabel;
-	}
-	
 	public function getColMeta( $colName, $typeAs = ELE_AS_DEFINED ) {
 		// Init
 		$colMeta = new \xan\colMeta();
@@ -112,6 +88,9 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 		$colMeta->choicesADisplay = [];
 		$colMeta->choicesClearLabel = STR_CLEAR; // Add Clear
 		$colMeta->choicesOtherLabel = STR_OTHER; // Add Other
+		
+		// Sizes
+		$colMeta->widthForTable = ''; // No Default for Overrides Closer to Renderers
 		
 		// Columns Specifics
 		switch ( $colName ) {
@@ -235,13 +214,6 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 		
 		// Return the Element
 		return $colMeta;
-	}
-	
-	public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
-		// Get Col Ele Meta
-		$colMeta = $this->getColMeta( $colName, $typeAs );
-		$code = \xan\eleDBMetaRender( $colMeta, $tags, $recs, $formTag, $resp );
-		return $code;
 	}
 	
 	

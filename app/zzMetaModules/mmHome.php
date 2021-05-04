@@ -30,7 +30,7 @@ class moduleMetaHome extends \xan\moduleMeta {
 	
 	
 	///////////////////////////////////////////////////////////
-	// Functions Required by \xan\moduleMeta
+	// Abstract Functions Required by \xan\moduleMeta
 	
 	public function getDisplayList( \xan\recs $recs ) {
 		$code = $this->getDisplayName( $recs );
@@ -42,17 +42,6 @@ class moduleMetaHome extends \xan\moduleMeta {
 		$code = '';
 		$code = trim( $code );
 		return $code;
-	}
-	
-	public function getListItem( $idPrefix, \xan\recs $recs, $onClick ) {
-		$code = '';
-		return $code;
-	}
-	
-	public function getColLabel( $colName ) {
-		// Get Col Ele Meta
-		$colEle = $this->getColMeta( $colName, ELE_AS_LABEL );
-		return $colEle->colLabel;
 	}
 	
 	public function getColMeta( $colName, $typeAs = ELE_AS_DEFINED ) {
@@ -71,10 +60,13 @@ class moduleMetaHome extends \xan\moduleMeta {
 		$colMeta->choicesClearLabel = STR_CLEAR; // Add Clear
 		$colMeta->choicesOtherLabel = STR_OTHER; // Add Other
 		
+		// Sizes
+		$colMeta->widthForTable = ''; // No Default for Overrides Closer to Renderers
+		
 		// Columns Specifics
 		switch ( $colName ) {
 			case 'NULL':
-				$colEle->colLabelEN = 'NULL';
+				$colMeta->colLabelEN = 'NULL';
 				break;
 		}
 		
@@ -84,14 +76,6 @@ class moduleMetaHome extends \xan\moduleMeta {
 		// Return the Element
 		return $colMeta;
 	}
-	
-	public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
-		// Get Col Ele Meta
-		$colMeta = $this->getColMeta( $colName, $typeAs );
-		$code = \xan\eleDBMetaRender( $colMeta, $tags, $recs, $formTag, $resp );
-		return $code;
-	}
-	
 	
 	///////////////////////////////////////////////////////////
 	// Functions For This Module
