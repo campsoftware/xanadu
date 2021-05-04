@@ -36,22 +36,24 @@ if ( true ) {
 		$cardHeaderContent .= ': ' . $recsList->rowCount;
 		$cardContent = '';
 		
-		// Mini Tables
+		// Items List
 		if ( $listStyle === 'items' ) {
 			$recsList->rowIndex = -1;
 			foreach ( $recsList->rowsD as $recsListRow ) {
 				$recsList->rowIndex++;
 				
+				// IDs
 				$idPrefix = $mmAPIRequestsT->NameModule . 'List';
+				$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $mmAPIRequestsT->NameTableKey ];
+				$idListItemImage = $idListItem . 'Image';
+				
+				// Get List Item
 				$onClick = 'window.location.href = \'' . $mmAPIRequestsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmAPIRequestsT->NameTableKey ] . '\';';
-				$itemContent = $mmAPIRequestsT->getListItem( $idPrefix, $recsList, $onClick );
-				$itemID = $idPrefix . $recsList->rowsD[ $recsList->rowIndex ][ $mmAPIRequestsT->NameTableKey ];
-				$isSelected = ( $resp->reqID == $recsList->rowsD[ $recsList->rowIndex ][ $mmAPIRequestsT->NameTableKey ] ? true : false );
-				$cardContent .= $card->renderListItemLink( $itemContent, $recsList->rowIndex + 1, $itemID, $isSelected, $onClick );
+				$cardContent .= $mmAPIRequestsT->getListItem( $recsList, $idPrefix, $resp->reqID, $onClick );
 			}
 		}
 		
-		// Mini Tables
+		// Rows of Table
 		if ( $listStyle === 'rows' ) {
 			// Big Table
 			$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
@@ -59,7 +61,7 @@ if ( true ) {
 			
 			// Header
 			$recsList->rowIndex = 0;
-			$mmAPIRequestsT->getListRow( 'header', $recsList, $table, '', '', '', '', '' );
+			$mmAPIRequestsT->getListRow( 'head', $recsList, $table, '', '', '', '', '' );
 			
 			// Recs Loop
 			$recsList->rowIndex = -1;
@@ -68,7 +70,7 @@ if ( true ) {
 				
 				$idPrefix = $mmAPIRequestsT->NameModule . 'List';
 				$onClick = 'window.location.href = \'' . $mmAPIRequestsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmAPIRequestsT->NameTableKey ] . '\';';
-				$mmAPIRequestsT->getListRow( 'data', $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
+				$mmAPIRequestsT->getListRow( 'body', $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
 			}
 			
 			// Content

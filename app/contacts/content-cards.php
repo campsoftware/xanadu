@@ -2,9 +2,20 @@
 ///////////////////////////////////////////////////////////
 // List
 if ( true ) {
+	// List Style
+	$listStyle = 'items'; // items or rows
+	if ( $listStyle === 'items' ) {
+		$cardWidth = CARD_WIDTH;
+		$cardHeight = CARD_HEIGHT_MAX;
+	}
+	if ( $listStyle === 'rows' ) {
+		$cardWidth = '100%';
+		$cardHeight = '50rem';
+	}
+ 
 	// Card Init
 	$cardHeaderContent = $mmContactsT->FontAwesomeList . STR_NBSP . $mmContactsT->NamePlural;
-	$card = new \xan\eleCard( CARD_WIDTH, CARD_HEIGHT_MAX, true );
+	$card = new \xan\eleCard( $cardWidth, $cardHeight, true );
 	
 	// Query
 	$recsList = new \xan\recs( $mmContactsT );
@@ -14,7 +25,7 @@ if ( true ) {
 	$recsList->queryBindNamesA = $searchBarList[ 'queryBindNames' ];
 	$recsList->queryBindValuesA = $searchBarList[ 'queryBindValues' ];
 	$recsList->query();
-	$recsList->rowsMassageForGUI( true, [ 'NumberCurrency', 'DateContacted' ] );
+	$recsList->rowsMassageForGUI( true, [ 'NumberCurrency', 'ContactedDate' ] );
 	
 	// Error Check
 	if ( $recsList->errorB ) {
@@ -23,21 +34,55 @@ if ( true ) {
 		$cardHeaderContent .= ': None Found';
 	} else {
 		$cardHeaderContent .= ': ' . $recsList->rowCount;
-		
-		// Recs Loop
 		$cardContent = '';
-		$recsList->rowIndex = -1;
-		foreach ( $recsList->rowsD as $recsListRow ) {
-			$recsList->rowIndex++;
-			
-			$idPrefix = $mmContactsT->NameModule . 'List';
-			$onClick = 'window.location.href = \'' . $mmContactsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmContactsT->NameTableKey ] . '\';';
-			$itemContent = $mmContactsT->getListItem( $idPrefix, $recsList, $onClick );
-			$itemID = $idPrefix . $recsList->rowsD[ $recsList->rowIndex ][ $mmContactsT->NameTableKey ];
-			$isSelected = ( $resp->reqID == $recsList->rowsD[ $recsList->rowIndex ][ $mmContactsT->NameTableKey ] ? true : false );
-			$cardContent .= $card->renderListItemLink( $itemContent, $recsList->rowIndex + 1, $itemID, $isSelected, $onClick );
-			
+		
+		if ( $listStyle === 'items' ) {
+			$recsList->rowIndex = -1;
+			foreach ( $recsList->rowsD as $recsListRow ) {
+				$recsList->rowIndex++;
+				
+				// IDs
+				$idPrefix = $mmContactsT->NameModule . 'List';
+				$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $mmContactsT->NameTableKey ];
+				$idListItemImage = $idListItem . 'Image';
+				
+				// Image Element
+				$imgURL = \xan\fileBucketURL( $mmContactsT->NameTable, $recsList->rowsD[ $recsList->rowIndex ][ $mmContactsT->NameTableKey ], 'PhotoFN', $recsList->rowsD[ $recsList->rowIndex ][ 'PhotoFN' ] );
+				$tagsEleImage = new \xan\tags( [ 'img-thumbnail' ], [ 'max-width' => '4rem', 'max-height' => '100%' ], [] );
+				$imgEle = new \xan\eleURLImage( $imgURL, ( $recsList->rowIndex > 20 ? true : false ), $idListItemImage, 'Photo', 'Photo', $tagsEleImage );
+				$tagsCellImage = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], array( 'width' => '4.2rem' ), [] );
+				
+				// Get List Item
+				$onClick = 'window.location.href = \'' . $mmContactsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmContactsT->NameTableKey ] . '\';';
+				// $cardContent .= $mmContactsT->getListItem( $recsList, $idPrefix, $resp->reqID, $onClick );
+				$cardContent .= $mmContactsT->getListItemWImage( $recsList, $idPrefix, $resp->reqID, $onClick, $tagsCellImage, $imgEle );
+			}
 		}
+		
+		// Rows of Table
+		if ( $listStyle === 'rows' ) {
+			// Big Table
+			$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+			$table = new \xan\eleTable( $tagsCellEmpty );
+			
+			// Header
+			$recsList->rowIndex = 0;
+			$mmContactsT->getListRow( 'head', $recsList, $table, '', '', '', '', '' );
+			
+			// Recs Loop
+			$recsList->rowIndex = -1;
+			foreach ( $recsList->rowsD as $recsListRow ) {
+				$recsList->rowIndex++;
+				
+				$idPrefix = $mmContactsT->NameModule . 'List';
+				$onClick = 'window.location.href = \'' . $mmContactsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmContactsT->NameTableKey ] . '\';';
+				$mmContactsT->getListRow( 'body', $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
+			}
+			
+			// Content
+			$cardContent .= $table->render( 1 );
+		}
+		
 	}
 	
 	// Header Button New Record

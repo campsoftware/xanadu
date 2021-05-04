@@ -27,7 +27,7 @@ $cardTemp = new \xan\eleCard( '', '', '' );
 
 // Query Search Term Prep
 $queryColumns = array( 'NameCompany', 'NameFirst', 'NameLast' );
-$queryWhere = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? '' : 'AND ( ' . \xan\dbSearchTermSQL( $queryColumns ) . ' )' );
+$queryWhere = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? '' : '( ' . \xan\dbSearchTermSQL( $queryColumns ) . ' )' );
 $queryTermBindNamesA = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : \xan\dbSearchTermBindNamesA( $queryColumns ) );
 $queryTermBindValuesA = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : \xan\dbSearchTermBindValuesA( $queryColumns, $doParam[ 'SearchTerm' ] ) );
 
@@ -51,10 +51,19 @@ if ( $recs->errorB ) {
 	foreach ( $recs->rowsD as $recsListRow ) {
 		$recs->rowIndex++;
 		
+		// IDs
+		$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $mmContactsT->NameTableKey ];
+		$idListItemImage = $idListItem . 'Image';
+		
+		// Image Element
+		$imgURL = \xan\fileBucketURL( $mmContactsT->NameTable, $recs->rowsD[ $recs->rowIndex ][ $mmContactsT->NameTableKey ], 'PhotoFN', $recs->rowsD[ $recs->rowIndex ][ 'PhotoFN' ] );
+		$tagsEleImage = new \xan\tags( [ 'img-thumbnail' ], [ 'max-width' => '4rem', 'max-height' => '100%' ], [] );
+		$imgEle = new \xan\eleURLImage( $imgURL, ( $recs->rowIndex > 20 ? true : false ), $idListItemImage, 'Photo', 'Photo', $tagsEleImage );
+		$tagsCellImage = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], array( 'width' => '4.2rem' ), [] );
+		
+		// Get List Item
 		$onClick = '$(\'#' . $idPrefix . '_Modal\').modal(\'hide\'); alert( \'' . $recsListRow[ $mmContactsT->NameTableKey ] . '\');';
-		$itemContent = $mmContactsT->getListItem( $idPrefix, $recs, $onClick );
-		$itemID = $idPrefix . $recsListRow[ $mmContactsT->NameTableKey ];
-		$cardListContent .= $cardTemp->renderListItemLink( $itemContent, $recs->rowIndex + 1, $itemID, false, $onClick );
+		$cardListContent .= $mmContactsT->getListItemWImage( $recs, $idPrefix, '', $onClick, $tagsCellImage, $imgEle );
 	}
 }
 

@@ -1,5 +1,12 @@
 # Xanadu Change Log
 
+2021-05-04-15-48-16
+- Summary: Simplifying List Cards while adding options: Items Text, Items Image + Text, or a Table Row.
+- Removed three functions from moduleMeta class and each subclass. Replaced with sharable moduleMeta functions.
+- Added colMeta property widthForTable that defaults to empty string but can be overridden per Table Column Name.
+- Added two new moduleMeta getList functions: getListItem is for text, getListItemWImage is for an image + text, and getListRow is for html tables at full page width with a default column width.
+- Updated content-cards.php Lists for Contacts, Contact Picker ( image + text ), Settings-Users ( text ), and APIRequests ( html table ). It's now easy to change how Lists are displayed.
+
 2021-05-01-18-08-00
 - Added a link to the ChangeLog in the ReadMe.
 

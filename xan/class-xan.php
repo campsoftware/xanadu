@@ -321,11 +321,128 @@ abstract class moduleMeta {
 	// Functions
 	abstract public function getDisplayName( recs $recs );
 	abstract public function getDisplayList( recs $recs );
-	abstract public function getListItem( $idPrefix, recs $recs, $onClick );
-	abstract public function getColLabel( $colName );
-	abstract public function getColEleRender( $colName, $typeAs, tags $tags, recs $recs, formTag $formTag, response &$resp );
 	abstract public function getColMeta( $colName, $typeAs = ELE_AS_DEFINED );
+	
+	public function getColLabel( $colName ) {
+		// Get Col Ele Meta
+		$colEle = $this->getColMeta( $colName, ELE_AS_LABEL );
+		return $colEle->colLabel;
+	}
+	
+	public function getColEleRender( $colName, $typeAs, \xan\tags $tags, \xan\recs $recs, \xan\formTag $formTag, \xan\response &$resp ) {
+		// Get Col Ele Meta
+		$colMeta = $this->getColMeta( $colName, $typeAs );
+		$code = \xan\eleDBMetaRender( $colMeta, $tags, $recs, $formTag, $resp );
+		return $code;
+	}
+	
+	public function getListItem( \xan\recs $recs, $idPrefix, $idSelected, $onClick ) {
+	    // IDs Init
+		$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
+		$idListItemLabel = $idListItem . 'Label';
+		
+		// Table Init
+		$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+		$tagsCellRightMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
+		$table = new \xan\eleTable( $tagsCellEmpty );
+		
+		// Info Cell
+		$info = $this->getDisplayList( $recs );
+		$info = '<span id="' . $idListItemLabel . '" class="list-group-item-text">' . $info . '</span>';
+		$table->cellSet( $recs->rowIndex, 1, $tagsCellRightMiddle, $info );
+		
+		// Content
+		$content = $table->render();
+		
+		$active = ( $idSelected == $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] ? 'active' : '' );
+		$content = str_replace( 'list-group-item-text', 'list-group-item-text ' . $active, $content );
+		$code = <<< HTML
+        <span id="{$idListItem}" class="list-group-item list-group-item-action {$active} border-secondary border-bottom p-1 pt-2 pb-2" onclick="{$onClick}">
+		{$content}<div style="position: absolute; top: 2px; right: 2px; font-size: 9px;">{$recs->rowIndex}</div></span>
+HTML;
+		return $code;
+	}
+	
+		public function getListItemWImage( \xan\recs $recs, $idPrefix, $idSelected, $onClick,\xan\tags $tagsCellImage,\xan\eleURLImage $imageEle ) {
+	    // IDs Init
+		$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
+		$idListItemLabel = $idListItem . 'Label';
+		
+		// Table Init
+		$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+		$tagsCellRightMiddle = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
+		$table = new \xan\eleTable( $tagsCellEmpty );
+		
+		// Image Cell
+		$table->cellSet( $recs->rowIndex, 0, $tagsCellImage, $imageEle->render() );
+		
+		// Info Cell
+		$info = $this->getDisplayList( $recs );
+		$info = '<span id="' . $idListItemLabel . '" class="list-group-item-text">' . $info . '</span>';
+		$table->cellSet( $recs->rowIndex, 1, $tagsCellRightMiddle, $info );
+		
+		// Content
+		$content = $table->render();
+		
+		$active = ( $idSelected == $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] ? 'active' : '' );
+		$content = str_replace( 'list-group-item-text', 'list-group-item-text ' . $active, $content );
+		$code = <<< HTML
+        <span id="{$idListItem}" class="list-group-item list-group-item-action {$active} border-secondary border-bottom p-1 pt-2 pb-2" onclick="{$onClick}">
+		{$content}<div style="position: absolute; top: 2px; right: 2px; font-size: 9px;">{$recs->rowIndex}</div></span>
+HTML;
+		return $code;
+	}
+	
+	public function getListRow( $rowType, \xan\recs $recs, \xan\eleTable &$table, $bodyIDPrefix, $bodyIDSelected, $bodyOnClick, $bodyRowHeight, $bodyColWidth ) {
+		if ( $rowType === 'head' ) {
+			// Init Indexes
+			// Init Indexes
+			$colIndex = 0;
+			
+			// Cell Tag
+			$tagsCell = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [ 'position' => '-webkit-sticky', 'position' => '-moz-sticky', 'position' => '-ms-sticky', 'position' => '-o-sticky', 'position' => 'sticky', 'top' => 0 ], [] );
+			
+			// Cell Left
+			$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, '' );
+		}
+		
+		if ( $rowType === 'body' ) {
+			// Init Indexes
+			$colIndex = 0;
+			$rowIndexTable = $recs->rowIndex + 1;
+			
+			// Cell Tag
+			$isActive = ( $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] === $bodyIDSelected ? 'active' : '' );
+			$tagsCell = new \xan\tags( [ $isActive, 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
+			
+			// Cell Left
+			$idListItem = $bodyIDPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
+			$buttonMoreTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY, 'mb-2' ], [], [ 'id="' . $idListItem . '"', 'onclick="' . $bodyOnClick . '"' ] );
+			$buttonMoreEle = new \xan\eleButton( $rowIndexTable, '', '', $buttonMoreTags );
+			$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $bodyRowHeight . '; overflow-y: auto;">' . $buttonMoreEle->render() . '</div>' );
+		}
+		
+		// For Each Header or Data Row Cell
+		foreach ( $recs->rowsD[ $recs->rowIndex ] as $key => $value ) {
+			$colIndex++;
+			
+			// Get Col Meta
+			$keyColMeta = $this->getColMeta( $key );
+			
+			if ( $rowType === 'head' ) {
+				$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, $keyColMeta->colLabel );
+			}
+			
+			if ( $rowType === 'body' ) {
+				$width = ( \xan\isEmpty( $keyColMeta->widthForTable) ? $bodyColWidth : $keyColMeta->widthForTable );
+				$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $bodyRowHeight . '; width: ' . $width . '; overflow-y: auto;">' . $value . '</div>' );
+			}
+		}
+		
+	}
+	
 }
+
 
 // recsQuerySimple
 function recsQuerySimple( $sql, $bindNamesA, $bindValuesA ){
@@ -878,6 +995,8 @@ class colMeta {
 	public $colName = '';
 	public $colLabelEN = '';
 	public $colLabel = '';
+	
+	public $widthForTable = '';
 
 	public $isMod = false;
 	public $isKey = false;

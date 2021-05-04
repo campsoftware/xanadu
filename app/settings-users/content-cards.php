@@ -2,9 +2,20 @@
 ///////////////////////////////////////////////////////////
 // List
 if ( true ) {
+	// List Style
+	$listStyle = 'items'; // items or rows
+	if ( $listStyle === 'items' ) {
+		$cardWidth = CARD_WIDTH;
+		$cardHeight = CARD_HEIGHT_MAX;
+	}
+	if ( $listStyle === 'rows' ) {
+		$cardWidth = '100%';
+		$cardHeight = '50rem';
+	}
+	
 	// Card Init
 	$cardHeaderContent = $mmUsersT->FontAwesomeList . STR_NBSP . $mmUsersT->NamePlural;
-	$card = new \xan\eleCard( CARD_WIDTH, CARD_HEIGHT_MAX, true );
+	$card = new \xan\eleCard( $cardWidth, $cardHeight, true );
 	
 	// Query
 	$recsList = new \xan\recs( $mmUsersT );
@@ -23,21 +34,49 @@ if ( true ) {
 		$cardHeaderContent .= ': None Found';
 	} else {
 		$cardHeaderContent .= ': ' . $recsList->rowCount;
-		
-		// Recs Loop
 		$cardContent = '';
-		$recsList->rowIndex = -1;
-		foreach ( $recsList->rowsD as $recsListRow ) {
-			$recsList->rowIndex++;
-			
-			$idPrefix = $mmUsersT->NameModule . 'List';
-			$onClick = 'window.location.href = \'' . $mmUsersT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmUsersT->NameTableKey ] . '\';';
-			$itemContent = $mmUsersT->getListItem( $idPrefix, $recsList, $onClick );
-			$itemID = $idPrefix . $recsList->rowsD[ $recsList->rowIndex ][ $mmUsersT->NameTableKey ];
-			$isSelected = ( $resp->reqID == $recsList->rowsD[ $recsList->rowIndex ][ $mmUsersT->NameTableKey ] ? true : false );
-			$cardContent .= $card->renderListItemLink( $itemContent, $recsList->rowIndex + 1, $itemID, $isSelected, $onClick );
-			
+		
+		// Items List
+		if ( $listStyle === 'items' ) {
+			$recsList->rowIndex = -1;
+			foreach ( $recsList->rowsD as $recsListRow ) {
+				$recsList->rowIndex++;
+				
+				// IDs
+				$idPrefix = $mmUsersT->NameModule . 'List';
+				$idListItem = $idPrefix . $recs->rowsD[ $recs->rowIndex ][ $mmUsersT->NameTableKey ];
+				$idListItemImage = $idListItem . 'Image';
+				
+				// Get List Item
+				$onClick = 'window.location.href = \'' . $mmUsersT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmUsersT->NameTableKey ] . '\';';
+				$cardContent .= $mmUsersT->getListItem( $recsList, $idPrefix, $resp->reqID, $onClick );
+			}
 		}
+		
+		// Rows of Table
+		if ( $listStyle === 'rows' ) {
+			// Big Table
+			$tagsCellEmpty = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_MIDDLE ], [], [] );
+			$table = new \xan\eleTable( $tagsCellEmpty );
+			
+			// Header
+			$recsList->rowIndex = 0;
+			$mmUsersT->getListRow( 'head', $recsList, $table, '', '', '', '', '' );
+			
+			// Recs Loop
+			$recsList->rowIndex = -1;
+			foreach ( $recsList->rowsD as $recsListRow ) {
+				$recsList->rowIndex++;
+				
+				$idPrefix = $mmUsersT->NameModule . 'List';
+				$onClick = 'window.location.href = \'' . $mmUsersT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmUsersT->NameTableKey ] . '\';';
+				$mmUsersT->getListRow( 'body', $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
+			}
+			
+			// Content
+			$cardContent .= $table->render( 1 );
+		}
+		
 	}
 	
 	// Header Button New Record
