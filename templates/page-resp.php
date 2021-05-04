@@ -445,7 +445,7 @@ ob_start();
                 data: "params=" + encodeURIComponent( JSON.stringify( params ) ),
                 success: function ( successResult, status, xhr ) {
                     // JSON Get
-                    alert( "xanDo Success: " + successResult );
+                    // alert( "xanDo Success: " + successResult );
                     if ( successResult === "" ) {
                         alert( "Error: xanDo Result is Blank; Params: " + JSON.stringify( params ) );
                         return;
