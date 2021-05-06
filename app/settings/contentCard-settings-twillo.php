@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-sms' ) . STR_NBSP . 'Twillo';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-sms' ) . STR_NBSP . 'Twillo';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

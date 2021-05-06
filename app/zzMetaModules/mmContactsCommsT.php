@@ -21,8 +21,8 @@ class moduleMetaContactsCommsT extends \xan\moduleMeta {
 		$this->NamePlural = 'Comms';
 		$this->NameSingular = 'Comm';
 		
-		$this->FontAwesome = '<i class=\'fas fa-comment-dots\'></i>';
-		$this->FontAwesomeList = FA_LIST;
+		$this->FontAwesome = \xan\fontIcon( 'fas fa-comment-dots' );
+		$this->FontAwesomeList = FI_LIST;
 		
 		// $this->URLRelative = '/' . 'contacts/';
 		// $this->URLFull = URL_BASE . 'contacts/';

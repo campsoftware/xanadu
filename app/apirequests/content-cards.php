@@ -81,7 +81,7 @@ if ( true ) {
 	
 	// Header Button New Record
 	$buttonNewTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_NEW, 'mb-2' ], [], [ 'onclick="$(\'#' . $mmAPIRequestsT->NameModule . 'RecNew_Modal\').modal(\'show\');"' ] );
-	$buttonNewEle = new \xan\eleButton( FA_NEW, '', '', $buttonNewTags );
+	$buttonNewEle = new \xan\eleButton( FI_NEW, '', '', $buttonNewTags );
 	$cardHeaderContent .= '<div class="float-right">' . $buttonNewEle->render() . '</div>';
 	// Header Search Bar
 	$cardHeaderContent .= STR_BR . $searchBarList[ 'searchbar' ];
@@ -139,22 +139,22 @@ if ( \xan\isNotEmpty( $resp->reqID ) ) {
 				<?php
 				// Button Contact Picker
 				$buttonContactPickerTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY, 'mr-2' ], [], [ 'onclick="$(\'#ContactsPicker_Modal\').modal(\'show\');"' ] );
-				$buttonContactPicker = new \xan\eleButton( FA_NEW . STR_NBSP . 'Contact Picker', '', '', $buttonContactPickerTags );
+				$buttonContactPicker = new \xan\eleButton( FI_NEW . STR_NBSP . 'Contact Picker', '', '', $buttonContactPickerTags );
 				echo $buttonContactPicker->render();
 				
 				// Button Actions
 				$buttonActionsTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY, 'dropdown-toggle' ], [ 'z-index' => ZINDEX_TOP ], [ 'data-toggle="dropdown"', 'aria-haspopup="true"', 'aria-expanded="false"' ] );
-				$buttonActionsPicker = new \xan\eleButton( FA_ACTION . STR_NBSP . 'Actions', 'actionsMenu', '', $buttonActionsTags );
+				$buttonActionsPicker = new \xan\eleButton( FI_ACTION . STR_NBSP . 'Actions', 'actionsMenu', '', $buttonActionsTags );
 				echo $buttonActionsPicker->render();
 				
 				// Button Actions Items
 				?>
                 <div class="dropdown-menu dropdown-menu-right border-1" role="menu" aria-labelledby="actionsMenu">
-                    <a class="dropdown-item pl-2 pr-2" onclick='xanDo( { "Do":"ContactsPrint", "Msg":"PDF Print", "URL":"<?= $mmAPIRequestsT->URLDoRelative ?>", "IDContacts":"<?= $resp->reqID ?>", "Format":"pdf", "Template":"pdf-default", "NewWindow":1 } );'><?= FA_PRINT . STR_NBSP ?>Print to PDF</a>
-                    <a class="dropdown-item pl-2 pr-2" onclick='xanDo( { "Do":"ContactsPrint", "Msg":"HTML Print", "URL":"<?= $mmAPIRequestsT->URLDoRelative ?>", "IDContacts":"<?= $resp->reqID ?>", "Format":"html", "Template":"pdf-default", "NewWindow":1 } );'><?= FA_PRINT . STR_NBSP ?>Print to HTML</a>
+                    <a class="dropdown-item pl-2 pr-2" onclick='xanDo( { "Do":"ContactsPrint", "Msg":"PDF Print", "URL":"<?= $mmAPIRequestsT->URLDoRelative ?>", "IDContacts":"<?= $resp->reqID ?>", "Format":"pdf", "Template":"pdf-default", "NewWindow":1 } );'><?= FI_PRINT . STR_NBSP ?>Print to PDF</a>
+                    <a class="dropdown-item pl-2 pr-2" onclick='xanDo( { "Do":"ContactsPrint", "Msg":"HTML Print", "URL":"<?= $mmAPIRequestsT->URLDoRelative ?>", "IDContacts":"<?= $resp->reqID ?>", "Format":"html", "Template":"pdf-default", "NewWindow":1 } );'><?= FI_PRINT . STR_NBSP ?>Print to HTML</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item pl-2 pr-2 bg-primary text-white" onclick="$('#ContactsRecDuplicate_Modal').modal('show');"><?= FA_DUPLICATE . STR_NBSP ?>Duplicate</a>
-                    <a class="dropdown-item pl-2 pr-2 bg-danger text-white" onclick="$('#ContactsRecDelete_Modal').modal('show');"><?= FA_DELETE . STR_NBSP ?>Delete</a>
+                    <a class="dropdown-item pl-2 pr-2 bg-primary text-white" onclick="$('#ContactsRecDuplicate_Modal').modal('show');"><?= FI_DUPLICATE . STR_NBSP ?>Duplicate</a>
+                    <a class="dropdown-item pl-2 pr-2 bg-danger text-white" onclick="$('#ContactsRecDelete_Modal').modal('show');"><?= FI_DELETE . STR_NBSP ?>Delete</a>
                 </div>
 			<?php endif; ?>
         </div>

@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-handshake' ) . STR_NBSP . 'Sessions Array';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-handshake' ) . STR_NBSP . 'Sessions Array';
 $card = new \xan\eleCard( CARD_WIDTH_2X, CARD_HEIGHT_MAX, true );
 
 // Tags Special

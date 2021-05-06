@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-hdd' ) . STR_NBSP . 'Versions, Disk, and RAM';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-hdd' ) . STR_NBSP . 'Versions, Disk, and RAM';
 $card = new \xan\eleCard( CARD_WIDTH, CARD_HEIGHT_MAX, false );
 
 // Tags Special

@@ -21,8 +21,8 @@ class moduleMetaUsersPasswordReset extends \xan\moduleMeta {
 		$this->NamePlural = 'Password Reset';
 		$this->NameSingular = 'Password Reset';
 		
-		$this->FontAwesome = FA_PASSWORD;
-		$this->FontAwesomeList = FA_LIST;
+		$this->FontAwesome = FI_PASSWORD;
+		$this->FontAwesomeList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'passwordreset/';
 		$this->URLFull = URL_BASE . 'passwordreset/';

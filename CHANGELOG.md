@@ -1,5 +1,13 @@
 # Xanadu Change Log
 
+2021-05-06-17-52-02
+- Added Bootstrap Icons.
+- Replaced iconFA function with fontIcon. Adds a tags parameter. Works with both Bootstrap Icons and FontAwesome.
+- Planning to remove FontAwesome when to Bootstrap Icons collection is larger.
+- Replaced all FontAwesome html with the equivalent fontIcon function. 
+- Ranamed all "FA_" icon constant names to "FI_".
+- Removed eleCard->renderListItemLink as it's now redundant.
+
 2021-05-04-16-46-46
 - Commented out XanDo javascript alert.
 - Touched images and index.php.

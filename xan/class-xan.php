@@ -119,39 +119,41 @@ define( 'ZINDEX_BELOW', '-1' );
 define( 'ZINDEX_NAVBAR', '500' );
 define( 'ZINDEX_TOP', '1000' );
 
-// FontAwesome
-define( 'FA_LIST', "<i class='fas fa-th-list'></i>" );
-define( 'FA_SEARCH', "<i class='fas fa-search'></i>" );
-define( 'FA_SEARCHPLUS', "<i class='fas fa-search-plus'></i>" );
-define( 'FA_SORT', "<i class='fas fa-sort'></i>" );
-define( 'FA_SORT_ASC', "<i class='fas fa-arrow-alt-down'></i>" );
-define( 'FA_SORT_DESC', "<i class='fas fa-arrow-alt-up'></i>" );
-define( 'FA_CLEAR', "<i class='fas fa-times-circle'></i>" );
-define( 'FA_UPLOAD', "<i class='fas fa-file-upload'></i>" ); // fa-file-upload, fa-cloud-upload
-define( 'FA_PASSWORD', "<i class='fas fa-key'></i>" );
-define( 'FA_STOPWATCH', "<i class='fas fa-stopwatch'></i>" );
-define( 'FA_CLOUD', "<i class='fas fa-cloud'></i>" );
-define( 'FA_SPINNER', "<i class='fas fa-spinner fa-spin'></i>" );
+// Icon Fonts
+$tagsFontIconBlue = new \xan\tags( [], [ 'color' => 'blue' ], [] );
+define( 'FI_LIST', \xan\fontIcon( 'fas fa-list' ) );
+define( 'FI_SEARCH', \xan\fontIcon( 'fas fa-search' ) );
+define( 'FI_SEARCHPLUS', \xan\fontIcon( 'fas fa-search-plus' ) );
 
-define( 'FA_NEW', "<i class='fas fa-plus'></i>" );
-define( 'FA_DUPLICATE', "<i class='fas fa-clone'></i>" );
-define( 'FA_DELETE', "<i class='fas fa-minus'></i>" );
+define( 'FI_SORT', \xan\fontIcon( 'fas fa-sort' ) );
+define( 'FI_SORT_ASC', \xan\fontIcon( 'fas fa-arrow-alt-down' ) );
+define( 'FI_SORT_DESC', \xan\fontIcon( 'fas fa-arrow-alt-up' ) );
+define( 'FI_CLEAR', \xan\fontIcon( 'fas fa-times-circle' ) );
+define( 'FI_UPLOAD', \xan\fontIcon( 'fas fa-file-upload' ) ); // fa-file-upload, fa-cloud-upload
+define( 'FI_PASSWORD', \xan\fontIcon( 'fas fa-key' ) );
+define( 'FI_STOPWATCH', \xan\fontIcon( 'fas fa-stopwatch' ) );
+define( 'FI_CLOUD', \xan\fontIcon( 'fas fa-cloud' ) );
+define( 'FI_SPINNER', \xan\fontIcon( 'fas fa-spinner fa-spin' ) );
 
-define( 'FA_MORE_UP', "<i class='fas fa-angle-double-up'></i>" );
-define( 'FA_MORE_DOWN', "<i class='fas fa-angle-double-down'></i>" );
-define( 'FA_MORE_LEFT', "<i class='fas fa-angle-double-left'></i>" );
-define( 'FA_MORE_RIGHT', "<i class='fas fa-angle-double-right'></i>" );
+define( 'FI_NEW', \xan\fontIcon( 'fas fa-plus' ) );
+define( 'FI_DUPLICATE', \xan\fontIcon( 'fas fa-clone' ) );
+define( 'FI_DELETE', \xan\fontIcon( 'fas fa-minus' ) );
 
-define( 'FA_ACTION', "<i class='fas fa-running'></i>" );
-define( 'FA_PRINT', "<i class='fas fa-print'></i>" );
+define( 'FI_MORE_UP', \xan\fontIcon( 'fas fa-angle-double-up' ) );
+define( 'FI_MORE_DOWN', \xan\fontIcon( 'fas fa-angle-double-down' ) );
+define( 'FI_MORE_LEFT', \xan\fontIcon( 'fas fa-angle-double-left' ) );
+define( 'FI_MORE_RIGHT', \xan\fontIcon( 'fas fa-angle-double-right' ) );
 
-define( 'FA_MENU', "<i class='fas fa-bars'></i>" );
-define( 'FA_SELECT', "<i class='fas fa-caret-down'></i>" );
+define( 'FI_ACTION', \xan\fontIcon( 'fas fa-running' ) );
+define( 'FI_PRINT', \xan\fontIcon( 'fas fa-print' ) );
 
-define( 'FA_PSOS_STOPWATCH', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'><i class='fas fa-stopwatch'></i></span>" );
-define( 'FA_PSOS_CLOUD', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'><i class='fas fa-cloud'></i></span>" );
-define( 'FA_PSOS_SAVE', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'><i class='fas fa-save'></i></span>" );
-define( 'FA_PSOS_ERROR', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'><i class='fas fa-exclamation-triangle'></i></span>" );
+define( 'FI_MENU', \xan\fontIcon( 'fas fa-bars' ) );
+define( 'FI_SELECT', \xan\fontIcon( 'fas fa-caret-down' ) );
+
+define( 'FI_PSOS_STOPWATCH', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'>" . \xan\fontIcon( 'fas fa-stopwatch' ) . "</span>" );
+define( 'FI_PSOS_CLOUD', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'>" . \xan\fontIcon( 'fas fa-cloud' ) . "</span>" );
+define( 'FI_PSOS_SAVE', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'>" . \xan\fontIcon( 'fas fa-save' ) . "</span>" );
+define( 'FI_PSOS_ERROR', "<span class='mr-1' style='font-size: " . ICON_SIZE_XANMESSAGE . ";'>" . \xan\fontIcon( 'fas fa-exclamation-triangle' ) . "</span>" );
 
 // Bucket File Types
 define( 'FILE_TYPES_IMAGES', 'Images' );
@@ -975,14 +977,36 @@ class tags {
 	public $classA = [];
 	public $styleD = [];
 	public $extrasA = [];
-	public $otherD = [];
+	
+	public $classValue = '';
+	public $classTag = '';
+	
+	public $styleValue = '';
+	public $styleTag = '';
+
+	public $extrasValue = '';
+	public $extrasTag = '';
 
 	// Constructor
 	public function __construct( $classA = [], $styleD = [], $extrasA = [] ) {
+	    // Init
 		$this->classA = $classA;
 		$this->styleD = $styleD;
 		$this->extrasA = $extrasA;
 	}
+	
+	public function initTags(){
+        // Class
+        $this->classValue = classAToString( $this->classA );
+        $this->classTag = ( isEmpty($this->classValue ) ? '' : 'class="' . $this->classValue . '"' );;
+        // Style
+        $this->styleValue = styleDToString( $this->styleD );
+        $this->styleTag = ( isEmpty($this->styleValue ) ? '' : 'style="' . $this->styleValue . '"' );;
+        // Extras
+        $this->extrasValue = extrasAToString( $this->extrasA );
+        $this->extrasTag = $this->extrasValue;
+	}
+	
 }
 
 
@@ -1170,19 +1194,6 @@ class eleCard extends element {
 		// Return
 		$code = ob_get_clean();
 		return $code;
-	}
-
-	 public function renderListItemLink( $content, $index, $id, $isSelected, $onClick ) {
-		 $active = ( $isSelected ? 'active' : '' );
-		 $content = str_replace( 'list-group-item-text', 'list-group-item-text ' . $active, $content );
-		 ob_start();
-	?>
-	<span id="<?= $id ?>" class="list-group-item list-group-item-action <?= $active ?> border-secondary border-bottom p-1 pt-2 pb-2" onclick="<?= $onClick ?>">
-		<?= $content ?>
-		<div style="position: absolute; top: 2px; right: 2px; font-size: 9px;"><?= $index ?></div>
-	</span>
-	<?php
-	return ob_get_clean();
 	}
 
 }
@@ -1606,7 +1617,7 @@ class eleTextReveal extends element {
 		<div class="input-group" id="<?= $this->idValue . '_Group' ?>">
 			<?= $input ?>
 			<div class="input-group-append" id="<?= $this->idValue . '_Reveal' ?>">
-				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" id="<?= $this->idValue . '_Button' ?>" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= iconFA( 'fas fa-eye' ) ?></button>
+				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" id="<?= $this->idValue . '_Button' ?>" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= fontIcon( 'fas fa-eye' ) ?></button>
 			</div>
 		</div>
 		<?php
@@ -1722,7 +1733,7 @@ class eleTextRevealDB extends element {
 		<div class="input-group">
 			<?= $input ?>
 			<div class="input-group-append">
-				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= iconFA( 'fas fa-eye' ) ?></button>
+				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= fontIcon( 'fas fa-eye' ) ?></button>
 			</div>
 		</div>
 		<?php
@@ -2116,7 +2127,7 @@ class eleFileBucketImageDB extends element {
 			<input type="hidden" name="fileKey" value="<?= $this->fileBucketKey ?>">
 			<input type="hidden" name="fileTypes" value="<?= $this->fileTypes ?>">
 			<div class="form-file-area float-right bg-primary" style="width: 2rem; height: 2rem;">
-			<div class="form-file-icon"><?= FA_UPLOAD ?></div>
+			<div class="form-file-icon"><?= FI_UPLOAD ?></div>
 			<input class="form-file-input" type="file" name="file" id="<?= $idFormFile ?>" onChange='xanFileUploadToBucket( "#<?= $idForm ?>", "<?= URL_BUCKET_UPLOAD_PAGE ?>", <?= $jsfnNameSuccess ?>, <?= $jsfnNameProblem ?> );'>
 			</div>
 		</form>
@@ -2127,13 +2138,13 @@ class eleFileBucketImageDB extends element {
 			$( "#<?= $idImg ?>" ).attr( "src", pURL ); // Set the img URL
 			<?= $jsSuccess ?>
 			let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
-			xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_SAVE ?>", iconID, '', true, false );
+			xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_SAVE ?>", iconID, '', true, false );
 			let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
 			xanMessageDisplay( "#xanMessage", "<span class='text-success'>Uploaded</span>", messageID, iconID, true, true );
 		}
 		function <?= $jsfnNameProblem ?>( pMessage ) {
 			<?= $jsProblem ?>
-			xanMessageDisplay( "#xanMessage", "<?= FA_PSOS_ERROR ?>", "", "", false, false );
+			xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_ERROR ?>", "", "", false, false );
 			xanMessageDisplay( "#xanMessage", "<span class='text-danger'>Upload Problem: " + pMessage + "</span>", "", "", false, true );
 		}
 		</script>
@@ -2164,8 +2175,8 @@ class eleSearchBarSimpleDB extends element {
 			<div class="input-group">
 				<input type="text" class="<?= ELE_CLASS ?>" name="SearchTerm" id="<?= $this->idPrefix ?>_SearchTerm" value="<?= $this->defaultValue ?>" placeholder="" aria-label="<?= $this->idPrefix ?> Search" aria-describedby="<?= $this->idPrefix ?>_SearchButtonDo">
 				<div class="input-group-append">
-					<button class="<?= ELE_CLASS_BUTTON_SM_SEARCHBAR ?>" type="button" id="<?= $this->idPrefix ?>_SearchButtonDo" onclick="<?= $this->onSearch ?>"><?= FA_SEARCH ?></button>
-					<button class="<?= ELE_CLASS_BUTTON_SM_SEARCHBAR ?>" type="button" id="<?= $this->idPrefix ?>_SearchButtonClear" onclick="$( '#<?= $this->idPrefix ?>_SearchTerm' ).val(''); $( '#<?= $this->idPrefix ?>_SearchButtonDo' ).click();"><?= FA_CLEAR ?></button>
+					<button class="<?= ELE_CLASS_BUTTON_SM_SEARCHBAR ?>" type="button" id="<?= $this->idPrefix ?>_SearchButtonDo" onclick="<?= $this->onSearch ?>"><?= FI_SEARCH ?></button>
+					<button class="<?= ELE_CLASS_BUTTON_SM_SEARCHBAR ?>" type="button" id="<?= $this->idPrefix ?>_SearchButtonClear" onclick="$( '#<?= $this->idPrefix ?>_SearchTerm' ).val(''); $( '#<?= $this->idPrefix ?>_SearchButtonDo' ).click();"><?= FI_CLEAR ?></button>
 				</div>
 			</div>
 		</div>
@@ -2357,19 +2368,19 @@ class eleSearchBarListDB extends element {
 		
 		// Button Search
 		$buttonSearchSimpleTags = new tags( [ ELE_CLASS_BUTTON_SM_SEARCHBAR ], [], [ 'onclick="$( \'#' . $this->idPrefix . 'SearchForm' .'\' ).submit();"' ] );
-		$buttonSearchSimpleEle = new eleButton( FA_SEARCH, $this->idPrefix . 'SearchButtonDo', '', $buttonSearchSimpleTags );
+		$buttonSearchSimpleEle = new eleButton( FI_SEARCH, $this->idPrefix . 'SearchButtonDo', '', $buttonSearchSimpleTags );
 
 		// Button Search Advanced
 		$buttonSearchAdvancedTags = new tags( [ ELE_CLASS_BUTTON_SM_SEARCHBAR ], [], [ 'onclick="$(\'#' . $this->idPrefix . 'QueryBuilder_Modal\').modal(\'show\');"' ] );
-		$buttonSearchAdvancedEle = new eleButton( FA_SEARCHPLUS, $this->idPrefix . 'SearchButtonQueryBuilder', '', $buttonSearchAdvancedTags );
+		$buttonSearchAdvancedEle = new eleButton( FI_SEARCHPLUS, $this->idPrefix . 'SearchButtonQueryBuilder', '', $buttonSearchAdvancedTags );
 
 		// Button Sort
 		$buttonSearchSortTags = new tags( [ ELE_CLASS_BUTTON_SM_SEARCHBAR ], [], [ 'data-toggle="dropdown"', 'aria-haspopup="true"', 'aria-expanded="false"', '' ] );
-		$buttonSearchSortEle = new eleButton( FA_SORT, $this->idPrefix . 'SearchButtonSort', '', $buttonSearchSortTags );
+		$buttonSearchSortEle = new eleButton( FI_SORT, $this->idPrefix . 'SearchButtonSort', '', $buttonSearchSortTags );
 
 		// Button Clear
 		$buttonSearchClearTags = new tags( [ ELE_CLASS_BUTTON_SM_SEARCHBAR ], [], [ 'onclick="$( \'#' . $this->idPrefix . 'SearchTerm\' ).val(\'\'); $( \'#' . $this->idPrefix . 'SearchSort\' ).val(\'\'); $( \'#' . $this->idPrefix . 'SearchButtonDo\' ).click();"' ] );
-		$buttonSearchClearEle = new eleButton( FA_CLEAR, $this->idPrefix . 'SearchButtonClear', '', $buttonSearchClearTags );
+		$buttonSearchClearEle = new eleButton( FI_CLEAR, $this->idPrefix . 'SearchButtonClear', '', $buttonSearchClearTags );
 
 		// Search Bar!!!
 		ob_start() ?>
@@ -2759,8 +2770,13 @@ function logAuditToSQL( $UUIDUsers, $userLogin, $action, $tableName, $tableUUIDN
 
 ///////////////////////////////////////////////////////////
 // FontAwesome
-function iconFA( $pKey, $quote = '"' ) {
-	return '<i class=' . $quote . $pKey . $quote . '></i>';
+function fontIcon( $pKey, tags $tags = null, $quote = '"' ) {
+    if ( $tags !== null ){
+        $tags->initTags();
+        $tagsStringClass = ' ' . $tags->classValue;
+        $tagsStringOther = " $tags->styleTag $tags->extrasTag";
+    }
+	return '<i class=' . $quote . $pKey . $tagsStringClass . $quote . $tagsStringOther . '></i>';
 }
 
 ///////////////////////////////////////////////////////////
@@ -2904,10 +2920,10 @@ function dbQueryOrderByItem( $idPrefix, $orderByASC, $orderByDESC, $label ) {
 	ob_start() ?>
     <div class="dropdown-item text-right">
         <a onclick="<?= $idPrefix ?>_SearchSortAction( '<?= $orderByASC ?>' );"><?= $label . ' ' ?>
-            <button class="<?= ELE_CLASS_BUTTON_SM_GO ?>" type="button"><?= FA_SORT_ASC ?></button>
+            <button class="<?= ELE_CLASS_BUTTON_SM_GO ?>" type="button"><?= FI_SORT_ASC ?></button>
         </a>
         <a onclick="<?= $idPrefix ?>_SearchSortAction( '<?= $orderByDESC ?>' );"> or
-            <button class="<?= ELE_CLASS_BUTTON_SM_GO ?>" type="button"><?= FA_SORT_DESC ?></button>
+            <button class="<?= ELE_CLASS_BUTTON_SM_GO ?>" type="button"><?= FI_SORT_DESC ?></button>
         </a>
     </div>
 	<?php

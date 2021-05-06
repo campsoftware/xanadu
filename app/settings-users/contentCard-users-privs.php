@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( FA_PASSWORD ) . STR_NBSP . 'Privs';
+$cardHeaderContent = \xan\fontIcon( FI_PASSWORD ) . STR_NBSP . 'Privs';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-mouse' ) . STR_NBSP . 'App';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-mouse' ) . STR_NBSP . 'App';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

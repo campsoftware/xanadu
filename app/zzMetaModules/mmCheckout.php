@@ -21,8 +21,8 @@ class moduleMetaCheckout extends \xan\moduleMeta {
 		$this->NamePlural = 'Checkout';
 		$this->NameSingular = 'Checkout';
 		
-		$this->FontAwesome = '<i class=\'fas fa-shopping-basket\'></i>';
-		$this->FontAwesomeList = FA_LIST;
+		$this->FontAwesome = \xan\fontIcon( 'fas fa-shopping-basket' );
+		$this->FontAwesomeList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'checkout/';
 		$this->URLFull = URL_BASE . 'checkout/';

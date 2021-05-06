@@ -21,8 +21,8 @@ class moduleMetaSettingsT extends \xan\moduleMeta {
 		$this->NamePlural = 'Settings';
 		$this->NameSingular = 'Setting';
 		
-		$this->FontAwesome = '<i class=\'fas fa-cog\'></i>';
-		$this->FontAwesomeList = FA_LIST;
+		$this->FontAwesome = \xan\fontIcon( 'fas fa-cog' );
+		$this->FontAwesomeList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'settings/';
 		$this->URLFull = URL_BASE . 'settings/';

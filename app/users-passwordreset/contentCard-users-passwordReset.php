@@ -34,7 +34,7 @@ JS;
 
 // Button
 $formButtonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_DELETE ], [], [ "onclick='" . $formButtonOnClick . "'" ] );
-$formButtonSpinner = '<span id="formButtonSpinner" style="display: none;">' . STR_NBSP . FA_SPINNER . '</span>';
+$formButtonSpinner = '<span id="formButtonSpinner" style="display: none;">' . STR_NBSP . FI_SPINNER . '</span>';
 $buttonEle = new \xan\eleButton( $mmUsersPasswordReset->FontAwesome . STR_NBSP . $mmUsersPasswordReset->NameModule . $formButtonSpinner, 'formButton', '', $formButtonTags );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 

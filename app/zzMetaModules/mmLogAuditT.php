@@ -21,8 +21,8 @@ class moduleMetaLogAuditT extends \xan\moduleMeta {
         $this->NamePlural = 'Log Audits';
         $this->NameSingular = 'Log Audit';
 
-        $this->FontAwesome = '<i class=\'fas fa-abacus\'></i>';
-        $this->FontAwesomeList = FA_LIST;
+        $this->FontAwesome = \xan\fontIcon( 'fas fa-abacus' );
+        $this->FontAwesomeList = FI_LIST;
 
         //        $this->URLRelative = '/' . 'contacts/';
         //        $this->URLFull = URL_BASE . 'contacts/';
