@@ -53,8 +53,8 @@ function {$buttonActionOnClickFunctionName}(){
 JS;
 
 // Modal Append
-$buttonActionSpinnerSpan = '<span id="' . $buttonActionSpinnerID . '" style="display: none;">' . STR_NBSP . FA_SPINNER . '</span>';
-$buttonActionLabel = FA_PASSWORD . STR_NBSP . 'Password Replace' . STR_NBSP . $buttonActionSpinnerSpan;
+$buttonActionSpinnerSpan = '<span id="' . $buttonActionSpinnerID . '" style="display: none;">' . STR_NBSP . FI_SPINNER . '</span>';
+$buttonActionLabel = FI_PASSWORD . STR_NBSP . 'Password Replace' . STR_NBSP . $buttonActionSpinnerSpan;
 $buttonActionMessage = '<span id="' . $messageID . '"></span>';
 $resp->contentEndA[] = $modal->renderModalWButtons( 'Replace the Password for this User?', '', $table->render(), $buttonActionMessage, 'Cancel', $buttonActionLabel, [ "onclick='" . $buttonActionOnClick . "'" ], $modalInitJS );
 ?>

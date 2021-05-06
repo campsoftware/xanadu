@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-keyboard' ) . STR_NBSP . 'Auth';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-keyboard' ) . STR_NBSP . 'Auth';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
@@ -30,7 +30,7 @@ $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmUsersT->getColEleRen
 
 // Password Change Button
 $buttonPWChangeTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY ], [], [ 'onclick="$(\'#UsersPasswordReplace_Modal\').modal(\'show\');"' ] );
-$buttonPWChangeEle = new \xan\eleButton( \xan\iconFA( FA_PASSWORD ) . STR_NBSP . 'Password Replace', '', '', $buttonPWChangeTags );
+$buttonPWChangeEle = new \xan\eleButton( \xan\fontIcon( FI_PASSWORD ) . STR_NBSP . 'Password Replace', '', '', $buttonPWChangeTags );
 $cardHeaderContent .= '<div class="float-right">' . $buttonPWChangeEle->render() . '</div>';
 
 // Card Append

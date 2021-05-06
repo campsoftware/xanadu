@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-at' ) . STR_NBSP . 'SMTP';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-at' ) . STR_NBSP . 'SMTP';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

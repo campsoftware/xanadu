@@ -21,8 +21,8 @@ class moduleMetaUsersRegister extends \xan\moduleMeta {
 		$this->NamePlural = 'Register';
 		$this->NameSingular = 'Register';
 		
-		$this->FontAwesome = '<i class=\'fas fa-fingerprint\'></i>';
-		$this->FontAwesomeList = FA_LIST;
+		$this->FontAwesome = \xan\fontIcon( 'fas fa-fingerprint' );
+		$this->FontAwesomeList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'register/';
 		$this->URLFull = URL_BASE . 'register/';

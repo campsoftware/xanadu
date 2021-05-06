@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-file-alt' ) . STR_NBSP . 'Notes';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-file-alt' ) . STR_NBSP . 'Notes';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-hard-hat' ) . STR_NBSP . 'Processes';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-hard-hat' ) . STR_NBSP . 'Processes';
 $card = new \xan\eleCard( CARD_WIDTH, CARD_HEIGHT_MAX, true );
 
 // Tags Special

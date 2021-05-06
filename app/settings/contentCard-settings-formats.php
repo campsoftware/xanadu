@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-calendar-alt' ) . STR_NBSP . 'Formats';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-calendar-alt' ) . STR_NBSP . 'Formats';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

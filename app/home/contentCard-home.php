@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-door-open' ) . STR_NBSP . 'Welcome Home!';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-door-open' ) . STR_NBSP . 'Welcome Home!';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

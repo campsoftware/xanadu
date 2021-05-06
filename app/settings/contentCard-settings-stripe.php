@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-cc-stripe' ) . STR_NBSP . 'Stripe';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-cc-stripe' ) . STR_NBSP . 'Stripe';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

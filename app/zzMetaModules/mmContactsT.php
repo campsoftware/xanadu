@@ -21,8 +21,8 @@ class moduleMetaContactsT extends \xan\moduleMeta {
 		$this->NamePlural = 'Contacts';
 		$this->NameSingular = 'Contact';
 		
-		$this->FontAwesome = '<i class=\'fas fa-user\'></i>';
-		$this->FontAwesomeList = FA_LIST;
+		$this->FontAwesome = \xan\fontIcon( 'fas fa-user' );
+		$this->FontAwesomeList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'contacts/';
 		$this->URLFull = URL_BASE . 'contacts/';

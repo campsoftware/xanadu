@@ -39,7 +39,7 @@ JS;
 
 // Button
 $formButtonLoginTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ "onclick='" . $formButtonLoginOnClick . "'" ] );
-$formButtonLoginSpinner = '<span id="formButtonLoginSpinner" style="display: none;">' . STR_NBSP . FA_SPINNER . '</span>';
+$formButtonLoginSpinner = '<span id="formButtonLoginSpinner" style="display: none;">' . STR_NBSP . FI_SPINNER . '</span>';
 $buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . $mmUsersLogin->NameModule . $formButtonLoginSpinner, 'formButtonLogin', '', $formButtonLoginTags );
 $tableLogin->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
@@ -75,7 +75,7 @@ JS;
 
 // Button
 $formButtonCodeTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ "onclick='" . $formButtonCodeOnClick . "'" ] );
-$formButtonCodeSpinner = '<span id="formButtonCodeSpinner" style="display: none;">' . STR_NBSP . FA_SPINNER . '</span>';
+$formButtonCodeSpinner = '<span id="formButtonCodeSpinner" style="display: none;">' . STR_NBSP . FI_SPINNER . '</span>';
 $buttonEle = new \xan\eleButton( $mmUsersLogin->FontAwesome . STR_NBSP . 'Enter Code to Login' . $formButtonCodeSpinner, 'formButtonCode', '', $formButtonCodeTags );
 $tableCode->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 

@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-folders' ) . STR_NBSP . 'Disk Path:' . STR_BR . PATH_ROOT_OS;
+$cardHeaderContent = \xan\fontIcon( 'fas fa-folders' ) . STR_NBSP . 'Disk Path:' . STR_BR . PATH_ROOT_OS;
 $card = new \xan\eleCard( CARD_WIDTH, CARD_HEIGHT_MAX, true );
 
 // Tags Special

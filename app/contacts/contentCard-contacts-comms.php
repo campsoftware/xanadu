@@ -80,7 +80,7 @@ if ( $recsComms->errorB ) {
         $gridRow->content .= $mmContactsCommsT->getColEleRender( 'Main', ELE_AS_DEFINED, $tagsEleMain, $recsComms, $formTagContactsComms, $resp );
         // Button Delete
         $buttonDeleteTags = new \xan\tags( [ 'p-0 mr-1 ', ELE_CLASS_BUTTON_SM_DELETE ], [ 'width' => PORTAL_BUTTON_WIDTH, 'height' => PORTAL_ELE_HEIGHT ], [ 'onclick="window.' . $xanDoDelete . '_UUID = \'' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '\'; $(\'#' . $xanDoDelete . '_Modal\').modal(\'show\');"' ] );
-        $buttonDeleteEle = new \xan\eleButton( FA_DELETE, '', '', $buttonDeleteTags );
+        $buttonDeleteEle = new \xan\eleButton( FI_DELETE, '', '', $buttonDeleteTags );
         // End
         $gridRow->content .= $buttonDeleteEle->render();
         $grid->content .= $gridRow->render();
@@ -93,17 +93,17 @@ if ( $recsComms->errorB ) {
         // Email Button
         $buttonGoTags = new \xan\tags( [ 'p-0 mr-1 ', ELE_CLASS_BUTTON_SM_GO ], [ 'display' => ( $recsCommsRow[ 'Type' ] === 'Email' ? 'block' : 'none' ), 'width' => PORTAL_BUTTON_WIDTH, 'height' => PORTAL_ELE_HEIGHT ], [ "onclick=\"xanDo( { 'Do': 'ContactsCommsURLGet', 'Msg': 'Email Compose', 'URL': '" . $mmContactsT->URLDoRelative . "', 'IDContactsComms': '" . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . "' } );\"" ] );
         $buttonID = 'xf_' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '_Button_EmailLink';
-        $buttonGoEle = new \xan\eleButton( \xan\iconFA( 'fas fa-at' ), $buttonID, '', $buttonGoTags );
+        $buttonGoEle = new \xan\eleButton( \xan\fontIcon( 'fas fa-at' ), $buttonID, '', $buttonGoTags );
         $gridRow->content .= $buttonGoEle->render();
         // Phone Button
         $buttonGoTags = new \xan\tags( [ 'p-0 mr-1 ', ELE_CLASS_BUTTON_SM_GO ], [ 'display' => ( $recsCommsRow[ 'Type' ] === 'Phone' ? 'block' : 'none' ), 'width' => PORTAL_BUTTON_WIDTH, 'height' => PORTAL_ELE_HEIGHT ], [ "onclick=\"xanDo( { 'Do': 'ContactsCommsURLGet', 'Msg': 'Phone Dial', 'URL': '" . $mmContactsT->URLDoRelative . "', 'IDContactsComms': '" . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . "' } );\"" ] );
         $buttonID = 'xf_' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '_Button_PhoneLink';
-        $buttonGoEle = new \xan\eleButton( \xan\iconFA( 'fas fa-phone' ), $buttonID, '', $buttonGoTags );
+        $buttonGoEle = new \xan\eleButton( \xan\fontIcon( 'fas fa-phone' ), $buttonID, '', $buttonGoTags );
         $gridRow->content .= $buttonGoEle->render();
         // Web Button
         $buttonGoTags = new \xan\tags( [ 'p-0 mr-1 ', ELE_CLASS_BUTTON_SM_GO ], [ 'display' => ( $recsCommsRow[ 'Type' ] === 'Web' ? 'block' : 'none' ), 'width' => PORTAL_BUTTON_WIDTH, 'height' => PORTAL_ELE_HEIGHT ], [ "onclick=\"xanDo( { 'Do': 'ContactsCommsURLGet', 'Msg': 'Webpage Load', 'URL': '" . $mmContactsT->URLDoRelative . "', 'IDContactsComms': '" . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . "', 'NewWindow': 1 } );\"" ] );
         $buttonID = 'xf_' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '_Button_WebLink';
-        $buttonGoEle = new \xan\eleButton( \xan\iconFA( 'fas fa-spider-web' ), $buttonID, '', $buttonGoTags );
+        $buttonGoEle = new \xan\eleButton( \xan\fontIcon( 'fas fa-spider-web' ), $buttonID, '', $buttonGoTags );
         $gridRow->content .= $buttonGoEle->render();
         // Street
         $tagsEleStreet = new \xan\tags( [ 'col', $tagsCommon ], [ 'display' => ( $recsCommsRow[ 'Type' ] === 'Address' ? 'block' : 'none' ), 'height' => PORTAL_ELE_HEIGHT ], [] );
@@ -111,7 +111,7 @@ if ( $recsComms->errorB ) {
         // Address Button
         $buttonGoTags = new \xan\tags( [ 'p-0 mr-1 ', ELE_CLASS_BUTTON_SM_GO ], [ 'display' => ( $recsCommsRow[ 'Type' ] === 'Address' ? 'block' : 'none' ), 'width' => PORTAL_BUTTON_WIDTH, 'height' => PORTAL_ELE_HEIGHT ], [ "onclick=\"xanDo( { 'Do': 'ContactsCommsURLGet', 'Msg': 'Map Load', 'URL': '" . $mmContactsT->URLDoRelative . "', 'IDContactsComms': '" . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . "', 'NewWindow': 1 } );\"" ] );
         $buttonID = 'xf_' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '_Button_AddressLink';
-        $buttonGoEle = new \xan\eleButton( \xan\iconFA( 'fas fa-map-marker-alt' ), $buttonID, '', $buttonGoTags );
+        $buttonGoEle = new \xan\eleButton( \xan\fontIcon( 'fas fa-map-marker-alt' ), $buttonID, '', $buttonGoTags );
         // Row 2 End
         $gridRow->content .= $buttonGoEle->render();
         $grid->content .= $gridRow->render();
@@ -165,7 +165,7 @@ if ( $recsComms->errorB ) {
 
 // Header Button New Record
 $buttonNewTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_NEW ], [], [ 'onclick="$(\'#' . $xanDoNew . '_Modal\').modal(\'show\');"' ] );
-$buttonNewEle = new \xan\eleButton( FA_NEW, '', '', $buttonNewTags );
+$buttonNewEle = new \xan\eleButton( FI_NEW, '', '', $buttonNewTags );
 $cardHeaderContent .= '<div class="float-right">' . $buttonNewEle->render() . '</div>';
 
 // Body Grid

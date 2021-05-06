@@ -20,7 +20,7 @@ $sessionFilePaths = glob( $sessionsPath . 'sess_*' );
 // echo print_r( $sessionFilePaths, true );
 
 // Card
-$cardHeaderContent = \xan\iconFA( 'fas fa-handshake' ) . STR_NBSP . 'Sessions';
+$cardHeaderContent = \xan\fontIcon( 'fas fa-handshake' ) . STR_NBSP . 'Sessions';
 $card = new \xan\eleCard( CARD_WIDTH_3X, CARD_HEIGHT_MAX, true );
 
 // Tags Special

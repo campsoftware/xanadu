@@ -21,8 +21,8 @@ class moduleMetaLogEventT extends \xan\moduleMeta {
         $this->NamePlural = 'Log Events';
         $this->NameSingular = 'Log Event';
 
-        $this->FontAwesome = '<i class=\'fas fa-calendar-day\'></i>';
-        $this->FontAwesomeList = FA_LIST;
+        $this->FontAwesome = \xan\fontIcon( 'fas fa-calendar-day' );
+        $this->FontAwesomeList = FI_LIST;
 
         //        $this->URLRelative = '/' . 'contacts/';
         //        $this->URLFull = URL_BASE . 'contacts/';
