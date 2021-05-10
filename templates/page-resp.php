@@ -95,6 +95,7 @@ ob_start();
 			echo "\r\r";
 		}
 		?>
+        
         <!-- Bootstrap Icons     https://icons.getbootstrap.com -->
         <link href="/include/bootstrapIcons/1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css">
         
@@ -431,7 +432,7 @@ ob_start();
     <script>
         function xanDo( params ) {
             let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
-            xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_CLOUD ?>", iconID, '', false, false );
+            xanMessageDisplay( "#xanMessage", `<?= FI_PSOS_CLOUD ?>`, iconID, '', false, false );
             // alert( "xanDo params = " + JSON.stringify( params ) );
             let timeBegin = new Date();
             // Window in Current or New Window
@@ -542,7 +543,7 @@ ob_start();
                     xanMessageDisplay( "#xanMessage", "<span class='text-success'>" + params[ "Msg" ] + "<br />" + Math.abs( timeSecs ) + "s</span>", messageID, iconID, true, true );
                 },
                 error: function ( xhr, status, error ) {
-                    xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_ERROR ?>", '', '', false, false );
+                    xanMessageDisplay( "#xanMessage", `<?= FI_PSOS_ERROR ?>`, '', '', false, false );
                     xanMessageDisplay( "#xanMessage", "<span class='text-danger'>" + params[ "Msg" ] + " Error:" + error + "</span>", '', '', false, true );
                 }
             } );
@@ -578,7 +579,7 @@ ob_start();
 
         function xanDoSave( event ) {
             let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
-            xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_SAVE ?>", iconID, '', false, false );
+            xanMessageDisplay( "#xanMessage", `<?= FI_PSOS_SAVE ?>`, iconID, '', false, false );
             thisInput = $( this );
             let thisInputID = $( thisInput ).attr( "id" );
             let thisInputName = $( thisInput ).attr( "name" );
@@ -641,7 +642,7 @@ ob_start();
                     },
                     error: function ( xhr, status, error ) {
                         //alert( "Error: " + status + " / " + error );
-                        xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_ERROR ?>", '', '', false, false );
+                        xanMessageDisplay( "#xanMessage", `<?= FI_PSOS_ERROR ?>`, '', '', false, false );
                         xanMessageDisplay( "#xanMessage", "<span class='text-danger'>Saving Error: " + error + "</span>", '', '', false, true );
                     }
                 } );
@@ -682,7 +683,7 @@ ob_start();
 
             // Message Display
             let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
-            xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_STOPWATCH ?>", iconID, '', true, false );
+            xanMessageDisplay( "#xanMessage", `<?= FI_PSOS_STOPWATCH ?>`, iconID, '', true, false );
             let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
             xanMessageDisplay( "#xanMessage", "<span class='text-success'>Load Page<br /><?= \xan\microsecsDiff( $pageload_begin ) ?></span>", messageID, iconID, true, true );
 
