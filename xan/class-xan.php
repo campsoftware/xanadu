@@ -1617,7 +1617,7 @@ class eleTextReveal extends element {
 		<div class="input-group" id="<?= $this->idValue . '_Group' ?>">
 			<?= $input ?>
 			<div class="input-group-append" id="<?= $this->idValue . '_Reveal' ?>">
-				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" id="<?= $this->idValue . '_Button' ?>" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= fontIcon( 'fas fa-eye' ) ?></button>
+				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" id="<?= $this->idValue . '_Button' ?>" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= \xan\fontIcon( 'fas fa-eye' ) ?></button>
 			</div>
 		</div>
 		<?php
@@ -1733,7 +1733,7 @@ class eleTextRevealDB extends element {
 		<div class="input-group">
 			<?= $input ?>
 			<div class="input-group-append">
-				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= fontIcon( 'fas fa-eye' ) ?></button>
+				<button class="<?= ELE_CLASS_BUTTON_RG_SECONDARY ?> p-1 mb-1" type="button" onclick="let x = document.getElementById('<?= $this->idValue ?>'); if (x.type === 'password') { x.type = 'text'; } else { x.type = 'password'; }"><?= \xan\fontIcon( 'fas fa-eye' ) ?></button>
 			</div>
 		</div>
 		<?php
@@ -2138,13 +2138,13 @@ class eleFileBucketImageDB extends element {
 			$( "#<?= $idImg ?>" ).attr( "src", pURL ); // Set the img URL
 			<?= $jsSuccess ?>
 			let iconID = Math.floor( ( Math.random() * 999999999 ) + 1 );
-			xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_SAVE ?>", iconID, '', true, false );
+			xanMessageDisplay( "#xanMessage", `<?= FI_PSOS_SAVE ?>`, iconID, '', true, false );
 			let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
 			xanMessageDisplay( "#xanMessage", "<span class='text-success'>Uploaded</span>", messageID, iconID, true, true );
 		}
 		function <?= $jsfnNameProblem ?>( pMessage ) {
 			<?= $jsProblem ?>
-			xanMessageDisplay( "#xanMessage", "<?= FI_PSOS_ERROR ?>", "", "", false, false );
+			xanMessageDisplay( "#xanMessage", `<?= FI_PSOS_ERROR ?>`, "", "", false, false );
 			xanMessageDisplay( "#xanMessage", "<span class='text-danger'>Upload Problem: " + pMessage + "</span>", "", "", false, true );
 		}
 		</script>
@@ -2769,8 +2769,8 @@ function logAuditToSQL( $UUIDUsers, $userLogin, $action, $tableName, $tableUUIDN
 
 
 ///////////////////////////////////////////////////////////
-// FontAwesome
-function fontIcon( $pKey, tags $tags = null, $quote = '"' ) {
+// FontIcons for Bootstrap Icon or FontAwesome
+function fontIcon( $pKey, \xan\tags $tags = null, $quote = '"' ) {
     if ( $tags !== null ){
         $tags->initTags();
         $tagsStringClass = ' ' . $tags->classValue;

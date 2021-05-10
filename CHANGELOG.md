@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-10-12-18-05
+- Fixed an issue with quotes when displaying font icons during ajax calls.
+
 2021-05-06-17-52-02
 - Added Bootstrap Icons.
 - Replaced iconFA function with fontIcon. Adds a tags parameter. Works with both Bootstrap Icons and FontAwesome.
