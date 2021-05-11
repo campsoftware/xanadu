@@ -27,9 +27,9 @@ $cardTemp = new \xan\eleCard( '', '', '' );
 
 // Query Search Term Prep
 $queryColumns = array( 'NameCompany', 'NameFirst', 'NameLast' );
-$queryWhere = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? '' : '( ' . \xan\dbSearchTermSQL( $queryColumns ) . ' )' );
-$queryTermBindNamesA = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : \xan\dbSearchTermBindNamesA( $queryColumns ) );
-$queryTermBindValuesA = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : \xan\dbSearchTermBindValuesA( $queryColumns, $doParam[ 'SearchTerm' ] ) );
+$queryWhere = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? '' : '( ' . \xan\dbSearchTerm_SQL( $queryColumns ) . ' )' );
+$queryTermBindNamesA = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : \xan\dbSearchTerm_BindNamesA( $queryColumns ) );
+$queryTermBindValuesA = ( \xan\isEmpty( $doParam[ 'SearchTerm' ] ) ? array() : \xan\dbSearchTerm_BindValuesA( $queryColumns, $doParam[ 'SearchTerm' ] ) );
 
 // Query Actual
 $recs = new \xan\recs( $mmContactsT );

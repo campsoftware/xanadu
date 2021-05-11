@@ -15,7 +15,7 @@ class moduleMetaContactsT extends \xan\moduleMeta {
 		$this->QueryBuilderDefault = '{ field: "Contacts.NameCompany", id: "querybuilder_Contacts_NameCompany", operator: "begins_with", value: "" }';
 		
 		$this->QueryOrderByDefault = 'NameCompany ASC, NameLast ASC, NameFirst ASC';
-		$this->QueryOrderByExtraBegin .= \xan\dbQueryOrderByItem( $this->NameTable, 'NameCompany ASC, NameLast ASC, NameFirst ASC', 'NameCompany DESC, NameLast DESC, NameFirst DESC', 'Company, Last, First' );
+		$this->QueryOrderByExtraBegin .= \xan\dbQueryOrderBy_DropdownItem( $this->NameTable, 'NameCompany ASC, NameLast ASC, NameFirst ASC', 'NameCompany DESC, NameLast DESC, NameFirst DESC', 'Company, Last, First' );
 		$this->QueryOrderByExtraBegin .= '<hr />';
 		
 		$this->NamePlural = 'Contacts';

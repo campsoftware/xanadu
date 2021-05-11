@@ -15,7 +15,7 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 		$this->QueryBuilderDefault = '{ field: "APIRequests.RequestTS", id: "querybuilder_APIRequests_RequestTS", operator: "greater_or_equal", value: "" }';
 		
 		$this->QueryOrderByDefault = 'RequestTS DESC';
-		$this->QueryOrderByExtraBegin .= \xan\dbQueryOrderByItem( $this->NameTable, 'RequestTS DESC', 'RequestTS ASC', 'Request TS' );
+		$this->QueryOrderByExtraBegin .= \xan\dbQueryOrderBy_DropdownItem( $this->NameTable, 'RequestTS DESC', 'RequestTS ASC', 'Request TS' );
 		$this->QueryOrderByExtraBegin .= '<hr />';
 		
 		$this->NamePlural = 'API Requests';

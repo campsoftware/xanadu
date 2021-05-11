@@ -127,7 +127,7 @@ $Log .= 'Process Time: ' . $timer[ 'RequestProcessTime' ] . "; ";
 if ( $processType === 'now' ) {
 	$tsNowSQL = \xan\dateTimeNowSQL();
 	$sqlCols = array( 'UUIDAPIRequests', 'Auth', 'Action', 'ActionID', 'ResponseURL', 'ResponseAuth', 'RequestIsProcessed', 'RequestIsSent', 'RequestTS', 'RequestData', 'ResponseIsProcessed', 'ResponseTS', 'ResponseData' );
-	$sql = 'INSERT INTO APIRequests ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . \xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
+	$sql = 'INSERT INTO APIRequests ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . \xan\dbSQL_InsertValuesQuestions( count( $sqlCols ) ) . ' )';
 	$bindValues = array( \xan\strUUID(), $resp->reqPost[ 'Auth' ], $resp->reqPost[ 'Action' ], $resp->reqPost[ 'ActionID' ], $responseURL, $responseAuth, 'Yes', 'Yes', $tsNowSQL, json_encode( $resp->reqPost ), $ResponseIsProcessed, $tsNowSQL, json_encode( $resp->api ) );
 	$apirequestsInsert = \xan\recsQuerySimple( $sql, $sqlCols, $bindValues );// Error Check
 	if ( $apirequestsInsert->errorB or $apirequestsInsert->rowCount < 1 ) {
@@ -151,7 +151,7 @@ if ( $processType === 'queued' ) {
 	$requestUUID = \xan\strUUID();
 	$tsNowSQL = \xan\dateTimeNowSQL();
 	$sqlCols = array( 'UUIDAPIRequests', 'Auth', 'Action', 'ActionID', 'ResponseURL', 'ResponseAuth', 'RequestIsProcessed', 'RequestIsSent', 'RequestTS', 'RequestData', 'ResponseIsProcessed', 'ResponseTS', 'ResponseData' );
-	$sql = 'INSERT INTO APIRequests ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . \xan\dbQueryQuestions( count( $sqlCols ) ) . ' )';
+	$sql = 'INSERT INTO APIRequests ( ' . implode( ', ', $sqlCols ) . ' ) VALUES ( ' . \xan\dbSQL_InsertValuesQuestions( count( $sqlCols ) ) . ' )';
 	$bindValues = array( $requestUUID, $resp->reqPost[ 'Auth' ], $resp->reqPost[ 'Action' ], $resp->reqPost[ 'ActionID' ], $responseURL, $responseAuth, $RequestIsProcessed, $RequestIsSent, $tsNowSQL, json_encode( $resp->reqPost ), $ResponseIsProcessed, $tsNowSQL, json_encode( $resp->api ) );
 	$apirequestsInsert = \xan\recsQuerySimple( $sql, $sqlCols, $bindValues );
 	
