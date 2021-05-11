@@ -293,6 +293,23 @@ ob_start();
             img, video {
                 /* filter: drop-shadow(4px 4px 5px gray); grayscale(var(--xan-image-grayscale)) opacity(var(--xan-image-opacity)) */
             }
+            /* Password Strength */
+            .passwordRating {
+                font-weight: bold;
+                border-radius: 1px;
+                color: white;
+                display: inline-block;
+                text-transform: uppercase;
+            }
+            .passwordWeak {
+                background-color: #EF1111;
+            }
+            .passwordModerate {
+                background-color: #FFC700;
+            }
+            .passwordStrong {
+                background-color: #22BA3E;
+            }
             /* StackTable */
             .stacktable {
                 width: <?= STACKTABLE_WIDTH ?>;
