@@ -32,6 +32,14 @@ $eleInput = new \xan\eleTextReveal( '', 'PasswordNewTwo', '', $tagsEleInput );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $eleLabel->render() );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $eleInput->render() );
 
+// Password Meter
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, '' );
+$table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, '<div class="passwordRating"></div>' );
+$resp->scriptsOnLoadA[] = <<< JS
+	var userChangePasswordRatingInput = document.getElementById( "PasswordNewOne" );
+	xanPasswordRating( userChangePasswordRatingInput );
+JS;
+
 // Modal Init
 $modalInitJS = <<< JS
 $( "#{$xanDoDo}_Modal" ).on( "shown.bs.modal", function () {

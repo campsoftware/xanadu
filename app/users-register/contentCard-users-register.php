@@ -27,8 +27,13 @@ $pwEle = new \xan\eleTextReveal( '', 'Password', 'Password', $tagsEleInput );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render(), 1, 2 );
 
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, 'Password Verify' );
-$table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, '<div class="passwordRating"></div>' );
 
+// Password Meter
+$table->cellSet( $tableRowIndex, 1, $tagsCellRightMiddle, '<div class="passwordRating"></div>' );
+$resp->scriptsOnLoadA[] = <<< JS
+	var registerPasswordRatingInput = document.getElementById( "Password" );
+	xanPasswordRating( registerPasswordRatingInput );
+JS;
 
 $pwEle = new \xan\eleTextReveal( '', 'PasswordVerify', 'PasswordVerify', $tagsEleInput );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render(), 1, 2 );
@@ -84,5 +89,4 @@ JS;
 
 // Card Append
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $contentBody . $jsFocus );
-$resp->contentAreaA[] = '<script src="/include/passwordRating/passwordRating.js"></script>';
 ?>

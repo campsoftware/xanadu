@@ -2690,7 +2690,7 @@ function extrasAToString( $classArray ) {
 }
 
 function respAToString( $array ) {
-	return arrayImplodeIndexed( $array, "\n" );
+	return arrayImplodeIndexed( $array, "\n\r" );
 }
 
 function arrayToJavascriptArrayString( $ArrayA ) {

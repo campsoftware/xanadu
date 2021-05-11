@@ -1,5 +1,9 @@
 # Xanadu Change Log
 
+2021-05-11-15-09-05
+- Updated Register Password Rating as a function in xan.js xanPasswordRating.
+- Added User Change Password Rating using xan.js xanPasswordRating.
+
 2021-05-11-14-10-04
 - Added a simple Password Rating of Weak in red, Moderate in yellow, Strong in green.
 
