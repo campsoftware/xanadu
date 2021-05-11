@@ -2259,7 +2259,7 @@ class eleSearchBarListDB extends element {
 								
 								// Add to QueryBuilder IF NOT A KEY AND NOT A MOD
 								if ( $tableColMeta->isKey === false and $tableColMeta->isMod === false ) {
-									$qrItems .= dbQueryBuilderFindFilter( $this->mm->NameTable, $val[ 'COLUMN_NAME' ], $colLabel ) . ', ';
+									$qrItems .= dbQueryBuilder_FindFilter( $this->mm->NameTable, $val[ 'COLUMN_NAME' ], $colLabel ) . ', ';
 								}
 							}
 							// Remove the last comma
@@ -2323,7 +2323,7 @@ class eleSearchBarListDB extends element {
 				$colEleMeta = $this->mm->getColMeta($val[ 'COLUMN_NAME' ],ELE_AS_DEFINED );
 				$colLabel = ( isEmpty( $colEleMeta->colLabel ) ? $val[ 'COLUMN_NAME' ] : $colEleMeta->colLabel );
 				if ( $colEleMeta->isKey === false ) {
-					$searchSortItems .= dbQueryOrderByItem( $this->idPrefix, $val[ 'COLUMN_NAME' ] . ' ASC', $val[ 'COLUMN_NAME' ] . ' DESC', $colLabel );
+					$searchSortItems .= dbQueryOrderBy_DropdownItem( $this->idPrefix, $val[ 'COLUMN_NAME' ] . ' ASC', $val[ 'COLUMN_NAME' ] . ' DESC', $colLabel );
 				}
 				///////////////////////////////////////////////////////////
 				
@@ -2349,9 +2349,9 @@ class eleSearchBarListDB extends element {
 			if ( $searchTermBlankAction === 'Show None' ) {
 				$searchTermQuery = ( isEmpty( $_SESSION[ $this->idPrefix . 'SearchTerm' ] ) ? '0Will1Not2Ever3Find4This5' : $_SESSION[ $this->idPrefix . 'SearchTerm' ] );
 			}
-			$searchWhere = ( isEmpty( $searchTermQuery ) ? '' : 'WHERE ( ' . dbSearchTermSQL( $this->mm->QuerySimpleDefault ) . ' )' );
-			$searchTermBindNamesA = ( isEmpty( $searchTermQuery ) ? array() : dbSearchTermBindNamesA( $this->mm->QuerySimpleDefault ) );
-			$searchTermBindValuesA = ( isEmpty( $searchTermQuery ) ? array() : dbSearchTermBindValuesA( $this->mm->QuerySimpleDefault, $searchTermQuery ) );
+			$searchWhere = ( isEmpty( $searchTermQuery ) ? '' : 'WHERE ( ' . dbSearchTerm_SQL( $this->mm->QuerySimpleDefault ) . ' )' );
+			$searchTermBindNamesA = ( isEmpty( $searchTermQuery ) ? array() : dbSearchTerm_BindNamesA( $this->mm->QuerySimpleDefault ) );
+			$searchTermBindValuesA = ( isEmpty( $searchTermQuery ) ? array() : dbSearchTerm_BindValuesA( $this->mm->QuerySimpleDefault, $searchTermQuery ) );
 		} else {
 			// Search Builder
 			$searchWhere = 'WHERE ( ' . $_SESSION[ $this->idPrefix . 'SearchQBBindWhere' ] . ' )';
@@ -2819,15 +2819,11 @@ function navDivider() {
 ///////////////////////////////////////////////////////////
 // Database
 
-function dbQueryQuestions( $pCount ) {
-	return arrayImplodeIndexed( array_fill( 0, $pCount, '?' ), ', ' );
-}
-
 function dbDebugPDO( $recsVar ) {
 	/*
 	Calling Example
 	$recs->execute();
-	echo xanPDODebugStrParams( $recs );
+	echo dbDebugPDO( $recs );
 	*/
 	ob_start();
 	$recsVar->debugDumpParams();
@@ -2836,7 +2832,16 @@ function dbDebugPDO( $recsVar ) {
 	return $r;
 }
 
-function dbSearchTermSQL( $colNameArray ) {
+function dbSQL_InsertValuesQuestions( $pCount ) {
+	return arrayImplodeIndexed( array_fill( 0, $pCount, '?' ), ', ' );
+}
+
+function dbSQL_InsertOrUpdate( $queryTableName, $queryBindNamesA ){
+    $sql = 'INSERT INTO ' . $queryTableName . ' ( ' . implode( ', ', $queryBindNamesA ) . ' ) VALUES ( ' . \xan\dbSQL_InsertValuesQuestions( count( $queryBindNamesA ) ) . ' )  ON DUPLICATE KEY UPDATE ' . implode( ' = ?, ', $queryBindNamesA ) . ' = ? ;';
+    return $sql;
+}
+
+function dbSearchTerm_SQL( $colNameArray ) {
 	$sql = '';
 	foreach ( $colNameArray as $value ) {
 		$sql .= ( !isEmpty( $sql ) ? ' OR ' : '' );
@@ -2845,7 +2850,7 @@ function dbSearchTermSQL( $colNameArray ) {
 	return $sql;
 }
 
-function dbSearchTermBindNamesA( $colNameArray ) {
+function dbSearchTerm_BindNamesA( $colNameArray ) {
 	$bindNames = array();
 	foreach ( $colNameArray as $value ) {
 		$bindNames[] = $value . 'zLIKE01';
@@ -2854,16 +2859,16 @@ function dbSearchTermBindNamesA( $colNameArray ) {
 	return $bindNames;
 }
 
-function dbSearchTermBindValuesA( $colNameArray, $sqlWhereTerm ) {
+function dbSearchTerm_BindValuesA( $colNameArray, $searchTerm ) {
 	$bindValues = array();
 	foreach ( $colNameArray as $value ) {
-		$bindValues[] = $sqlWhereTerm . '%';
-		$bindValues[] = '% ' . $sqlWhereTerm . '%';
+		$bindValues[] = $searchTerm . '%';
+		$bindValues[] = '% ' . $searchTerm . '%';
 	}
 	return $bindValues;
 }
 
-function dbQueryBuilderDataType( $tableName, $columnName ) {
+function dbQueryBuilder_DataType( $tableName, $columnName ) {
 	$qbType = '';
 	$dataType = $GLOBALS[ 'schema' ][ $tableName ][ $columnName ][ 'DATA_TYPE' ];
 	$dataType = strtolower( $dataType );
@@ -2904,18 +2909,18 @@ function dbQueryBuilderDataType( $tableName, $columnName ) {
 	return $qbType;
 }
 
-function dbQueryBuilderFindFilter( $tableName, $columnName, $columnLabel ) {
+function dbQueryBuilder_FindFilter( $tableName, $columnName, $columnLabel ) {
 	$theFindFilter = '{ ';
 	$theFindFilter .= 'optgroup: "' . $tableName . '", ';
 	$theFindFilter .= 'field: "' . $tableName . '.' . $columnName . '", ';
 	$theFindFilter .= 'id: "querybuilder_' . $tableName . '_' . $columnName . '", ';
 	$theFindFilter .= 'label: "' . $columnLabel . '", ';
-	$theFindFilter .= 'type: "' . dbQueryBuilderDataType( $tableName, $columnName ) . '" ';
+	$theFindFilter .= 'type: "' . dbQueryBuilder_DataType( $tableName, $columnName ) . '" ';
 	$theFindFilter .= '}';
 	return $theFindFilter;
 }
 
-function dbQueryOrderByItem( $idPrefix, $orderByASC, $orderByDESC, $label ) {
+function dbQueryOrderBy_DropdownItem( $idPrefix, $orderByASC, $orderByDESC, $label ) {
 	$item = '';
 	ob_start() ?>
     <div class="dropdown-item text-right">
