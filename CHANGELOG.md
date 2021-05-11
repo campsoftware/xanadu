@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-11-14-10-04
+- Added a simple Password Rating of Weak in red, Moderate in yellow, Strong in green.
+
 2021-05-11-12-51-44
 - Added a function dbSQL_InsertOrUpdate that creates a sql statement that will INSERT / ON DUPLICATE KEY UPDATE that will either Insert a record or Update a record if it already exists.
 - Renamed a few functions to: dbSQL_InsertValuesQuestions, dbSearchTerm_SQL, dbSearchTerm_BindNamesA, dbSearchTerm_BindValuesA, dbQueryBuilder_DataType, dbQueryBuilder_FindFilter, and dbQueryOrderBy_DropdownItem.
