@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-13-17-01-49
+- Updated Home to add more examples. Added a use of php date_default_timezone_get.
+
 2021-05-13-16-39-14
 - Added a clickable link to the 2FA SMS and Email messages that will open a new tab to complete the Login. Works similar to the Registration One Time Code.
 
