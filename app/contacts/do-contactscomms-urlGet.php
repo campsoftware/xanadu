@@ -34,7 +34,7 @@ if ( $recs->errorB ) {
     $recs->rowIndex++;
     
     // Go to the URL
-    $resp->jsSetPageURL( $mmContactsCommsT->getURL( $recs ) );
+    $resp->jsSetPageURL( $mmContactsCommsT->getURL( $recs, $doParam[ 'URLType' ] ) );
     
     //    }
 

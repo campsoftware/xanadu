@@ -157,7 +157,7 @@ class moduleMetaContactsCommsT extends \xan\moduleMeta {
 	///////////////////////////////////////////////////////////
 	// Functions For This Module
 	
-	public function getURL( \xan\recs $recs ) {
+	public function getURL( \xan\recs $recs, $urlType = '' ) {
 		$url = '';
 		$row = $recs->rowsD[ $recs->rowIndex ];
 		
@@ -171,6 +171,12 @@ class moduleMetaContactsCommsT extends \xan\moduleMeta {
 		}
 		if ( $row[ 'Type' ] == 'Phone' ) {
 			$url = 'tel:' . $row[ 'Data' ];
+			if ( $urlType === 'Call' ) {
+				$url = 'tel:' . $row[ 'Data' ];
+			}
+			if ( $urlType === 'SMS' ) {
+				$url = 'sms:' . $row[ 'Data' ];
+			}
 		}
 		if ( $row[ 'Type' ] == 'Web' ) {
 			$url = $row[ 'Data' ];
