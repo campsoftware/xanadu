@@ -2868,13 +2868,14 @@ function dbDebugPDO( $recsVar ) {
 	return $r;
 }
 
-function dbSQL_InsertValuesQuestions( $pCount ) {
-	return arrayImplodeIndexed( array_fill( 0, $pCount, '?' ), ', ' );
+function dbSQL_insertOrUpdate( $queryTableName, $queryBindNamesA ){
+    $bindNamesA = \xan\arrayValuesWrapWithBackticks($queryBindNamesA );
+    $sql = 'INSERT INTO ' . $queryTableName . ' ( ' . implode( ', ', $bindNamesA ) . ' ) VALUES ( ' . \xan\dbSQL_insertValuesQuestions( count( $bindNamesA ) ) . ' )  ON DUPLICATE KEY UPDATE ' . implode( ' = ?, ', $bindNamesA ) . ' = ? ;';
+    return $sql;
 }
 
-function dbSQL_InsertOrUpdate( $queryTableName, $queryBindNamesA ){
-    $sql = 'INSERT INTO ' . $queryTableName . ' ( ' . implode( ', ', $queryBindNamesA ) . ' ) VALUES ( ' . \xan\dbSQL_InsertValuesQuestions( count( $queryBindNamesA ) ) . ' )  ON DUPLICATE KEY UPDATE ' . implode( ' = ?, ', $queryBindNamesA ) . ' = ? ;';
-    return $sql;
+function dbSQL_insertValuesQuestions( $pCount ) {
+	return arrayImplodeIndexed( array_fill( 0, $pCount, '?' ), ', ' );
 }
 
 function dbSearchTerm_SQL( $colNameArray ) {

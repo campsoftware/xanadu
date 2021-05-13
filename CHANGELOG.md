@@ -1,5 +1,10 @@
 # Xanadu Change Log
 
+2021-05-13-15-34-17
+- Added setting the default timezone to UTC in init.php.
+- Added a function for arrayValuesWrapWith and arrayValuesWrapWithBackticks. Using to wrapping Column Names with backticks. Moved array functions higher within functions_utility.php.
+- Updated dbSQL_InsertOrUpdate to use arrayValuesWrapWithBackticks. Goal is to wrap all SQL Statement Column Names with backticks everywhere possible.
+
 2021-05-13-14-38-07
 - Renamed /sql/ files from sequential numbers to dates.
 - Added /sql/xan-2021-05-13.sql to add columns for constants: APP_COUNTRY_CODE, TWITTER_SITE, TWITTER_AUTHOR.

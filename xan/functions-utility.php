@@ -22,6 +22,39 @@ function isNotEmpty( $value ) {
 
 
 ///////////////////////////////////////////////////////////
+// Arrays and Dictionaries
+
+function arrayValuesWrapWithBackticks( $arrayA ){
+	return arrayValuesWrapWith($arrayA,'`','`');
+}
+
+function arrayValuesWrapWith( $arrayA, $prefix, $suffix ){
+	$newArrayA = [];
+	foreach ( $arrayA as $thisValue ) {
+		$newArrayA[] = $prefix . $thisValue . $suffix;
+	}
+	return $newArrayA;
+}
+
+function arrayImplodeIndexed( $pArray, $pSeparator ) {
+	return implode( $pSeparator, $pArray );
+}
+
+function arrayImplodeDict( $pDict, $pPrefix, $pMiddle, $pSuffix ) {
+	$string = '';
+	foreach ( $pDict as $key => $value ) {
+		$string .= "$pPrefix$key$pMiddle$value$pSuffix";
+	}
+	return $string;
+}
+
+function arrayImplodeDictAsCSSStyle( $pDict ) {
+	// Nice for Visual and CSS Styles: NameFirst: Hal; NameLast: Gumbert;
+	return arrayImplodeDict( $pDict, '', ': ', '; ' );
+}
+
+
+///////////////////////////////////////////////////////////
 // Strings
 function strTagsRemoveScript( $code ) {
 	$code = strSubstitute( $code, '<script>', '' );
@@ -208,46 +241,6 @@ function urlContent( $pURL, $pPostD = [] ) {
 	}
 }
 
-
-///////////////////////////////////////////////////////////
-// Arrays and Dictionaries
-
-// Arrays
-function arrayImplodeIndexed( $pArray, $pSeparator ) {
-	//    if ( !is_array( $pArray ) ) {
-	//        return '';
-	//    }
-	//    if ( count( $pArray ) < 1 ) {
-	//        return '';
-	//    }
-	return implode( $pSeparator, $pArray );
-}
-
-// Dictionaries aka Associative
-function arrayImplodeDict( $pDict, $pPrefix, $pMiddle, $pSuffix ) {
-	//    if ( !is_array( $pDict ) ) {
-	//        return '';
-	//    }
-	//    if ( count( $pDict ) == 0 ) {
-	//        return '';
-	//    }
-	$string = '';
-	foreach ( $pDict as $key => $value ) {
-		$string .= "$pPrefix$key$pMiddle$value$pSuffix";
-	}
-	return $string;
-}
-
-function arrayImplodeDictAsCSSStyle( $pDict ) {
-	//    if ( !is_array( $pDict ) ) {
-	//        return '';
-	//    }
-	//    if ( count( $pDict ) == 0 ) {
-	//        return '';
-	//    }
-	// Nice for Visual and CSS Styles: NameFirst: Hal; NameLast: Gumbert;
-	return arrayImplodeDict( $pDict, '', ': ', '; ' );
-}
 
 ///////////////////////////////////////////////////////////
 // Param Handling
