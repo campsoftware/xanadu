@@ -80,7 +80,7 @@ $mmUsersT->set2FACode( $userSelect->rowsD[ 0 ][ UUIDUSERS ] );
 // 2FA Send
 $senderCode = $mmUsersT->TwoFactorCode;
 $senderSubject = APP_NAME . ' Verification Code';
-$senderMessage = $senderCode . ' is your ' . APP_NAME . ' verification code.';
+$senderMessage = $senderCode . ' is your ' . APP_NAME . ' Code or click: ' . URL_BASE . 'login/tfa/' . $userSelect->rowsD[ 0 ][ UUIDUSERS ] . '/' . $senderCode;
 $sender = new \xan\sender();
 // Send SMS
 if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'PhoneTwoFactor' ] ) ) {

@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-13-16-39-14
+- Added a clickable link to the 2FA SMS and Email messages that will open a new tab to complete the Login. Works similar to the Registration One Time Code.
+
 2021-05-13-15-34-17
 - Added setting the default timezone to UTC in init.php.
 - Added a function for arrayValuesWrapWith and arrayValuesWrapWithBackticks. Using to wrapping Column Names with backticks. Moved array functions higher within functions_utility.php.
