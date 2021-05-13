@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-13-17-12-47
+- Fixed \xan\response->metaSet(). Removed an extra quote and closing bracket.
+
 2021-05-13-17-01-49
 - Updated Home to add more examples. Added a use of php date_default_timezone_get.
 
