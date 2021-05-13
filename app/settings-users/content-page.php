@@ -88,6 +88,21 @@ JS;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
+///////////////////////////////////////////////////////////
+// Meta
+$resp->headMetaPageURL = $mmUsersT->URLFull;
+if ( \xan\isEmpty( $resp->reqID ) ) {
+	// List
+	$resp->headMetaTitle = $mmUsersT->NamePlural;
+	$resp->headMetaDesc = '';
+}else{
+	// Detail
+	$resp->headMetaTitle = $mmUsersT->NamePlural;
+	$resp->headMetaDesc = '';
+}
+$resp->metaSet();
+
+///////////////////////////////////////////////////////////
 // Return Page
 $aloe_response->content_set( require_once( PATH_PAGE_RESP ) );
 ?>
