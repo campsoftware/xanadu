@@ -249,12 +249,12 @@ class response {
         $meta .= ( \xan\isEmpty( $this->headMetaPageURL ) ? '' : "<meta property='og:type' content='website'>\r" ); // https://ogp.me/#types
         $meta .= ( \xan\isEmpty( $this->headMetaPageURL ) ? '' : "<meta property='og:url' content='{$this->headMetaPageURL}'>\r" );
         
-        $meta .= ( \xan\isEmpty( $this->headMetaTwitterCardType ) ? '' : "<meta name='twitter:card' content='{$this->headMetaTwitterCardType}'>'>\r" ); // "summary" or "summary_large_image"
-        $meta .= ( \xan\isEmpty( $this->headMetaTwitterAtSite ) ? '' : "<meta name='twitter:site' content='{$this->headMetaTwitterAtSite}'>'>\r" );
-        $meta .= ( \xan\isEmpty( $this->headMetaTwitterAtAuthor ) ? '' : "<meta name='twitter:creator' content='{$this->headMetaTwitterAtAuthor}'>'>\r" );
-        $meta .= ( \xan\isEmpty( $this->headMetaTitle ) ? '' : "<meta name='twitter:title' content='{$this->headMetaTitle}'>'>\r" );
-        $meta .= ( \xan\isEmpty( $this->headMetaDesc ) ? '' : "<meta name='twitter:description' content='{$this->headMetaDesc}'>'>\r" );
-        $meta .= ( \xan\isEmpty( $this->headMetaImageURL ) ? '' : "<meta name='twitter:image' content='{$this->headMetaImageURL}'>'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaTwitterCardType ) ? '' : "<meta name='twitter:card' content='{$this->headMetaTwitterCardType}'>\r" ); // "summary" or "summary_large_image"
+        $meta .= ( \xan\isEmpty( $this->headMetaTwitterAtSite ) ? '' : "<meta name='twitter:site' content='{$this->headMetaTwitterAtSite}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaTwitterAtAuthor ) ? '' : "<meta name='twitter:creator' content='{$this->headMetaTwitterAtAuthor}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaTitle ) ? '' : "<meta name='twitter:title' content='{$this->headMetaTitle}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaDesc ) ? '' : "<meta name='twitter:description' content='{$this->headMetaDesc}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaImageURL ) ? '' : "<meta name='twitter:image' content='{$this->headMetaImageURL}'>\r" );
         
         $this->headMetaA[] = $meta;
     }
