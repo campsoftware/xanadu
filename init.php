@@ -6,6 +6,9 @@
 // Precompiling PHP
 ini_set( "opcache.enable", 0 ); // 0 for dev, 1 for production; default = 1; improves PHP performance by storing precompiled script bytecode in shared memory, thereby removing the need for PHP to load and parse scripts on each request
 
+// Time
+date_default_timezone_set( 'UTC' );
+
 ///////////////////////////////////////////////////////////
 // LoadTime Begin
 $pageload_begin = microtime( true );
