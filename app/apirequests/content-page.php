@@ -125,6 +125,21 @@ JS;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
+///////////////////////////////////////////////////////////
+// Meta
+$resp->headMetaPageURL = $mmAPIRequestsT->URLFull . $resp->reqID;
+if ( \xan\isEmpty( $resp->reqID ) ) {
+	// List
+	$resp->headMetaTitle = $mmAPIRequestsT->NamePlural . ' List';
+	$resp->headMetaDesc = '';
+}else{
+	// Detail
+	$resp->headMetaTitle = $mmAPIRequestsT->getDisplayName( $recsDetail );
+	$resp->headMetaDesc = 'Details for ' . $resp->headMetaTitle;
+}
+$resp->metaSet();
+
+///////////////////////////////////////////////////////////
 // Return Page
 $aloe_response->content_set( require_once( PATH_PAGE_RESP ) );
 ?>

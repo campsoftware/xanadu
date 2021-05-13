@@ -125,6 +125,25 @@ JS;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
+///////////////////////////////////////////////////////////
+// Meta
+$resp->headMetaPageURL = $mmContactsT->URLFull . $resp->reqID;
+if ( \xan\isEmpty( $resp->reqID ) ) {
+	// List
+	$resp->headMetaTitle = $mmContactsT->NamePlural . ' List';
+	$resp->headMetaDesc = '';
+}else{
+	// Detail
+	$resp->headMetaTitle = $mmContactsT->getDisplayName( $recsDetail );
+	$resp->headMetaDesc = 'Details for ' . $resp->headMetaTitle;
+	if ( \xan\isNotEmpty( $recsDetail->rowsD[ 0 ][ 'PhotoFN' ] ) ) {
+		$resp->headMetaImageURL = \xan\fileBucketURL( $mmContactsT->NameTable, $resp->reqID, 'PhotoFN', $recsDetail->rowsD[ 0 ][ 'PhotoFN' ] );
+		$resp->headMetaImageDesc = 'Photo for ' . $resp->headMetaTitle;
+	}
+}
+$resp->metaSet();
+
+///////////////////////////////////////////////////////////
 // Return Page
 $aloe_response->content_set( require_once( PATH_PAGE_RESP ) );
 ?>

@@ -1,5 +1,10 @@
 # Xanadu Change Log
 
+2021-05-13-12-57-31
+- Added constants: APP_COUNTRY_CODE, APP_LOCALE, TWITTER_SITE, TWITTER_AUTHOR. Need to add to the Settings Database Record.
+- Added properties to \xan\response to support optionally adding html meta tags via \xan\respone->metaSet();
+- Added \xan\respone->metaSet(); to several pages.
+
 2021-05-11-15-09-05
 - Updated Register Password Rating as a function in xan.js xanPasswordRating.
 - Added User Change Password Rating using xan.js xanPasswordRating.

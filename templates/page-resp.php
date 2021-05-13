@@ -31,9 +31,13 @@ ob_start();
         <meta name="X-Content-Type-Options" content="nosniff">
         <meta name="X-Frame-Options" content="deny">
         <meta name="X-XSS-Protection" content="1; mode=block">
-
-        <!-- Title and Icons -->
+        
+        <!-- Head Meta Begin -->
         <title><?= $resp->headTitle ?></title>
+		<?= \xan\respAToString( $resp->headMetaA ) ?>
+        <!-- Head Meta End -->
+
+        <!-- Icons -->
         <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
         <link rel="apple-touch-icon" href="/images/apple-touch-icon.png"/>
         <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png"/>

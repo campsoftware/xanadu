@@ -206,6 +206,17 @@ class response {
 
 	// Content
 	public $headTitle = '';
+	public $headMetaA = [];
+	public $headMetaTitle = '';
+	public $headMetaDesc = '';
+	public $headMetaImageURL = URL_BASE . APP_ICON_URL_50;
+	public $headMetaImageDesc = APP_NAME;
+	public $headMetaPageURL = '';
+	public $headMetaTwitterAtSite = TWITTER_SITE;
+	public $headMetaTwitterAtAuthor = TWITTER_AUTHOR;
+	public $headMetaTwitterCardType = 'summary';  // "summary" or "summary_large_image"
+	public $headMetaLocale = APP_LOCALE;
+	
 	public $headExtraA = [];
 	public $headLogoutAuto = true;
 	public $navInclude = false;
@@ -222,7 +233,31 @@ class response {
 
 	// Constructor
 	public function __construct() {
+	    // Remove Double Slash between URL_BASE and APP_ICON_URL_50
+	    $this->headMetaImageURL = \xan\strSubstitute($this->headMetaImageURL,'//','/');
 	}
+	
+	 public function metaSet(){
+        $meta = ( \xan\isEmpty( $this->headMetaDesc ) ? '' : "<meta name='description' content='{$this->headMetaDesc}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaPageURL ) ? '' : "<link rel='canonical' href='{$this->headMetaPageURL}'>\r" );
+        
+        $meta .= ( \xan\isEmpty( $this->headMetaTitle ) ? '' : "<meta property='og:title' content='{$this->headMetaTitle}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaDesc ) ? '' : "<meta property='og:description' content='{$this->headMetaDesc}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaImageURL ) ? '' : "<meta property='og:image' content='{$this->headMetaImageURL}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaImageDesc ) ? '' : "<meta property='og:image:alt' content='{$this->headMetaImageDesc}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaLocale ) ? '' : "<meta property='og:locale' content='{$this->headMetaLocale}'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaPageURL ) ? '' : "<meta property='og:type' content='website'>\r" ); // https://ogp.me/#types
+        $meta .= ( \xan\isEmpty( $this->headMetaPageURL ) ? '' : "<meta property='og:url' content='{$this->headMetaPageURL}'>\r" );
+        
+        $meta .= ( \xan\isEmpty( $this->headMetaTwitterCardType ) ? '' : "<meta name='twitter:card' content='{$this->headMetaTwitterCardType}'>'>\r" ); // "summary" or "summary_large_image"
+        $meta .= ( \xan\isEmpty( $this->headMetaTwitterAtSite ) ? '' : "<meta name='twitter:site' content='{$this->headMetaTwitterAtSite}'>'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaTwitterAtAuthor ) ? '' : "<meta name='twitter:creator' content='{$this->headMetaTwitterAtAuthor}'>'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaTitle ) ? '' : "<meta name='twitter:title' content='{$this->headMetaTitle}'>'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaDesc ) ? '' : "<meta name='twitter:description' content='{$this->headMetaDesc}'>'>\r" );
+        $meta .= ( \xan\isEmpty( $this->headMetaImageURL ) ? '' : "<meta name='twitter:image' content='{$this->headMetaImageURL}'>'>\r" );
+        
+        $this->headMetaA[] = $meta;
+    }
 	
 	public function jsAlert( $value ){
         $index = count( $this->jsActionsA );
@@ -288,6 +323,7 @@ class response {
         $this->jsActionsA[ $index ][ 'xanDo_Action' ] = 'setFocus';
         $this->jsActionsA[ $index ][ 'xanDo_Selector' ]  = $selector;
     }
+    
 }
 
 

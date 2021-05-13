@@ -18,6 +18,21 @@ $mmUsersT->setPathLast( $resp->reqPath );
 // Content Load Now
 require_once( 'content-cards.php' );
 
+///////////////////////////////////////////////////////////
+// Meta
+$resp->headMetaPageURL = $mmHome->URLFull;
+if ( \xan\isEmpty( $resp->reqID ) ) {
+	// List
+	$resp->headMetaTitle = $mmHome->NamePlural;
+	$resp->headMetaDesc = '';
+}else{
+	// Detail
+	$resp->headMetaTitle = $mmHome->NamePlural;
+	$resp->headMetaDesc = '';
+}
+$resp->metaSet();
+
+///////////////////////////////////////////////////////////
 // Return Page
 $aloe_response->content_set( require_once( PATH_PAGE_RESP ) );
 ?>

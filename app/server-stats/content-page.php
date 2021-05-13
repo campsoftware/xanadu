@@ -35,6 +35,21 @@ if ( CONTENT_LOAD_NOW ) {
 // JS;
 }
 
+///////////////////////////////////////////////////////////
+// Meta
+$resp->headMetaPageURL = $mmServerStats->URLFull;
+if ( \xan\isEmpty( $resp->reqID ) ) {
+	// List
+	$resp->headMetaTitle = $mmServerStats->NamePlural;
+	$resp->headMetaDesc = '';
+}else{
+	// Detail
+	$resp->headMetaTitle = $mmServerStats->NamePlural;
+	$resp->headMetaDesc = '';
+}
+$resp->metaSet();
+
+///////////////////////////////////////////////////////////
 // Return Page
 $aloe_response->content_set( require_once( PATH_PAGE_RESP ) );
 ?>
