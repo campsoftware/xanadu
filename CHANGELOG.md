@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-13-17-45-29
+- Added Contacts Comms create SMS to go with call.
+
 2021-05-13-17-12-47
 - Fixed \xan\response->metaSet(). Removed an extra quote and closing bracket.
 

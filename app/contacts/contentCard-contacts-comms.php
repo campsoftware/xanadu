@@ -95,9 +95,14 @@ if ( $recsComms->errorB ) {
         $buttonID = 'xf_' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '_Button_EmailLink';
         $buttonGoEle = new \xan\eleButton( \xan\fontIcon( 'fas fa-at' ), $buttonID, '', $buttonGoTags );
         $gridRow->content .= $buttonGoEle->render();
-        // Phone Button
-        $buttonGoTags = new \xan\tags( [ 'p-0 mr-1 ', ELE_CLASS_BUTTON_SM_GO ], [ 'display' => ( $recsCommsRow[ 'Type' ] === 'Phone' ? 'block' : 'none' ), 'width' => PORTAL_BUTTON_WIDTH, 'height' => PORTAL_ELE_HEIGHT ], [ "onclick=\"xanDo( { 'Do': 'ContactsCommsURLGet', 'Msg': 'Phone Dial', 'URL': '" . $mmContactsT->URLDoRelative . "', 'IDContactsComms': '" . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . "' } );\"" ] );
-        $buttonID = 'xf_' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '_Button_PhoneLink';
+		// Phone SMS Button
+		$buttonGoTags = new \xan\tags( [ 'p-0 mr-1 ', ELE_CLASS_BUTTON_SM_GO ], [ 'display' => ( $recsCommsRow[ 'Type' ] === 'Phone' ? 'block' : 'none' ), 'width' => PORTAL_BUTTON_WIDTH, 'height' => PORTAL_ELE_HEIGHT ], [ "onclick=\"xanDo( { 'Do': 'ContactsCommsURLGet', 'Msg': 'Phone SMS', 'URL': '" . $mmContactsT->URLDoRelative . "', 'IDContactsComms': '" . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . "', 'URLType': 'SMS' } );\"" ] );
+		$buttonID = 'xf_' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '_Button_PhoneSMSLink';
+		$buttonGoEle = new \xan\eleButton( \xan\fontIcon( 'fas fa-sms' ), $buttonID, '', $buttonGoTags );
+		$gridRow->content .= $buttonGoEle->render();
+        // Phone Call Button
+        $buttonGoTags = new \xan\tags( [ 'p-0 mr-1 ', ELE_CLASS_BUTTON_SM_GO ], [ 'display' => ( $recsCommsRow[ 'Type' ] === 'Phone' ? 'block' : 'none' ), 'width' => PORTAL_BUTTON_WIDTH, 'height' => PORTAL_ELE_HEIGHT ], [ "onclick=\"xanDo( { 'Do': 'ContactsCommsURLGet', 'Msg': 'Phone Dial', 'URL': '" . $mmContactsT->URLDoRelative . "', 'IDContactsComms': '" . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . "', 'URLType': 'Dial' } );\"" ] );
+        $buttonID = 'xf_' . $recsCommsRow[ $mmContactsCommsT->NameTableKey ] . '_Button_PhoneCallLink';
         $buttonGoEle = new \xan\eleButton( \xan\fontIcon( 'fas fa-phone' ), $buttonID, '', $buttonGoTags );
         $gridRow->content .= $buttonGoEle->render();
         // Web Button
@@ -148,7 +153,8 @@ if ( $recsComms->errorB ) {
             // alert( theKey + "/" + theType );
             // Buttons
             $( "#xf_" + key + "_Button_EmailLink" ).css( "display", ( type === "Email" ) ? "block" : "none" );
-            $( "#xf_" + key + "_Button_PhoneLink" ).css( "display", ( type === "Phone" ) ? "block" : "none" );
+            $( "#xf_" + key + "_Button_PhoneCallLink" ).css( "display", ( type === "Phone" ) ? "block" : "none" );
+            $( "#xf_" + key + "_Button_PhoneSMSLink" ).css( "display", ( type === "Phone" ) ? "block" : "none" );
             $( "#xf_" + key + "_Button_WebLink" ).css( "display", ( type === "Web" ) ? "block" : "none" );
             $( "#xf_" + key + "_Button_AddressLink" ).css( "display", ( type === "Address" ) ? "block" : "none" );
             // Fields
