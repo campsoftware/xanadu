@@ -182,7 +182,6 @@ if ( $recsSettings->errorB ) {
 
 //xan\xanEmailDebug( 'Xan Settings Test', $querySQL . print_r( $recsSettings->rowsD, true ) );
 
-
 // App
 define( 'APP_NAME', $recsSettings->rowsD[ 0 ][ 'AppName' ] );
 define( 'APP_ICON_URL_50', $recsSettings->rowsD[ 0 ][ 'AppIconURL50' ] );
@@ -190,13 +189,12 @@ define( 'APP_ICON_URL_1024', $recsSettings->rowsD[ 0 ][ 'AppIconURL1024' ] );
 define( 'APP_ICON_URL_LINK', $recsSettings->rowsD[ 0 ][ 'AppIconURLLink' ] );
 define( 'APP_CURRENCY', $recsSettings->rowsD[ 0 ][ 'AppCurrency' ] );
 define( 'APP_EMAIL_FROM', $recsSettings->rowsD[ 0 ][ 'AppEmailFrom' ] );
+
+// Locale
 define( 'APP_LANG_CODE', $recsSettings->rowsD[ 0 ][ 'AppLangCode' ] ); // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-define( 'APP_COUNTRY_CODE', 'US' ); // $recsSettings->rowsD[ 0 ][ 'AppCountryCode' ] ); // https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+define( 'APP_COUNTRY_CODE', $recsSettings->rowsD[ 0 ][ 'AppCountryCode' ] ); // https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 define( 'APP_LOCALE', APP_LANG_CODE . '_' . APP_COUNTRY_CODE );
 define( 'APP_TIMEZONE_ID', $recsSettings->rowsD[ 0 ][ 'AppTimezoneID' ] ); // https://www.php.net/manual/en/timezones.php
-
-define( 'TWITTER_SITE', '@CampSoftware' );
-define( 'TWITTER_AUTHOR', '@HalGumbert' );
 
 // Features
 define( 'CONTENT_LOAD_NOW', true );
@@ -207,6 +205,10 @@ define( 'DATETIME_FORMAT_DISPLAY_DATE', $recsSettings->rowsD[ 0 ][ 'FormatDispla
 define( 'DATETIME_FORMAT_DISPLAY_TIMESTAMP', $recsSettings->rowsD[ 0 ][ 'FormatDisplayTS' ] );
 define( 'DATETIME_FORMAT_DISPLAY_TIMESTAMP_SECONDS', $recsSettings->rowsD[ 0 ][ 'FormatDisplayTSSecs' ] );
 define( 'DATETIME_FORMAT_DISPLAY_TIME', $recsSettings->rowsD[ 0 ][ 'FormatDisplayTime' ] );
+
+// Twitter
+define( 'TWITTER_SITE', $recsSettings->rowsD[ 0 ][ 'TwitterSite' ] );
+define( 'TWITTER_AUTHOR', $recsSettings->rowsD[ 0 ][ 'TwitterAuthor' ] );
 
 // Google Maps
 define( 'GOOGLE_MAPS_KEY', $recsSettings->rowsD[ 0 ][ 'GoogleMapsKey' ] );
