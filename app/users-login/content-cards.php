@@ -3,6 +3,8 @@
 $loginMethod = $resp->reqPathComponents[ 1 ];
 $loginUUIDUser = $resp->reqPathComponents[ 2 ];
 $LoginKeyOneTime = $resp->reqPathComponents[ 3 ];
+
+// Registration Login URL
 if ( $loginMethod === 'otc' and \xan\isNotEmpty( $loginUUIDUser ) and \xan\isNotEmpty( $LoginKeyOneTime ) ) {
 	// User Select
 	$userSelect = new \xan\recs( $mmUsersT );
@@ -29,7 +31,46 @@ if ( $loginMethod === 'otc' and \xan\isNotEmpty( $loginUUIDUser ) and \xan\isNot
 		} elseif ( $userUpdate->rowCount < 1 ) {
 			$xanMessage .= ' OTC Login Update: None Found' . STR_BR;
 		} elseif ( $userUpdate->rowCount > 0 ) {
-			$redirectPath = $mmUsersT->doLogin( 'Registration', $userSelect );
+			$redirectPath = $mmUsersT->doLogin( 'Registration OTC', $userSelect );
+			$aloe_response->status_set( '307 Temporary Redirect' );
+			$aloe_response->header_set( 'Location', $redirectPath );
+			$aloe_response->content_set( '' );
+			return;
+		}
+	}
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// 2FA Login URL
+if ( $loginMethod === 'tfa' and \xan\isNotEmpty( $loginUUIDUser ) and \xan\isNotEmpty( $LoginKeyOneTime ) ) {
+	// User Select
+	$tsNowSQL = \xan\dateTimeNowSQL();
+	$userSelect = new \xan\recs( $mmUsersT );
+	$userSelect->querySQL = 'SELECT * FROM Users WHERE UUIDUsers = ? AND TwoFactorString = ? AND TwoFactorExpiresTS >= ? ;';
+	$userSelect->queryBindNamesA = array( UUIDUSERS, 'TwoFactorString', 'TwoFactorExpiresTS' );
+	$userSelect->queryBindValuesA = array( $loginUUIDUser, $LoginKeyOneTime, $tsNowSQL );
+	$userSelect->query();
+	// Error Check
+	if ( $userSelect->errorB ) {
+		$xanMessage .= ' TFA Login Select Error: ' . $userSelect->messageExtra . '; ' . $userSelect->messageSQL . STR_BR;
+	} elseif ( $userSelect->rowCount < 1 ) {
+		$xanMessage .= ' TFA Login Select: None Found' . STR_BR;
+	} elseif ( $userSelect->rowCount > 0 ) {
+		
+		// User Update
+		$userUpdate = new \xan\recs( $mmUsersT );
+		$userUpdate->querySQL = 'UPDATE Users SET TwoFactorString = ?, TwoFactorExpiresTS = ? WHERE UUIDUsers = ?';
+		$userUpdate->queryBindNamesA = array( 'TwoFactorString', 'TwoFactorExpiresTS', UUIDUSERS );
+		$userUpdate->queryBindValuesA = array( '', null, $loginUUIDUser );
+		$userUpdate->query();
+		// Error Check
+		if ( $userUpdate->errorB ) {
+			$xanMessage .= ' TFA Login Update Error: ' . $userUpdate->messageExtra . '; ' . $userUpdate->messageSQL . STR_BR;
+		} elseif ( $userUpdate->rowCount < 1 ) {
+			$xanMessage .= ' TFA Login Update: None Found' . STR_BR;
+		} elseif ( $userUpdate->rowCount > 0 ) {
+			$redirectPath = $mmUsersT->doLogin( 'Login TFA', $userSelect );
 			$aloe_response->status_set( '307 Temporary Redirect' );
 			$aloe_response->header_set( 'Location', $redirectPath );
 			$aloe_response->content_set( '' );
