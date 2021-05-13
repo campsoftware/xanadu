@@ -33,14 +33,20 @@ $imgEle = new \xan\eleURLImage( URL_BASE . 'include/barcode/2018-10-03/barcode.p
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellCenterMiddle, $imgEle->render() . STR_BR . 'CampSoftware.com' );
 
 // Button API Random Amount
-$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ "onclick=\"xanDo( { 'Do': 'apiRequestRandomAmount', 'Msg': 'API Request Random Amount', 'URL': '/home-do' } );\"" ] );
-$buttonEle = new \xan\eleButton( 'API Random Amount', '', '', $buttonTags );
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
-
+$buttonAPIRandomTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ "onclick=\"xanDo( { 'Do': 'apiRequestRandomAmount', 'Msg': 'API Request Random Amount', 'URL': '/home-do' } );\"" ] );
+$buttonAPIRandomEle = new \xan\eleButton( 'API Random Amount', '', '', $buttonAPIRandomTags );
 // Button API Process Queued
-$buttonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ "onclick=\"xanDo( { 'Do': 'apiProcessQueued', 'Msg': 'API Process Queued', 'URL': '/home-do' } );\"" ] );
-$buttonEle = new \xan\eleButton( 'API Process Queued', '', '', $buttonTags );
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
+$buttonAPIQueuedTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ "onclick=\"xanDo( { 'Do': 'apiProcessQueued', 'Msg': 'API Process Queued', 'URL': '/home-do' } );\"" ] );
+$buttonAPIQueuedEle = new \xan\eleButton( 'API Process Queued', '', '', $buttonTags );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonAPIRandomEle->render() . ' ' . $buttonAPIQueuedEle->render() );
+
+// Time
+$timezoneIDNow = date_default_timezone_get();
+date_default_timezone_set( APP_TIMEZONE_ID );
+$timeLocal = \xan\timeNowSQL();
+date_default_timezone_set( $timezoneIDNow );
+$timeUTC = \xan\timeNowSQL();
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $timeUTC . ' UTC; ' . $timeLocal . ' ' . APP_TIMEZONE_ID . ';' );
 
 // Card Append
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $table->render() );
