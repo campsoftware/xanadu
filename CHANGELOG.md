@@ -1,5 +1,11 @@
 # Xanadu Change Log
 
+2021-05-13-14-38-07
+- Renamed /sql/ files from sequential numbers to dates.
+- Added /sql/xan-2021-05-13.sql to add columns for constants: APP_COUNTRY_CODE, TWITTER_SITE, TWITTER_AUTHOR.
+- Changed ALTER TABLE commands to use AFTER to keep table column order.
+- Changed init.php to use the database values for APP_COUNTRY_CODE, TWITTER_SITE, TWITTER_AUTHOR.
+
 2021-05-13-12-57-31
 - Added constants: APP_COUNTRY_CODE, APP_LOCALE, TWITTER_SITE, TWITTER_AUTHOR. Need to add to the Settings Database Record.
 - Added properties to \xan\response to support optionally adding html meta tags via \xan\respone->metaSet();
@@ -101,8 +107,8 @@
 
 2021-04-22-15-42-07
 - Added example code for hourofDay function.
-- Added /sql/xan-00001.sql which creates the starting tables and sample data.
-- Added /sql/xan-00002.sql which adds Settings columns AppLangCode = 'en' and AppTimezoneID = 'America/New_York'.
+- Added /sql/xan-2021-03-02.sql which creates the starting tables and sample data.
+- Added /sql/xan-2021-04-21.sql which adds Settings columns AppLangCode = 'en' and AppTimezoneID = 'America/New_York'.
 - Added in init.php constants for AppLangCode and AppTimezoneID to be loaded from Settings.
 
 2021-04-22-14-21-34
