@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-05-15-14-37-21
+- Removed an unneeded call to fmREST.
+
 2021-05-13-17-45-29
 - Added Contacts Comms create SMS to go with call.
 
