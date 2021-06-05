@@ -67,7 +67,7 @@ if ( true ) {
 			
 			// Header
 			$recsList->rowIndex = 0;
-			$mmContactsT->getListRow( 'head', $recsList, $table, '', '', '', '', '' );
+			$mmContactsT->getListRow( 'head', true, [], $recsList, $table, '', '', '', '', '' );
 			
 			// Recs Loop
 			$recsList->rowIndex = -1;
@@ -76,7 +76,7 @@ if ( true ) {
 				
 				$idPrefix = $mmContactsT->NameModule . 'List';
 				$onClick = 'window.location.href = \'' . $mmContactsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmContactsT->NameTableKey ] . '\';';
-				$mmContactsT->getListRow( 'body', $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
+				$mmContactsT->getListRow( 'body', true, [], $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
 			}
 			
 			// Content

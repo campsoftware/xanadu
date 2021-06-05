@@ -61,7 +61,7 @@ if ( true ) {
 			
 			// Header
 			$recsList->rowIndex = 0;
-			$mmAPIRequestsT->getListRow( 'head', $recsList, $table, '', '', '', '', '' );
+			$mmAPIRequestsT->getListRow( 'head', true, [], $recsList, $table, '', '', '', '', '' );
 			
 			// Recs Loop
 			$recsList->rowIndex = -1;
@@ -70,7 +70,7 @@ if ( true ) {
 				
 				$idPrefix = $mmAPIRequestsT->NameModule . 'List';
 				$onClick = 'window.location.href = \'' . $mmAPIRequestsT->URLFull . $recsList->rowsD[ $recsList->rowIndex ][ $mmAPIRequestsT->NameTableKey ] . '\';';
-				$mmAPIRequestsT->getListRow( 'body', $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
+				$mmAPIRequestsT->getListRow( 'body', true, [], $recsList, $table, $idPrefix, $resp->reqID, $onClick, '75px', '100px' );
 			}
 			
 			// Content

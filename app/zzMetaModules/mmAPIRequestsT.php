@@ -55,6 +55,7 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 		$colMeta->eleType = ELE_TYPE_TEXT_DB; // Default to Text Input
 		$colMeta->eleTypeAs = $typeAs;
 		$colMeta->eleFormatAs = '';
+		$colMeta->eleAlign = 'left';
 		$colMeta->colName = $colName;
 		$colMeta->colLabelEN = $colMeta->colName;
 		$colMeta->colLabel = $colMeta->colName;

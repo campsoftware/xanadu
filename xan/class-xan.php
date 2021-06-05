@@ -62,8 +62,9 @@ define( 'ELE_CLASS_BUTTON_SM_DELETE', 'btn btn-danger border-0 btn-sm' );
 
 // Align
 define( 'TEXT_ALIGN_LEFT', 'text-left' );
-define( 'TEXT_ALIGN_CENTER', 'text-center' );
 define( 'TEXT_ALIGN_RIGHT', 'text-right' );
+define( 'TEXT_ALIGN_CENTER', 'text-center' );
+define( 'TEXT_ALIGN_JUSTIFY', 'text-justify' );
 define( 'TABLE_ALIGN_TOP', 'align-top' );
 define( 'TABLE_ALIGN_MIDDLE', 'align-middle' );
 define( 'TABLE_ALIGN_BOTTOM', 'align-bottom' );
@@ -200,6 +201,10 @@ class response {
 	public $reqPathComponents = [];
 	public $reqPost = [];
 	public $reqID = '';
+	public $reqID2 = '';
+	public $reqID3 = '';
+	public $reqID4 = '';
+	public $reqID5 = '';
 
 	// Module
 	public $moduleName = '';
@@ -431,50 +436,83 @@ HTML;
 		return $code;
 	}
 	
-	public function getListRow( $rowType, \xan\recs $recs, \xan\eleTable &$table, $bodyIDPrefix, $bodyIDSelected, $bodyOnClick, $bodyRowHeight, $bodyColWidth ) {
-		if ( $rowType === 'head' ) {
-			// Init Indexes
-			// Init Indexes
-			$colIndex = 0;
-			
-			// Cell Tag
-			$tagsCell = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [ 'position' => '-webkit-sticky', 'position' => '-moz-sticky', 'position' => '-ms-sticky', 'position' => '-o-sticky', 'position' => 'sticky', 'top' => 0 ], [] );
-			
+	public function getListRow( $rowType, $rowHasButton, $rowColNamesA, \xan\recs $recs, \xan\eleTable &$table, $bodyIDPrefix, $bodyIDSelected, $bodyOnClick, $bodyRowHeight, $bodyColWidth ) {
+		$colIndex = -1;
+		$isActive = ( $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] === $bodyIDSelected ? 'active' : '' );
+	    
+	    // Head First Cell
+	    if ( $rowType === 'head' ) {
 			// Cell Left
-			$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, '' );
+			if ( $rowHasButton === true ){
+			    $colIndex++;
+			    
+			    $tagsCell = new \xan\tags( [ 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [ 'position' => '-webkit-sticky', 'position' => '-moz-sticky', 'position' => '-ms-sticky', 'position' => '-o-sticky', 'position' => 'sticky', 'top' => 0 ], [] );
+			    $table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, '' );
+			}
+			
 		}
 		
+	    // Body First Cell
 		if ( $rowType === 'body' ) {
 			// Init Indexes
-			$colIndex = 0;
 			$rowIndexTable = $recs->rowIndex + 1;
 			
-			// Cell Tag
-			$isActive = ( $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] === $bodyIDSelected ? 'active' : '' );
-			$tagsCell = new \xan\tags( [ $isActive, 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
-			
 			// Cell Left
-			$idListItem = $bodyIDPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
-			$buttonMoreTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY, 'mb-2' ], [], [ 'id="' . $idListItem . '"', 'onclick="' . $bodyOnClick . '"' ] );
-			$buttonMoreEle = new \xan\eleButton( $rowIndexTable, '', '', $buttonMoreTags );
-			$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $bodyRowHeight . '; overflow-y: auto;">' . $buttonMoreEle->render() . '</div>' );
+			if ( $rowHasButton === true ){
+			    $colIndex++;
+			    
+                $idListItem = $bodyIDPrefix . $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ];
+                $buttonMoreTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY, 'mb-2' ], [], [ 'id="' . $idListItem . '"', 'onclick="' . $bodyOnClick . '"' ] );
+                $buttonMoreEle = new \xan\eleButton( $rowIndexTable, '', '', $buttonMoreTags );
+                
+                $tagsCell = new \xan\tags( [ $isActive, 'border-0', 'pb-0', TEXT_ALIGN_LEFT, TABLE_ALIGN_TOP ], [], [] );
+                $table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $bodyRowHeight . '; overflow-y: auto;">' . $buttonMoreEle->render() . '</div>' );
+			}
 		}
 		
-		// For Each Header or Data Row Cell
-		foreach ( $recs->rowsD[ $recs->rowIndex ] as $key => $value ) {
-			$colIndex++;
-			
-			// Get Col Meta
-			$keyColMeta = $this->getColMeta( $key );
-			
-			if ( $rowType === 'head' ) {
-				$table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, $keyColMeta->colLabel );
-			}
-			
-			if ( $rowType === 'body' ) {
-				$width = ( \xan\isEmpty( $keyColMeta->widthForTable) ? $bodyColWidth : $keyColMeta->widthForTable );
-				$table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $bodyRowHeight . '; width: ' . $width . '; overflow-y: auto;">' . $value . '</div>' );
-			}
+		// Head/Body Cells
+		if ( count($rowColNamesA ) === 0 ){
+		    
+		    // All Columns
+		    foreach ( $recs->rowsD[ $recs->rowIndex ] as $key => $value ) {
+                $colIndex++;
+                
+                // Get Col Meta
+                $colMeta = $this->getColMeta( $key );
+                
+                if ( $rowType === 'head' ) {
+                    $tagsCell = new \xan\tags( [ 'border-0', 'pb-0',  $colMeta->classTextAlign(), TABLE_ALIGN_TOP ], [ 'position' => '-webkit-sticky', 'position' => '-moz-sticky', 'position' => '-ms-sticky', 'position' => '-o-sticky', 'position' => 'sticky', 'top' => 0 ], [] );
+                    $table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, $colMeta->colLabel );
+                }
+                
+                if ( $rowType === 'body' ) {
+                    $contentWidth = ( \xan\isEmpty( $colMeta->widthForTable) ? $bodyColWidth : $colMeta->widthForTable );
+                    $tagsCell = new \xan\tags( [ $isActive, 'border-0', 'pb-0',  $colMeta->classTextAlign(), TABLE_ALIGN_TOP ], [], [] );
+                    $table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $bodyRowHeight . '; width: ' . $contentWidth . '; overflow-y: auto;">' . $value . '</div>' );
+                }
+            }
+		    
+		} else {
+		    
+		    // Passed Columns
+		    foreach ( $rowColNamesA as $key ){
+		        $colIndex++;
+		        
+		        // Get Col Meta
+                $colMeta = $this->getColMeta( $key );
+                
+                if ( $rowType === 'head' ) {
+                    $tagsCell = new \xan\tags( [ 'border-0', 'pb-0',  $colMeta->classTextAlign(), TABLE_ALIGN_TOP ], [ 'position' => '-webkit-sticky', 'position' => '-moz-sticky', 'position' => '-ms-sticky', 'position' => '-o-sticky', 'position' => 'sticky', 'top' => 0 ], [] );
+                    $table->cellSet( $recs->rowIndex, $colIndex, $tagsCell, $colMeta->colLabel );
+                }
+                
+                if ( $rowType === 'body' ) {
+                    $contentWidth = ( \xan\isEmpty( $colMeta->widthForTable) ? $bodyColWidth : $colMeta->widthForTable );
+                    $tagsCell = new \xan\tags( [ $isActive, 'border-0', 'pb-0',  $colMeta->classTextAlign(), TABLE_ALIGN_TOP ], [], [] );
+                    $table->cellSet( $rowIndexTable, $colIndex, $tagsCell, '<div style="height: ' . $bodyRowHeight . '; width: ' . $contentWidth . '; overflow-y: auto;">' . $recs->rowsD[ $recs->rowIndex ][ $key ] . '</div>' );
+                }
+            }
+		    
 		}
 		
 	}
@@ -1051,6 +1089,7 @@ class colMeta {
 	public $eleType = '';
 	public $eleTypeAs = '';
 	public $eleFormatAs = '';
+	public $eleAlign = '';
 
 	public $colName = '';
 	public $colLabelEN = '';
@@ -1070,6 +1109,22 @@ class colMeta {
 	public $choicesOtherLabel = '';
 
 	public function __construct() {
+	}
+	
+	public function classTextAlign(){
+	    switch ( $this->eleAlign ) {
+            case 'right':
+                return TEXT_ALIGN_RIGHT;
+                break;
+            case 'center':
+                return TEXT_ALIGN_CENTER;
+                break;
+            case 'justify':
+                return TEXT_ALIGN_JUSTIFY;
+                break;
+            default:
+                return TEXT_ALIGN_LEFT;
+        }
 	}
 }
 
@@ -1156,11 +1211,30 @@ class element {
 		if ( $isAjaxSave ) {
 			$this->classA[] = 'xanDoSave';
 		}
-		if ( $this->colType == 'integer' or $this->colType == 'decimal' ) {
-			$this->styleD[ 'text-align' ] = 'right';
-		} else {
-			$this->styleD[ 'text-align' ] = 'left';
-		}
+		// Align
+		switch ( $this->colMeta->eleAlign ) {
+            case 'right':
+                $this->classA[] = TEXT_ALIGN_RIGHT;
+                // $this->styleD[ 'text-align' ] = 'right';
+                break;
+            case 'center':
+                $this->classA[] = TEXT_ALIGN_CENTER;
+                // $this->styleD[ 'text-align' ] = 'center';
+                break;
+            case 'justify':
+                $this->classA[] = TEXT_ALIGN_JUSTIFY;
+                // $this->styleD[ 'text-align' ] = 'justify';
+                break;
+            default:
+                $this->classA[] = TEXT_ALIGN_LEFT;
+                // $this->styleD[ 'text-align' ] = 'left';
+        }
+		// Align based on SQL Col Type
+		// if ( $this->colType == 'integer' or $this->colType == 'decimal' ) {
+		// 	$this->styleD[ 'text-align' ] = 'right';
+		// } else {
+		// 	$this->styleD[ 'text-align' ] = 'left';
+		// }
 		// Init Tags
 		$this->initTags();
 		// Value
@@ -1203,9 +1277,10 @@ class eleCard extends element {
 
 	// Functions
 	public function renderCardWithDiv( $contentHeader, $contentBody ) {
+	    $this->idTag = ( $this->idValue === '' ? '' : 'id="' . $this->idValue . '"' );
 		ob_start();
 		?>
-		<div class="card rounded float-left shadow ml-3 mb-3" style="<?= styleDToString( $this->styleD ) ?>">
+		<div <?= $this->idTag ?> class="card rounded float-left shadow ml-3 mb-3" style="<?= styleDToString( $this->styleD ) ?>">
 			<div class="card-header font-weight-bold p-2"><?= $contentHeader ?></div>
 			<div class="card-body p-2 <?= $this->overflowAuto ?>">
 				<?= $contentBody ?>
@@ -1218,9 +1293,10 @@ class eleCard extends element {
 	}
 
 	public function renderCardWithList( $contentHeader, $contentBody ) {
+	    $this->idTag = ( $this->idValue === '' ? '' : 'id="' . $this->idValue . '"' );
 		ob_start();
 		?>
-		<div class="card rounded float-left shadow ml-3 mb-3" style="<?= styleDToString( $this->styleD ) ?>">
+		<div <?= $this->idTag ?> class="card rounded float-left shadow ml-3 mb-3" style="<?= styleDToString( $this->styleD ) ?>">
 			<div class="card-header font-weight-bold p-2"><?= $contentHeader ?></div>
 			<div class="list-group list-group-flush <?= $this->overflowAuto ?>">
 				<?= $contentBody ?>
@@ -2243,7 +2319,7 @@ class eleSearchBarListDB extends element {
 		$this->idPrefix = $mm->NameTable . '';
 	}
 
-	public function render(){
+	public function render( $inclColA = [], $inclColMod = false, $inclColKeys = false ){
 		// Search Session Vars Init
 		$_SESSION[ $this->idPrefix . 'SearchTerm' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchTerm' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchTerm' ] : $_SESSION[ $this->idPrefix . 'SearchTerm' ] );
 		$_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchQBStringWhere' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchQBStringWhere' ] : $_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] );
@@ -2251,7 +2327,7 @@ class eleSearchBarListDB extends element {
 		$_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchQBBindParams' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchQBBindParams' ] : $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
 		$_SESSION[ $this->idPrefix . 'SearchQBRules' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchQBRules' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchQBRules' ] : $_SESSION[ $this->idPrefix . 'SearchQBRules' ] );
 		$_SESSION[ $this->idPrefix . 'SearchSort' ] = ( isset( $this->resp->reqPost[ $this->idPrefix . 'SearchSort' ] ) ? $this->resp->reqPost[ $this->idPrefix . 'SearchSort' ] : $_SESSION[ $this->idPrefix . 'SearchSort' ] );
-
+		
 		// Decode ONLY Double and Single Quotes
 		$_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] = paramDecodeQuotes( $_SESSION[ $this->idPrefix . 'SearchQBStringWhere' ] );
 		$_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] = paramDecodeQuotes( $_SESSION[ $this->idPrefix . 'SearchQBBindParams' ] );
@@ -2289,13 +2365,31 @@ class eleSearchBarListDB extends element {
 						$qrItems = '';
 						if ( $GLOBALS[ 'schema' ] !== null ) {
 							foreach ( $GLOBALS[ 'schema' ][ $this->mm->NameTable ] as $key => $val ) {
-								// Get Column Name Label
-							    $tableColMeta = $this->mm->getColMeta($val[ 'COLUMN_NAME' ]);
+							    // Get Column Name Label
+							    $colName = $val[ 'COLUMN_NAME' ];
+							    $tableColMeta = $this->mm->getColMeta($colName );
 							    $colLabel = $tableColMeta->colLabel;
 								
-								// Add to QueryBuilder IF NOT A KEY AND NOT A MOD
-								if ( $tableColMeta->isKey === false and $tableColMeta->isMod === false ) {
-									$qrItems .= dbQueryBuilder_FindFilter( $this->mm->NameTable, $val[ 'COLUMN_NAME' ], $colLabel ) . ', ';
+								// Add to QueryBuilder
+								$doAdd = false;
+								// Not a Key and Not a Mod
+								if ( !$doAdd and $tableColMeta->isKey === false and $tableColMeta->isMod === false ) {
+									$doAdd = true;
+								}
+								// Check $inclColMod
+								if ( !$doAdd and $tableColMeta->isMod === true and $inclColMod === true ) {
+									$doAdd = true;
+								}
+								// Check $inclColKeys
+								if ( !$doAdd and $tableColMeta->isKey === true and $inclColKeys === true ) {
+									$doAdd = true;
+								}
+								// Check $inclColA
+								if ( !$doAdd and \xan\arrayContainsString($inclColA,$colName) ) {
+									$doAdd = true;
+								}
+								if ( $doAdd ){
+								    $qrItems .= dbQueryBuilder_FindFilter( $this->mm->NameTable, $colName, $colLabel ) . ', ';
 								}
 							}
 							// Remove the last comma
