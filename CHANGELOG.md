@@ -1,5 +1,13 @@
 # Xanadu Change Log
 
+2021-06-05-16-30-10
+- Added colMeta->eleAlign that accepts left, right, center, justify which defaults to left.
+- Added Utility Function arrayContainsString for searching arrays for a value.
+- Added additional reqID properties 2, 3, 4, 5
+- Added getListRow params $rowHaButton and $rowColNamesA for tables in List Cards.
+- Added eleCard IDs to make Showing and Hiding Cards simple.
+- Added eleSearchBarListDB->render optional properties for $inclColA, $inclColMod, and $inclColKeys.
+
 2021-05-15-14-37-21
 - Removed an unneeded call to fmREST.
 

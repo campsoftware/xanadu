@@ -24,6 +24,10 @@ function isNotEmpty( $value ) {
 ///////////////////////////////////////////////////////////
 // Arrays and Dictionaries
 
+function arrayContainsString( $arrayA, $searchStr ) {
+	return in_array( $searchStr, $arrayA );
+}
+
 function arrayValuesWrapWithBackticks( $arrayA ){
 	return arrayValuesWrapWith($arrayA,'`','`');
 }

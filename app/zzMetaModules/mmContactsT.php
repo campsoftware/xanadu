@@ -64,6 +64,7 @@ class moduleMetaContactsT extends \xan\moduleMeta {
 		$colMeta->eleType = ELE_TYPE_TEXT_DB; // Default to Text Input
 		$colMeta->eleTypeAs = $typeAs;
 		$colMeta->eleFormatAs = '';
+		$colMeta->eleAlign = 'left';
 		$colMeta->colName = $colName;
 		$colMeta->colLabelEN = $colMeta->colName;
 		$colMeta->colLabel = $colMeta->colName;
@@ -161,14 +162,17 @@ class moduleMetaContactsT extends \xan\moduleMeta {
 				break;
 			case 'ContactedDate':
 				$colMeta->colLabelEN = 'Contacted Date';
+				$colMeta->eleAlign = 'right';
 				$colMeta->eleType = ELE_TYPE_DATE_DB;
 				break;
 			case 'TimeOpen':
 				$colMeta->colLabelEN = 'Time Open';
+				$colMeta->eleAlign = 'right';
 				$colMeta->eleType = ELE_TYPE_TIME_DB;
 				break;
 			case 'TimeClosed':
 				$colMeta->colLabelEN = 'Time Closed';
+				$colMeta->eleAlign = 'right';
 				$colMeta->eleType = ELE_TYPE_TIME_DB;
 				break;
 			case 'FollowUpTS':
@@ -180,12 +184,15 @@ class moduleMetaContactsT extends \xan\moduleMeta {
 				break;
 			case 'NumberInteger':
 				$colMeta->colLabelEN = 'Number Integer';
+				$colMeta->eleAlign = 'right';
 				break;
 			case 'NumberDecimal':
 				$colMeta->colLabelEN = 'Number Decimal';
+				$colMeta->eleAlign = 'right';
 				break;
 			case 'NumberCurrency':
 				$colMeta->colLabelEN = 'Number Currency';
+				$colMeta->eleAlign = 'right';
 				$colMeta->eleFormatAs = ELE_FORMAT_CURRENCY;
 				break;
 			
