@@ -30,12 +30,16 @@ if ( $recsDetail->errorB ) {
 	$tagsEleSelector = new \xan\tags( [], [], [] );
 	
 	// Detail Cards Append
-	require_once( 'contentCard-settings-app.php' );
-	require_once( 'contentCard-settings-formats.php' );
-	require_once( 'contentCard-settings-smtp.php' );
-	require_once( 'contentCard-settings-twillo.php' );
-	require_once( 'contentCard-settings-stripe.php' );
-	require_once( 'contentCard-settings-otherApis.php' );
+	require_once( 'contentCard-settings-01-app.php' );
+	require_once( 'contentCard-settings-02-locale.php' );
+	require_once( 'contentCard-settings-03A-contact.php' );
+	require_once( 'contentCard-settings-03B-contact.php' );
+	require_once( 'contentCard-settings-04-features.php' );
+	require_once( 'contentCard-settings-05-formats.php' );
+	require_once( 'contentCard-settings-06-smtp.php' );
+	require_once( 'contentCard-settings-07-twillo.php' );
+	require_once( 'contentCard-settings-08-stripe.php' );
+	require_once( 'contentCard-settings-09-otherApis.php' );
 	
 	// Scripts Extra
 	// $resp->scriptsOnLoadA[] = '';

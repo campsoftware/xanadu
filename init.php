@@ -190,18 +190,13 @@ define( 'APP_NAME', $recsSettings->rowsD[ 0 ][ 'AppName' ] );
 define( 'APP_ICON_URL_50', $recsSettings->rowsD[ 0 ][ 'AppIconURL50' ] );
 define( 'APP_ICON_URL_1024', $recsSettings->rowsD[ 0 ][ 'AppIconURL1024' ] );
 define( 'APP_ICON_URL_LINK', $recsSettings->rowsD[ 0 ][ 'AppIconURLLink' ] );
-define( 'APP_CURRENCY', $recsSettings->rowsD[ 0 ][ 'AppCurrency' ] );
-define( 'APP_EMAIL_FROM', $recsSettings->rowsD[ 0 ][ 'AppEmailFrom' ] );
 
 // Locale
 define( 'APP_LANG_CODE', $recsSettings->rowsD[ 0 ][ 'AppLangCode' ] ); // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 define( 'APP_COUNTRY_CODE', $recsSettings->rowsD[ 0 ][ 'AppCountryCode' ] ); // https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 define( 'APP_LOCALE', APP_LANG_CODE . '_' . APP_COUNTRY_CODE );
 define( 'APP_TIMEZONE_ID', $recsSettings->rowsD[ 0 ][ 'AppTimezoneID' ] ); // https://www.php.net/manual/en/timezones.php
-
-// Features
-define( 'CONTENT_LOAD_NOW', true );
-define( 'LOGOUT_AUTO_SECONDS', $recsSettings->rowsD[ 0 ][ 'LogoutAutoSeconds' ] );
+define( 'APP_CURRENCY', $recsSettings->rowsD[ 0 ][ 'AppCurrency' ] );
 
 // Formats
 define( 'DATETIME_FORMAT_DISPLAY_DATE', $recsSettings->rowsD[ 0 ][ 'FormatDisplayDate' ] );
@@ -209,27 +204,14 @@ define( 'DATETIME_FORMAT_DISPLAY_TIMESTAMP', $recsSettings->rowsD[ 0 ][ 'FormatD
 define( 'DATETIME_FORMAT_DISPLAY_TIMESTAMP_SECONDS', $recsSettings->rowsD[ 0 ][ 'FormatDisplayTSSecs' ] );
 define( 'DATETIME_FORMAT_DISPLAY_TIME', $recsSettings->rowsD[ 0 ][ 'FormatDisplayTime' ] );
 
-// Twitter
+// Contact
+define( 'APP_EMAIL_FROM', $recsSettings->rowsD[ 0 ][ 'AppEmailFrom' ] );
 define( 'TWITTER_SITE', $recsSettings->rowsD[ 0 ][ 'TwitterSite' ] );
 define( 'TWITTER_AUTHOR', $recsSettings->rowsD[ 0 ][ 'TwitterAuthor' ] );
 
-// Google Maps
-define( 'GOOGLE_MAPS_KEY', $recsSettings->rowsD[ 0 ][ 'GoogleMapsKey' ] );
-
-// Stripe
-define( 'STRIPE_CURRENCY_CODE', $recsSettings->rowsD[ 0 ][ 'StripeCurrencyCode' ] );
-define( 'STRIPE_KEY_LIVE_SECRET', $recsSettings->rowsD[ 0 ][ 'StripeKeyLiveSecret' ] );
-define( 'STRIPE_KEY_LIVE_PUBLIC', $recsSettings->rowsD[ 0 ][ 'StripeKeyLivePublic' ] );
-define( 'STRIPE_KEY_TEST_SECRET', $recsSettings->rowsD[ 0 ][ 'StripeKeyTestSecret' ] );
-define( 'STRIPE_KEY_TEST_PUBLIC', $recsSettings->rowsD[ 0 ][ 'StripeKeyTestPublic' ] );
-$stripeMode = 'Test';
-if ( $stripeMode === 'Live' ) {
-	define( 'STRIPE_KEY_SECRET', $recsSettings->rowsD[ 0 ][ 'StripeKeyLiveSecret' ] );
-	define( 'STRIPE_KEY_PUBLIC', $recsSettings->rowsD[ 0 ][ 'StripeKeyLivePublic' ] );
-} else {
-	define( 'STRIPE_KEY_SECRET', $recsSettings->rowsD[ 0 ][ 'StripeKeyTestSecret' ] );
-	define( 'STRIPE_KEY_PUBLIC', $recsSettings->rowsD[ 0 ][ 'StripeKeyTestPublic' ] );
-}
+// Features
+define( 'CONTENT_LOAD_NOW', true );
+define( 'LOGOUT_AUTO_SECONDS', $recsSettings->rowsD[ 0 ][ 'LogoutAutoSeconds' ] );
 
 // SMTP
 define( 'SMTP_HOST_MAILGUN', $recsSettings->rowsD[ 0 ][ 'SMTPHost' ] );
@@ -239,10 +221,28 @@ define( 'SMTP_PASSWORD_MAILGUN', $recsSettings->rowsD[ 0 ][ 'SMTPPassword' ] );
 define( 'SMTP_USEAUTH_MAILGUN', ( $recsSettings->rowsD[ 0 ][ 'SMTPUseAuth' ] === 'Yes' ? true : false ) ); // true or false
 define( 'SMTP_SECURE_MAILGUN', $recsSettings->rowsD[ 0 ][ 'SMTPAuthType' ] ); // tls or ssl
 
-// SMS
+// Twillow for SMS
 define( 'SMS_PHONENUM_TWILLO', $recsSettings->rowsD[ 0 ][ 'TwilloPhoneNumber' ] );
 define( 'SMS_APIKEY_TWILLO', $recsSettings->rowsD[ 0 ][ 'TwilloAPIKey' ] );
 define( 'SMS_APISECRET_TWILLO', $recsSettings->rowsD[ 0 ][ 'TwilloAPISecret' ] );
+
+// Stripe
+define( 'STRIPE_CURRENCY_CODE', $recsSettings->rowsD[ 0 ][ 'StripeCurrencyCode' ] );
+define( 'STRIPE_KEY_LIVE_SECRET', $recsSettings->rowsD[ 0 ][ 'StripeKeyLiveSecret' ] );
+define( 'STRIPE_KEY_LIVE_PUBLIC', $recsSettings->rowsD[ 0 ][ 'StripeKeyLivePublic' ] );
+define( 'STRIPE_KEY_TEST_SECRET', $recsSettings->rowsD[ 0 ][ 'StripeKeyTestSecret' ] );
+define( 'STRIPE_KEY_TEST_PUBLIC', $recsSettings->rowsD[ 0 ][ 'StripeKeyTestPublic' ] );
+$stripeMode = 'Test'; // Test or Live
+if ( $stripeMode === 'Live' ) {
+	define( 'STRIPE_KEY_SECRET', $recsSettings->rowsD[ 0 ][ 'StripeKeyLiveSecret' ] );
+	define( 'STRIPE_KEY_PUBLIC', $recsSettings->rowsD[ 0 ][ 'StripeKeyLivePublic' ] );
+} else {
+	define( 'STRIPE_KEY_SECRET', $recsSettings->rowsD[ 0 ][ 'StripeKeyTestSecret' ] );
+	define( 'STRIPE_KEY_PUBLIC', $recsSettings->rowsD[ 0 ][ 'StripeKeyTestPublic' ] );
+}
+
+// APIs Other
+define( 'GOOGLE_MAPS_KEY', $recsSettings->rowsD[ 0 ][ 'GoogleMapsKey' ] );
 
 ///////////////////////////////////////////////////////////
 // Arrays

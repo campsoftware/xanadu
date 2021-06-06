@@ -22,9 +22,6 @@ $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmSettingsT->getColEle
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmSettingsT->getColEleRender( 'FormatDisplayTime', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmSettingsT->getColEleRender( 'FormatDisplayTime', ELE_AS_DEFINED, $tagsEleInput, $recsDetail, $formTagDetail, $resp ) );
 
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $mmSettingsT->getColEleRender( 'AppCurrency', ELE_AS_LABEL, $tagsEleLabel, $recsDetail, $formTagDetail, $resp ) );
-$table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmSettingsT->getColEleRender( 'AppCurrency', ELE_AS_DEFINED, $tagsEleInput, $recsDetail, $formTagDetail, $resp ) );
-
 // Card Append
 $resp->contentAreaA[] = $card->renderCardWithDiv( $cardHeaderContent, $table->render() );
 ?>
