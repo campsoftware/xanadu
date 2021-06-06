@@ -93,8 +93,67 @@ class moduleMetaSettingsT extends \xan\moduleMeta {
 			case 'AppEmailFrom':
 				$colMeta->colLabelEN = 'App Email From';
 				break;
+				
+			// Locale
+			case 'AppLangCode':
+				$colMeta->colLabelEN = 'App Language Code';
+				break;
+			case 'AppCountryCode':
+				$colMeta->colLabelEN = 'App Country Code';
+				break;
+			case 'AppTimezoneID':
+				$colMeta->colLabelEN = 'App TimeZone ID';
+				break;
+			case 'AppCurrency':
+				$colMeta->colLabelEN = 'App Currency';
+				break;
+			
+			// Contact 1
+			case 'PhoneNumber':
+				$colMeta->colLabelEN = 'Phone Number';
+				break;
+			case 'EmailAddress':
+				$colMeta->colLabelEN = 'Email Address';
+				break;
+			case 'TwitterSite':
+				$colMeta->colLabelEN = 'Twitter Site';
+				break;
+			case 'TwitterAuthor':
+				$colMeta->colLabelEN = 'Twitter Author';
+				break;
+				
+			// Contact 2
+			case 'AddressStreet1':
+				$colMeta->colLabelEN = 'Street 1';
+				break;
+			case 'AddressStreet2':
+				$colMeta->colLabelEN = 'Street 2';
+				break;
+			case 'AddressCity':
+				$colMeta->colLabelEN = 'City';
+				break;
+			case 'AddressState':
+				$colMeta->colLabelEN = 'State';
+				break;
+			case 'AddressZip':
+				$colMeta->colLabelEN = 'Zip';
+				break;
+			case 'AddressCounty':
+				$colMeta->colLabelEN = 'County';
+				break;
+			case 'AddressLatitude':
+				$colMeta->colLabelEN = 'Latitude';
+				$colMeta->eleAlign = 'right';
+				break;
+			case 'AddressLongitude':
+				$colMeta->colLabelEN = 'Longitude';
+				$colMeta->eleAlign = 'right';
+				break;
+				
+			// Features
 			case 'LogoutAutoSeconds':
 				$colMeta->colLabelEN = 'Auto Logout Seconds';
+				$colMeta->eleAlign = 'right';
 				break;
 				
 			// Formats
@@ -109,9 +168,6 @@ class moduleMetaSettingsT extends \xan\moduleMeta {
 				break;
 			case 'FormatDisplayTime':
 				$colMeta->colLabelEN = 'Format Display Time';
-				break;
-			case 'AppCurrency':
-				$colMeta->colLabelEN = 'App Currency';
 				break;
 				
 			// SMTP

@@ -1,5 +1,9 @@
 # Xanadu Change Log
 
+2021-06-06-16-20-23
+- Updated Init, mmSettingsT, and Settings Card values to appear in similar order.
+- Added Settings for Phone Number, Email Address, and Postal Address.
+
 2021-06-05-16-30-10
 - Added colMeta->eleAlign that accepts left, right, center, justify which defaults to left.
 - Added Utility Function arrayContainsString for searching arrays for a value.
