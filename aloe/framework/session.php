@@ -18,6 +18,7 @@ namespace aloe {
 		@session_start();
 		
 		// Set Session Data
+		$_SESSION[ SESS_URL ] = 'http://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
 		$_SESSION[ SESS_INFO ] = $info;
 		if ( !isset( $_SESSION[ SESS_BEGIN ] ) ) {
 			$_SESSION[ SESS_BEGIN ] = dateTimeFromString( 'now' , DATETIME_FORMAT_SQLDATETIME );

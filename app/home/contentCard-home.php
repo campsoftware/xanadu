@@ -27,17 +27,13 @@ $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $stripeButtonProduct[
 $resp->scriptsOnLoadA[] = $stripeButtonProduct[ 'InitJavaScript' ];
 $resp->scriptsOnLoadA[] = $stripeButtonSubscription[ 'InitJavaScript' ];
 
-// Barcode
-$tagsElePhoto = new \xan\tags( [ 'img-thumbnail p-2' ], [ 'height' => CARD_HEIGHT_QUARTER, 'width' => 'auto' ], [] );
-$imgEle = new \xan\eleURLImage( URL_BASE . 'include/barcode/2018-10-03/barcode.php?f=png&s=qr&p=-14&d=http://campsoftware.com ', false, '', '', 'CampSoftware.com', $tagsElePhoto );
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellCenterMiddle, $imgEle->render() . STR_BR . 'CampSoftware.com' );
-
 // Button API Random Amount
 $buttonAPIRandomTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ "onclick=\"xanDo( { 'Do': 'apiRequestRandomAmount', 'Msg': 'API Request Random Amount', 'URL': '/home-do' } );\"" ] );
 $buttonAPIRandomEle = new \xan\eleButton( 'API Random Amount', '', '', $buttonAPIRandomTags );
 // Button API Process Queued
 $buttonAPIQueuedTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_SECONDARY ], [], [ "onclick=\"xanDo( { 'Do': 'apiProcessQueued', 'Msg': 'API Process Queued', 'URL': '/home-do' } );\"" ] );
-$buttonAPIQueuedEle = new \xan\eleButton( 'API Process Queued', '', '', $buttonTags );
+$buttonAPIQueuedEle = new \xan\eleButton( 'API Process Queued', '', '', $buttonAPIQueuedTags );
+// Show Buttons
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonAPIRandomEle->render() . ' ' . $buttonAPIQueuedEle->render() );
 
 // Time
