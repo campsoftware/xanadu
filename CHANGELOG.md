@@ -1,5 +1,10 @@
 # Xanadu Change Log
 
+2021-06-08-16-21-56
+- Removed setting $_SESSION[ SESS_USER ] from init.php Session was not started yet. It's set in mmUsersT->doLogin.
+- Moved setting $_SESSION[ SESS_URL ] to aloe/framework/session.php.
+- Added a mb-1 to the button classes, ELE_CLASS_BUTTON_RG_PRIMARY, ELE_CLASS_BUTTON_SM_PRIMARY, ELE_CLASS_BUTTON_RG_SECONDARY, and ELE_CLASS_BUTTON_SM_SECONDARY to add bit of vertical space.
+
 2021-06-08-15-26-13
 - Fixed eleTable->render to correctly set table thead and tbody.
 - Renamed FontAwesome properties to FontIcon since we're using FontAwesome and Boostrap Icons.

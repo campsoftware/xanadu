@@ -31,7 +31,7 @@ ob_start();
         <meta name="X-Content-Type-Options" content="nosniff">
         <meta name="X-Frame-Options" content="deny">
         <meta name="X-XSS-Protection" content="1; mode=block">
-        
+
         <!-- Head Meta Begin -->
         <title><?= $resp->headTitle ?></title>
 		<?= \xan\respAToString( $resp->headMetaA ) ?>
@@ -99,10 +99,10 @@ ob_start();
 			echo "\r\r";
 		}
 		?>
-        
+
         <!-- Bootstrap Icons     https://icons.getbootstrap.com -->
         <link href="/include/bootstrapIcons/1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css">
-        
+
         <!-- FontAwesome     https://fontawesome.com/icons -->
         <link href="/include/fontawesome/5.15.2_pro/css/all.min.css" rel="stylesheet" type="text/css">
 
@@ -402,6 +402,15 @@ ob_start();
 									}
 									?>
 									<?= \xan\navItemDropdownModule( $mmUsersLogout ) ?>
+									<?php
+									echo \xan\navDivider();
+									// URL Barcode
+									$barcodeTags = new \xan\tags( [ 'img-thumbnail p-2' ], [ 'height' => CARD_HEIGHT_QUARTER, 'width' => 'auto' ], [] );
+									$barcodeImage = new \xan\eleURLImage( URL_BASE . 'include/barcode/2018-10-03/barcode.php?f=png&s=qr&p=-14&d=' . $_SESSION[ SESS_URL ], false, '', '', $_SESSION[ SESS_URL ], $barcodeTags );
+									$barcodeHTML = $barcodeImage->render();
+									?>
+                                    <span class="dropdown-item disabled">Mobile Quick Load:</span>
+                                    <span class="dropdown-item disabled"><?= $barcodeHTML ?></span>
 									<?= \xan\navDivider() ?>
                                     <span class="dropdown-item disabled">Session Info</span>
                                     <span class="dropdown-item disabled">Email: <?= $_SESSION[ SESS_USER ][ 'EmailAddress' ] ?></span>
@@ -516,7 +525,7 @@ ob_start();
                                         $( xanDoJS[ i ][ "xanDo_Selector" ] ).modal( "show" );
                                     }
                                     break;
-                                
+
                                 case "setHTML":
                                     $( xanDoJS[ i ][ "xanDo_Selector" ] ).html( xanDoJS[ i ][ "xanDo_Value" ] );
                                     break;
@@ -541,14 +550,14 @@ ob_start();
 
                         }
                     }
-                    
+
                     // Auto Logout Schedule
 					<?php
 					if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
 						echo 'xanSchedAutoLogoutID = xanSchedAutoLogout( xanSchedAutoLogoutID, ' . LOGOUT_AUTO_SECONDS . '  );';
 					}
 					?>
-                    
+
                     // Focus from Session
 					<?php
 					if ( $_SESSION[ SESS_FOCUS_SELECTOR ] !== '' ) {
@@ -656,7 +665,7 @@ ob_start();
 							echo 'xanSchedAutoLogoutID = xanSchedAutoLogout( xanSchedAutoLogoutID, ' . LOGOUT_AUTO_SECONDS . '  );';
 						}
 						?>
-                        
+
                         // Notify
                         let messageID = Math.floor( ( Math.random() * 999999999 ) + 1 );
                         xanMessageDisplay( "#xanMessage", "<span class='text-success'>Saved " + result[ 0 ][ 'AjaxColumnLabel' ] + "<br />" + result[ 0 ][ "AjaxLoadTime" ] + "</span>", messageID, iconID, true, true );
@@ -675,7 +684,7 @@ ob_start();
 
         // On Load
         $( function () {
-            
+
             // Auto Logout Schedule
 			<?php
 			if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {

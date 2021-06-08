@@ -143,32 +143,8 @@ foreach ( glob( PATH_ROOT_APP . "zzMetaModules/mm*.php" ) as $filename ) {
 // Schema Init
 xan\dbRecsSchemaSet(); // Sets: $GLOBALS[ 'schema' ]
 
-
 ///////////////////////////////////////////////////////////
-// Session recsUsersCURRENT Init ;
-// Example: $_SESSION[ SESS_USER ][ 'NameFirst' ]
-$recsUserCURRENT = new \xan\recs( $mmUsersT );
-$recsUserCURRENT->querySQL = 'SELECT * FROM ' . $mmUsersT->NameTable . ' WHERE ' . $mmUsersT->NameTableKey . ' = ?';
-$recsUserCURRENT->queryBindNamesA = array( $mmUsersT->NameTableKey );
-$recsUserCURRENT->queryBindValuesA = array( $_SESSION[ SESS_USER ][ UUIDUSERS ] );
-$recsUserCURRENT->query();
-// Error Check
-if ( $recsUserCURRENT->errorB ) {
-	// $resp->contentHeader .= ' Error: ' . $recsSettings->messageExtra . '; ' . $recsSettings->messageSQL;
-} elseif ( $recsUserCURRENT->rowCount < 1 ) {
-	// $resp->contentHeader .= ' Error: None Found';
-} elseif ( $recsUserCURRENT->rowCount > 0 ) {
-	// Use First Record
-}
-$_SESSION[ SESS_USER ] = $recsUserCURRENT->rowsD[ 0 ];
-$recsUserCURRENT = new \xan\recs( $mmNull_T );
-
-// URL Current
-$_SESSION[ SESS_URL ] = 'http://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
-
-
-///////////////////////////////////////////////////////////
-// Settings Select
+// Settings Load
 $recsSettings = new \xan\recs( $mmSettingsT );
 $recsSettings->querySQL = 'SELECT * FROM ' . $mmSettingsT->NameTable . ' WHERE ' . 'Active = ?';
 $recsSettings->queryBindNamesA = array( 'Active' );
@@ -182,8 +158,6 @@ if ( $recsSettings->errorB ) {
 } elseif ( $recsSettings->rowCount > 0 ) {
 	// Use First Record
 }
-
-//xan\xanEmailDebug( 'Xan Settings Test', $querySQL . print_r( $recsSettings->rowsD, true ) );
 
 // App
 define( 'APP_NAME', $recsSettings->rowsD[ 0 ][ 'AppName' ] );
@@ -210,8 +184,10 @@ define( 'TWITTER_SITE', $recsSettings->rowsD[ 0 ][ 'TwitterSite' ] );
 define( 'TWITTER_AUTHOR', $recsSettings->rowsD[ 0 ][ 'TwitterAuthor' ] );
 
 // Features
+define( 'TWOFACTORAUTH_ENABLED', true );
 define( 'CONTENT_LOAD_NOW', true );
 define( 'LOGOUT_AUTO_SECONDS', $recsSettings->rowsD[ 0 ][ 'LogoutAutoSeconds' ] );
+
 
 // SMTP
 define( 'SMTP_HOST_MAILGUN', $recsSettings->rowsD[ 0 ][ 'SMTPHost' ] );

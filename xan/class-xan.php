@@ -48,10 +48,10 @@ define( 'DATETIME_FORMAT_SQLDATETIME', 'Y-m-d H:i:s' );
 // Element Classes
 define( 'ELE_CLASS', 'xanControl form-control' );
 // Buttons Generic
-define( 'ELE_CLASS_BUTTON_RG_PRIMARY', 'btn btn-primary border-0' );
-define( 'ELE_CLASS_BUTTON_SM_PRIMARY', 'btn btn-primary border-0 btn-sm' );
-define( 'ELE_CLASS_BUTTON_RG_SECONDARY', 'btn btn-secondary' );
-define( 'ELE_CLASS_BUTTON_SM_SECONDARY', 'btn btn-secondary btn-sm' );
+define( 'ELE_CLASS_BUTTON_RG_PRIMARY', 'btn btn-primary mb-1 border-0' );
+define( 'ELE_CLASS_BUTTON_SM_PRIMARY', 'btn btn-primary mb-1 border-0 btn-sm' );
+define( 'ELE_CLASS_BUTTON_RG_SECONDARY', 'btn btn-secondary mb-1' );
+define( 'ELE_CLASS_BUTTON_SM_SECONDARY', 'btn btn-secondary mb-1 btn-sm' );
 // Buttons Specific
 define( 'ELE_CLASS_BUTTON_SM_SEARCHBAR', 'btn btn-secondary btn-sm' );
 define( 'ELE_CLASS_BUTTON_RG_GO', 'btn btn-secondary' );
