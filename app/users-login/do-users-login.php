@@ -69,30 +69,69 @@ if ( !empty( $ValidationMsgA ) ) {
 	return;
 }
 
-// Hide Login Table, Show Code Table, Set Focus
-$resp->jsHideOrShow( '#formTableLogin', 'Hide' );
-$resp->jsHideOrShow( '#formTableCode', 'Show' );
-$resp->jsSetFocus( '#Code');
 
-// 2FA Generate
-$mmUsersT->set2FACode( $userSelect->rowsD[ 0 ][ UUIDUSERS ] );
-
-// 2FA Send
-$senderCode = $mmUsersT->TwoFactorCode;
-$senderSubject = APP_NAME . ' Verification Code';
-$senderMessage = $senderCode . ' is your ' . APP_NAME . ' Code or click: ' . URL_BASE . 'login/tfa/' . $userSelect->rowsD[ 0 ][ UUIDUSERS ] . '/' . $senderCode;
-$sender = new \xan\sender();
-// Send SMS
-if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'PhoneTwoFactor' ] ) ) {
-	$sender->sendSMS( $userSelect->rowsD[ 0 ][ 'PhoneTwoFactor' ], $senderMessage );
+//  Cookie RememberMe Set
+$RememberMeIsUpdated = false;
+if ( $doParam[ 'RememberMe' ] === '1' ) {
+	$RememberMeID = \xan\strUUID();
+	$UUIDUsers = $userSelect->rowsD[ 0 ][ UUIDUSERS ];
+	setcookie( COOKIE_REMEMBERME, $RememberMeID, ['expires' => time() + ( 86400 * APP_COOKIE_LOGIN_DAYS ), 'path' => '/', 'httponly' => true, 'secure' => true ] );
+	
+	// User Update
+	$userUpdate = new \xan\recs( $mmUsersT );
+	$userUpdate->querySQL = 'UPDATE Users SET LoginKey = ? WHERE UUIDUsers = ?';
+	$userUpdate->queryBindNamesA = array( 'LoginKey', UUIDUSERS );
+	$userUpdate->queryBindValuesA = array( $RememberMeID, $UUIDUsers );
+	$userUpdate->query();
+	// Error Check
+	if ( $userUpdate->errorB ) {
+		// $xanMessage .= ' Remember Me Update Error: ' . $userUpdate->messageExtra . '; ' . $userUpdate->messageSQL . STR_BR;
+	} elseif ( $userUpdate->rowCount < 1 ) {
+		// $xanMessage .= ' Remember Me Update: None Found' . STR_BR;
+	} elseif ( $userSelect->rowCount > 0 ) {
+		$RememberMeIsUpdated = true;
+	}
 }
-// Send Email
-if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'EmailAddress' ] ) ) {
-	$sender->sendEmail( true, APP_EMAIL_FROM, $userSelect->rowsD[ 0 ][ 'EmailAddress' ], $senderSubject, '', $senderMessage );
-}
 
-// Actions Return as JSON
-$resp->jsSetHTML( '#formMessageLogin', implode( ', ', $ValidationMsgA ) );
-$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
-return;
+if ( TWOFACTORAUTH_ENABLED ) {
+	
+	// Hide Login Table, Show Code Table, Set Focus
+	$resp->jsHideOrShow( '#formTableLogin', 'Hide' );
+	$resp->jsHideOrShow( '#formTableCode', 'Show' );
+	$resp->jsSetFocus( '#Code');
+	
+	// 2FA Generate
+	$mmUsersT->set2FACode( $userSelect->rowsD[ 0 ][ UUIDUSERS ] );
+	
+	// 2FA Send
+	$senderCode = $mmUsersT->TwoFactorCode;
+	$senderSubject = APP_NAME . ' Verification Code';
+	$senderMessage = $senderCode . ' is your ' . APP_NAME . ' Code or click: ' . URL_BASE . 'login/tfa/' . $userSelect->rowsD[ 0 ][ UUIDUSERS ] . '/' . $senderCode;
+	$sender = new \xan\sender();
+	
+	// Send SMS
+	if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'PhoneTwoFactor' ] ) and $userSelect->rowsD[ 0 ][ 'TwoFactorViaPhone2FA' ] === 'Yes' ) {
+		$sender->sendSMS( $userSelect->rowsD[ 0 ][ 'PhoneTwoFactor' ], $senderMessage );
+	}
+	// Send Email
+	if ( \xan\isNotEmpty( $userSelect->rowsD[ 0 ][ 'EmailAddress' ] ) and $userSelect->rowsD[ 0 ][ 'TwoFactorViaEmail' ] === 'Yes' ) {
+		$sender->sendEmail( true, APP_EMAIL_FROM, $userSelect->rowsD[ 0 ][ 'EmailAddress' ], $senderSubject, '', $senderMessage );
+	}
+	
+	// Actions Return as JSON
+	$resp->jsSetHTML( '#formMessageLogin', implode( ', ', $ValidationMsgA ) );
+	$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
+	return;
+	
+} else {
+	
+	// Redirect
+	$redirectPath = $mmUsersT->doLogin( 'Form', $userSelect );
+	$resp->jsSetPageURL( $redirectPath);
+	
+	// Actions Return as JSON
+	$resp->jsSetHTML( '#formMessageLogin', implode( ', ', $ValidationMsgA ) );
+	$aloe_response->content_set( json_encode( $resp->jsActionsA ) );
+	return;
+}
 ?>

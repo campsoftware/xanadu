@@ -70,29 +70,6 @@ if ( !empty( $ValidationMsgA ) ) {
 // DB Clear Code
 $mmUsersT->set2FACode( $userSelect->rowsD[ 0 ][ UUIDUSERS ], '' );
 
-//  Cookie RememberMe Set
-$RememberMeIsUpdated = false;
-if ( $doParam[ 'RememberMe' ] === '1' ) {
-	$RememberMeID = \xan\strUUID();
-	$UUIDUsers = $userSelect->rowsD[ 0 ][ UUIDUSERS ];
-	setcookie( COOKIE_REMEMBERME, $RememberMeID, ['expires' => time() + ( 86400 * APP_COOKIE_LOGIN_DAYS ), 'path' => '/', 'httponly' => true, 'secure' => true ] );
-	
-	// User Update
-	$userUpdate = new \xan\recs( $mmUsersT );
-	$userUpdate->querySQL = 'UPDATE Users SET LoginKey = ? WHERE UUIDUsers = ?';
-	$userUpdate->queryBindNamesA = array( 'LoginKey', UUIDUSERS );
-	$userUpdate->queryBindValuesA = array( $RememberMeID, $UUIDUsers );
-	$userUpdate->query();
-	// Error Check
-	if ( $userUpdate->errorB ) {
-		// $xanMessage .= ' Remember Me Update Error: ' . $userUpdate->messageExtra . '; ' . $userUpdate->messageSQL . STR_BR;
-	} elseif ( $userUpdate->rowCount < 1 ) {
-		// $xanMessage .= ' Remember Me Update: None Found' . STR_BR;
-	} elseif ( $userSelect->rowCount > 0 ) {
-		$RememberMeIsUpdated = true;
-	}
-}
-
 // Redirect
 $redirectPath = $mmUsersT->doLogin( 'Form', $userSelect );
 $resp->jsSetPageURL( $redirectPath);
