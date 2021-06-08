@@ -136,6 +136,20 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 				$colMeta->colLabelEN = '2FA Expires';
 				$colMeta->eleType = ELE_TYPE_DATETIME_DB;
 				break;
+			case 'TwoFactorViaPhone2FA':
+				$colMeta->colLabelEN = '2FA via Phone';
+				$colMeta->eleType = ELE_TYPE_SELECT_DB;
+				$colMeta->choicesAValues = ARRAY_YESNO;
+				$colMeta->choicesADisplay = ARRAY_YESNO;
+				$colMeta->choicesOtherLabel = '';
+				break;
+			case 'TwoFactorViaEmail':
+				$colMeta->colLabelEN = '2FA via Email';
+				$colMeta->eleType = ELE_TYPE_SELECT_DB;
+				$colMeta->choicesAValues = ARRAY_YESNO;
+				$colMeta->choicesADisplay = ARRAY_YESNO;
+				$colMeta->choicesOtherLabel = '';
+				break;
 			
 			case 'Active':
 				$colMeta->colLabelEN = 'Active';

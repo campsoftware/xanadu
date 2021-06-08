@@ -1,5 +1,9 @@
 # Xanadu Change Log
 
+2021-06-08-17-47-46
+- Added a Constant TWOFACTORAUTH_ENABLED to enable or disable 2FA.
+- Added User table columns for '2FA via Phone' and '2FA via Email' to allow options for receiving the code. 
+
 2021-06-08-16-21-56
 - Removed setting $_SESSION[ SESS_USER ] from init.php Session was not started yet. It's set in mmUsersT->doLogin.
 - Moved setting $_SESSION[ SESS_URL ] to aloe/framework/session.php.
