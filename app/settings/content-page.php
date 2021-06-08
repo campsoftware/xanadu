@@ -16,7 +16,7 @@ $resp->moduleName = $mmSettingsT->NameModule;
 $resp->headTitle = $mmSettingsT->NamePlural;
 $resp->headLogoutAuto = true;
 $resp->navInclude = true;
-$resp->contentHeader = $mmSettingsT->FontAwesome . STR_NBSP . $mmSettingsT->NamePlural . STR_NBSP;
+$resp->contentHeader = $mmSettingsT->FontIcon . STR_NBSP . $mmSettingsT->NamePlural . STR_NBSP;
 
 ///////////////////////////////////////////////////////////
 // Content Load Now or Later. Now is faster due to less 'round trips'. Later uses Ajax which is fast, but an extra 'round trip'.

@@ -9,7 +9,7 @@ $resp->moduleName = $mmAPIRequestsT->NameModule;
 $resp->headTitle = $mmAPIRequestsT->NamePlural;
 $resp->headLogoutAuto = true;
 $resp->navInclude = true;
-$resp->contentHeader = $mmAPIRequestsT->FontAwesome . STR_NBSP . $mmAPIRequestsT->NamePlural . STR_NBSP;
+$resp->contentHeader = $mmAPIRequestsT->FontIcon . STR_NBSP . $mmAPIRequestsT->NamePlural . STR_NBSP;
 
 // User Save Path Last
 $mmUsersT->setPathLast( $resp->reqPath );
@@ -120,7 +120,7 @@ JS;
         } );
 JS;
 	// Modal
-	$resp->contentEndA[] = $modal->renderModalWButtons( $mmAPIRequestsT->FontAwesome . ' Select a Contact', $searchBar->render(), $modelResults, '', 'Cancel', '', [], $modalInitJS );
+	$resp->contentEndA[] = $modal->renderModalWButtons( $mmAPIRequestsT->FontIcon . ' Select a Contact', $searchBar->render(), $modelResults, '', 'Cancel', '', [], $modalInitJS );
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }

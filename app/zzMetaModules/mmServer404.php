@@ -21,8 +21,8 @@ class moduleMetaServer404 extends \xan\moduleMeta {
 		$this->NamePlural = '404 Resource Not Found';
 		$this->NameSingular = '404 Resource Not Found';
 		
-		$this->FontAwesome = \xan\fontIcon( 'fas fa-exclamation-triangle' );
-		$this->FontAwesomeList = FI_LIST;
+		$this->FontIcon = \xan\fontIcon( 'fas fa-exclamation-triangle' );
+		$this->FontIconList = FI_LIST;
 		
 		// $this->URLRelative = '/' . '404/';
 		// $this->URLFull = URL_BASE . '404/';

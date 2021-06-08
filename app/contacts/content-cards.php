@@ -14,7 +14,7 @@ if ( true ) {
 	}
  
 	// Card Init
-	$cardHeaderContent = $mmContactsT->FontAwesomeList . STR_NBSP . $mmContactsT->NamePlural;
+	$cardHeaderContent = $mmContactsT->FontIconList . STR_NBSP . $mmContactsT->NamePlural;
 	$card = new \xan\eleCard( $cardWidth, $cardHeight, true );
 	
 	// Query

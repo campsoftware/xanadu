@@ -52,7 +52,7 @@ JS;
 // Button
 $formButtonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ "onclick='" . $formButtonOnClick . "'" ] );
 $formButtonSpinner = '<span id="formButtonSpinner" style="display: none;">' . STR_NBSP . FI_SPINNER . '</span>';
-$buttonEle = new \xan\eleButton( $mmUsersRegister->FontAwesome . STR_NBSP . $mmUsersRegister->NameModule . $formButtonSpinner, 'formButton', '', $formButtonTags );
+$buttonEle = new \xan\eleButton( $mmUsersRegister->FontIcon . STR_NBSP . $mmUsersRegister->NameModule . $formButtonSpinner, 'formButton', '', $formButtonTags );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
 
 // Message

@@ -21,8 +21,8 @@ class moduleMetaUsersLogin extends \xan\moduleMeta {
 		$this->NamePlural = 'Login';
 		$this->NameSingular = 'Login';
 		
-		$this->FontAwesome = \xan\fontIcon( 'fas fa-door-open' );
-		$this->FontAwesomeList = FI_LIST;
+		$this->FontIcon = \xan\fontIcon( 'fas fa-door-open' );
+		$this->FontIconList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'login/';
 		$this->URLFull = URL_BASE . 'logout/';

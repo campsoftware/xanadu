@@ -21,8 +21,8 @@ class moduleMetaUsersLogout extends \xan\moduleMeta {
 		$this->NamePlural = 'Logout';
 		$this->NameSingular = 'Logout';
 		
-		$this->FontAwesome = \xan\fontIcon( 'fas fa-sign-out' );
-		$this->FontAwesomeList = FI_LIST;
+		$this->FontIcon = \xan\fontIcon( 'fas fa-sign-out' );
+		$this->FontIconList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'logout/';
 		$this->URLFull = URL_BASE . 'logout/';

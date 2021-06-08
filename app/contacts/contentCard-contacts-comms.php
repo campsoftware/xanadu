@@ -11,7 +11,7 @@ $recsComms->rowsMassageForGUI( false );
 $card = new \xan\eleCard( CARD_WIDTH, CARD_HEIGHT_MAX, true );
 
 // Content Init
-$cardHeaderContent = $mmContactsCommsT->FontAwesome . STR_NBSP . $mmContactsCommsT->NamePlural;
+$cardHeaderContent = $mmContactsCommsT->FontIcon . STR_NBSP . $mmContactsCommsT->NamePlural;
 $cardBodyContent = '';
 
 // XanDo

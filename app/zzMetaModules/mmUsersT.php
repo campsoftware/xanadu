@@ -21,8 +21,8 @@ class moduleMetaUsersT extends \xan\moduleMeta {
 		$this->NamePlural = 'Users';
 		$this->NameSingular = 'User';
 		
-		$this->FontAwesome = \xan\fontIcon( 'fas fa-id-badge' );
-		$this->FontAwesomeList = FI_LIST;
+		$this->FontIcon = \xan\fontIcon( 'fas fa-id-badge' );
+		$this->FontIconList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'settings-users/';
 		$this->URLFull = URL_BASE . 'settings-users/';

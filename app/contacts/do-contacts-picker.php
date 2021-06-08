@@ -21,7 +21,7 @@ if ( !empty( $ValidationMsgA ) ) {
 
 // Init Card Parts
 $idPrefix = 'ContactsPicker';  // Unique ID Prefix
-$cardListHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NamePlural;
+$cardListHeader = $mmContactsT->FontIcon . STR_NBSP . $mmContactsT->NamePlural;
 $cardListContent .= '';
 $cardTemp = new \xan\eleCard( '', '', '' );
 

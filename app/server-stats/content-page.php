@@ -16,7 +16,7 @@ $resp->moduleName = $mmServerStats->NameModule;
 $resp->headTitle = $mmServerStats->NamePlural;
 $resp->headLogoutAuto = false;
 $resp->navInclude = true;
-$resp->contentHeader = $mmServerStats->FontAwesome . STR_NBSP . $mmServerStats->NamePlural . STR_NBSP;
+$resp->contentHeader = $mmServerStats->FontIcon . STR_NBSP . $mmServerStats->NamePlural . STR_NBSP;
 
 // User Save Path Last
 $mmUsersT->setPathLast( $resp->reqPath );

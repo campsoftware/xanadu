@@ -10,7 +10,7 @@ ob_start();
 		<?php
 		if ( false ) {
 			if ( $resp->headLogoutAuto and intval( LOGOUT_AUTO_SECONDS ) > 0 ) {
-				echo '<!-- Session Updated: ' . \xan\dateTimeFromString( $_SESSION[ SES_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SES_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; -->';
+				echo '<!-- Session Updated: ' . \xan\dateTimeFromString( $_SESSION[ SESS_CHANGE ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; Expires: ' . \xan\dateTimeFromString( $_SESSION[ SESS_EXPIRES ], DATETIME_FORMAT_DISPLAY_TIMESTAMP ) . '; -->';
 				echo "\r\t\t" . '<meta http-equiv="refresh" content="' . LOGOUT_AUTO_SECONDS . ';url=' . $mmUsersLogout->URLRelative . '">';
 				echo "\r\r";
 			}
@@ -384,7 +384,7 @@ ob_start();
 							<?= \xan\navItemButtonModule( $mmContactsT, $resp->moduleName ) ?>
                             <!-- ------ -->
                             <li class="nav-item dropdown">
-                                <a class="nav-item-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $mmUsersT->FontAwesome ?></i></a>
+                                <a class="nav-item-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $mmUsersT->FontIcon ?></i></a>
                                 <div class="dropdown-menu text" aria-labelledby="navbarDropdown">
 									<?php
 									if ( $_SESSION[ SESS_USER ][ 'PrivAdmin' ] === 'Yes' ) {

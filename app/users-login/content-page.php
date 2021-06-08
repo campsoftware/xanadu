@@ -9,7 +9,7 @@ $resp->moduleName = $mmUsersLogin->NameModule;
 $resp->headTitle = $mmUsersLogin->NamePlural;
 $resp->headLogoutAuto = false;
 $resp->navInclude = false;
-$resp->contentHeader = $mmUsersLogin->FontAwesome . STR_NBSP . $mmUsersLogin->NamePlural . STR_NBSP;
+$resp->contentHeader = $mmUsersLogin->FontIcon . STR_NBSP . $mmUsersLogin->NamePlural . STR_NBSP;
 
 ///////////////////////////////////////////////////////////
 // Content Load Now

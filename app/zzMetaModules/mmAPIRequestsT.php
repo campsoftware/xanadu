@@ -21,8 +21,8 @@ class moduleMetaAPIRequestsT extends \xan\moduleMeta {
 		$this->NamePlural = 'API Requests';
 		$this->NameSingular = 'API Request';
 		
-		$this->FontAwesome = \xan\fontIcon( 'fas fa-user-robot' );
-		$this->FontAwesomeList = FI_LIST;
+		$this->FontIcon = \xan\fontIcon( 'fas fa-user-robot' );
+		$this->FontIconList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'apirequests/';
 		$this->URLFull = URL_BASE . 'apirequests/';

@@ -21,8 +21,8 @@ class moduleMetaServerStats extends \xan\moduleMeta {
 		$this->NamePlural = 'Stats';
 		$this->NameSingular = 'Stats';
 		
-		$this->FontAwesome = \xan\fontIcon( 'fas fa-tachometer-fast' );
-		$this->FontAwesomeList = FI_LIST;
+		$this->FontIcon = \xan\fontIcon( 'fas fa-tachometer-fast' );
+		$this->FontIconList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'server-stats/';
 		$this->URLFull = URL_BASE . 'server-stats/';

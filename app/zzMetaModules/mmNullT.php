@@ -21,8 +21,8 @@ class moduleMetaNullT extends \xan\moduleMeta {
         $this->NamePlural = '';
         $this->NameSingular = '';
 
-        $this->FontAwesome = '';
-        $this->FontAwesomeList = '';
+        $this->FontIcon = '';
+        $this->FontIconList = '';
 
         //        $this->URLRelative = '/' . 'contacts/';
         //        $this->URLFull = URL_BASE . 'contacts/';

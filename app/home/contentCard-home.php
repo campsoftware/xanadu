@@ -21,8 +21,8 @@ $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() 
 
 // Stripe Purchase Button
 $resp->includeStripeB = true;
-$stripeButtonProduct = \xan\buttonStripeProduct( 'Product $20', 'buttonProduct20', 'ProdCode', 'Product Name', 'Product Description', 1, 2000, 'https://xandev.xanweb.app/images/logo1024.png', $_SESSION[ 'urlCurrent' ] );
-$stripeButtonSubscription = \xan\buttonStripeSubscription( 'Subscription $1/month', 'buttonSubscription1pm', 'SubCode', 'monthly', 1, $_SESSION[ 'urlCurrent' ] );
+$stripeButtonProduct = \xan\buttonStripeProduct( 'Product $20', 'buttonProduct20', 'ProdCode', 'Product Name', 'Product Description', 1, 2000, 'https://xandev.xanweb.app/images/logo1024.png', $_SESSION[ SESS_URL ] );
+$stripeButtonSubscription = \xan\buttonStripeSubscription( 'Subscription $1/month', 'buttonSubscription1pm', 'SubCode', 'monthly', 1, $_SESSION[ SESS_URL ] );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $stripeButtonProduct[ 'Button' ] . ' ' . $stripeButtonSubscription[ 'Button' ] );
 $resp->scriptsOnLoadA[] = $stripeButtonProduct[ 'InitJavaScript' ];
 $resp->scriptsOnLoadA[] = $stripeButtonSubscription[ 'InitJavaScript' ];
