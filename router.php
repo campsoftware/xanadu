@@ -37,8 +37,8 @@ if ( ( $path_components[ 0 ] == 'xanDoSave' ) ) {
 // Logout Page
 if ( ( $path_components[ 0 ] == 'logout' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
-	$_SESSION[ SES_PATH ] = $path;
-	$_SESSION[ SES_INFO ] = '';
+	$_SESSION[ SESS_PATH ] = $path;
+	$_SESSION[ SESS_INFO ] = '';
 	require_once( 'app/users-logout/logout.php' );
 	return;
 }
@@ -46,8 +46,8 @@ if ( ( $path_components[ 0 ] == 'logout' ) ) {
 // Login Page
 if ( ( $path_components[ 0 ] == 'login' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
-	$_SESSION[ SES_PATH ] = $path;
-	$_SESSION[ SES_INFO ] = '';
+	$_SESSION[ SESS_PATH ] = $path;
+	$_SESSION[ SESS_INFO ] = '';
 	require_once( 'app/users-login/content-page.php' );
 	return;
 }
@@ -55,8 +55,8 @@ if ( ( $path_components[ 0 ] == 'login' ) ) {
 // Login Do
 if ( ( $path_components[ 0 ] == 'login-do' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
-	$_SESSION[ SES_PATH ] = $path;
-	$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+	$_SESSION[ SESS_PATH ] = $path;
+	$_SESSION[ SESS_INFO ] = print_r( $aloe_request->post, true );
 	require_once( 'app/users-login/do.php' );
 	return;
 }
@@ -64,8 +64,8 @@ if ( ( $path_components[ 0 ] == 'login-do' ) ) {
 // Register Page
 if ( ( $path_components[ 0 ] == 'register' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
-	$_SESSION[ SES_PATH ] = $path;
-	$_SESSION[ SES_INFO ] = '';
+	$_SESSION[ SESS_PATH ] = $path;
+	$_SESSION[ SESS_INFO ] = '';
 	require_once( 'app/users-register/content-page.php' );
 	return;
 }
@@ -73,8 +73,8 @@ if ( ( $path_components[ 0 ] == 'register' ) ) {
 // Register Do
 if ( ( $path_components[ 0 ] == 'register-do' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
-	$_SESSION[ SES_PATH ] = $path;
-	$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+	$_SESSION[ SESS_PATH ] = $path;
+	$_SESSION[ SESS_INFO ] = print_r( $aloe_request->post, true );
 	require_once( 'app/users-register/do.php' );
 	return;
 }
@@ -82,8 +82,8 @@ if ( ( $path_components[ 0 ] == 'register-do' ) ) {
 // PassworedReset Page
 if ( ( $path_components[ 0 ] == 'passwordreset' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, true, $path );
-	$_SESSION[ SES_PATH ] = $path;
-	$_SESSION[ SES_INFO ] = '';
+	$_SESSION[ SESS_PATH ] = $path;
+	$_SESSION[ SESS_INFO ] = '';
 	require_once( 'app/users-passwordreset/content-page.php' );
 	return;
 }
@@ -91,8 +91,8 @@ if ( ( $path_components[ 0 ] == 'passwordreset' ) ) {
 // PassworedReset Do
 if ( ( $path_components[ 0 ] == 'passwordreset-do' ) ) {
 	aloe\session_init( APP_COOKIE_SESSION_SECONDS, false, $path );
-	$_SESSION[ SES_PATH ] = $path;
-	$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+	$_SESSION[ SESS_PATH ] = $path;
+	$_SESSION[ SESS_INFO ] = print_r( $aloe_request->post, true );
 	require_once( 'app/users-passwordreset/do.php' );
 	return;
 }
@@ -121,8 +121,8 @@ if ( ( $path_components[ 0 ] == 'home' ) || ( $aloe_request->path_get() == '' ) 
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = '';
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = '';
 		require_once( 'app/home/content-page.php' );
 		return;
 	}
@@ -134,8 +134,8 @@ if ( ( $path_components[ 0 ] == 'home-do' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = print_r( $aloe_request->post, true );
 		require_once( 'app/home/do.php' );
 		return;
 	}
@@ -151,8 +151,8 @@ if ( ( $path_components[ 0 ] == 'contacts' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = '';
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = '';
 		require_once( 'app/contacts/content-page.php' );
 		return;
 	}
@@ -164,8 +164,8 @@ if ( ( $path_components[ 0 ] == 'contacts-do' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = print_r( $aloe_request->post, true );
 		require_once( 'app/contacts/do.php' );
 		return;
 	}
@@ -181,8 +181,8 @@ if ( ( $path_components[ 0 ] == 'server-stats' ) ) {
 	if ( !xan\userIsAuthenticated() or !xan\userIsAdmin() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = '';
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = '';
 		require_once( 'app/server-stats/content-page.php' );
 		return;
 	}
@@ -194,8 +194,8 @@ if ( ( $path_components[ 0 ] == 'apirequests' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = '';
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = '';
 		require_once( 'app/apirequests/content-page.php' );
 		return;
 	}
@@ -207,8 +207,8 @@ if ( ( $path_components[ 0 ] == 'apirequests-do' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = print_r( $aloe_request->post, true );
 		require_once( 'app/apirequests/do.php' );
 		return;
 	}
@@ -220,8 +220,8 @@ if ( ( $path_components[ 0 ] == 'settings' ) ) {
 	if ( !xan\userIsAuthenticated() or !xan\userIsAdmin() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = '';
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = '';
 		require_once( 'app/settings/content-page.php' );
 		return;
 	}
@@ -233,8 +233,8 @@ if ( ( $path_components[ 0 ] == 'settings-do' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = print_r( $aloe_request->post, true );
 		require_once( 'app/settings/do.php' );
 		return;
 	}
@@ -246,8 +246,8 @@ if ( ( $path_components[ 0 ] == 'settings-users' ) ) {
 	if ( !xan\userIsAuthenticated() or !xan\userIsAdmin() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = '';
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = '';
 		require_once( 'app/settings-users/content-page.php' );
 		return;
 	}
@@ -259,8 +259,8 @@ if ( ( $path_components[ 0 ] == 'settings-users-do' ) ) {
 	if ( !xan\userIsAuthenticated() ) {
 		$redirectToLogin = true;
 	} else {
-		$_SESSION[ SES_PATH ] = $path;
-		$_SESSION[ SES_INFO ] = print_r( $aloe_request->post, true );
+		$_SESSION[ SESS_PATH ] = $path;
+		$_SESSION[ SESS_INFO ] = print_r( $aloe_request->post, true );
 		require_once( 'app/settings-users/do.php' );
 		return;
 	}
@@ -277,6 +277,6 @@ if ( $redirectToLogin ) {
 
 ///////////////////////////////////////////////////////////
 // 404 - DO NOT LOAD THE SESSION
-$_SESSION[ SES_PATH ] = '404: ' . $path;
+$_SESSION[ SESS_PATH ] = '404: ' . $path;
 require_once( 'app/server-404/content-page.php' );
 ?>

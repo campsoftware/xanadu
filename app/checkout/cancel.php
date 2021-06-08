@@ -9,7 +9,7 @@ $resp->moduleName = $mmCheckout->NameModule;
 $resp->headTitle = $mmCheckout->NamePlural;
 $resp->headLogoutAuto = false;
 $resp->navInclude = false;
-$resp->contentHeader = $mmCheckout->FontAwesome . STR_NBSP . $mmCheckout->NamePlural . STR_NBSP;
+$resp->contentHeader = $mmCheckout->FontIcon . STR_NBSP . $mmCheckout->NamePlural . STR_NBSP;
 
 // Stripe Init
 require_once( 'include/stripe/7.48.0/init.php' );

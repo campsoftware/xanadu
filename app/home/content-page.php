@@ -9,7 +9,7 @@ $resp->moduleName = $mmHome->NameModule;
 $resp->headTitle = $mmHome->NamePlural;
 $resp->headLogoutAuto = true;
 $resp->navInclude = true;
-$resp->contentHeader = $mmHome->FontAwesome . STR_NBSP . $mmHome->NamePlural . STR_NBSP;
+$resp->contentHeader = $mmHome->FontIcon . STR_NBSP . $mmHome->NamePlural . STR_NBSP;
 
 // User Save Path Last
 $mmUsersT->setPathLast( $resp->reqPath );

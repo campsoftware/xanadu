@@ -21,8 +21,8 @@ class moduleMetaHome extends \xan\moduleMeta {
 		$this->NamePlural = 'Home';
 		$this->NameSingular = 'Home';
 		
-		$this->FontAwesome = \xan\fontIcon( 'fas fa-home' );
-		$this->FontAwesomeList = FI_LIST;
+		$this->FontIcon = \xan\fontIcon( 'fas fa-home' );
+		$this->FontIconList = FI_LIST;
 		
 		$this->URLRelative = '/' . 'home/';
 		$this->URLFull = URL_BASE . 'home/';

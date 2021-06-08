@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = $mmAPIRequestsT->FontAwesome . STR_NBSP . $mmAPIRequestsT->NameSingular;
+$cardHeaderContent = $mmAPIRequestsT->FontIcon . STR_NBSP . $mmAPIRequestsT->NameSingular;
 $card = new \xan\eleCard( CARD_WIDTH_2X, '', false );
 
 // Tags Special

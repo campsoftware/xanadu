@@ -9,7 +9,7 @@ $resp->moduleName = $mmServer404->NameModule;
 $resp->headTitle = $mmServer404->NamePlural;
 $resp->headLogoutAuto = true;
 $resp->navInclude = false;
-$resp->contentHeader = $mmServer404->FontAwesome . STR_NBSP . $mmServer404->NamePlural . STR_NBSP;
+$resp->contentHeader = $mmServer404->FontIcon . STR_NBSP . $mmServer404->NamePlural . STR_NBSP;
 
 // Return Page
 $aloe_response->content_set( require_once( PATH_PAGE_RESP ) );

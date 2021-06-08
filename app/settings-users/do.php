@@ -32,7 +32,7 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->headTitle = $mmUsersT->NamePlural;
 	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
-	$resp->contentHeader = $mmUsersT->FontAwesome . STR_NBSP . $mmUsersT->NamePlural . STR_NBSP;
+	$resp->contentHeader = $mmUsersT->FontIcon . STR_NBSP . $mmUsersT->NamePlural . STR_NBSP;
 	
 	// Content Area Load
 	require_once( 'content-cards.php' );

@@ -3,11 +3,12 @@
 namespace xan;
 
 // Session
-define( 'SES_BEGIN', 'SES_BEGIN' );
-define( 'SES_CHANGE', 'SES_CHANGE' );
-define( 'SES_EXPIRES', 'SES_EXPIRES' );
-define( 'SES_PATH', 'SES_PATH' );
-define( 'SES_INFO', 'SES_INFO' );
+define( 'SESS_BEGIN', 'SESS_BEGIN' );
+define( 'SESS_CHANGE', 'SESS_CHANGE' );
+define( 'SESS_EXPIRES', 'SESS_EXPIRES' );
+define( 'SESS_INFO', 'SESS_INFO' );
+define( 'SESS_PATH', 'SESS_PATH' );
+define( 'SESS_URL', 'SESS_URL' );
 define( 'SESS_USER', 'SESS_USER' );
 define( 'SESS_FOCUS_SELECTOR', 'SESS_FOCUS_SELECTOR' );
 
@@ -342,8 +343,8 @@ abstract class moduleMeta {
 	public $NameTable;
 	public $NameTableKey;
 
-	public $FontAwesome;
-	public $FontAwesomeList;
+	public $FontIcon;
+	public $FontIconList;
 
 	public $URLRelative;
 	public $URLFull;
@@ -399,9 +400,10 @@ abstract class moduleMeta {
 		
 		$active = ( $idSelected == $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] ? 'active' : '' );
 		$content = str_replace( 'list-group-item-text', 'list-group-item-text ' . $active, $content );
+		$cornerIndex = $recs->rowIndex + 1;
 		$code = <<< HTML
         <span id="{$idListItem}" class="list-group-item list-group-item-action {$active} border-secondary border-bottom p-1 pt-2 pb-2" onclick="{$onClick}">
-		{$content}<div style="position: absolute; top: 2px; right: 2px; font-size: 9px;">{$recs->rowIndex}</div></span>
+		{$content}<div style="position: absolute; top: 2px; right: 2px; font-size: 9px;">{$cornerIndex}</div></span>
 HTML;
 		return $code;
 	}
@@ -429,9 +431,10 @@ HTML;
 		
 		$active = ( $idSelected == $recs->rowsD[ $recs->rowIndex ][ $this->NameTableKey ] ? 'active' : '' );
 		$content = str_replace( 'list-group-item-text', 'list-group-item-text ' . $active, $content );
+		$cornerIndex = $recs->rowIndex + 1;
 		$code = <<< HTML
         <span id="{$idListItem}" class="list-group-item list-group-item-action {$active} border-secondary border-bottom p-1 pt-2 pb-2" onclick="{$onClick}">
-		{$content}<div style="position: absolute; top: 2px; right: 2px; font-size: 9px;">{$recs->rowIndex}</div></span>
+		{$content}<div style="position: absolute; top: 2px; right: 2px; font-size: 9px;">{$cornerIndex}</div></span>
 HTML;
 		return $code;
 	}
@@ -1341,19 +1344,19 @@ class eleTable extends element {
 		// Next Row Init
 		$rowIndex = 0;
 		$colIndex = 0;
-		
-		// $tableHeadRowCount Adjust
-		$tableHeadRowCount--;
 
 		// For each Cell
 		foreach ( $this->cells as $rowKey => $rowValue ) {
 		    
 		    // Head or Body
-		    if ( $tableHeadRowCount >= $rowIndex ){
+		    if ( $tableHeadRowCount === 0 and $rowIndex === 0 ){
+		        $code .= '<tbody>';
+		    }
+            if ( $tableHeadRowCount <> 0 and $rowIndex === 0 ){
 		        $code .= '<thead>';
 		    }
-		    if ( $tableHeadRowCount === 0 ){
-		        $code .= '<tbody>';
+		    if ( $tableHeadRowCount <> 0 and $tableHeadRowCount === $rowIndex ){
+		        $code .= '</thead><tbody>';
 		    }
 		    
 			// Start a Row
@@ -1376,7 +1379,7 @@ class eleTable extends element {
 						$styleTag = 'style="' . styleDToString( $this->tagsCellsEmpty->styleD ) . '"';
 						$extrasTag = extrasAToString( $this->tagsCellsEmpty->extrasA );
 						// $code .= "<td $classTag $styleTag $extrasTag></td>";
-						if ( $tableHeadRowCount >= $rowIndex ){
+						if ( $tableHeadRowCount > 0 and $tableHeadRowCount > $rowIndex ){
 						    $code .= "<th $classTag $styleTag $extrasTag></th>";
 						} else {
 						    $code .= "<td $classTag $styleTag $extrasTag></td>";
@@ -1393,7 +1396,7 @@ class eleTable extends element {
 					$colSpan = ( $colAttributes[ 'ColSpan' ] == '' ? '' : 'colspan="' . $colAttributes[ 'ColSpan' ] . '"' );
 					$rowSpan = ( $colAttributes[ 'RowSpan' ] == '' ? '' : 'rowspan="' . $colAttributes[ 'RowSpan' ] . '"' );
 					// $code .= "<td $classTag $styleTag $extrasTag $colSpan $rowSpan>" . $colAttributes[ 'Content' ] . "</td>";
-					if ( $tableHeadRowCount >= $rowIndex ){
+					if ( $tableHeadRowCount > 0 and $tableHeadRowCount > $rowIndex ){
 						    $code .= "<th $classTag $styleTag $extrasTag $colSpan $rowSpan>" . $colAttributes[ 'Content' ] . "</th>";
 						} else {
 						    $code .= "<td $classTag $styleTag $extrasTag $colSpan $rowSpan>" . $colAttributes[ 'Content' ] . "</td>";
@@ -1405,11 +1408,6 @@ class eleTable extends element {
 
 			// End Row
 			$code .= "</tr>";
-			
-			// Head or Body
-		    if ( $tableHeadRowCount >= $rowIndex ){
-		        $code .= '</thead><tbody>';
-		    }
 			
 			// Next Row Init
 			$rowIndex++;
@@ -1954,7 +1952,7 @@ class eleSelectDB extends element {
 		<?php
 		$codeSelect .= ob_get_clean();
 		// Remove xanDoSave
-		$codeSelect = strSubstitute($codeSelect,'xanDoSave',''); // The Hidden Element will handle saving.
+		$codeSelect = \xan\strSubstitute($codeSelect,'xanDoSave',''); // The Hidden Element will handle saving.
 		// Choice Options
 		if ( is_array( $this->colMeta->choicesAValues ) and is_array( $this->colMeta->choicesADisplay ) ) {
 			for ( $i = 0; $i < count( $this->colMeta->choicesAValues ); $i++ ) {
@@ -2026,9 +2024,9 @@ class eleDateDB extends element {
 
 	public function renderScriptsDoInit() {
 		// Remove and Add Class Styles to Generated Input
-		$classFlatpickerGenerated = strSubstitute( ' ' . $this->classValue . ' ', ' flatpickr_date ', ' ' );
-		$classFlatpickerGenerated = strSubstitute( ' ' . $classFlatpickerGenerated . ' ', ' xanDoSave ', ' ' );
-		$classFlatpickerGenerated = strSubstitute( ' ' . $classFlatpickerGenerated . ' ', ' col ', ' ' );
+		$classFlatpickerGenerated = \xan\strSubstitute( ' ' . $this->classValue . ' ', ' flatpickr_date ', ' ' );
+		$classFlatpickerGenerated = \xan\strSubstitute( ' ' . $classFlatpickerGenerated . ' ', ' xanDoSave ', ' ' );
+		$classFlatpickerGenerated = \xan\strSubstitute( ' ' . $classFlatpickerGenerated . ' ', ' col ', ' ' );
 		$classFlatpickerGenerated = trim( $classFlatpickerGenerated ) . ' col-12';
 		ob_start();
 		?>
@@ -2090,9 +2088,9 @@ class eleDateTimeDB extends element {
 
 	public function renderScriptsDoInit() {
 		// Remove and Add Class Styles to Generated Input
-		$classFlatpickerGenerated = strSubstitute( ' ' . $this->classValue . ' ', ' flatpickr_datetime ', ' ' );
-		$classFlatpickerGenerated = strSubstitute( ' ' . $classFlatpickerGenerated . ' ', ' xanDoSave ', ' ' );
-		$classFlatpickerGenerated = strSubstitute( ' ' . $classFlatpickerGenerated . ' ', ' col ', ' ' );
+		$classFlatpickerGenerated = \xan\strSubstitute( ' ' . $this->classValue . ' ', ' flatpickr_datetime ', ' ' );
+		$classFlatpickerGenerated = \xan\strSubstitute( ' ' . $classFlatpickerGenerated . ' ', ' xanDoSave ', ' ' );
+		$classFlatpickerGenerated = \xan\strSubstitute( ' ' . $classFlatpickerGenerated . ' ', ' col ', ' ' );
 		$classFlatpickerGenerated = trim( $classFlatpickerGenerated ) . ' col-12';
 		ob_start();
 		?>
@@ -2154,9 +2152,9 @@ class eleTimeDB extends element {
 
 	public function renderScriptsDoInit() {
 		// Remove and Add Class Styles to the Flatpickr Generated Input
-		$classGenerated = strSubstitute( ' ' . $this->classValue . ' ', ' flatpickr_time ', ' ' );
-		$classGenerated = strSubstitute( ' ' . $classGenerated . ' ', ' xanDoSave ', ' ' );
-		$classGenerated = strSubstitute( ' ' . $classGenerated . ' ', ' col ', ' ' );
+		$classGenerated = \xan\strSubstitute( ' ' . $this->classValue . ' ', ' flatpickr_time ', ' ' );
+		$classGenerated = \xan\strSubstitute( ' ' . $classGenerated . ' ', ' xanDoSave ', ' ' );
+		$classGenerated = \xan\strSubstitute( ' ' . $classGenerated . ' ', ' col ', ' ' );
 		$classGenerated = trim( $classGenerated ) . ' col-12';
 		ob_start();
 		?>
@@ -2916,7 +2914,7 @@ function navItemButtonModule( $module, $pageModuleName ) {
 	ob_start();
 	?>
 	<li class="nav-item">
-		<a class="nav-item-link <?= ( $pageModuleName === $module->NameModule ? 'active' : '' ) ?>" href="<?= $module->URLFull ?>"><?= $module->FontAwesome . STR_NBSP . $theText ?></a>
+		<a class="nav-item-link <?= ( $pageModuleName === $module->NameModule ? 'active' : '' ) ?>" href="<?= $module->URLFull ?>"><?= $module->FontIcon . STR_NBSP . $theText ?></a>
 	</li>
 	<?php
 	return ob_get_clean();
@@ -2925,7 +2923,7 @@ function navItemButtonModule( $module, $pageModuleName ) {
 function navItemDropdownModule( $module ) {
 	ob_start();
 	?>
-	<a class="dropdown-item" href="<?= $module->URLFull ?>"><?= $module->FontAwesome . STR_NBSP . $module->NamePlural ?></a>
+	<a class="dropdown-item" href="<?= $module->URLFull ?>"><?= $module->FontIcon . STR_NBSP . $module->NamePlural ?></a>
 	<?php
 	return ob_get_clean();
 }
@@ -3249,20 +3247,20 @@ function dbValueMassageForGUI( $tableName, $colName, $colValue, $colFormat, $mas
 }
 
 function dbNumberDisplay( $columnName, $tableName, $columnValue ) {
-	$columnValue = numDisplay( $columnValue, $GLOBALS[ 'schema' ][ $tableName ][ $columnName ][ 'NUMERIC_SCALE' ] );
+	$columnValue = \xan\numDisplay( $columnValue, $GLOBALS[ 'schema' ][ $tableName ][ $columnName ][ 'NUMERIC_SCALE' ] );
 	$columnValue = trim( $columnValue );
 	return $columnValue;
 }
 
 function dbNumberDisplayAsCurrency( $columnName, $tableName, $columnValue ) {
-	$columnValue = APP_CURRENCY . numDisplay( $columnValue, $GLOBALS[ 'schema' ][ $tableName ][ $columnName ][ 'NUMERIC_SCALE' ] );
+	$columnValue = APP_CURRENCY . \xan\numDisplay( $columnValue, $GLOBALS[ 'schema' ][ $tableName ][ $columnName ][ 'NUMERIC_SCALE' ] );
 	$columnValue = str_replace( APP_CURRENCY . APP_CURRENCY, APP_CURRENCY, $columnValue );
 	$columnValue = trim( $columnValue );
 	return $columnValue;
 }
 
 function dbNumberDisplayAsPercentage( $columnName, $tableName, $columnValue ) {
-	$columnValue = numDisplay( $columnValue, $GLOBALS[ 'schema' ][ $tableName ][ $columnName ][ 'NUMERIC_SCALE' ] );
+	$columnValue = \xan\numDisplay( $columnValue, $GLOBALS[ 'schema' ][ $tableName ][ $columnName ][ 'NUMERIC_SCALE' ] );
 	$columnValue = ( $columnValue * 100 ) . '%';
 	$columnValue = trim( $columnValue );
 	return $columnValue;
@@ -3285,7 +3283,7 @@ function buttonStripeProduct( $label, $id, $code, $name, $desc, $qty, $price, $i
 	// Calling Example
 	if ( false ) {
 		// Stripe Product
-		$stripeButtonProduct = \xan\ButtonStripeProduct( 'Product $20', 'buttonProduct20', 'ProdCode', 'Product Name', 'Product Description', 1, 2000, 'https://xandev.xanweb.app/images/logo1024.png', $_SESSION[ 'urlCurrent' ] );
+		$stripeButtonProduct = \xan\ButtonStripeProduct( 'Product $20', 'buttonProduct20', 'ProdCode', 'Product Name', 'Product Description', 1, 2000, 'https://xandev.xanweb.app/images/logo1024.png', $_SESSION[ SESS_URL ] );
 		if ( $stripeButtonProduct !== null ) {
 			$page[ PAGE_CONTENT_AREA ] .= '<p class="ml-3">' . $stripeButtonProduct[ 'Button' ] . '</p>';
 			$page[ PAGE_SCRIPTS_ONLOAD ] .= $stripeButtonProduct[ 'InitJavaScript' ];
@@ -3340,7 +3338,7 @@ function buttonStripeSubscription( $label, $id, $code, $stripePriceID, $qty, $ca
 	// Calling Example
 	if ( false ) {
 		// Stripe Subscription
-		$stripeButtonSubscription = \xan\ButtonStripeSubscription( 'Subscription $1/month', 'buttonSubscription1', 'SubCode', 'monthly', 1, $_SESSION[ 'urlCurrent' ] );
+		$stripeButtonSubscription = \xan\ButtonStripeSubscription( 'Subscription $1/month', 'buttonSubscription1', 'SubCode', 'monthly', 1, $_SESSION[ SESS_URL ] );
 		if ( $stripeButtonSubscription !== null ) {
 			$page[ PAGE_CONTENT_AREA ] .= '<p class="ml-3">' . $stripeButtonSubscription[ 'Button' ] . '</p>';
 			$page[ PAGE_SCRIPTS_ONLOAD ] .= $stripeButtonSubscription[ 'InitJavaScript' ];

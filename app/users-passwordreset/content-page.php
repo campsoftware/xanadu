@@ -9,7 +9,7 @@ $resp->moduleName = $mmUsersPasswordReset->NameModule;
 $resp->headTitle = $mmUsersPasswordReset->NamePlural;
 $resp->headLogoutAuto = false;
 $resp->navInclude = false;
-$resp->contentHeader = $mmUsersPasswordReset->FontAwesome . STR_NBSP . $mmUsersPasswordReset->NamePlural . STR_NBSP;
+$resp->contentHeader = $mmUsersPasswordReset->FontIcon . STR_NBSP . $mmUsersPasswordReset->NamePlural . STR_NBSP;
 
 ///////////////////////////////////////////////////////////
 // Content Load Now

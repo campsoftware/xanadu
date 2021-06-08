@@ -18,12 +18,12 @@ namespace aloe {
 		@session_start();
 		
 		// Set Session Data
-		$_SESSION[ SES_INFO ] = $info;
-		if ( !isset( $_SESSION[ SES_BEGIN ] ) ) {
-			$_SESSION[ SES_BEGIN ] = dateTimeFromString( 'now' , DATETIME_FORMAT_SQLDATETIME );
+		$_SESSION[ SESS_INFO ] = $info;
+		if ( !isset( $_SESSION[ SESS_BEGIN ] ) ) {
+			$_SESSION[ SESS_BEGIN ] = dateTimeFromString( 'now' , DATETIME_FORMAT_SQLDATETIME );
 		}
-		$_SESSION[ SES_CHANGE ] = dateTimeFromString( 'now' , DATETIME_FORMAT_SQLDATETIME );
-		$_SESSION[ SES_EXPIRES ] = dateTimeFromString( '+' . $timeout . 'seconds' , DATETIME_FORMAT_SQLDATETIME );
+		$_SESSION[ SESS_CHANGE ] = dateTimeFromString( 'now' , DATETIME_FORMAT_SQLDATETIME );
+		$_SESSION[ SESS_EXPIRES ] = dateTimeFromString( '+' . $timeout . 'seconds' , DATETIME_FORMAT_SQLDATETIME );
 		
 		// Update the current session's id with a newly generated one,
 		// and delete the old associated session file.

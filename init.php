@@ -164,7 +164,7 @@ $_SESSION[ SESS_USER ] = $recsUserCURRENT->rowsD[ 0 ];
 $recsUserCURRENT = new \xan\recs( $mmNull_T );
 
 // URL Current
-$_SESSION[ 'urlCurrent' ] = 'http://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
+$_SESSION[ SESS_URL ] = 'http://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
 
 
 ///////////////////////////////////////////////////////////

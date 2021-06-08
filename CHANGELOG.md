@@ -1,5 +1,10 @@
 # Xanadu Change Log
 
+2021-06-08-15-26-13
+- Fixed eleTable->render to correctly set table thead and tbody.
+- Renamed FontAwesome properties to FontIcon since we're using FontAwesome and Boostrap Icons.
+- $_SESSION[ 'urlCurrent' ] is now $_SESSION[ SESS_URL ] to replace the string with a constant.
+
 2021-06-06-16-20-23
 - Updated Init, mmSettingsT, and Settings Card values to appear in similar order.
 - Added Settings for Phone Number, Email Address, and Postal Address.

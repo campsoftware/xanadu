@@ -34,7 +34,7 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->headTitle = $mmContactsT->NamePlural;
 	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
-	$resp->contentHeader = $mmContactsT->FontAwesome . STR_NBSP . $mmContactsT->NamePlural . STR_NBSP;
+	$resp->contentHeader = $mmContactsT->FontIcon . STR_NBSP . $mmContactsT->NamePlural . STR_NBSP;
 	
 	// Content Area Load
 	require_once( 'content-cards.php' );

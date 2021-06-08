@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = $mmUsersT->FontAwesome . STR_NBSP . 'User';
+$cardHeaderContent = $mmUsersT->FontIcon . STR_NBSP . 'User';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special

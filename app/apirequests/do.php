@@ -34,7 +34,7 @@ if ( $doParam[ 'Do' ] === 'ContentLoadAll' ) {
 	$resp->headTitle = $mmAPIRequestsT->NamePlural;
 	$resp->headLogoutAuto = false;
 	$resp->navInclude = true;
-	$resp->contentHeader = $mmAPIRequestsT->FontAwesome . STR_NBSP . $mmAPIRequestsT->NamePlural . STR_NBSP;
+	$resp->contentHeader = $mmAPIRequestsT->FontIcon . STR_NBSP . $mmAPIRequestsT->NamePlural . STR_NBSP;
 	
 	// Content Area Load
 	require_once( 'content-cards.php' );

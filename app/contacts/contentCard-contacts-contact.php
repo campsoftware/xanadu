@@ -1,6 +1,6 @@
 <?php
 // Card
-$cardHeaderContent = $mmContactsT->FontAwesome . STR_NBSP . 'Contact';
+$cardHeaderContent = $mmContactsT->FontIcon . STR_NBSP . 'Contact';
 $card = new \xan\eleCard( CARD_WIDTH, '', false );
 
 // Tags Special
