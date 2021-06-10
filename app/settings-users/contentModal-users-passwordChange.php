@@ -26,6 +26,10 @@ $eleInput = new \xan\eleTextReveal( '', 'PasswordNewOne', '', $tagsEleInput );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $eleLabel->render() );
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $eleInput->render() );
 
+// Rules
+$table->cellSet( ++$tableRowIndex, 1, $tagsCellLeftMiddle, '<div class="small text-secondary">Min 10 Chars + Num + Lower + Upper + Special</div>' );
+
+
 // New Password Verify
 $eleLabel = new \xan\eleLabel( 'New Password Verify', '', '', $tagsEleLabel );
 $eleInput = new \xan\eleTextReveal( '', 'PasswordNewTwo', '', $tagsEleInput );
@@ -33,12 +37,15 @@ $table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, $eleLabel->render() 
 $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $eleInput->render() );
 
 // Password Meter
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellRightMiddle, '' );
-$table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, '<div class="passwordRating"></div>' );
+$table->cellSet( ++$tableRowIndex, 1, $tagsCellLeftMiddle, '<div class="passwordRating"></div>' );
 $resp->scriptsOnLoadA[] = <<< JS
-	var userChangePasswordRatingInput = document.getElementById( "PasswordNewOne" );
+	let userChangePasswordRatingInput = document.getElementById( "PasswordNewOne" );
 	xanPasswordRating( userChangePasswordRatingInput );
 JS;
+
+// Message
+$messageID = $xanDoDo . 'Message';
+$table->cellSet( ++$tableRowIndex, 1, $tagsCellLeftMiddle, '<span id="' . $messageID . '"></span>' );
 
 // Modal Init
 $modalInitJS = <<< JS
@@ -60,16 +67,22 @@ $buttonActionOnClick = /** @lang JavaScript */
 // Button Action On Click Function
 $resp->scriptsExtraA[] = <<< JS
 function {$buttonActionOnClickFunctionName}(){
+    if ( $( ".passwordRating" ).html().includes( '&nbsp;Strong&nbsp;' ) === false ){
+        $( "#{$messageID}" ).html( "Password is not Strong" );
+        $( "#{$buttonActionSpinnerID}" ).css( "display", "none" );
+        $( "#{$buttonActionID}" ).prop( "disabled", false );
+        return;
+    }
 	xanDo( { "Do": "{$xanDoDo}", "Msg": "Password Change", "URL":"{$mmUsersT->URLDoRelative}", "IDUsers": "{$_SESSION[SESS_USER][UUIDUSERS]}", "PasswordOld": $( "#PasswordOld" ).val(), "PasswordNewOne": $( "#PasswordNewOne" ).val(), "PasswordNewTwo": $( "#PasswordNewTwo" ).val() } );
     $("#PasswordOld").val("");
     $("#PasswordNewOne").val("");
     $("#PasswordNewTwo").val("");
+    $( ".passwordRating" ).html("")
 }
 JS;
 
 // Modal Append
 $buttonActionSpinnerSpan = '<span id="' . $buttonActionSpinnerID . '" style="display: none;">' . STR_NBSP . FI_SPINNER . '</span>';
 $buttonActionLabel = FI_PASSWORD . STR_NBSP . 'Password Change' . STR_NBSP . $buttonActionSpinnerSpan;
-$buttonActionMessage = '<span id="' . $messageID . '"></span>';
-$resp->contentEndA[] = $modal->renderModalWButtons( 'Change your Password?', '', $table->render(), $buttonActionMessage, 'Cancel', $buttonActionLabel, [ "onclick='" . $buttonActionOnClick . "'" ], $modalInitJS );
+$resp->contentEndA[] = $modal->renderModalWButtons( 'Change your Password?', '', $table->render(), '', 'Cancel', $buttonActionLabel, [ "onclick='" . $buttonActionOnClick . "'" ], $modalInitJS );
 ?>

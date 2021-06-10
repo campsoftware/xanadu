@@ -26,6 +26,8 @@ $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, 'Password', 1, 2 );
 $pwEle = new \xan\eleTextReveal( '', 'Password', 'Password', $tagsEleInput );
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $pwEle->render(), 1, 2 );
 
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, '<div class="small text-secondary">Min 10 Chars + Num + Lower + Upper + Special</div>', 1, 2 );
+
 $table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, 'Password Verify' );
 
 // Password Meter
@@ -43,6 +45,12 @@ $formButtonOnClick = /** @lang JavaScript */
 	'$( "#formButtonSpinner" ).css( "display", "inline" ); $( "#formButton" ).prop( "disabled", true ); setTimeout( formButtonOnClick, 100 );';
 $resp->scriptsExtraA[] = <<< JS
 function formButtonOnClick(){
+    if ( $( ".passwordRating" ).html().includes( '&nbsp;Strong&nbsp;' ) === false ){
+        $( "#formMessage" ).html( "Password is not Strong" );
+        $( "#formButtonSpinner" ).css( "display", "none" );
+        $( "#formButton" ).prop( "disabled", false );
+        return;
+    }
 	xanDo( { "Do": "Register", "Msg": "Register", "URL":"{$mmUsersRegister->URLDoRelative}", "Login": $("#Login").val(), "Password": $("#Password").val(), "PasswordVerify": $("#PasswordVerify").val() } );
 	$("#Password").val("");
 	$("#PasswordVerify").val("");
@@ -53,10 +61,10 @@ JS;
 $formButtonTags = new \xan\tags( [ ELE_CLASS_BUTTON_RG_PRIMARY ], [], [ "onclick='" . $formButtonOnClick . "'" ] );
 $formButtonSpinner = '<span id="formButtonSpinner" style="display: none;">' . STR_NBSP . FI_SPINNER . '</span>';
 $buttonEle = new \xan\eleButton( $mmUsersRegister->FontIcon . STR_NBSP . $mmUsersRegister->NameModule . $formButtonSpinner, 'formButton', '', $formButtonTags );
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render() );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, $buttonEle->render(), 1, 2 );
 
 // Message
-$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, '<span id="formMessage"></span>' );
+$table->cellSet( ++$tableRowIndex, 0, $tagsCellLeftMiddle, '<span id="formMessage"></span>', 1, 2 );
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

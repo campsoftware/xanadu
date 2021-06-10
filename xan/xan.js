@@ -355,17 +355,20 @@ function xanFileUploadToBucket( formSelector, postURL, callbackSuccess, callback
 //
 function xanPasswordRating( password ) {
     password.addEventListener( 'keyup', function () {
+
+        // Init
         var passwordArray = password.value.split( '' );
         var totalScore = 0;
-
         var rating = {
             number: 0,
             lowercase: 0,
             uppercase: 0,
             specialChar: 0,
+            lengthMin: 0,
             total: 0
         }
 
+        // Validation Rules
         var validation = {
             isNumber: function ( val ) {
                 var pattern = /^\d+$/;
@@ -385,6 +388,7 @@ function xanPasswordRating( password ) {
             }
         }
 
+        // Validate Chars
         for ( var i = 0; i < passwordArray.length; i++ ) {
             if ( validation.isNumber( passwordArray[ i ] ) ) {
                 rating.number = 1;
@@ -396,27 +400,48 @@ function xanPasswordRating( password ) {
                 rating.specialChar = 1;
             }
         }
+        // Validate Length
+        if ( passwordArray.length >= 10 ){
+            rating.lengthMin = 1
+        }
+        if ( passwordArray.length >= 20 ){
+            rating.lengthMin = 2
+        }
 
+        // Function Do
         function assessTotalScore() {
             var ratingElement = document.querySelector( ".passwordRating" );
-            rating.total = rating.number + rating.lowercase + rating.uppercase + rating.specialChar;
+            rating.total = rating.number + rating.lowercase + rating.uppercase + rating.specialChar + rating.lengthMin;
 
-            if ( rating.total === 1 ) {
+            if ( rating.total < 1 ) {
+                ratingElement.innerHTML = "";
+                ratingElement.classList.remove( "passwordWeak", "passwordModerate", "passwordStrong" );
+            } else if ( rating.total === 1 ) {
                 ratingElement.innerHTML = "&nbsp;Weak&nbsp;";
                 ratingElement.classList.remove( "passwordModerate", "passwordStrong" );
                 ratingElement.classList.add( "passwordWeak" );
             } else if ( rating.total === 2 ) {
+                ratingElement.innerHTML = "&nbsp;Weak&nbsp;";
+                ratingElement.classList.remove( "passwordModerate", "passwordStrong" );
+                ratingElement.classList.add( "passwordWeak" );
+            } else if ( rating.total === 3 ) {
                 ratingElement.innerHTML = "&nbsp;Moderate&nbsp;";
                 ratingElement.classList.remove( "passwordWeak", "passwordStrong" );
                 ratingElement.classList.add( "passwordModerate" );
-            } else if ( rating.total === 3 ) {
+            } else if ( rating.total === 4 ) {
+                ratingElement.innerHTML = "&nbsp;Moderate&nbsp;";
+                ratingElement.classList.remove( "passwordWeak", "passwordStrong" );
+                ratingElement.classList.add( "passwordModerate" );
+            } else if ( rating.total > 4 ) {
                 ratingElement.innerHTML = "&nbsp;Strong&nbsp;";
                 ratingElement.classList.remove( "passwordWeak", "passwordModerate" );
                 ratingElement.classList.add( "passwordStrong" );
             }
         }
 
+        // Function Call
         assessTotalScore();
+
     } );
 }
 

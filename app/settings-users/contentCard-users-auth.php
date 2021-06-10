@@ -36,7 +36,7 @@ $table->cellSet( $tableRowIndex, 1, $tagsCellLeftMiddle, $mmUsersT->getColEleRen
 
 // Password Change Button
 $buttonPWChangeTags = new \xan\tags( [ ELE_CLASS_BUTTON_SM_SECONDARY ], [], [ 'onclick="$(\'#UsersPasswordReplace_Modal\').modal(\'show\');"' ] );
-$buttonPWChangeEle = new \xan\eleButton( \xan\fontIcon( FI_PASSWORD ) . STR_NBSP . 'Password Replace', '', '', $buttonPWChangeTags );
+$buttonPWChangeEle = new \xan\eleButton( FI_PASSWORD . STR_NBSP . 'Password Replace', '', '', $buttonPWChangeTags );
 $cardHeaderContent .= '<div class="float-right">' . $buttonPWChangeEle->render() . '</div>';
 
 // Card Append
