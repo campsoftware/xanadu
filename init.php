@@ -94,19 +94,11 @@ ini_set( "allow_url_fopen", 1 );
 ini_set( 'session.cookie_httponly', 1 );
 ini_set( 'session.cookie_secure', 1 );
 
-// RAM and Disk
+// Resources
 // ini_set( 'memory_limit', '128M' ); // max php script RAM
 // ini_set( 'upload_max_filesize', '100M' ); // max file size upload
 // ini_set( 'post_max_size', '100M' ); // max post size [normally > upload_max_filesize]
-// echo 'memory_limit: ' . ini_get( 'memory_limit' ) . '; ';
-// echo 'upload_max_filesize: ' . ini_get( 'upload_max_filesize' ) . '; ';
-// echo 'post_max_size: ' . ini_get( 'post_max_size' ) . '; ';
-
-
-///////////////////////////////////////////////////////////
-// User Logins
-define( 'APP_TWOFACTOR_REQUIRED', 'Yes' ); // 'Yes' to Require
-define( 'APP_PASSWORD_LENGTH_GENERATED', 15 );
+// ini_set( 'max_execution_time', 0 ); // seconds; 0 = forever
 
 
 ///////////////////////////////////////////////////////////
@@ -142,6 +134,7 @@ foreach ( glob( PATH_ROOT_APP . "zzMetaModules/mm*.php" ) as $filename ) {
 ///////////////////////////////////////////////////////////
 // Schema Init
 xan\dbRecsSchemaSet(); // Sets: $GLOBALS[ 'schema' ]
+
 
 ///////////////////////////////////////////////////////////
 // Settings Load
@@ -187,7 +180,7 @@ define( 'TWITTER_AUTHOR', $recsSettings->rowsD[ 0 ][ 'TwitterAuthor' ] );
 define( 'TWOFACTORAUTH_ENABLED', true );
 define( 'CONTENT_LOAD_NOW', true );
 define( 'LOGOUT_AUTO_SECONDS', $recsSettings->rowsD[ 0 ][ 'LogoutAutoSeconds' ] );
-
+define( 'APP_PASSWORD_LENGTH_GENERATED', 15 );
 
 // SMTP
 define( 'SMTP_HOST_MAILGUN', $recsSettings->rowsD[ 0 ][ 'SMTPHost' ] );

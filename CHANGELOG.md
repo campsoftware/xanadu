@@ -1,8 +1,11 @@
 # Xanadu Change Log
 
-2021-06-08-17-47-46
+2021-06-10-16-22-27
 - Added a Constant TWOFACTORAUTH_ENABLED to enable or disable 2FA.
+- Added eleDBMetaRender ELE_AS_STRING.
 - Added User table columns for '2FA via Phone' and '2FA via Email' to allow options for receiving the code. 
+- Updated the Password Meter to check for Password Length and spread out the Levels ( Weak, Moderate, Strong ).
+- Register and Change Passwords now require a Strong password based on the Password Meter.
 
 2021-06-08-16-21-56
 - Removed setting $_SESSION[ SESS_USER ] from init.php Session was not started yet. It's set in mmUsersT->doLogin.

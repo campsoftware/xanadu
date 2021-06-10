@@ -19,6 +19,7 @@ define( 'COOKIE_LOGIN', 'COOKIE_LOGIN' );
 // Element As
 define( 'ELE_AS_DEFINED', 'ELE_AS_DEFINED' );
 define( 'ELE_AS_LABEL', 'ELE_AS_LABEL' );
+define( 'ELE_AS_STRING', 'ELE_AS_STRING' );
 define( 'ELE_AS_SELECTOR', 'ELE_AS_SELECTOR' );
 define( 'ELE_AS_FILEUPLOADBUTTON', 'ELE_AS_FILEUPLOADBUTTON' );
 
@@ -2575,6 +2576,11 @@ function eleDBMetaRender( colMeta $colMeta, tags $tags, recs $recs, formTag $for
 		$ele = new eleLabel( $colMeta->colLabel, '', '', $tags );
 		$eleString = $ele->render();
 		return $eleString;
+	}
+	
+	// Ele as String
+	if ( $colMeta->eleTypeAs == ELE_AS_STRING ) {
+		return $recs->rowsD[ $recs->rowIndex ][ $colMeta->colName ];
 	}
 
 	// Ele as Defined or Selector
