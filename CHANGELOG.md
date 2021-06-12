@@ -1,5 +1,8 @@
 # Xanadu Change Log
 
+2021-06-12-15-47-52
+- Added \xan\microsecsTracker class for millisecond level time tracking of code and loops.
+
 2021-06-10-16-22-27
 - Added a Constant TWOFACTORAUTH_ENABLED to enable or disable 2FA.
 - Added eleDBMetaRender ELE_AS_STRING.

@@ -201,6 +201,33 @@ function microsecsDiff( $pMicrosecs ) {
 	return round( ( microsecsNow() - $pMicrosecs ), 4 ) . "s";
 }
 
+class microsecsTracker {
+	// Vars
+	private $timersD = [];
+	private $beginD = [];
+	
+	// Constructor
+	public function __construct() {
+	}
+	
+	// Functions
+	public function begin( $label, $index = '-1' ) {
+		// Begin Set
+		$this->beginD[ $index ][ $label ] = \xan\microsecsNow();
+	}
+	
+	public function end( $label, $index = '-1' ) {
+		// Timer Set
+		$this->timersD[ $index ][ $label ] = \xan\microsecsDiff( $this->beginD[ $index ][ $label ] );
+		// Begin Clear
+		$this->beginD[ $index ][ $label ] = '';
+	}
+	
+	public function getDict(){
+		return  $this->timersD;
+	}
+}
+
 ///////////////////////////////////////////////////////////
 // IP Addresses
 function ipOfBrowser() {
